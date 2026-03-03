@@ -6,8 +6,12 @@ noinst_PROGRAMS = $(TESTS)
 endif
 
 AM_LDFLAGS =
-AM_CXXFLAGS = 
-AM_CFLAGS = 
+AM_CXXFLAGS =
+AM_CFLAGS =
+
+# Use C++14 to avoid std::byte conflict with crypto++ byte typedef
+# Use -fpermissive for old crypto++ library compatibility
+AM_CXXFLAGS += -std=c++14 -fpermissive
 
 # Relax inlining; the default of 600 takes way too long to compile and
 # generates enormous output.

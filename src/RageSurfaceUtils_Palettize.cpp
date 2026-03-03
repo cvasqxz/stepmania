@@ -97,10 +97,12 @@ static void pam_addtoacolorhash( acolorhash_hash &acht, const uint8_t acolorP[4]
 static int pam_lookupacolor( const acolorhash_hash &acht, const uint8_t acolorP[4] );
 static void pam_freeacolorhist( acolorhist_item *achv );
 
-struct error_t
+struct palette_error_t
 {
 	int c[4];
 };
+/* Avoid conflict with glibc's error_t */
+#define error_t palette_error_t
 
 void RageSurfaceUtils::Palettize( RageSurface *&pImg, int iColors, bool bDither )
 {

@@ -169,7 +169,7 @@ CString LowLevelWindow_SDL::TryVideoMode( RageDisplay::VideoModeParams p, bool &
 	/* Recreating the window changes the hwnd. */
 	SDL_UpdateHWnd();
 
-#if defined(unix)
+#if defined(unix) || defined(UNIX)
 	{
 		SDL_SysWMinfo info;
 		SDL_VERSION(&info.version);

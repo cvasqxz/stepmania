@@ -6,6 +6,7 @@
 #include "fltrimpl.h"
 #include "argnames.h"
 #include <functional>
+#include <memory>
 
 NAMESPACE_BEGIN(CryptoPP)
 

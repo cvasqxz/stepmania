@@ -46,6 +46,9 @@
 /* Everything will need string for one reason or another: */
 #include <string>
 
+/* C string functions (memset, strcmp, etc.) */
+#include <cstring>
+
 /* And vector: */
 #include <vector>
 

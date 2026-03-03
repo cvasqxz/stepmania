@@ -6,6 +6,7 @@
 
 #include <csetjmp>
 #include <cassert>
+#include <ctime>
 
 LuaFunctionList *g_LuaFunctionList = NULL;
 

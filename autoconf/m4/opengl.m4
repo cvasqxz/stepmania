@@ -12,6 +12,9 @@ AC_DEFUN(SM_X_WITH_OPENGL,
 
 	if test -n "$x_libraries"; then
 	    XLIBS="-L$x_libraries -lX11"
+	else
+	    # X11 is in standard path
+	    XLIBS="-lX11"
 	fi
 
 	if test -n "$x_includes"; then

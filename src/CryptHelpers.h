@@ -1,14 +1,15 @@
 #ifndef CryptHelpers_H
 #define CryptHelpers_H
 
-#include "RageFile.h"
-
-// crypt headers
+// crypt headers must be included BEFORE RageFile.h to avoid std::byte conflict
 #include "crypto51/files.h"
 #include "crypto51/filters.h"
 #include "crypto51/cryptlib.h"
 
+#include "RageFile.h"
+
 using namespace CryptoPP;
+using CryptoPP::byte;  /* Ensure CryptoPP::byte is used, not std::byte */
 
 //! .
 class RageFileStore : public Store, private FilterPutSpaceHelper

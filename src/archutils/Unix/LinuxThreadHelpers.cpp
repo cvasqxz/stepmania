@@ -18,6 +18,8 @@
 #include <linux/unistd.h>
 #define _LINUX_PTRACE_H // hack to prevent broken linux/ptrace.h from conflicting with sys/ptrace.h
 #include <sys/user.h>
+#include <sys/syscall.h>
+#include <pthread.h>
 
 /* In Linux, we might be using PID-based or TID-based threads.  With PID-based
  * threads, getpid() returns a unique value for each thread; each thread is a
@@ -29,7 +31,9 @@
 
 static bool g_bUsingNPTL = false;
 
-static _syscall0(pid_t,gettid)
+/* Modern replacement for _syscall0(pid_t,gettid) */
+static pid_t gettid_wrapper() { return (pid_t)syscall(SYS_gettid); }
+#define gettid gettid_wrapper
 
 #ifndef _CS_GNU_LIBPTHREAD_VERSION
 #define _CS_GNU_LIBPTHREAD_VERSION 3

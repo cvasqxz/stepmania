@@ -44,7 +44,7 @@ int ThreadImpl_Pthreads::Wait()
 	if( ret )
 		RageException::Throw( "pthread_join: %s", strerror(errno) );
 
-	return (int) val;
+	return (int)(intptr_t) val;
 }
 
 ThreadImpl *MakeThisThread()

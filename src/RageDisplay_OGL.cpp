@@ -1,22 +1,31 @@
 #include "global.h"
 
-/* ours may be more up-to-date */
-#define __glext_h_
-
 #if defined(WIN32)
 #include <windows.h>
-#endif
-
-#if !defined(DARWIN)
+/* On Windows, use our bundled glext.h which may be more up-to-date */
+#define __glext_h_
 # include <GL/gl.h>
 # include <GL/glu.h>
-#else
-# include <OpenGL/gl.h>
-# include <OpenGL/glu.h>
-#endif
-
 #undef __glext_h_
 #include "glext.h"
+#elif defined(DARWIN)
+# include <OpenGL/gl.h>
+# include <OpenGL/glu.h>
+# include <OpenGL/glext.h>
+#else
+/* On Linux/Unix, use system GL headers which include glext */
+# include <GL/gl.h>
+# include <GL/glu.h>
+# include <GL/glext.h>
+#endif
+
+/* Compatibility typedefs for paletted texture extensions (deprecated but used by this code) */
+#ifndef PFNGLCOLORTABLEPROC
+typedef void (APIENTRYP PFNGLCOLORTABLEPROC) (GLenum target, GLenum internalformat, GLsizei width, GLenum format, GLenum type, const void *table);
+#endif
+#ifndef PFNGLCOLORTABLEPARAMETERIVPROC
+typedef void (APIENTRYP PFNGLCOLORTABLEPARAMETERIVPROC) (GLenum target, GLenum pname, const GLint *params);
+#endif
 
 #include "RageFile.h"
 #include "RageSurface.h"
