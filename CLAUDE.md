@@ -10,7 +10,25 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **Build Tool**: GNU Autoconf/Automake (version 2.57+)
 
-### Building
+### Building on Modern Linux (Ubuntu 22.04+, GCC 13+)
+
+The original 2005 codebase has been patched for modern compiler compatibility. Required steps:
+
+```bash
+# Install dependencies (Ubuntu/Debian)
+sudo apt install build-essential autoconf automake libsdl1.2-dev \
+    libpng-dev libjpeg-dev libvorbis-dev libogg-dev libmad0-dev \
+    liblua5.1-dev libgl1-mesa-dev libglu1-mesa-dev libx11-dev
+
+# Generate configure script (if not present)
+autoreconf -fi
+
+# Configure and build
+./configure
+make
+```
+
+### Building (General)
 
 ```bash
 # Initial configuration (generate configure script and Makefile from templates)
@@ -30,6 +48,26 @@ make
 make clean
 make
 ```
+
+### Modern Compilation Fixes Applied
+
+The following compatibility fixes have been applied for GCC 13 / C++14:
+
+| Issue | Fix Location |
+|-------|--------------|
+| Lua detection (pkg-config) | `autoconf/m4/lua.m4` |
+| Missing X11 linkage | `autoconf/m4/opengl.m4` |
+| C++14 standard flag | `src/Makefile.am` |
+| Missing `<climits>` | `src/RageUtil.h` |
+| Missing `<cstring>` | `src/global.h` |
+| Extra class qualifications | `GameState.h`, `NetworkSyncServer.h`, `RageUtil_FileDB.h` |
+| 64-bit pointer casts | `Threads_Pthreads.cpp`, `ScreenOptionsMasterPrefs.cpp` |
+| Template two-phase lookup | `StdString.h`, `RageSurfaceUtils_Palettize.cpp` |
+| libpng opaque structs | `RageSurface_Load_PNG.cpp` |
+| `_syscall0` deprecated | `LinuxThreadHelpers.cpp` |
+| `std::byte` conflict (C++17) | `crypto51/config.h`, `crypto51/misc.h` |
+| glext.h conflicts | `RageDisplay_OGL.cpp` |
+| unix/UNIX define | `LowLevelWindow_SDL.cpp` |
 
 **Key Compilation Flags**:
 - Release mode (default): `-O3` optimization
