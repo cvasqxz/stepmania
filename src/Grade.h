@@ -6,8 +6,9 @@
 #include "RageUtil.h"
 
 #define NUM_GRADE_TIERS 20
-enum Grade 
-{ 
+/* C++11: explicit underlying type */
+enum Grade : int
+{
 	GRADE_TIER_1,	// = AAAA
 	GRADE_TIER_2,	// = AAA
 	GRADE_TIER_3,	// = AA

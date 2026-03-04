@@ -6,7 +6,8 @@
 //
 // Player number stuff
 //
-enum Difficulty 
+/* C++11: explicit underlying type */
+enum Difficulty : int
 {
 	DIFFICULTY_BEGINNER,	// corresponds to DDREX Beginner
 	DIFFICULTY_EASY,		// corresponds to Basic, Easy
@@ -23,7 +24,7 @@ CString DifficultyToThemedString( Difficulty dc );
 Difficulty StringToDifficulty( const CString& sDC );
 
 
-typedef Difficulty CourseDifficulty;
+using CourseDifficulty = Difficulty;
 #define NUM_COURSE_DIFFICULTIES NUM_DIFFICULTIES
 #define FOREACH_CourseDifficulty FOREACH_Difficulty
 #define FOREACH_ShownCourseDifficulty( cd ) for( Difficulty cd=GetNextShownCourseDifficulty((CourseDifficulty)-1); cd!=DIFFICULTY_INVALID; cd=GetNextShownCourseDifficulty(cd) )

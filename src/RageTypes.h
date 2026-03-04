@@ -5,11 +5,29 @@
 #ifndef RAGETYPES_H
 #define RAGETYPES_H
 
-enum GlowMode { GLOW_BRIGHTEN, GLOW_WHITEN };
-enum BlendMode { BLEND_NORMAL, BLEND_ADD, BLEND_NO_EFFECT, BLEND_INVALID };
-enum CullMode { CULL_BACK, CULL_FRONT, CULL_NONE };
-enum ZTestMode { ZTEST_OFF, ZTEST_WRITE_ON_PASS, ZTEST_WRITE_ON_FAIL };
-enum PolygonMode { POLYGON_FILL, POLYGON_LINE };
+/* C++11 modernization: scoped enums
+ * Note: Using _Mode suffix to avoid conflicts with X11 macros (None, etc.) */
+enum class GlowMode { Brighten_Mode, Whiten_Mode };
+enum class BlendMode { Normal_Mode, Add_Mode, NoEffect_Mode, Invalid_Mode };
+enum class CullMode { Back_Mode, Front_Mode, None_Mode };
+enum class ZTestMode { Off_Mode, WriteOnPass_Mode, WriteOnFail_Mode };
+enum class PolygonMode { Fill_Mode, Line_Mode };
+
+/* Backwards compatibility aliases */
+constexpr GlowMode GLOW_BRIGHTEN = GlowMode::Brighten_Mode;
+constexpr GlowMode GLOW_WHITEN = GlowMode::Whiten_Mode;
+constexpr BlendMode BLEND_NORMAL = BlendMode::Normal_Mode;
+constexpr BlendMode BLEND_ADD = BlendMode::Add_Mode;
+constexpr BlendMode BLEND_NO_EFFECT = BlendMode::NoEffect_Mode;
+constexpr BlendMode BLEND_INVALID = BlendMode::Invalid_Mode;
+constexpr CullMode CULL_BACK = CullMode::Back_Mode;
+constexpr CullMode CULL_FRONT = CullMode::Front_Mode;
+constexpr CullMode CULL_NONE = CullMode::None_Mode;
+constexpr ZTestMode ZTEST_OFF = ZTestMode::Off_Mode;
+constexpr ZTestMode ZTEST_WRITE_ON_PASS = ZTestMode::WriteOnPass_Mode;
+constexpr ZTestMode ZTEST_WRITE_ON_FAIL = ZTestMode::WriteOnFail_Mode;
+constexpr PolygonMode POLYGON_FILL = PolygonMode::Fill_Mode;
+constexpr PolygonMode POLYGON_LINE = PolygonMode::Line_Mode;
 
 
 struct RageVector2
@@ -217,8 +235,8 @@ public:
     T    left, top, right, bottom;
 };
 
-typedef Rect<int> RectI;
-typedef Rect<float> RectF;
+using RectI = Rect<int>;
+using RectF = Rect<float>;
 
 /* Structure for our custom vertex type.  Note that these data structes 
  * have the same layout that D3D expects. */

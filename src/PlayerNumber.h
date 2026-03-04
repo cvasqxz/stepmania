@@ -10,7 +10,8 @@
 //
 // Player number stuff
 //
-enum PlayerNumber {
+/* C++11: explicit underlying type */
+enum PlayerNumber : int {
 	PLAYER_1 = 0,
 	PLAYER_2,
 	NUM_PLAYERS,	// leave this at the end

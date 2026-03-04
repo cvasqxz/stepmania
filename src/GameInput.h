@@ -5,7 +5,7 @@
 
 #include "EnumHelper.h"
 
-enum GameController
+enum GameController : int
 {
 	GAME_CONTROLLER_1 = 0,	// left controller
 	GAME_CONTROLLER_2,		// right controller
@@ -14,7 +14,7 @@ enum GameController
 };
 #define FOREACH_GameController( gc ) FOREACH_ENUM( GameController, MAX_GAME_CONTROLLERS, gc )
 
-typedef int GameButton;
+using GameButton = int;
 const GameButton MAX_GAME_BUTTONS = 20;
 const GameButton GAME_BUTTON_INVALID = MAX_GAME_BUTTONS+1;
 #define FOREACH_GameButton( gb ) FOREACH_ENUM( GameButton, MAX_GAME_BUTTONS, gb )

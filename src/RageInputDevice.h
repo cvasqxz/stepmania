@@ -9,7 +9,7 @@
  * other keys are mapped to KEY_OTHER_0 and up.  (If we want to support real international
  * input, stick a wchar_t in DeviceInput.)  */
  
-enum RageKeySym
+enum RageKeySym : int
 {
 	KEY_SPACE	= 32,
 	KEY_EXCL	= 33,
@@ -190,7 +190,7 @@ const int NUM_JOYSTICK_HATS = 1;
 const int NUM_PUMPS = 2;
 const int NUM_PARAS = 2;
 
-enum InputDevice {
+enum InputDevice : int {
 	DEVICE_KEYBOARD = 0,
 	DEVICE_JOY1,
 	DEVICE_JOY2,
@@ -209,7 +209,7 @@ enum InputDevice {
  * joystick has an obvious mapping, but keep it generic and don't try to handle odd
  * special cases.  For example, many controllers have two sticks, so the JOY_LEFT_2, etc.
  * pairs are useful for many types of sticks. */
-enum JoystickButton
+enum JoystickButton : int
 {
 	/* Standard axis: */
 	JOY_LEFT = 0, JOY_RIGHT, 
@@ -232,7 +232,7 @@ enum JoystickButton
 	NUM_JOYSTICK_BUTTONS	// leave this at the end
 };
 
-enum PumpButton {
+enum PumpButton : int {
 	PUMP_UL,
 	PUMP_UR,
 	PUMP_MID,
@@ -250,7 +250,7 @@ enum PumpButton {
 	NUM_PUMP_PAD_BUTTONS	// leave this at the end
 };
 
-enum ParaButton {
+enum ParaButton : int {
 	PARA_L,
 	PARA_UL,
 	PARA_U,
