@@ -9,7 +9,7 @@
 #include "RageFile.h"
 
 using namespace CryptoPP;
-using CryptoPP::byte;  /* Ensure CryptoPP::byte is used, not std::byte */
+/* Note: byte is defined globally in crypto51/config.h, not inside CryptoPP namespace */
 
 //! .
 class RageFileStore : public Store, private FilterPutSpaceHelper
@@ -48,11 +48,11 @@ public:
 	typedef FileStore::OpenErr OpenErr;
 	typedef FileStore::ReadErr ReadErr;
 
-	RageFileSource(BufferedTransformation *attachment = NULL)
+	RageFileSource(BufferedTransformation *attachment = nullptr)
 		: SourceTemplate<RageFileStore>(attachment) {}
-	RageFileSource(std::istream &in, bool pumpAll, BufferedTransformation *attachment = NULL)
+	RageFileSource(std::istream &in, bool pumpAll, BufferedTransformation *attachment = nullptr)
 		: SourceTemplate<RageFileStore>(attachment) {SourceInitialize(pumpAll, MakeParameters("InputStreamPointer", &in));}
-	RageFileSource(const char *filename, bool pumpAll, BufferedTransformation *attachment = NULL, bool binary=true)
+	RageFileSource(const char *filename, bool pumpAll, BufferedTransformation *attachment = nullptr, bool binary=true)
 		: SourceTemplate<RageFileStore>(attachment) {SourceInitialize(pumpAll, MakeParameters("InputFileName", filename)("InputBinaryMode", binary));}
 };
 
