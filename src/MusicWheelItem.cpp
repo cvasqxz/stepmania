@@ -42,7 +42,7 @@ WheelItemData::WheelItemData( WheelItemType wit, Song* pSong, CString sSectionNa
 
 MusicWheelItem::MusicWheelItem()
 {
-	data = NULL;
+	data = nullptr;
 
 	SetName( "MusicWheelItem" );
 
@@ -99,7 +99,7 @@ MusicWheelItem::MusicWheelItem()
 
 void MusicWheelItem::LoadFromWheelItemData( WheelItemData* pWID )
 {
-	ASSERT( pWID != NULL );
+	ASSERT( pWID != nullptr );
 	
 	
 	
@@ -122,7 +122,7 @@ void MusicWheelItem::LoadFromWheelItemData( WheelItemData* pWID )
 	case TYPE_SORT:
 		{
 			CString sDisplayName, sTranslitName;
-			BitmapText *bt = NULL;
+			BitmapText *bt = nullptr;
 			switch( pWID->m_Type )
 			{
 				case TYPE_SECTION:
@@ -247,7 +247,7 @@ void MusicWheelItem::Update( float fDeltaTime )
 
 void MusicWheelItem::DrawPrimitives()
 {
-	Sprite *bar = NULL;
+	Sprite *bar = nullptr;
 	switch( data->m_Type )
 	{
 	case TYPE_SECTION: 

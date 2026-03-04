@@ -30,7 +30,7 @@ Actor* LoadFromActorFile( CString sIniPath, CString sLayer )
 	if( !ini.GetKey(sLayer) )
 		RageException::Throw( "The file '%s' doesn't have layer '%s'.", sIniPath.c_str(), sLayer.c_str() );
 
-	Actor* pActor = NULL;	// fill this in before we return;
+	Actor* pActor = nullptr;	// fill this in before we return;
 
 	CString sType;
 	ini.GetValue( sLayer, "Type", sType );
@@ -99,13 +99,13 @@ Actor* LoadFromActorFile( CString sIniPath, CString sLayer )
 			else if( sFile.CompareNoCase("songbanner")==0 )
 			{
 				Song *pSong = GAMESTATE->m_pCurSong;
-				if( pSong == NULL )
+				if( pSong == nullptr )
 				{
 					// probe for a random banner
 					for( int i=0; i<300; i++ )
 					{
 						pSong = SONGMAN->GetRandomSong();
-						if( pSong == NULL )
+						if( pSong == nullptr )
 							break;
 						if( !pSong->ShowInDemonstrationAndRanking() )
 							continue;
@@ -132,13 +132,13 @@ Actor* LoadFromActorFile( CString sIniPath, CString sLayer )
 			else if( sFile.CompareNoCase("coursebanner")==0 )
 			{
 				Course *pCourse = GAMESTATE->m_pCurCourse;
-				if( pCourse == NULL )
+				if( pCourse == nullptr )
 				{
 					// probe for a random banner
 					for( int i=0; i<300; i++ )
 					{
 						pCourse = SONGMAN->GetRandomCourse();
-						if( pCourse == NULL )
+						if( pCourse == nullptr )
 							break;
 						if( !pCourse->ShowInDemonstrationAndRanking() )
 							continue;

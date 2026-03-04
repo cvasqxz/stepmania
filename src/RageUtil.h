@@ -194,7 +194,7 @@ void splitpath( const CString &Path, CString &Dir, CString &Filename, CString &E
 CString SetExtension( const CString &path, const CString &ext );
 CString GetExtension( const CString &sPath );
 
-typedef int longchar;
+using longchar = int;
 extern const wchar_t INVALID_CHAR;
 
 int utf8_get_char_len( char p );
@@ -325,7 +325,7 @@ struct char_traits_char_nocase: public char_traits<char>
 		return NULL;
     }
 };
-typedef basic_string<char,char_traits_char_nocase> istring;
+using istring = basic_string<char,char_traits_char_nocase>;
 
 /* Compatibility/convenience shortcuts.  These are actually defined in RageFileManager.h, but
  * declared here since they're used in many places. */

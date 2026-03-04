@@ -385,7 +385,7 @@ void ScreenOptions::Init( InputMode im, OptionRowData OptionRows[], int iNumOpti
 
 	/* Hack: if m_CurStyle is set, we're probably in the player or song options menu, so
 	 * the player name is meaningful.  Otherwise, we're probably in the system menu. */
-	if( GAMESTATE->m_pCurStyle != NULL )
+	if( GAMESTATE->m_pCurStyle != nullptr )
 	{
 		FOREACH_HumanPlayer( p )
 		{
@@ -943,7 +943,7 @@ void ScreenOptions::PositionItems()
 	int P2Choice = GAMESTATE->IsHumanPlayer(PLAYER_2)? m_iCurrentRow[PLAYER_2]: m_iCurrentRow[PLAYER_1];
 
 	vector<Row*> Rows( m_Rows );
-	Row *ExitRow = NULL;
+	Row *ExitRow = nullptr;
 
 	if( SEPARATE_EXIT_ROW && Rows.back()->Type == Row::ROW_EXIT )
 	{
@@ -1089,7 +1089,7 @@ void ScreenOptions::OnChange( PlayerNumber pn )
 	const int iCurRow = m_iCurrentRow[pn];
 	const CString text = GetExplanationText( iCurRow );
 
-	BitmapText *pText = NULL;
+	BitmapText *pText = nullptr;
 	switch( m_InputMode )
 	{
 	case INPUTMODE_INDIVIDUAL:

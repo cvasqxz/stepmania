@@ -78,7 +78,7 @@ bool ScreenJukebox::SetSong( bool bDemonstration )
 		Difficulty dc = vDifficultiesToShow[ rand()%vDifficultiesToShow.size() ];
 		Steps* pSteps = pSong->GetStepsByDifficulty( GAMESTATE->GetCurrentStyle()->m_StepsType, dc );
 
-		if( pSteps == NULL )
+		if( pSteps == nullptr )
 			continue;	// skip
 
 		if( !PREFSMAN->m_bAutogenSteps && pSteps->IsAutogen())
@@ -156,7 +156,7 @@ ScreenJukebox::ScreenJukebox( CString sName, bool bDemonstration ) : ScreenGamep
 {
 	LOG->Trace( "ScreenJukebox::ScreenJukebox()" );
 
-	if( GAMESTATE->m_pCurSong == NULL )	// we didn't find a song.
+	if( GAMESTATE->m_pCurSong == nullptr )	// we didn't find a song.
 	{
 		this->PostScreenMessage( SM_GoToNextScreen, 0 );	// Abort demonstration.
 		return;

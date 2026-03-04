@@ -38,8 +38,8 @@ protected:
 	{
 		PageToShow()
 		{
-			pCourse = NULL;
-			pTrail = NULL;
+			pCourse = nullptr;
+			pTrail = nullptr;
 		}
 
 		PageType		type;

@@ -46,7 +46,7 @@ const CString COMMON_XSL	= "Common.xsl";
 
 #define FOREACH_Node( Node, Var ) \
 	XNodes::const_iterator Var##Iter; \
-	const XNode *Var = NULL; \
+	const XNode *Var = nullptr; \
 	for( Var##Iter = Node->childs.begin(); \
 		(Var##Iter != Node->childs.end() && (Var = *Var##Iter) ),  Var##Iter != Node->childs.end(); \
 		++Var##Iter )
@@ -240,7 +240,7 @@ float Profile::GetSongsActual( StepsType st, Difficulty dc ) const
 		
 		// If the Song isn't loaded on the current machine, then we can't 
 		// get radar values to compute dance points.
-		if( pSong == NULL )
+		if( pSong == nullptr )
 			continue;
 
 		if( pSong->m_SelectionDisplay == Song::SHOW_NEVER )
@@ -257,7 +257,7 @@ float Profile::GetSongsActual( StepsType st, Difficulty dc ) const
 			
 			// If the Steps isn't loaded on the current machine, then we can't 
 			// get radar values to compute dance points.
-			if( pSteps == NULL )
+			if( pSteps == nullptr )
 				continue;
 
 			if( pSteps->m_StepsType != st )
@@ -297,7 +297,7 @@ float Profile::GetCoursesPossible( StepsType st, CourseDifficulty cd ) const
 			continue;
 
 		Trail* pTrail = pCourse->GetTrail(st,cd);
-		if( pTrail == NULL )
+		if( pTrail == nullptr )
 			continue;
 
 		iTotalTrails++;
@@ -320,7 +320,7 @@ float Profile::GetCoursesActual( StepsType st, CourseDifficulty cd ) const
 		
 		// If the Course isn't loaded on the current machine, then we can't 
 		// get radar values to compute dance points.
-		if( pCourse == NULL )
+		if( pCourse == nullptr )
 			continue;
 		
 		// Don't count any course that has any entries that change over time.
@@ -338,7 +338,7 @@ float Profile::GetCoursesActual( StepsType st, CourseDifficulty cd ) const
 			
 			// If the Steps isn't loaded on the current machine, then we can't 
 			// get radar values to compute dance points.
-			if( pTrail == NULL )
+			if( pTrail == nullptr )
 				continue;
 
 			if( pTrail->m_StepsType != st )
@@ -379,7 +379,7 @@ int Profile::GetSongNumTimesPlayed( const Song* pSong ) const
 int Profile::GetSongNumTimesPlayed( const SongID& songID ) const
 {
 	const HighScoresForASong *hsSong = GetHighScoresForASong( songID );
-	if( hsSong == NULL )
+	if( hsSong == nullptr )
 		return 0;
 
 	int iTotalNumTimesPlayed = 0;
@@ -439,7 +439,7 @@ void Profile::GetGrades( const Song* pSong, StepsType st, int iCounts[NUM_GRADES
 	
 	memset( iCounts, 0, sizeof(int)*NUM_GRADES );
 	const HighScoresForASong *hsSong = GetHighScoresForASong( songID );
-	if( hsSong == NULL )
+	if( hsSong == nullptr )
 		return;
 
 	FOREACH_Grade(g)
@@ -496,7 +496,7 @@ int Profile::GetCourseNumTimesPlayed( const Course* pCourse ) const
 int Profile::GetCourseNumTimesPlayed( const CourseID &courseID ) const
 {
 	const HighScoresForACourse *hsCourse = GetHighScoresForACourse( courseID );
-	if( hsCourse == NULL )
+	if( hsCourse == nullptr )
 		return 0;
 
 	int iTotalNumTimesPlayed = 0;
@@ -1065,7 +1065,7 @@ void Profile::LoadSongScoresFromNode( const XNode* pNode )
 				WARN_AND_CONTINUE;
 
 			XNode *pHighScoreListNode = (*steps)->GetChild("HighScoreList");
-			if( pHighScoreListNode == NULL )
+			if( pHighScoreListNode == nullptr )
 				WARN_AND_CONTINUE;
 			
 			HighScoreList &hsl = m_SongHighScores[songID].m_StepsHighScores[stepsID].hs;
@@ -1148,7 +1148,7 @@ void Profile::LoadCourseScoresFromNode( const XNode* pNode )
 				WARN_AND_CONTINUE;
 
 			XNode *pHighScoreListNode = (*trail)->GetChild("HighScoreList");
-			if( pHighScoreListNode == NULL )
+			if( pHighScoreListNode == nullptr )
 				WARN_AND_CONTINUE;
 			
 			HighScoreList &hsl = m_CourseHighScores[courseID].m_TrailHighScores[trailID].hs;
@@ -1228,7 +1228,7 @@ void Profile::LoadCategoryScoresFromNode( const XNode* pNode )
 				WARN_AND_CONTINUE_M( str );
 
 			XNode *pHighScoreListNode = (*radarCategory)->GetChild("HighScoreList");
-			if( pHighScoreListNode == NULL )
+			if( pHighScoreListNode == nullptr )
 				WARN_AND_CONTINUE;
 			
 			HighScoreList &hsl = this->GetCategoryHighScoreList( st, rc );

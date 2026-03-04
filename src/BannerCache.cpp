@@ -69,7 +69,7 @@ void BannerCache::LoadBanner( CString BannerPath )
 
 		CHECKPOINT_M( ssprintf( "BannerCache::LoadBanner: %s", CachePath.c_str() ) );
 		RageSurface *img = RageSurfaceUtils::LoadSurface( CachePath );
-		if( img == NULL )
+		if( img == nullptr )
 		{
 			if(tries == 0)
 			{
@@ -306,7 +306,7 @@ void BannerCache::CacheBannerInternal( CString BannerPath )
 {
 	CString error;
 	RageSurface *img = RageSurfaceUtils::LoadFile( BannerPath, error );
-	if( img == NULL )
+	if( img == nullptr )
 	{
 		LOG->Warn( "BannerCache::CacheBanner: Couldn't load %s: %s", BannerPath.c_str(), error.c_str() );
 		return;

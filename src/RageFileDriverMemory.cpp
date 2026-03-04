@@ -134,7 +134,7 @@ RageFileObj *RageFileDriverMem::Open( const CString &sPath, int mode, RageFile &
 	}
 
 	RageFileObjMemFile *pFile = (RageFileObjMemFile *) FDB->GetFilePriv( sPath );
-	if( pFile == NULL )
+	if( pFile == nullptr )
 	{
 		err = ENOENT;
 		return NULL;
@@ -148,7 +148,7 @@ bool RageFileDriverMem::Remove( const CString &sPath )
 	LockMut(m_Mutex);
 
 	RageFileObjMemFile *pFile = (RageFileObjMemFile *) FDB->GetFilePriv( sPath );
-	if( pFile == NULL )
+	if( pFile == nullptr )
 		return false;
 
 	/* Unregister the file. */

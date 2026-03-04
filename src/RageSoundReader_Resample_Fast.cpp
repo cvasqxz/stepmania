@@ -3,7 +3,7 @@
 
 RageSoundReader_Resample_Fast::RageSoundReader_Resample_Fast()
 {
-	source = NULL;
+	source = nullptr;
 	samplerate = -1;
 }
 

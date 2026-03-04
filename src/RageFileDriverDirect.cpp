@@ -162,7 +162,7 @@ RageFileObj *RageFileObjDirect::Copy( RageFile &p ) const
 	int err;
 	RageFileObj *ret = MakeFileObjDirect( path, parent.GetOpenMode(), p, err );
 
-	if( ret == NULL )
+	if( ret == nullptr )
 		RageException::Throw("Couldn't reopen \"%s\": %s", path.c_str(), strerror(err) );
 
 	ret->Seek( lseek( fd, 0, SEEK_CUR ) );

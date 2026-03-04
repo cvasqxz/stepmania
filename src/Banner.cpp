@@ -82,7 +82,7 @@ void Banner::SetScrolling( bool bScroll, float Percent)
 
 void Banner::LoadFromSong( Song* pSong )		// NULL means no song
 {
-	if( pSong == NULL )					LoadFallback();
+	if( pSong == nullptr )					LoadFallback();
 	else if( pSong->HasBanner() )		Load( pSong->GetBannerPath() );
 	else								LoadFallback();
 
@@ -117,7 +117,7 @@ void Banner::LoadFromGroup( CString sGroupName )
 
 void Banner::LoadFromCourse( Course* pCourse )		// NULL means no course
 {
-	if( pCourse == NULL )						LoadFallback();
+	if( pCourse == nullptr )						LoadFallback();
 	else if( pCourse->m_sBannerPath != "" )		Load( pCourse->m_sBannerPath );
 	else										LoadFallback();
 
@@ -147,7 +147,7 @@ void Banner::LoadIconFromCharacter( Character* pCharacter )
 
 void Banner::LoadTABreakFromCharacter( Character* pCharacter )
 {
-	if( pCharacter == NULL )					Load( THEME->GetPathToG("Common fallback takingabreak") );
+	if( pCharacter == nullptr )					Load( THEME->GetPathToG("Common fallback takingabreak") );
 	else 
 	{
 		Load( pCharacter->GetTakingABreakPath() );

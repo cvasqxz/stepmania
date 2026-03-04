@@ -125,7 +125,7 @@ void RageFileDriver::FlushDirCache( const CString &sPath )
 }
 
 
-const struct FileDriverEntry *g_FileDriverList = NULL;
+const struct FileDriverEntry *g_FileDriverList = nullptr;
 
 FileDriverEntry::FileDriverEntry( CString Type )
 {
@@ -136,7 +136,7 @@ FileDriverEntry::FileDriverEntry( CString Type )
 
 FileDriverEntry::~FileDriverEntry()
 {
-	g_FileDriverList = NULL; /* invalidate */
+	g_FileDriverList = nullptr; /* invalidate */
 }
 
 RageFileDriver *MakeFileDriver( CString Type, CString Root )

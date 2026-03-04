@@ -8,7 +8,7 @@
 #include <cassert>
 #include <ctime>
 
-LuaFunctionList *g_LuaFunctionList = NULL;
+LuaFunctionList *g_LuaFunctionList = nullptr;
 
 #if defined(_WINDOWS)
 	#pragma comment(lib, "lua-5.0/lib/LibLua.lib")
@@ -33,7 +33,7 @@ struct ChunkReaderData
 {
 	const CString *buf;
 	bool done;
-	ChunkReaderData() { buf = NULL; done = false; }
+	ChunkReaderData() { buf = nullptr; done = false; }
 };
 
 const char *ChunkReaderString( lua_State *L, void *ptr, size_t *size )

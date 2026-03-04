@@ -73,10 +73,10 @@ ScreenHowToPlay::ScreenHowToPlay( CString sName ) : ScreenAttract( sName )
 	m_iNumPerfects = NUM_PERFECTS;
 
 	// initialize these because they might not be used.
-	m_pPlayer = NULL;
-	m_pLifeMeterBar = NULL;
-	m_pmCharacter = NULL;
-	m_pmDancePad = NULL;
+	m_pPlayer = nullptr;
+	m_pLifeMeterBar = nullptr;
+	m_pmCharacter = nullptr;
+	m_pmDancePad = nullptr;
 
 	m_In.Load( THEME->GetPathToB("ScreenHowToPlay in") );
 	m_In.StartTransitioning();
@@ -142,7 +142,7 @@ ScreenHowToPlay::ScreenHowToPlay( CString sName ) : ScreenAttract( sName )
 		const Style* pStyle = GAMESTATE->GetCurrentStyle();
 		
 		Steps *pSteps = m_Song.GetStepsByDescription( pStyle->m_StepsType, "" );
-		ASSERT_M( pSteps != NULL, ssprintf("%i", pStyle->m_StepsType) );
+		ASSERT_M( pSteps != nullptr, ssprintf("%i", pStyle->m_StepsType) );
 
 		NoteData TempNoteData;
 		pSteps->GetNoteData( &TempNoteData );
@@ -227,7 +227,7 @@ void ScreenHowToPlay::Step()
 
 void ScreenHowToPlay::Update( float fDelta )
 {
-	if(GAMESTATE->m_pCurSong != NULL)
+	if(GAMESTATE->m_pCurSong != nullptr)
 	{
 		GAMESTATE->UpdateSongPosition( m_fFakeSecondsIntoSong, GAMESTATE->m_pCurSong->m_Timing );
 		m_fFakeSecondsIntoSong += fDelta;

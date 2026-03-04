@@ -10,7 +10,7 @@
 
 GraphDisplay::GraphDisplay()
 {
-	m_pTexture = NULL;
+	m_pTexture = nullptr;
 }
 
 
@@ -33,10 +33,10 @@ void GraphDisplay::Load( CString TexturePath, float height )
 
 void GraphDisplay::Unload()
 {
-	if( m_pTexture != NULL )
+	if( m_pTexture != nullptr )
 		TEXTUREMAN->UnloadTexture( m_pTexture );
 
-	m_pTexture = NULL;
+	m_pTexture = nullptr;
 }
 
 void GraphDisplay::LoadFromStageStats( const StageStats &s, PlayerNumber pn )

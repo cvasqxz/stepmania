@@ -32,7 +32,7 @@
 #include "StageStats.h"
 #include "Style.h"
 
-SongManager*	SONGMAN = NULL;	// global and accessable from anywhere in our program
+SongManager*	SONGMAN = nullptr;	// global and accessable from anywhere in our program
 
 #define SONGS_DIR				"Songs/"
 #define COURSES_DIR				"Courses/"
@@ -727,7 +727,7 @@ void SongManager::Invalidate( Song *pStaleSong )
 	CONVERT_COURSE_POINTER( GAMESTATE->m_pPreferredCourse );
 
 #define CONVERT_TRAIL_POINTER( pTrail ) { \
-	if( pTrail != NULL ) { \
+	if( pTrail != nullptr ) { \
 		map<Trail*,TrailIDAndCourse>::iterator it; \
 		it = mapOldTrailToTrailIDAndCourse.find(pTrail); \
 		ASSERT_M( it != mapOldTrailToTrailIDAndCourse.end(), ssprintf("%p", pTrail) ); \
@@ -799,7 +799,7 @@ void SongManager::RevertFromDisk( Song *pSong, bool bAllowNotesLoss )
 
 
 #define CONVERT_STEPS_POINTER( pSteps ) { \
-	if( pSteps != NULL ) { \
+	if( pSteps != nullptr ) { \
 		map<Steps*,StepsID>::iterator it = mapOldStepsToStepsID.find(pSteps); \
 		if( it != mapOldStepsToStepsID.end() ) \
 			pSteps = it->second.ToSteps( pSong, bAllowNotesLoss ); \
@@ -920,10 +920,10 @@ void SongManager::GetExtraStageInfo( bool bExtra2, const Style *sd,
 	CString sGroup = GAMESTATE->m_sPreferredGroup;
 	if( sGroup == GROUP_ALL_MUSIC )
 	{
-		if( GAMESTATE->m_pCurSong == NULL )
+		if( GAMESTATE->m_pCurSong == nullptr )
 		{
 			/* This normally shouldn't happen, but it's helpful to permit it for testing. */
-			LOG->Warn( "GetExtraStageInfo() called in GROUP_ALL_MUSIC, but GAMESTATE->m_pCurSong == NULL" );
+			LOG->Warn( "GetExtraStageInfo() called in GROUP_ALL_MUSIC, but GAMESTATE->m_pCurSong == nullptr" );
 			GAMESTATE->m_pCurSong = SONGMAN->GetRandomSong();
 		}
 		sGroup = GAMESTATE->m_pCurSong->m_sGroupName;
@@ -938,10 +938,10 @@ void SongManager::GetExtraStageInfo( bool bExtra2, const Style *sd,
 		return;
 	
 	// Choose a hard song for the extra stage
-	Song*	pExtra1Song = NULL;		// the absolute hardest Song and Steps.  Use this for extra stage 1.
-	Steps*	pExtra1Notes = NULL;
-	Song*	pExtra2Song = NULL;		// a medium-hard Song and Steps.  Use this for extra stage 2.
-	Steps*	pExtra2Notes = NULL;
+	Song*	pExtra1Song = nullptr;		// the absolute hardest Song and Steps.  Use this for extra stage 1.
+	Steps*	pExtra1Notes = nullptr;
+	Song*	pExtra2Song = nullptr;		// a medium-hard Song and Steps.  Use this for extra stage 2.
+	Steps*	pExtra2Notes = nullptr;
 	
 	vector<Song*> apSongs;
 	SONGMAN->GetSongs( apSongs, sGroup );
@@ -955,7 +955,7 @@ void SongManager::GetExtraStageInfo( bool bExtra2, const Style *sd,
 		{
 			Steps* pSteps = apSteps[n];
 
-			if( pExtra1Notes == NULL || CompareNotesPointersForExtra(pExtra1Notes,pSteps) )	// pSteps is harder than pHardestNotes
+			if( pExtra1Notes == nullptr || CompareNotesPointersForExtra(pExtra1Notes,pSteps) )	// pSteps is harder than pHardestNotes
 			{
 				pExtra1Song = pSong;
 				pExtra1Notes = pSteps;
@@ -964,7 +964,7 @@ void SongManager::GetExtraStageInfo( bool bExtra2, const Style *sd,
 			// for extra 2, we don't want to choose the hardest notes possible.  So, we'll disgard Steps with meter > 8
 			if(	bExtra2  &&  pSteps->GetMeter() > 8 )	
 				continue;	// skip
-			if( pExtra2Notes == NULL  ||  CompareNotesPointersForExtra(pExtra2Notes,pSteps) )	// pSteps is harder than pHardestNotes
+			if( pExtra2Notes == nullptr  ||  CompareNotesPointersForExtra(pExtra2Notes,pSteps) )	// pSteps is harder than pHardestNotes
 			{
 				pExtra2Song = pSong;
 				pExtra2Notes = pSteps;
@@ -972,7 +972,7 @@ void SongManager::GetExtraStageInfo( bool bExtra2, const Style *sd,
 		}
 	}
 
-	if( pExtra2Song == NULL  &&  pExtra1Song != NULL )
+	if( pExtra2Song == nullptr  &&  pExtra1Song != nullptr )
 	{
 		pExtra2Song = pExtra1Song;
 		pExtra2Notes = pExtra1Notes;

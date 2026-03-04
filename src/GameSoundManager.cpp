@@ -11,7 +11,7 @@
 #include "RageDisplay.h"
 #include "AnnouncerManager.h"
 
-GameSoundManager *SOUND = NULL;
+GameSoundManager *SOUND = nullptr;
 
 /*
  * When playing music, automatically search for an SM file for timing data.  If one is

@@ -14,7 +14,7 @@
 #include "Foreach.h"
 
 
-NoteSkinManager*	NOTESKIN = NULL;	// global object accessable from anywhere in the program
+NoteSkinManager*	NOTESKIN = nullptr;	// global object accessable from anywhere in the program
 
 
 const CString NOTESKINS_DIR = "NoteSkins/";
@@ -24,7 +24,7 @@ static map<CString,CString> g_PathCache;
 
 NoteSkinManager::NoteSkinManager()
 {
-	m_pCurGame = NULL;
+	m_pCurGame = nullptr;
 }
 
 NoteSkinManager::~NoteSkinManager()

@@ -41,9 +41,9 @@ Steps::Steps()
 	m_Difficulty = DIFFICULTY_INVALID;
 	m_iMeter = 0;
 
-	notes = NULL;
-	notes_comp = NULL;
-	parent = NULL;
+	notes = nullptr;
+	notes_comp = nullptr;
+	parent = nullptr;
 }
 
 Steps::~Steps()
@@ -74,7 +74,7 @@ void Steps::GetNoteData( NoteData* pNoteDataOut ) const
 
 	Decompress();
 
-	if( notes != NULL )
+	if( notes != nullptr )
 		*pNoteDataOut = *notes;
 	else
 	{
@@ -86,7 +86,7 @@ void Steps::GetNoteData( NoteData* pNoteDataOut ) const
 void Steps::SetSMNoteData( const CString &notes_comp_, const CString &attacks_comp_ )
 {
 	delete notes;
-	notes = NULL;
+	notes = nullptr;
 
 	if(!notes_comp)
 		notes_comp = new CompressedNoteData;
@@ -188,7 +188,7 @@ void Steps::Decompress() const
 		return;
 	}
 
-	if( !m_sFilename.empty() && notes_comp == NULL )
+	if( !m_sFilename.empty() && notes_comp == nullptr )
 	{
 		/* We have data on disk and not in memory.  Load it. */
 		Song s;
@@ -204,7 +204,7 @@ void Steps::Decompress() const
 		ID.FromSteps( this );
 
 		Steps *pSteps = ID.ToSteps( &s, true, false );	// don't use cache
-		if( pSteps == NULL )
+		if( pSteps == nullptr )
 		{
 			LOG->Warn( "Couldn't find %s in \"%s\"", ID.ToString().c_str(), m_sFilename.c_str() );
 			return;
@@ -214,7 +214,7 @@ void Steps::Decompress() const
 		pSteps->GetSMNoteData( notes_comp->notes, notes_comp->attacks );
 	}
 
-	if( notes_comp == NULL )
+	if( notes_comp == nullptr )
 	{
 		/* there is no data, do nothing */
 	}
@@ -234,9 +234,9 @@ void Steps::Compress() const
 	{
 		/* We have a file on disk; clear all data in memory. */
 		delete notes;
-		notes = NULL;
+		notes = nullptr;
 		delete notes_comp;
-		notes_comp = NULL;
+		notes_comp = nullptr;
 		return;
 	}
 
@@ -248,7 +248,7 @@ void Steps::Compress() const
 	}
 
 	delete notes;
-	notes = NULL;
+	notes = nullptr;
 }
 
 /* Copy our parent's data.  This is done when we're being changed from autogen
@@ -265,7 +265,7 @@ void Steps::DeAutogen()
 	m_iMeter		= Real()->m_iMeter;
 	m_RadarValues   = Real()->m_RadarValues;
 
-	parent = NULL;
+	parent = nullptr;
 
 	Compress();
 }
@@ -307,7 +307,7 @@ const Steps *Steps::Real() const
 
 bool Steps::IsAutogen() const
 {
-	return parent != NULL;
+	return parent != nullptr;
 }
 
 void Steps::SetFile( CString fn )

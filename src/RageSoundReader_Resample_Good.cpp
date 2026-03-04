@@ -24,8 +24,8 @@
 
 RageSoundReader_Resample_Good::RageSoundReader_Resample_Good()
 {
-	source = NULL;
-	empty_resamp = NULL;
+	source = nullptr;
+	empty_resamp = nullptr;
 	samplerate = -1;
 	BufSamples = 0;
 	eof = false;

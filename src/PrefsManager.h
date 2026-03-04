@@ -28,7 +28,7 @@ public:
 	int				m_iRefreshRate;
 	bool			m_bShowStats;
 	bool			m_bShowBanners;
-	enum BackgroundModes { BGMODE_OFF, BGMODE_ANIMATIONS, BGMODE_MOVIEVIS, BGMODE_RANDOMMOVIES } m_BackgroundMode;
+	enum BackgroundModes : int { BGMODE_OFF, BGMODE_ANIMATIONS, BGMODE_MOVIEVIS, BGMODE_RANDOMMOVIES } m_BackgroundMode;
 	int				m_iNumBackgrounds;
 	float			m_fBGBrightness;
 	bool			m_bHiddenSongs;
@@ -39,7 +39,7 @@ public:
 	bool			m_bTexturePreload;
 	bool			m_bDelayedScreenLoad;
 	bool			m_bDelayedModelDelete;
-	enum BannerCacheMode { BNCACHE_OFF, BNCACHE_LOW_RES, BNCACHE_FULL };
+	enum BannerCacheMode : int { BNCACHE_OFF, BNCACHE_LOW_RES, BNCACHE_FULL };
 	BannerCacheMode	m_BannerCache;
 	bool			m_bPalettedBannerCache;
 	bool			m_bFastLoad;
@@ -132,7 +132,7 @@ public:
 	bool			m_bInstructions, m_bShowDontDie, m_bShowSelectGroup;
 	bool			m_bShowNative;
 	bool			m_bArcadeOptionsNavigation;
-	enum MusicWheelUsesSections { NEVER, ALWAYS, ABC_ONLY } m_MusicWheelUsesSections;
+	enum MusicWheelUsesSections : int { NEVER, ALWAYS, ABC_ONLY } m_MusicWheelUsesSections;
 	int				m_iMusicWheelSwitchSpeed;
 	bool			m_bEasterEggs;
 	int 			m_iMarvelousTiming;
@@ -142,7 +142,7 @@ public:
 
 	// These options have weird interactions depending on m_bEventMode, 
 	// so wrap them.
-	enum Premium { NO_PREMIUM, DOUBLES_PREMIUM, JOINT_PREMIUM };
+	enum Premium : int { NO_PREMIUM, DOUBLES_PREMIUM, JOINT_PREMIUM };
 	int				m_iCoinMode;
 	Premium			m_Premium;
 	int GetCoinMode();
@@ -153,7 +153,7 @@ public:
 	bool			m_bComboContinuesBetweenSongs;
 	float			m_fLongVerSongSeconds;
 	float			m_fMarathonVerSongSeconds;
-	enum Maybe { ASK = -1, NO = 0, YES = 1 };
+	enum Maybe : int { ASK = -1, NO = 0, YES = 1 };
 	Maybe			m_ShowSongOptions;
 	bool			m_bSoloSingle;
 	bool			m_bDancePointsForOni;	//DDR-Extreme style dance points instead of max2 percent
@@ -166,7 +166,7 @@ public:
 	bool			m_bAutogenGroupCourses;
 	bool			m_bBreakComboToGetItem;
 	bool			m_bLockCourseDifficulties;
-	enum CharacterOption { CO_OFF = 0, CO_RANDOM = 1, CO_SELECT = 2};
+	enum CharacterOption : int { CO_OFF = 0, CO_RANDOM = 1, CO_SELECT = 2};
 	CharacterOption	m_ShowDancingCharacters;
 	bool			m_bUseUnlockSystem;
 	bool			m_bFirstRun;
@@ -224,13 +224,13 @@ public:
 	bool			m_bEditorShowBGChangesPlay;
 
 	// course ranking
-	enum CourseSortOrders { COURSE_SORT_SONGS, COURSE_SORT_METER, COURSE_SORT_METER_SUM, COURSE_SORT_RANK } m_iCourseSortOrder;
+	enum CourseSortOrders : int { COURSE_SORT_SONGS, COURSE_SORT_METER, COURSE_SORT_METER_SUM, COURSE_SORT_RANK } m_iCourseSortOrder;
 	bool			m_bMoveRandomToEnd;
 	bool			m_bSubSortByNumSteps;	
-	enum GetRankingName { RANKING_OFF, RANKING_ON, RANKING_LIST } m_iGetRankingName;
+	enum GetRankingName : int { RANKING_OFF, RANKING_ON, RANKING_LIST } m_iGetRankingName;
 
 	// scoring type; SCORING_MAX2 should always be first
-	enum ScoringTypes { SCORING_MAX2, SCORING_5TH } m_iScoringType;
+	enum ScoringTypes : int { SCORING_MAX2, SCORING_5TH } m_iScoringType;
 
 	/* 0 = no; 1 = yes; -1 = auto (do whatever is appropriate for the arch). */
 	int				m_iBoostAppPriority;

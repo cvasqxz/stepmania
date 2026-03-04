@@ -14,7 +14,7 @@
 #include "Game.h"
 #include "Style.h"
 
-GameManager*	GAMEMAN = NULL;	// global and accessable from anywhere in our program
+GameManager*	GAMEMAN = nullptr;	// global and accessable from anywhere in our program
 
 enum
 {

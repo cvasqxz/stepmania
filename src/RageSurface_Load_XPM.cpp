@@ -8,7 +8,7 @@
 #include "RageSurface.h"
 
 #define CheckLine() \
-	if( xpm[line] == NULL ) { \
+	if( xpm[line] == nullptr ) { \
 		error = "short file"; \
 		return NULL; \
 	}

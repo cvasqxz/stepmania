@@ -95,7 +95,7 @@ void BeginnerHelper::ShowStepCircle( PlayerNumber pn, int CSTEP )
 void BeginnerHelper::AddPlayer( PlayerNumber pn, NoteData *pSteps )
 {
 	ASSERT(!m_bInitialized);
-	ASSERT(pSteps != NULL);
+	ASSERT(pSteps != nullptr);
 	ASSERT((pn >= 0) && (pn < NUM_PLAYERS));
 	ASSERT(GAMESTATE->IsHumanPlayer(pn));
 
@@ -103,7 +103,7 @@ void BeginnerHelper::AddPlayer( PlayerNumber pn, NoteData *pSteps )
 		return;
 	
 	const Character *Character = GAMESTATE->m_pCurCharacters[pn];
-	ASSERT( Character != NULL );
+	ASSERT( Character != nullptr );
 	if(!DoesFileExist(Character->GetModelPath()))
 		return;
 
@@ -188,7 +188,7 @@ bool BeginnerHelper::Initialize( int iDancePadType )
 
 		// Load character data
 		const Character *Character = GAMESTATE->m_pCurCharacters[pl];
-		ASSERT( Character != NULL );
+		ASSERT( Character != nullptr );
 
 		// Load textures
 		m_pDancer[pl]->SetHorizAlign( align_left );

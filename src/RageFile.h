@@ -42,7 +42,7 @@ public:
     bool Open( const CString& path, int mode = READ );
     void Close();
     
-	bool IsOpen() const { return m_File != NULL; }
+	bool IsOpen() const { return m_File != nullptr; }
 	int GetOpenMode() const { return m_Mode; }
 	bool AtEOF() const { return m_EOF; }
 	CString GetError() const { return m_Error; }

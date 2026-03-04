@@ -199,7 +199,7 @@ void PlayerOptions::FromString( CString sOptions )
 		if( mult.Compare(sBit, matches) )
 		{
 			m_fTimeSpacing = 0.0f;
-			char *p = NULL;
+			char *p = nullptr;
 			m_fScrollSpeed = strtof( matches[0], &p );
 			ASSERT( p != matches[0] );
 			continue;

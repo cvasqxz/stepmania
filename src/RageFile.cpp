@@ -5,7 +5,7 @@
 
 RageFile::RageFile()
 {
-    m_File = NULL;
+    m_File = nullptr;
 	m_BufAvail = 0;
 	m_EOF = false;
 	m_FilePos = 0;
@@ -13,7 +13,7 @@ RageFile::RageFile()
 	
 RageFile::RageFile( const CString& path, int mode )
 {
-    m_File = NULL;
+    m_File = nullptr;
 	m_BufAvail = 0;
 	m_EOF = false;
 	m_FilePos = 0;
@@ -73,7 +73,7 @@ bool RageFile::Open( const CString& path, int mode )
 	int error;
 	m_File = FILEMAN->Open( path, mode, *this, error );
 
-	if( m_File == NULL )
+	if( m_File == nullptr )
 	{
 		SetError( strerror(error) );
 		return false;
@@ -85,7 +85,7 @@ bool RageFile::Open( const CString& path, int mode )
 void RageFile::Close()
 {
 	FILEMAN->Close( m_File );
-	m_File = NULL;
+	m_File = nullptr;
 }
 
 /* Fill the internal buffer.  This never marks EOF, since this is an internal, hidden
@@ -97,7 +97,7 @@ int RageFile::FillBuf()
 	 * the two is old data that we've read.  (Don't mangle that data; we can use it
 	 * for seeking backwards.) */
 	const int iBufAvail = sizeof(m_Buffer) - (m_pBuf-m_Buffer) - m_BufAvail;
-	ASSERT_M( iBufAvail >= 0, ssprintf("%p, %p, %i", m_pBuf, m_Buffer, (int) sizeof(m_Buffer) ) );
+	ASSERT_M( iBufAvail >= 0, ssprintf("%p, %p, %i", m_pBuf, m_Buffer, static_cast<int>(sizeof(m_Buffer)) ) );
 	const int size = m_File->Read( m_pBuf+m_BufAvail, iBufAvail );
 
 	if( size > 0 )
@@ -135,7 +135,7 @@ int RageFile::GetLine( CString &out )
 		/* Find the end of the block we'll move to out. */
 		char *p = (char *) memchr( m_pBuf, '\n', m_BufAvail );
 		bool ReAddCR = false;
-		if( p == NULL )
+		if( p == nullptr )
 		{
 			/* Hack: If the last character of the buffer is \r, then it's likely that an
 			 * \r\n has been split across buffers.  Move everything else, then move the
@@ -231,7 +231,7 @@ int RageFile::Read( void *buffer, size_t bytes )
 	while( !m_EOF && bytes > 0 )
 	{
 		/* Copy data out of the buffer first. */
-		int FromBuffer = min( (int) bytes, m_BufAvail );
+		int FromBuffer = min( static_cast<int>(bytes), m_BufAvail );
 		memcpy( buffer, m_pBuf, FromBuffer );
 
 		ret += FromBuffer;
@@ -438,11 +438,11 @@ int RageFile::Seek( int offset, int whence )
 	switch( whence )
 	{
 	case SEEK_CUR:
-		return SeekCur( (int) offset );
+		return SeekCur( static_cast<int>(offset) );
 	case SEEK_END:
 		offset += GetFileSize();
 	}
-	return Seek( (int) offset );
+	return Seek( static_cast<int>(offset) );
 }
 
 /*

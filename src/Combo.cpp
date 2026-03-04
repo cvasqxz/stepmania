@@ -53,8 +53,8 @@ Combo::Combo()
 	m_sprComboLabel.SetShadowLength( 4 );
 	m_sprComboLabel.StopAnimating();
 	m_sprComboLabel.SetXY( LABEL_X, LABEL_Y );
-	m_sprComboLabel.SetHorizAlign( (Actor::HorizAlign)(int)LABEL_HORIZ_ALIGN );
-	m_sprComboLabel.SetVertAlign( (Actor::VertAlign)(int)LABEL_VERT_ALIGN );
+	m_sprComboLabel.SetHorizAlign( static_cast<Actor::HorizAlign>(static_cast<int>(LABEL_HORIZ_ALIGN)) );
+	m_sprComboLabel.SetVertAlign( static_cast<Actor::VertAlign>(static_cast<int>(LABEL_VERT_ALIGN)) );
 	m_sprComboLabel.SetHidden( true );
 	this->AddChild( &m_sprComboLabel );
 
@@ -62,16 +62,16 @@ Combo::Combo()
 	m_sprMissesLabel.SetShadowLength( 4 );
 	m_sprMissesLabel.StopAnimating();
 	m_sprMissesLabel.SetXY( LABEL_X, LABEL_Y );
-	m_sprMissesLabel.SetHorizAlign( (Actor::HorizAlign)(int)LABEL_HORIZ_ALIGN );
-	m_sprMissesLabel.SetVertAlign( (Actor::VertAlign)(int)LABEL_VERT_ALIGN );
+	m_sprMissesLabel.SetHorizAlign( static_cast<Actor::HorizAlign>(static_cast<int>(LABEL_HORIZ_ALIGN)) );
+	m_sprMissesLabel.SetVertAlign( static_cast<Actor::VertAlign>(static_cast<int>(LABEL_VERT_ALIGN)) );
 	m_sprMissesLabel.SetHidden( true );
 	this->AddChild( &m_sprMissesLabel );
 
 	m_textNumber.LoadFromFont( THEME->GetPathToF("Combo") );
 	m_textNumber.SetShadowLength( 4 );
 	m_textNumber.SetXY( NUMBER_X, NUMBER_Y );
-	m_textNumber.SetHorizAlign( (Actor::HorizAlign)(int)NUMBER_HORIZ_ALIGN );
-	m_textNumber.SetVertAlign( (Actor::VertAlign)(int)NUMBER_VERT_ALIGN );
+	m_textNumber.SetHorizAlign( static_cast<Actor::HorizAlign>(static_cast<int>(NUMBER_HORIZ_ALIGN)) );
+	m_textNumber.SetVertAlign( static_cast<Actor::VertAlign>(static_cast<int>(NUMBER_VERT_ALIGN)) );
 	m_textNumber.SetHidden( true );
 	this->AddChild( &m_textNumber );
 }
@@ -81,8 +81,8 @@ void Combo::SetCombo( int iCombo, int iMisses )
 	bool bMisses = iMisses > 0;
 	int iNum = bMisses ? iMisses : iCombo;
 
-	if( (iNum < (int)SHOW_COMBO_AT)  || 
-		(bMisses && !(bool)SHOW_MISS_COMBO) )
+	if( (iNum < static_cast<int>(SHOW_COMBO_AT))  ||
+		(bMisses && !static_cast<bool>(SHOW_MISS_COMBO)) )
 	{
 		m_sprComboLabel.SetHidden( true );
 		m_sprMissesLabel.SetHidden( true );
@@ -99,10 +99,10 @@ void Combo::SetCombo( int iCombo, int iMisses )
 	if(m_textNumber.GetText() == txt) return;
 
 	m_textNumber.SetText( txt );
-	float fNumberZoom = SCALE(iNum,0.f,(float)NUMBER_MAX_ZOOM_AT,(float)NUMBER_MIN_ZOOM,(float)NUMBER_MAX_ZOOM);
-	CLAMP( fNumberZoom, (float)NUMBER_MIN_ZOOM, (float)NUMBER_MAX_ZOOM );
+	float fNumberZoom = SCALE(iNum,0.f,static_cast<float>(NUMBER_MAX_ZOOM_AT),static_cast<float>(NUMBER_MIN_ZOOM),static_cast<float>(NUMBER_MAX_ZOOM));
+	CLAMP( fNumberZoom, static_cast<float>(NUMBER_MIN_ZOOM), static_cast<float>(NUMBER_MAX_ZOOM) );
 	m_textNumber.StopTweening();
-	m_textNumber.SetZoom( fNumberZoom * (float)PULSE_ZOOM ); 
+	m_textNumber.SetZoom( fNumberZoom * static_cast<float>(PULSE_ZOOM) ); 
 	m_textNumber.BeginTweening( C_TWEEN_SECONDS );
 	m_textNumber.SetZoom( fNumberZoom );
 

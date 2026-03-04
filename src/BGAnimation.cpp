@@ -69,7 +69,7 @@ void AddLayersFromAniDir( CString sAniDir, vector<Actor*> &layersAddTo, bool Gen
 	{
 		CString sLayer = ssprintf("Layer%d",i+1);
 		const IniFile::key* pKey = ini.GetKey( sLayer );
-		if( pKey == NULL )
+		if( pKey == nullptr )
 			continue;	// skip
 
 		CString sImportDir;

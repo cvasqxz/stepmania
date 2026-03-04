@@ -220,7 +220,7 @@ ScreenNetSelectMusic::ScreenNetSelectMusic( const CString& sName ) : ScreenWithM
 	UpdateGroupsListPos();
 	UpdateSongsList();
 	
-	if (GAMESTATE->m_pCurSong != NULL)
+	if (GAMESTATE->m_pCurSong != nullptr)
 		for ( unsigned i = 0 ; i<m_vSongs.size() ; ++i )
 			if (m_vSongs[i]->GetFullDisplayTitle() == GAMESTATE->m_pCurSong->GetFullDisplayTitle())
 				m_iSongNum = i;

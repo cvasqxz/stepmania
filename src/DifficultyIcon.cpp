@@ -42,7 +42,7 @@ bool DifficultyIcon::Load( CString sPath )
 
 void DifficultyIcon::SetFromSteps( PlayerNumber pn, Steps* pSteps )
 {
-	if( pSteps == NULL )
+	if( pSteps == nullptr )
 		m_bBlank = true;
 	else
 		SetFromDifficulty( pn, pSteps->GetDifficulty() );
@@ -50,7 +50,7 @@ void DifficultyIcon::SetFromSteps( PlayerNumber pn, Steps* pSteps )
 
 void DifficultyIcon::SetFromTrail( PlayerNumber pn, Trail* pTrail )
 {
-	if( pTrail == NULL )
+	if( pTrail == nullptr )
 		m_bBlank = true;
 	else
 		SetFromDifficulty( pn, pTrail->m_CourseDifficulty );

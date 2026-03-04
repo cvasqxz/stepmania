@@ -74,7 +74,7 @@ void SaveCatalogXml()
 				for( set<Difficulty>::const_iterator iter = vDiffs.begin(); iter != vDiffs.end(); iter++ )
 				{
 					Steps* pSteps = pSong->GetStepsByDifficulty( st, *iter, false );	// no autogen
-					if( pSteps == NULL )
+					if( pSteps == nullptr )
 						continue;	// skip
 
 					StepsID stepsID;
@@ -122,7 +122,7 @@ void SaveCatalogXml()
 				for( set<CourseDifficulty>::const_iterator iter = vDiffs.begin(); iter != vDiffs.end(); iter++ )
 				{
 					Trail *pTrail = pCourse->GetTrail( st, *iter );
-					if( pTrail == NULL )
+					if( pTrail == nullptr )
 						continue;
 					if( !pTrail->m_vEntries.size() )
 						continue;

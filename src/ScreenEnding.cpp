@@ -211,7 +211,7 @@ ScreenEnding::ScreenEnding( CString sClassName ) : ScreenAttract( sClassName, fa
 
 		m_bWaitingForRemoveCard[p] = MEMCARDMAN->GetCardState(p)!=MEMORY_CARD_STATE_NO_CARD;
 
-		if( pProfile == NULL )
+		if( pProfile == nullptr )
 			continue;	// don't show the stats lines
 	
 		FOREACH_EndingStatsLine( i )

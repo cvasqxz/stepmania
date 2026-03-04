@@ -69,13 +69,13 @@ PlayerMinus::PlayerMinus()
 	m_PlayerNumber = PLAYER_INVALID;
 	m_fNoteFieldHeight = 0;
 
-	m_pLifeMeter = NULL;
-	m_pCombinedLifeMeter = NULL;
-	m_pScoreDisplay = NULL;
-	m_pSecondaryScoreDisplay = NULL;
-	m_pPrimaryScoreKeeper = NULL;
-	m_pSecondaryScoreKeeper = NULL;
-	m_pInventory = NULL;
+	m_pLifeMeter = nullptr;
+	m_pCombinedLifeMeter = nullptr;
+	m_pScoreDisplay = nullptr;
+	m_pSecondaryScoreDisplay = nullptr;
+	m_pPrimaryScoreKeeper = nullptr;
+	m_pSecondaryScoreKeeper = nullptr;
+	m_pInventory = nullptr;
 	
 	m_iOffsetSample = 0;
 

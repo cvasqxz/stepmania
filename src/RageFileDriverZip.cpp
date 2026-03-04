@@ -399,7 +399,7 @@ RageFileObj *RageFileDriverZip::Open( const CString &path, int mode, RageFile &p
 	}
 
 	FileInfo *info = (FileInfo *) FDB->GetFilePriv( path );
-	if( info == NULL )
+	if( info == nullptr )
 	{
 		err = ENOENT;
 		return NULL;

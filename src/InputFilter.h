@@ -5,7 +5,7 @@
 
 #include "RageInputDevice.h"
 
-enum InputEventType
+enum InputEventType : int
 {
 	/* The device was just pressed. */
 	IET_FIRST_PRESS,

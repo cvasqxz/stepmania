@@ -17,7 +17,7 @@
 #include "StepMania.h"
 
 
-ThemeManager*	THEME = NULL;	// global object accessable from anywhere in the program
+ThemeManager*	THEME = nullptr;	// global object accessable from anywhere in the program
 
 
 const CString BASE_THEME_NAME = "default";
@@ -219,7 +219,7 @@ void ThemeManager::SwitchThemeAndLanguage( CString sThemeName, CString sLanguage
 	LOG->MapLog("language", "Language: %s", sLanguage.c_str());
 
 	// reload common sounds
-	if ( SCREENMAN != NULL )
+	if ( SCREENMAN != nullptr )
 		SCREENMAN->ThemeChanged();
 }
 

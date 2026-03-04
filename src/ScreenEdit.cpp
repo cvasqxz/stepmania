@@ -269,7 +269,7 @@ ScreenEdit::ScreenEdit( CString sName ) : Screen( sName )
 
 	m_pSong = GAMESTATE->m_pCurSong;
 	m_pSteps = GAMESTATE->m_pCurSteps[PLAYER_1];
-	m_pAttacksFromCourse = NULL;
+	m_pAttacksFromCourse = nullptr;
 
 	NoteData noteData;
 	m_pSteps->GetNoteData( &noteData );
@@ -1371,7 +1371,7 @@ void ScreenEdit::HandleScreenMessage( const ScreenMessage SM )
 	case SM_BackFromCourseModeMenu:
 	{
 		const int num = ScreenMiniMenu::s_iLastAnswers[0];
-		m_pAttacksFromCourse = NULL;
+		m_pAttacksFromCourse = nullptr;
 		if( num != 0 )
 		{
 			const CString name = g_CourseMode.rows[0].choices[num];
@@ -1421,7 +1421,7 @@ void ScreenEdit::HandleScreenMessage( const ScreenMessage SM )
 		StepsID id;
 		id.FromSteps( m_pSteps );
 
-		GAMESTATE->m_pCurSteps[PLAYER_1] = NULL; /* make RevertFromDisk not try to reset it */
+		GAMESTATE->m_pCurSteps[PLAYER_1] = nullptr; /* make RevertFromDisk not try to reset it */
 		SONGMAN->RevertFromDisk( GAMESTATE->m_pCurSong );
 
 		CString sMessage = "Reloaded from disk.";
@@ -1430,10 +1430,10 @@ void ScreenEdit::HandleScreenMessage( const ScreenMessage SM )
 		// Don't allow an autogen match.  This can't be what they chose to 
 		// edit originally because autogen steps are hidden.
 		if( pSteps && pSteps->IsAutogen() )
-			pSteps = NULL;
+			pSteps = nullptr;
 
 		/* If we couldn't find the steps we were on before, warn and use the first available. */
-		if( pSteps == NULL )
+		if( pSteps == nullptr )
 		{
 			pSteps = GAMESTATE->m_pCurSong->GetStepsByDifficulty( st, DIFFICULTY_INVALID, false );
 
@@ -1444,7 +1444,7 @@ void ScreenEdit::HandleScreenMessage( const ScreenMessage SM )
 
 		/* If we still couldn't find any steps, then all steps of the current StepsType
 		 * were removed.  Don't create them; only do that in EditMenu. */
-		if( pSteps == NULL )
+		if( pSteps == nullptr )
 		{
 			SCREENMAN->SetNewScreen( "ScreenEditMenu" );
 			return;

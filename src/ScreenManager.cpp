@@ -41,7 +41,7 @@
 #include "CodeDetector.h"
 #include "StepMania.h"
 
-ScreenManager*	SCREENMAN = NULL;	// global and accessable from anywhere in our program
+ScreenManager*	SCREENMAN = nullptr;	// global and accessable from anywhere in our program
 
 
 #define CREDITS_PRESS_START		THEME->GetMetric ("ScreenSystemLayer","CreditsPressStart")
@@ -341,7 +341,7 @@ void ScreenSystemLayer::Update( float fDeltaTime )
 
 ScreenManager::ScreenManager()
 {
-	m_SystemLayer = NULL;
+	m_SystemLayer = nullptr;
 
 	/* By the time this is constructed, THEME has already been set up and set to
 	 * the current theme.  Call ThemeChanged(), to handle the starting theme
@@ -350,7 +350,7 @@ ScreenManager::ScreenManager()
 	ASSERT( !THEME->GetCurThemeName().empty() );
 	this->ThemeChanged();
 
-	m_ScreenBuffered = NULL;
+	m_ScreenBuffered = nullptr;
 
 	m_MessageSendOnPop = SM_None;
 }
@@ -383,7 +383,7 @@ void ScreenManager::ThemeChanged()
 
 	// reload system layer
 	delete m_SystemLayer;
-	m_SystemLayer = NULL; // new ScreenSystemLayer may throw
+	m_SystemLayer = nullptr; // new ScreenSystemLayer may throw
 	m_SystemLayer = new ScreenSystemLayer;
 	m_SystemLayer->RefreshCreditsMessages();
 }
@@ -521,16 +521,16 @@ Screen* ScreenManager::MakeNewScreen( CString sClassName )
 
 void ScreenManager::PrepNewScreen( CString sClassName )
 {
-	ASSERT(m_ScreenBuffered == NULL);
+	ASSERT(m_ScreenBuffered == nullptr);
 	m_ScreenBuffered = MakeNewScreen(sClassName);
 }
 
 void ScreenManager::LoadPreppedScreen()
 {
-	ASSERT( m_ScreenBuffered != NULL);
+	ASSERT( m_ScreenBuffered != nullptr);
 	SetFromNewScreen( m_ScreenBuffered, false  );
 	
-	m_ScreenBuffered = NULL;
+	m_ScreenBuffered = nullptr;
 }
 
 void ScreenManager::DeletePreppedScreen()

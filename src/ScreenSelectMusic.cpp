@@ -74,7 +74,7 @@ ScreenSelectMusic::ScreenSelectMusic( CString sClassName ) : ScreenWithMenuEleme
 	/* Cache: */
 	g_sFallbackCDTitlePath = THEME->GetPathG(m_sName,"fallback cdtitle");
 
-	if( GAMESTATE->m_pCurStyle == NULL )
+	if( GAMESTATE->m_pCurStyle == nullptr )
 		RageException::Throw( "The Style has not been set.  A theme must set the Style before loading ScreenSelectMusic." );
 
 	if( GAMESTATE->m_PlayMode == PLAY_MODE_INVALID )
@@ -1408,8 +1408,8 @@ void ScreenSelectMusic::AfterMusicChange()
 
 	FOREACH_PlayerNumber( p )
 	{
-		GAMESTATE->m_pCurSteps[p] = NULL;
-		GAMESTATE->m_pCurTrail[p] = NULL;
+		GAMESTATE->m_pCurSteps[p] = nullptr;
+		GAMESTATE->m_pCurTrail[p] = nullptr;
 		m_vpSteps.clear();
 		m_vpTrails.clear();
 	}
@@ -1422,7 +1422,7 @@ void ScreenSelectMusic::AfterMusicChange()
 	m_MachineRank.SetText( "" );
 
 	m_sSampleMusicToPlay = "";
-	m_pSampleMusicTimingData = NULL;
+	m_pSampleMusicTimingData = nullptr;
 	g_sCDTitlePath = "";
 	g_sBannerPath = "";
 	g_bWantFallbackCdTitle = false;

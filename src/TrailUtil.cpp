@@ -8,7 +8,7 @@
 
 void TrailID::FromTrail( const Trail *p )
 {
-	if( p == NULL )
+	if( p == nullptr )
 	{
 		st = STEPS_TYPE_INVALID;
 		cd = DIFFICULTY_INVALID;
@@ -28,7 +28,7 @@ Trail *TrailID::ToTrail( const Course *p, bool bAllowNull ) const
 		return NULL;
 
 	Trail *ret = p->GetTrail( st, cd );
-	if( !bAllowNull && ret == NULL )
+	if( !bAllowNull && ret == nullptr )
 		RageException::Throw( "%i, %i, \"%s\"", st, cd, p->GetFullDisplayTitle().c_str() );	
 
 	return ret;

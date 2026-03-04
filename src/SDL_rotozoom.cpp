@@ -133,7 +133,7 @@ static void ZoomSurface( const RageSurface * src, RageSurface * dst )
 
 void RageSurfaceUtils::Zoom( RageSurface *&src, int dstwidth, int dstheight )
 {
-    if( src == NULL )
+    if( src == nullptr )
 		return;
 
 	/* resize currently only does RGBA8888 */

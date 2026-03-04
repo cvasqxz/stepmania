@@ -39,7 +39,7 @@ void ConditionalBGA::Load(CString szScreenName)
 	LOG->Trace("ConditionalBGA Load:%s",szConditionalBGAFile.c_str());
 
 	bool loaded = file.Open(szConditionalBGAFile,RageFile::READ);
-//	FILE* fp = NULL;
+//	FILE* fp = nullptr;
 //	fp = fopen(filepath,"r");
 	if(!loaded)
 	{
@@ -327,7 +327,7 @@ void ConditionalBGA::CheckBgaRequirements(BgaCondInfo info)
 	//	LOG->Info("COMP: %s",info.songtitle.c_str());
 
 		hasconditions = true;
-		if(GAMESTATE->m_pCurSong != NULL)
+		if(GAMESTATE->m_pCurSong != nullptr)
 		{
 			if(!GAMESTATE->m_pCurSong->m_sMainTitle.CompareNoCase(info.songtitle))
 			{
@@ -348,7 +348,7 @@ void ConditionalBGA::CheckBgaRequirements(BgaCondInfo info)
 	//	LOG->Info("COMP: %s",info.songtitle.c_str());
 
 		hasconditions = true;
-		if(GAMESTATE->m_pCurSong != NULL)
+		if(GAMESTATE->m_pCurSong != nullptr)
 		{
 			if(!GAMESTATE->m_pCurSong->m_sArtist.CompareNoCase(info.songartist))
 			{
@@ -374,7 +374,7 @@ void ConditionalBGA::CheckBgaRequirements(BgaCondInfo info)
 		{
 			FOREACH_EnabledPlayer( pn )
 			{
-				if(GAMESTATE->m_pCurSteps[pn] != NULL)
+				if(GAMESTATE->m_pCurSteps[pn] != nullptr)
 				{
 					if(GAMESTATE->m_pCurSteps[pn]->GetDifficulty() == info.difficulties[d])
 					{
@@ -448,7 +448,7 @@ void ConditionalBGA::CheckBgaRequirements(BgaCondInfo info)
 			LOG->Info("MeterRating: %d",info.songmeters[d]);
 			FOREACH_EnabledPlayer( pn )
 			{
-				if(GAMESTATE->m_pCurSteps[pn] != NULL)
+				if(GAMESTATE->m_pCurSteps[pn] != nullptr)
 				{			
 					if(info.songmeters[d] < 0) // negative values stored mean we want to check a value greaterthan or equal to its negative
 					{

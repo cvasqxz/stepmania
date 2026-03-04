@@ -15,7 +15,7 @@ class Song;
 class Steps;
 class Profile;
 
-enum CourseEntryType
+enum CourseEntryType : int
 {
 	COURSE_ENTRY_FIXED, 
 	COURSE_ENTRY_RANDOM, 
@@ -57,7 +57,7 @@ public:
 	{
 		type = (CourseEntryType)0;
 		mystery = false;
-		pSong = NULL;
+		pSong = nullptr;
 		group_name = "";
 		difficulty = DIFFICULTY_INVALID;
 		no_difficult = false;

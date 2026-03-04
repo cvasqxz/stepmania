@@ -62,7 +62,7 @@ RageSound::RageSound():
 	ASSERT(SOUNDMAN);
 
 	original = this;
-	Sample = NULL;
+	Sample = nullptr;
 	decode_position = 0;
 	stopped_position = 0;
 	max_driver_frame = 0;
@@ -95,7 +95,7 @@ RageSound::RageSound(const RageSound &cpy):
 {
 	ASSERT(SOUNDMAN);
 
-	Sample = NULL;
+	Sample = nullptr;
 
 	*this = cpy;
 
@@ -135,7 +135,7 @@ void RageSound::Unload()
 		StopPlaying();
 
 	delete Sample;
-	Sample = NULL;
+	Sample = nullptr;
 	
 	m_sFilePath = "";
 	databuf.clear();
@@ -179,7 +179,7 @@ bool RageSound::Load( CString sSoundFilePath, int precache )
 
 	CString error;
 	Sample = SoundReader_FileReader::OpenFile( m_sFilePath, error );
-	if( Sample == NULL )
+	if( Sample == nullptr )
 	{
 		LOG->Warn( "RageSound::Load: error opening sound \"%s\": %s",
 			m_sFilePath.c_str(), error.c_str() );
@@ -230,7 +230,7 @@ void RageSound::RateChange(char *buf, int &cnt,
 
 	/* Rate change.  Change speed_input_samples into speed_output_samples.
 		* Do this per-channel. */
-	static char *inbuf_tmp = NULL;
+	static char *inbuf_tmp = nullptr;
 	static int maxcnt = 0;
 	if(cnt > maxcnt)
 	{
@@ -631,7 +631,7 @@ void RageSound::StopPlaying()
 	if(!playing)
 		return;
 
-	stopped_position = (int) GetPositionSecondsInternal();
+	stopped_position = static_cast<int>(GetPositionSecondsInternal());
 
 	/* Tell the sound driver to stop mixing this sound. */
 	SOUNDMAN->StopMixing(this);
@@ -672,7 +672,7 @@ void RageSound::SoundIsFinishedPlaying()
 		return;
 	m_Mutex.Lock();
 
-	stopped_position = (int) GetPositionSecondsInternal();
+	stopped_position = static_cast<int>(GetPositionSecondsInternal());
 
 	SOUNDMAN->UnregisterPlayingSound( this );
 
@@ -750,7 +750,7 @@ int64_t RageSound::GetPositionSecondsInternal( bool *approximate ) const
 		if( last.IsZero() || last.Ago() > 1.0f )
 		{
 			LOG->Trace( "Sound %s: driver returned a lesser position (%i < %i)",
-				this->GetLoadedFilePath().c_str(), (int) cur_frame, (int) max_driver_frame );
+				this->GetLoadedFilePath().c_str(), static_cast<int>(cur_frame), static_cast<int>(max_driver_frame) );
 			last.Touch();
 		}
 	}

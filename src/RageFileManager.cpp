@@ -12,7 +12,7 @@
 #include <sys/stat.h>
 #endif
 
-RageFileManager *FILEMAN = NULL;
+RageFileManager *FILEMAN = nullptr;
 
 /* Lock this before touching any of these globals (except FILEMAN itself). */
 static RageMutex *g_Mutex;
@@ -33,7 +33,7 @@ struct LoadedDriver
 	RageFileDriver *driver;
 	CString Type, Root, MountPoint;
 
-	LoadedDriver() { driver = NULL; }
+	LoadedDriver() { driver = nullptr; }
 	CString GetPath( const CString &path );
 };
 
@@ -62,7 +62,7 @@ public:
 			FDB->AddFile( drivers[i].MountPoint, 0, 0 );
 	}
 };
-static RageFileDriverMountpoints *g_Mountpoints = NULL;
+static RageFileDriverMountpoints *g_Mountpoints = nullptr;
 
 static CString GetDirOfExecutable( CString argv0 )
 {
@@ -207,10 +207,10 @@ RageFileManager::~RageFileManager()
 	g_Drivers.clear();
 
 //	delete g_Mountpoints; // g_Mountpoints was in g_Drivers
-	g_Mountpoints = NULL;
+	g_Mountpoints = nullptr;
 
 	delete g_Mutex;
-	g_Mutex = NULL;
+	g_Mutex = nullptr;
 }
 
 /* path must be normalized (FixSlashesInPlace, CollapsePath). */
@@ -674,7 +674,7 @@ RageFileObj *RageFileManager::OpenForWriting( CString sPath, int mode, RageFile 
 
 void RageFileManager::Close( RageFileObj *obj )
 {
-	if( obj == NULL )
+	if( obj == nullptr )
 		return;
 
 	RemoveReference( obj );

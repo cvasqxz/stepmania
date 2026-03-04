@@ -86,7 +86,7 @@ MusicWheel::MusicWheel()
 void MusicWheel::Load() 
 { 
 	LOG->Trace( "MusicWheel::MusicWheel()" );
-	if (GAMESTATE->m_pCurSong != NULL)
+	if (GAMESTATE->m_pCurSong != nullptr)
 		LOG->Trace( "Current Song: %s", GAMESTATE->m_pCurSong->GetSongDir().c_str() );
 	else
 		LOG->Trace( "Current Song: NULL" );
@@ -102,7 +102,7 @@ void MusicWheel::Load()
 	/*
 	// for debugging.
 	// Whatever Screen uses MusicWheel should set the Style if it needs to be set.
-	if( GAMESTATE->m_CurStyle == NULL )
+	if( GAMESTATE->m_CurStyle == nullptr )
 		GAMESTATE->m_CurStyle = GAMEMAN->STYLE_DANCE_SINGLE;
 	*/
 
@@ -214,11 +214,11 @@ void MusicWheel::Load()
 	// cannot be played due to lack of stages remaining
 	// checking for event mode shouldn't be necessary here
 	// but someone mentioned it does it sometimes.
-	if( GAMESTATE->m_pCurSong != NULL && 
+	if( GAMESTATE->m_pCurSong != nullptr && 
 		SongManager::GetNumStagesForSong( GAMESTATE->m_pCurSong ) + GAMESTATE->m_iCurrentStageIndex > PREFSMAN->m_iNumArcadeStages
 		&& !PREFSMAN->m_bEventMode
 		&& !GAMESTATE->IsExtraStage() && !GAMESTATE->IsExtraStage2() )
-			GAMESTATE->m_pCurSong = NULL;
+			GAMESTATE->m_pCurSong = nullptr;
 
 	// Select the the previously selected song (if any)
 	if( !SelectSongOrCourse() )
@@ -262,7 +262,7 @@ bool MusicWheel::SelectSongOrCourse()
 
 bool MusicWheel::SelectSong( Song *p )
 {
-	if(p == NULL)
+	if(p == nullptr)
 		return false;
 
 	unsigned i;
@@ -290,7 +290,7 @@ bool MusicWheel::SelectSong( Song *p )
 
 bool MusicWheel::SelectCourse( Course *p )
 {
-	if(p == NULL)
+	if(p == nullptr)
 		return false;
 
 	GAMESTATE->m_pCurCourse = p;
@@ -704,7 +704,7 @@ void MusicWheel::BuildWheelItemDatas( vector<WheelItemData> &arrayWheelItemDatas
 	for( i=0; i<arrayWheelItemDatas.size(); i++ )
 	{
 		Song* pSong = arrayWheelItemDatas[i].m_pSong;
-		if( pSong == NULL )
+		if( pSong == nullptr )
 			continue;
 
 		WheelItemData& WID = arrayWheelItemDatas[i];
@@ -996,13 +996,13 @@ void MusicWheel::Update( float fDeltaTime )
 				case SORT_MEDIUM_METER:
 				case SORT_HARD_METER:
 				case SORT_CHALLENGE_METER:
-					GAMESTATE->m_pCurCourse = NULL;
+					GAMESTATE->m_pCurCourse = nullptr;
 					break;
 				case SORT_ALL_COURSES:
 				case SORT_NONSTOP_COURSES:
 				case SORT_ONI_COURSES:
 				case SORT_ENDLESS_COURSES:
-					GAMESTATE->m_pCurSong = NULL;
+					GAMESTATE->m_pCurSong = nullptr;
 					break;
 				}
 */
@@ -1337,7 +1337,7 @@ void MusicWheel::SetOpenGroup(CString group, SortOrder so)
 
 	m_sExpandedSectionName = group;
 
-	WheelItemData *old = NULL;
+	WheelItemData *old = nullptr;
 	if(!m_CurWheelItemData.empty())
 		old = m_CurWheelItemData[m_iSelection];
 

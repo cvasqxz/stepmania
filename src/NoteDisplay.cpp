@@ -99,7 +99,7 @@ struct NoteResource
 	NoteResource( CString sPath ): m_sPath(sPath)
 	{
 		m_iRefCount = 0;
-		m_pActor = NULL;
+		m_pActor = nullptr;
 	}
 
 	~NoteResource()
@@ -153,11 +153,11 @@ static NoteResource *FindNoteResource( const Actor *pActor )
 
 static void DeleteNoteResource( const Actor *pActor )
 {
-	if( pActor == NULL )
+	if( pActor == nullptr )
 		return;
 
 	NoteResource *pRes = FindNoteResource( pActor );
-	ASSERT( pRes != NULL );
+	ASSERT( pRes != nullptr );
 
 	ASSERT_M( pRes->m_iRefCount > 0, ssprintf("%i", pRes->m_iRefCount) );
 	--pRes->m_iRefCount;
@@ -184,19 +184,19 @@ NoteDisplay::NoteDisplay()
 {
 	for( int i=0; i<NOTE_COLOR_IMAGES; i++ )
 	{
-		m_pTapNote[i] = NULL;
-		m_pTapAddition[i] = NULL;
-		m_pTapMine[i] = NULL;
-		m_pHoldHeadActive[i] = NULL;
-		m_pHoldHeadInactive[i] = NULL;
-		m_pHoldTopCapActive[i] = NULL;
-		m_pHoldTopCapInactive[i] = NULL;
-		m_pHoldBodyActive[i] = NULL;
-		m_pHoldBodyInactive[i] = NULL;
-		m_pHoldBottomCapActive[i] = NULL;
-		m_pHoldBottomCapInactive[i] = NULL;
-		m_pHoldTailActive[i] = NULL;
-		m_pHoldTailInactive[i] = NULL;
+		m_pTapNote[i] = nullptr;
+		m_pTapAddition[i] = nullptr;
+		m_pTapMine[i] = nullptr;
+		m_pHoldHeadActive[i] = nullptr;
+		m_pHoldHeadInactive[i] = nullptr;
+		m_pHoldTopCapActive[i] = nullptr;
+		m_pHoldTopCapInactive[i] = nullptr;
+		m_pHoldBodyActive[i] = nullptr;
+		m_pHoldBodyInactive[i] = nullptr;
+		m_pHoldBottomCapActive[i] = nullptr;
+		m_pHoldBottomCapInactive[i] = nullptr;
+		m_pHoldTailActive[i] = nullptr;
+		m_pHoldTailInactive[i] = nullptr;
 	}
 
 	cache = new NoteMetricCache_t;
@@ -977,7 +977,7 @@ void NoteDisplay::DrawActor( Actor* pActor, int iCol, float fBeat, float fPercen
 
 void NoteDisplay::DrawTap( int iCol, float fBeat, bool bOnSameRowAsHoldStart, bool bIsAddition, bool bIsMine, float fPercentFadeToFail, float fLife, float fReverseOffsetPixels )
 {
-	Actor* pActor = NULL;
+	Actor* pActor = nullptr;
 	bool bUseLighting = false;
 	if( bIsMine )
 	{

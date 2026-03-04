@@ -300,7 +300,7 @@ static void FixLilEndian()
 
 void GetGLExtensions(set<string> &ext)
 {
-    const char *buf = (const char *)glGetString(GL_EXTENSIONS);
+    const char *buf = reinterpret_cast<const char*>(glGetString(GL_EXTENSIONS));
 
 	vector<CString> lst;
 	split(buf, " ", lst);
@@ -340,7 +340,7 @@ static void TurnOffHardwareVBO()
 #undef Font
 #undef Screen
 
-Display *g_X11Display = NULL;
+Display *g_X11Display = nullptr;
 #endif
 
 static void LogGLXDebugInformation()
@@ -410,7 +410,7 @@ RageDisplay_OGL::RageDisplay_OGL( VideoModeParams p, bool bAllowUnacceleratedRen
 	 * any case GLDirect can successfully render us, we should be able to do so
 	 * too using Direct3D directly.  (If we can't, it's a bug that we can work
 	 * around--if GLDirect can do it, so can we!) */
-	if( !strncmp( (const char *) glGetString(GL_RENDERER), "GLDirect", 8 ) )
+	if( !strncmp( reinterpret_cast<const char*>(glGetString(GL_RENDERER)), "GLDirect", 8 ) )
 	{
 		delete wind;
 		RageException::ThrowNonfatal( "GLDirect was detected.  GLDirect is not compatible with StepMania, and should be disabled.\n" );
@@ -514,13 +514,13 @@ static void CheckPalettedTextures()
 			break;
 		}
 
-		if( GLExt.glColorTableEXT == NULL )
+		if( GLExt.glColorTableEXT == nullptr )
 		{
 			error = "glColorTableEXT missing";
 			break;
 		}
 
-		if( GLExt.glGetColorTableParameterivEXT == NULL )
+		if( GLExt.glGetColorTableParameterivEXT == nullptr )
 		{
 			error = "glGetColorTableParameterivEXT missing";
 			break;
@@ -599,8 +599,8 @@ static void CheckPalettedTextures()
 
 	/* If 8-bit palettes don't work, disable them entirely--don't trust 4-bit
 	 * palettes if it can't even get 8-bit ones right. */
-	GLExt.glColorTableEXT = NULL;
-	GLExt.glGetColorTableParameterivEXT = NULL;
+	GLExt.glColorTableEXT = nullptr;
+	GLExt.glGetColorTableParameterivEXT = nullptr;
 	LOG->Info("Paletted textures disabled: %s.", error.c_str());
 }
 
@@ -626,12 +626,12 @@ static void CheckReversePackedPixels()
 
 void SetupExtensions()
 {
-	const float fGLVersion = strtof( (const char *) glGetString(GL_VERSION), NULL );
-	g_glVersion = int(roundf(fGLVersion * 10));
+	const float fGLVersion = strtof( reinterpret_cast<const char*>(glGetString(GL_VERSION)), nullptr );
+	g_glVersion = static_cast<int>(roundf(fGLVersion * 10));
 	GetGLExtensions(g_glExts);
 
-	const float fGLUVersion = strtof( (const char *) gluGetString(GLU_VERSION), NULL );
-	g_gluVersion = int(roundf(fGLUVersion * 10));
+	const float fGLUVersion = strtof( reinterpret_cast<const char*>(gluGetString(GLU_VERSION)), nullptr );
+	g_gluVersion = static_cast<int>(roundf(fGLUVersion * 10));
 
 	/* Reset extensions. */
 	GLExt.Reset();
@@ -1353,7 +1353,7 @@ void RageDisplay_OGL::ClearAllTextures()
 
 void RageDisplay_OGL::SetTexture( int iTextureUnitIndex, RageTexture* pTexture )
 {
-	if( GLExt.glActiveTextureARB == NULL )
+	if( GLExt.glActiveTextureARB == nullptr )
 	{
 		// multitexture isn't supported.  Ignore all textures except for 0.
 		if( iTextureUnitIndex != 0 )

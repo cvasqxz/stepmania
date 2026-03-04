@@ -35,7 +35,7 @@ static const CString LightsModeNames[NUM_LIGHTS_MODES] = {
 XToString( LightsMode );
 
 
-LightsManager*	LIGHTSMAN = NULL;	// global and accessable from anywhere in our program
+LightsManager*	LIGHTSMAN = nullptr;	// global and accessable from anywhere in our program
 
 LightsManager::LightsManager(CString sDriver)
 {

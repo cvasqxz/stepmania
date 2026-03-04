@@ -150,7 +150,7 @@ void CourseUtil::SortCoursePointerArrayByAvgDifficulty( vector<Course*> &apCours
 	for(unsigned i = 0; i < apCourses.size(); ++i)
 	{
 		const Trail* pTrail = apCourses[i]->GetTrail( GAMESTATE->GetCurrentStyle()->m_StepsType );
-		course_sort_val[apCourses[i]] = pTrail != NULL? (float) pTrail->GetMeter(): 0.0f;
+		course_sort_val[apCourses[i]] = pTrail != nullptr? (float) pTrail->GetMeter(): 0.0f;
 	}
 	sort( apCourses.begin(), apCourses.end(), CompareCoursePointersByTitle );
 	stable_sort( apCourses.begin(), apCourses.end(), CompareCoursePointersBySortValueAscending );
@@ -162,7 +162,7 @@ void CourseUtil::SortCoursePointerArrayByAvgDifficulty( vector<Course*> &apCours
 void CourseUtil::SortCoursePointerArrayByNumPlays( vector<Course*> &arrayCoursePointers, ProfileSlot slot, bool bDescending )
 {
 	Profile* pProfile = PROFILEMAN->GetProfile(slot);
-	if( pProfile == NULL )
+	if( pProfile == nullptr )
 		return;	// nothing to do since we don't have data
 	SortCoursePointerArrayByNumPlays( arrayCoursePointers, pProfile, bDescending );
 }

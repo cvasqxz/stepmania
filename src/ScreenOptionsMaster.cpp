@@ -157,7 +157,7 @@ void ScreenOptionsMaster::SetConf( OptionRowData &row, OptionRowHandler &hand, C
 	hand.type = ROW_CONFIG;
 
 	hand.opt = ConfOption::Find( param );
-	if( hand.opt == NULL )
+	if( hand.opt == nullptr )
 		RageException::Throw( "Invalid Conf type \"%s\"", param.c_str() );
 
 	hand.opt->MakeOptionsList( row.choices );

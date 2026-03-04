@@ -284,7 +284,7 @@ void DirectFilenameDB::PopulateFileSet( FileSet &fs, const CString &path )
 	}
 
 	DIR *d = opendir(".");
-	if( d == NULL )
+	if( d == nullptr )
 	{
 		LOG->MapLog("opendir " + root+"/"+sPath, "Couldn't opendir(%s%s): %s", root.c_str(), sPath.c_str(), strerror(errno) );
 		if( fchdir( OldDir ) == -1 )

@@ -147,8 +147,8 @@ bool FilenameDB::ResolvePath(CString &path)
 
 	/* Resolve each component. */
 	CString ret = "";
-	const FileSet *fs = NULL;
-	File *prev_file = NULL;
+	const FileSet *fs = nullptr;
+	File *prev_file = nullptr;
 	static const CString slash("/");
 	while( 1 )
 	{
@@ -156,7 +156,7 @@ bool FilenameDB::ResolvePath(CString &path)
 		if( begin == (int) path.size() )
 			break;
 
-		if( fs == NULL )
+		if( fs == nullptr )
 			fs = GetFileSet( ret );
 
 		CString p = path.substr( begin, size );
@@ -337,7 +337,7 @@ void FilenameDB::DelFileSet( map<CString, FileSet *>::iterator dir )
 		{
 			File &ff = (File &) *f;
 			if( ff.dirp == fs )
-				ff.dirp = NULL;
+				ff.dirp = nullptr;
 		}
 	}
 
@@ -395,8 +395,8 @@ const File *FilenameDB::GetFile( const CString &sPath )
 const void *FilenameDB::GetFilePriv( const CString &path )
 {
 	const File *pFile = GetFile( path );
-	void *pRet = NULL;
-	if( pFile != NULL )
+	void *pRet = nullptr;
+	if( pFile != nullptr )
 		pRet = pFile->priv;
 
 	return pRet;

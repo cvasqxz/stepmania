@@ -48,7 +48,7 @@ private:
 	{
 		Row()
 		{
-			m_Steps = NULL;
+			m_Steps = nullptr;
 			m_dc = DIFFICULTY_INVALID;
 			m_fY = 0;
 			m_bHidden = false;

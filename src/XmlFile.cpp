@@ -42,14 +42,14 @@ char* tcsskip( const char* psz )
 char* tcsechr( const char* psz, int ch, int escape )
 {
 	char* pch = (char*)psz;
-	char* prev_escape = NULL;
+	char* prev_escape = nullptr;
 	while( pch && *pch )
 	{
-		if( *pch == escape && prev_escape == NULL )
+		if( *pch == escape && prev_escape == nullptr )
 			prev_escape = pch;
 		else
 		{
-			prev_escape = NULL;
+			prev_escape = nullptr;
 			if( *pch == ch ) return (char*)pch;
 		}
 		pch++;
@@ -62,16 +62,16 @@ char* tcsechr( const char* psz, int ch, int escape )
 int tcselen( int escape, const char *start, const char *end )
 {
 	int len = 0;
-	if( end == NULL )
+	if( end == nullptr )
 		end = (char*) sizeof(long);
-	const char *prev_escape = NULL;
+	const char *prev_escape = nullptr;
 	while( start && *start && start<end )
 	{
-		if( *start == escape && prev_escape == NULL )
+		if( *start == escape && prev_escape == nullptr )
 			prev_escape = start;
 		else
 		{
-			prev_escape = NULL;
+			prev_escape = nullptr;
 			len++;
 		}
 		++start;
@@ -81,18 +81,18 @@ int tcselen( int escape, const char *start, const char *end )
 
 // Desc   : similar with _tcscpy with escape process
 // Param  : escape - will be escape character
-void unescape( char *psz, int escape, char* srt, char* end = NULL )
+void unescape( char *psz, int escape, char* srt, char* end = nullptr )
 {
 	const char* pch = srt;
 	if( end==NULL ) end = (char*)sizeof(long);
-	const char* prev_escape = NULL;
+	const char* prev_escape = nullptr;
 	while( pch && *pch && pch<end )
 	{
-		if( *pch == escape && prev_escape == NULL )
+		if( *pch == escape && prev_escape == nullptr )
 			prev_escape = pch;
 		else
 		{
-			prev_escape = NULL;
+			prev_escape = nullptr;
 			*psz++ = *pch;
 		}
 
@@ -107,14 +107,14 @@ void unescape( char *psz, int escape, char* srt, char* end = NULL )
 char* tcsepbrk( const char* psz, const char* chset, int escape )
 {
 	char* pch = (char*)psz;
-	char* prev_escape = NULL;
+	char* prev_escape = nullptr;
 	while( pch && *pch )
 	{
-		if( *pch == escape && prev_escape == NULL )
+		if( *pch == escape && prev_escape == nullptr )
 			prev_escape = pch;
 		else
 		{
-			prev_escape = NULL;
+			prev_escape = nullptr;
 			if( strchr( chset, *pch ) )
 				return (char*)pch;		
 		}
@@ -161,7 +161,7 @@ void XNode::Close()
 		XNode *p = childs[i];
 		if( p )
 		{
-			delete p; childs[i] = NULL;
+			delete p; childs[i] = nullptr;
 		}
 	}
 	childs.clear();
@@ -171,7 +171,7 @@ void XNode::Close()
 		XAttr *p = attrs[i];
 		if( p )
 		{
-			delete p; attrs[i] = NULL;
+			delete p; attrs[i] = nullptr;
 		}
 	}
 	attrs.clear();
@@ -206,7 +206,7 @@ char* XNode::LoadAttributes( const char* pszAttrs , PARSEINFO *pi /*= &piDefault
 
 		// XML Attr Name
 		char* pEnd = strpbrk( xml, " =" );
-		if( pEnd == NULL ) 
+		if( pEnd == nullptr ) 
 		{
 			// error
 			if( !pi->erorr_occur ) 
@@ -294,7 +294,7 @@ char* XNode::Load( const char* pszXml, PARSEINFO *pi /*= &piDefault*/ )
 	char* xml = (char*)pszXml;
 
 	xml = strchr( xml, chXMLTagOpen );
-	if( xml == NULL )
+	if( xml == nullptr )
 		return NULL;
 
 	// Close Tag
@@ -308,7 +308,7 @@ char* XNode::Load( const char* pszXml, PARSEINFO *pi /*= &piDefault*/ )
 	xml = pTagEnd;
 	// Generate XML Attributte List
 	xml = LoadAttributes( xml, pi );
-	if( xml == NULL )
+	if( xml == nullptr )
 		return NULL;
 
 	// alone tag <TAG ... /> or <?TAG ... ?>
@@ -352,7 +352,7 @@ char* XNode::Load( const char* pszXml, PARSEINFO *pi /*= &piDefault*/ )
 		{
 			// Text Value 
 			char* pEnd = tcsechr( ++xml, chXMLTagOpen, chXMLEscape );
-			if( pEnd == NULL ) 
+			if( pEnd == nullptr ) 
 			{
 				if( !pi->erorr_occur ) 
 				{
@@ -401,12 +401,12 @@ char* XNode::Load( const char* pszXml, PARSEINFO *pi /*= &piDefault*/ )
 				xml+=2; // C
 				
 				xml = tcsskip( xml );
-				if( xml == NULL )
+				if( xml == nullptr )
 					return NULL;
 
 				CString closename;
 				char* pEnd = strpbrk( xml, " >" );
-				if( pEnd == NULL ) 
+				if( pEnd == nullptr ) 
 				{
 					if( !pi->erorr_occur ) 
 					{
@@ -450,7 +450,7 @@ char* XNode::Load( const char* pszXml, PARSEINFO *pi /*= &piDefault*/ )
 				{
 					// Text Value 
 					char* pEnd = tcsechr( xml, chXMLTagOpen, chXMLEscape );
-					if( pEnd == NULL ) 
+					if( pEnd == nullptr ) 
 					{
 						// error cos not exist CloseTag </TAG>
 						if( !pi->erorr_occur )  
@@ -809,7 +809,7 @@ const XNode *XNode::GetChild( const char* name ) const
 const char*	XNode::GetChildValue( const char* name )
 {
 	XNode *node = GetChild( name );
-	return (node != NULL)? (const char*)node->value : NULL;
+	return (node != nullptr)? (const char*)node->value : NULL;
 }
 
 XAttr *XNode::GetChildAttr( const char* name, const char* attrname )
@@ -979,7 +979,7 @@ bool XNode::RemoveAttr( XAttr *attr )
 // Coder    Date                      Desc
 // bro      2002-10-29
 //========================================================
-XNode *XNode::CreateNode( const char* name /*= NULL*/, const char* value /*= NULL*/ )
+XNode *XNode::CreateNode( const char* name /*= nullptr*/, const char* value /*= nullptr*/ )
 {
 	XNode *node = new XNode;
 	node->name = name;
@@ -996,7 +996,7 @@ XNode *XNode::CreateNode( const char* name /*= NULL*/, const char* value /*= NUL
 // Coder    Date                      Desc
 // bro      2002-10-29
 //========================================================
-XAttr *XNode::CreateAttr( const char* name /*= NULL*/, const char* value /*= NULL*/ )
+XAttr *XNode::CreateAttr( const char* name /*= nullptr*/, const char* value /*= nullptr*/ )
 {
 	XAttr *attr = new XAttr;
 	attr->name = name;
@@ -1013,7 +1013,7 @@ XAttr *XNode::CreateAttr( const char* name /*= NULL*/, const char* value /*= NUL
 // Coder    Date                      Desc
 // bro      2002-10-29
 //========================================================
-XAttr *XNode::AppendAttr( const char* name /*= NULL*/, const char* value /*= NULL*/ )
+XAttr *XNode::AppendAttr( const char* name /*= nullptr*/, const char* value /*= nullptr*/ )
 {
 	return AppendAttr( CreateAttr( name, value ) );
 }
@@ -1210,7 +1210,7 @@ bool XNode::LoadFromFile( CString sFile, PARSEINFO *pi )
 		if( pi )
 		{
 			pi->erorr_occur = true;
-			pi->error_pointer = NULL;
+			pi->error_pointer = nullptr;
 			pi->error_code = PIE_READ_ERROR;
 			pi->error_string = f.GetError();
 		}

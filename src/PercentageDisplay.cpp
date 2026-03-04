@@ -15,7 +15,7 @@
 
 PercentageDisplay::PercentageDisplay()
 {
-	m_pSource = NULL;
+	m_pSource = nullptr;
 }
 
 void PercentageDisplay::Load( PlayerNumber pn, StageStats* pSource, bool bAutoRefresh )

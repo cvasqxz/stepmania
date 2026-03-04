@@ -25,7 +25,7 @@ private:
 
 	struct OptionRowHandler
 	{
-		OptionRowHandler() { opt = NULL; }
+		OptionRowHandler() { opt = nullptr; }
 
 		OptionRowType type;
 

@@ -27,7 +27,7 @@ static const int KEY_LENGTH = 1024;
 #define AutoSeededRandomPool RandomPool
 #endif
 
-CryptManager*	CRYPTMAN	= NULL;	// global and accessable from anywhere in our program
+CryptManager*	CRYPTMAN	= nullptr;	// global and accessable from anywhere in our program
 
 CryptManager::CryptManager()
 {

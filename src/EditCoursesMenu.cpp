@@ -406,7 +406,7 @@ void EditCoursesMenu::OnRowValueChanged( Row row )
 		m_CourseBanner.ScaleToClipped( COURSE_BANNER_WIDTH, COURSE_BANNER_HEIGHT );
 		m_iSelection[ROW_ENTRY] = 0;
 		pEntry = GetSelectedEntry();
-		if( pEntry == NULL )
+		if( pEntry == nullptr )
 		{
 			CourseEntry ce;
 			const vector<Song*> &apSongs = SONGMAN->GetAllSongs();

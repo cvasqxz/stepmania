@@ -47,10 +47,10 @@ CString GetErrorString( HRESULT hr )
 // Globals
 //
 #if !defined(_XBOX)
-HMODULE					g_D3D8_Module = NULL;
+HMODULE					g_D3D8_Module = nullptr;
 #endif
-LPDIRECT3D8				g_pd3d = NULL;
-LPDIRECT3DDEVICE8		g_pd3dDevice = NULL;
+LPDIRECT3D8				g_pd3d = nullptr;
+LPDIRECT3DDEVICE8		g_pd3dDevice = nullptr;
 D3DCAPS8				g_DeviceCaps;
 D3DDISPLAYMODE			g_DesktopMode;
 D3DPRESENT_PARAMETERS	g_d3dpp;
@@ -299,14 +299,14 @@ RageDisplay_D3D::RageDisplay_D3D( VideoModeParams p )
 		if( g_pd3d )
 		{
 			g_pd3d->Release();
-			g_pd3d = NULL;
+			g_pd3d = nullptr;
 		}
 
 #if !defined(_XBOX)
 		if( g_D3D8_Module )
 		{
 			FreeLibrary( g_D3D8_Module );
-			g_D3D8_Module = NULL;
+			g_D3D8_Module = nullptr;
 		}
 #endif
 		throw;
@@ -522,7 +522,7 @@ CString RageDisplay_D3D::TryVideoMode( VideoModeParams p, bool &bNewDeviceOut )
 		g_pd3dDevice = D3D__pDevice;
 #endif
 
-	if( g_pd3dDevice == NULL )		// device is not yet created.  We need to create it
+	if( g_pd3dDevice == nullptr )		// device is not yet created.  We need to create it
 	{
 		bNewDeviceOut = true;
 		hr = g_pd3d->CreateDevice(
@@ -954,7 +954,7 @@ void RageDisplay_D3D::SetTexture( int iTextureUnitIndex, RageTexture* pTexture )
 	if( g_iCurrentTextureIndex >= (int) g_DeviceCaps.MaxSimultaneousTextures )	// not supported
 		return;
 
-	if( pTexture == NULL )
+	if( pTexture == nullptr )
 	{
 		g_pd3dDevice->SetTexture( g_iCurrentTextureIndex, NULL );
 		g_pd3dDevice->SetTextureStageState( g_iCurrentTextureIndex, D3DTSS_COLOROP,   D3DTOP_DISABLE );
@@ -1236,7 +1236,7 @@ void RageDisplay_D3D::UpdateTexture(
 	int xoffset, int yoffset, int width, int height )
 {
 	IDirect3DTexture8* pTex = (IDirect3DTexture8*)uTexHandle;
-	ASSERT( pTex != NULL );
+	ASSERT( pTex != nullptr );
 	
 	/* Make sure that the pixel format of the image is legit.  We don't actually
 	 * care, but the OpenGL renderer does, so make sure people coding in the D3D

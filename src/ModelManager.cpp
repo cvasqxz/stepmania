@@ -6,7 +6,7 @@
 #include "RageException.h"
 #include "RageDisplay.h"
 
-ModelManager*		MODELMAN		= NULL;
+ModelManager*		MODELMAN		= nullptr;
 
 ModelManager::ModelManager()
 {

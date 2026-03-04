@@ -233,10 +233,10 @@ void ScreenEvaluation::Init()
 		if( PREFSMAN->m_iScoringType == PrefsManager::SCORING_5TH )
 		{
 			const int ScoreBonuses[] = { 10000000, 10000000, 1000000, 100000, 10000, 1000, 100 };
-			if( grade[p] < (int) ARRAYSIZE(ScoreBonuses) )
+			if( grade[p] < static_cast<int>(ARRAYSIZE(ScoreBonuses)) )
 			{
-				g_CurStageStats.iBonus[p] += ScoreBonuses[(int)grade[p] ];
-				stageStats.iBonus[p] += ScoreBonuses[(int)grade[p] ];
+				g_CurStageStats.iBonus[p] += ScoreBonuses[static_cast<int>(grade[p])];
+				stageStats.iBonus[p] += ScoreBonuses[static_cast<int>(grade[p])];
 			}
 		}
 	}
@@ -542,7 +542,7 @@ void ScreenEvaluation::Init()
 				// should be out of the possible bar, not actual (whatever value that is at)
 				m_sprActualBar[p][r].SetWidth( m_sprPossibleBar[p][r].GetUnzoomedWidth() * stageStats.radarActual[p][r] );
 				
-				float value = (float)100 * m_sprActualBar[p][r].GetUnzoomedWidth() / m_sprPossibleBar[p][r].GetUnzoomedWidth();
+				float value = static_cast<float>(100) * m_sprActualBar[p][r].GetUnzoomedWidth() / m_sprPossibleBar[p][r].GetUnzoomedWidth();
 				LOG->Trace("Radar bar %d of 5 - %f percent", r,  value);
 				
 				m_sprActualBar[p][r].SetName( ssprintf("BarActual%dP%d",r+1,p+1) );
@@ -572,7 +572,7 @@ void ScreenEvaluation::Init()
 			m_textSurvivedNumber[p].SetShadowLength( 0 );
 			// curewater: edited the "# stages cleared" text so it deducts one if you failed.
 			// Should be accurate, but I'm not sure if its "standard" that (bool)true = 1.  (assumption)
-			m_textSurvivedNumber[p].SetText( ssprintf("%02d", stageStats.iSongsPlayed[p] - (int)stageStats.bFailed[p]) );
+			m_textSurvivedNumber[p].SetText( ssprintf("%02d", stageStats.iSongsPlayed[p] - static_cast<int>(stageStats.bFailed[p])) );
 			m_textSurvivedNumber[p].SetName( ssprintf("SurvivedNumberP%d",p+1) );
 			SET_XY_AND_ON_COMMAND( m_textSurvivedNumber[p] );
 			this->AddChild( &m_textSurvivedNumber[p] );
@@ -674,8 +674,8 @@ void ScreenEvaluation::Init()
 				RADAR_NUM_JUMPS, RADAR_NUM_HOLDS, RADAR_NUM_MINES, RADAR_NUM_HANDS
 			};
 			const int ind = indeces[l];
-			const int iActual = (int) roundf(stageStats.radarActual[p][ind]);
-			const int iPossible = (int) roundf(stageStats.radarPossible[p][ind]);
+			const int iActual = static_cast<int>(roundf(stageStats.radarActual[p][ind]));
+			const int iPossible = static_cast<int>(roundf(stageStats.radarPossible[p][ind]));
 
 			m_textStatsText[l][p].SetText( ssprintf("%3d/%3d",iActual,iPossible) );
 		}
@@ -999,7 +999,7 @@ void ScreenEvaluation::CommitScores(
 			Profile* pProfile = PROFILEMAN->GetMachineProfile();
 			StepsType st = GAMESTATE->GetCurrentStyle()->m_StepsType;
 
-			const HighScoreList *pHSL = NULL;
+			const HighScoreList *pHSL = nullptr;
 			switch( m_Type )
 			{
 			case stage:

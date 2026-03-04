@@ -26,7 +26,7 @@ MenuTimer::MenuTimer()
 	m_textDigit1.LoadFromFont( THEME->GetPathToF("MenuTimer") );
 	m_textDigit2.LoadFromFont( THEME->GetPathToF("MenuTimer") );
 
-	const float fCharWidth = (float) m_textDigit1.m_pFont->GetLineWidthInSourcePixels(L"0");
+	const float fCharWidth = static_cast<float>(m_textDigit1.m_pFont->GetLineWidthInSourcePixels(L"0"));
 	m_textDigit1.SetX( -fCharWidth/2 );
 	m_textDigit2.SetX( +fCharWidth/2 );
 
@@ -67,8 +67,8 @@ void MenuTimer::Update( float fDeltaTime )
 	CLAMP( m_fSecondsLeft, 0, 99 );
 	const float fNewSecondsLeft = m_fSecondsLeft;
 
-	const int iOldDisplay = (int)(fOldSecondsLeft + 0.99f);
-	const int iNewDisplay = (int)(fNewSecondsLeft + 0.99f);
+	const int iOldDisplay = static_cast<int>(fOldSecondsLeft + 0.99f);
+	const int iNewDisplay = static_cast<int>(fNewSecondsLeft + 0.99f);
 
 	if( fOldSecondsLeft > 5.5  &&  fNewSecondsLeft < 5.5 )	// transition to below 5.5
 		SOUND->PlayOnceFromDir( ANNOUNCER->GetPathTo("hurry up") );
@@ -130,7 +130,7 @@ void MenuTimer::Stall()
 
 void MenuTimer::SetSeconds( int iSeconds )
 {
-	m_fSecondsLeft = (float)iSeconds;
+	m_fSecondsLeft = static_cast<float>(iSeconds);
 	CLAMP( m_fSecondsLeft, 0, 99 );
 
 	m_textDigit1.Command( ON_COMMAND );
@@ -146,8 +146,8 @@ void MenuTimer::Start()
 
 void MenuTimer::SetText( int iSeconds )
 {
-	const int iDigit1 = (int)(iSeconds)/10;
-	const int iDigit2 = (int)(iSeconds)%10;
+	const int iDigit1 = iSeconds / 10;
+	const int iDigit2 = iSeconds % 10;
 
 	m_textDigit1.SetText( ssprintf("%d",iDigit1) ); 
 	m_textDigit2.SetText( ssprintf("%d",iDigit2) ); 

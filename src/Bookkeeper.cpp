@@ -11,7 +11,7 @@
 #include <ctime>
 
 
-Bookkeeper*	BOOKKEEPER = NULL;	// global and accessable from anywhere in our program
+Bookkeeper*	BOOKKEEPER = nullptr;	// global and accessable from anywhere in our program
 
 static const CString COINS_DAT = "Data/Coins.dat";
 

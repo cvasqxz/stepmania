@@ -868,7 +868,7 @@ public:
 	void FormatV(const CT* szFormat, va_list argList)
 	{
 	#if defined(WIN32)
-		CT* pBuf			= NULL;
+		CT* pBuf			= nullptr;
 		int nChars			= 1;
 		int nUsed			= 0;
 		size_type nActual	= 0;

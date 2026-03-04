@@ -76,7 +76,7 @@ RageSurfaceUtils::OpenResult RageSurface_Load_GIF( const CString &sPath, RageSur
 		error = "error reading magic number";
 		return RageSurfaceUtils::OPEN_FATAL_ERROR;
 	}
-	if( strncmp((char *) buf, "GIF", 3) != 0 )
+	if( strncmp(reinterpret_cast<char*>(buf), "GIF", 3) != 0 )
 	{
 		error = "not a GIF file";
 		return RageSurfaceUtils::OPEN_UNKNOWN_FILE_FORMAT;
@@ -84,7 +84,7 @@ RageSurfaceUtils::OpenResult RageSurface_Load_GIF( const CString &sPath, RageSur
 
 	{
 		char version[4];
-		strncpy(version, (char *) buf + 3, 3);
+		strncpy(version, reinterpret_cast<char*>(buf) + 3, 3);
 		version[3] = '\0';
 
 		if( (strcmp(version, "87a") != 0) && (strcmp(version, "89a") != 0) )
@@ -415,8 +415,8 @@ static RageSurface *ReadImage( RageFile &f, int len, int height,
 	int v;
 	while( (v = state.ReadByte(f)) >= 0 )
 	{
-		char *data = (char *) image->pixels;
-		data[xpos + ypos * image->pitch] = (char) v;
+		char *data = reinterpret_cast<char*>(image->pixels);
+		data[xpos + ypos * image->pitch] = static_cast<char>(v);
 
 		++xpos;
 		if( xpos == len )

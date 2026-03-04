@@ -22,7 +22,7 @@ ScreenJukeboxMenu::ScreenJukeboxMenu( CString sClassName ) : ScreenWithMenuEleme
 {
 	LOG->Trace( "ScreenJukeboxMenu::ScreenJukeboxMenu()" );
 
-	GAMESTATE->m_pCurStyle = NULL;
+	GAMESTATE->m_pCurStyle = nullptr;
 
 	FOREACH_PlayerNumber( pn )
 		GAMESTATE->m_bSideIsJoined[pn] = true;

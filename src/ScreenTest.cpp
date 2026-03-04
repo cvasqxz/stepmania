@@ -27,7 +27,7 @@ void ScreenTest::SetScreen(int num)
 
 ScreenTest::ScreenTest( CString sClassName ) : Screen( sClassName )
 {
-	current = NULL;
+	current = nullptr;
 	cur_screen = -1;
 
 	SOUND->StopMusic();

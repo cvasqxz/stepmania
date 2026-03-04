@@ -78,11 +78,11 @@
 
 #ifdef _WINDOWS
 /* The renderer is responsible for setting this, and updating it when it changes. */
-HWND g_hWndMain = NULL;
+HWND g_hWndMain = nullptr;
 #endif
 
 int g_argc = 0;
-char **g_argv = NULL;
+char **g_argv = nullptr;
 
 static bool g_bHasFocus = true;
 static bool g_bQuitting = false;
@@ -557,7 +557,7 @@ static void CheckVideoDefaultSettings()
 	
 	LOG->Trace( "Last seen video driver: " + PREFSMAN->m_sLastSeenVideoDriver );
 
-	const VideoCardDefaults* pDefaults = NULL;
+	const VideoCardDefaults* pDefaults = nullptr;
 	
 	for( unsigned i=0; i<ARRAYSIZE(g_VideoCardDefaults); i++ )
 	{
@@ -730,17 +730,17 @@ void ReadGamePrefsFromDisk( bool bSwitchToLastPlayedGame )
 
 	if( bSwitchToLastPlayedGame )
 	{
-		ASSERT( GAMEMAN != NULL );
+		ASSERT( GAMEMAN != nullptr );
 		CString sGame;
-		GAMESTATE->m_pCurGame = NULL;
+		GAMESTATE->m_pCurGame = nullptr;
 		if( ini.GetValue("Options", "Game", sGame) )
 			GAMESTATE->m_pCurGame = GAMEMAN->StringToGameType( sGame );
 	}
 
 	/* If the active game type isn't actually available, revert to the default. */
-	if( GAMESTATE->m_pCurGame == NULL || !GAMEMAN->IsGameEnabled( GAMESTATE->m_pCurGame ) )
+	if( GAMESTATE->m_pCurGame == nullptr || !GAMEMAN->IsGameEnabled( GAMESTATE->m_pCurGame ) )
 	{
-		if( GAMESTATE->m_pCurGame != NULL )
+		if( GAMESTATE->m_pCurGame != nullptr )
 			LOG->Warn( "Default note skin for \"%s\" missing, reverting to \"%s\"",
 				GAMESTATE->m_pCurGame->m_szName, GAMEMAN->GetDefaultGame()->m_szName );
 		GAMESTATE->m_pCurGame = GAMEMAN->GetDefaultGame();
@@ -1012,7 +1012,7 @@ int main(int argc, char* argv[])
 
 	/* This requires PREFSMAN, for PREFSMAN->m_bShowLoadingWindow. */
 	LoadingWindow *loading_window = MakeLoadingWindow();
-	if( loading_window == NULL )
+	if( loading_window == nullptr )
 		RageException::Throw( "Couldn't open any loading windows." );
 
 	loading_window->Paint();

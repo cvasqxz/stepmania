@@ -41,7 +41,7 @@ void CourseContentsList::SetFromGameState()
 {
 	Course* pCourse = GAMESTATE->m_pCurCourse;
 
-	if( pCourse == NULL )
+	if( pCourse == nullptr )
 	{
 		m_iNumContents = 0;
 		return;
@@ -52,7 +52,7 @@ void CourseContentsList::SetFromGameState()
 	// They have to have the same number, and of the same songs, or gameplay
 	// isn't going to line up.
 	Trail* pMasterTrail = GAMESTATE->m_pCurTrail[GAMESTATE->m_MasterPlayerNumber];
-	if( pMasterTrail == NULL )
+	if( pMasterTrail == nullptr )
 		return;
 	int iNumEntriesToShow = min((int)pMasterTrail->m_vEntries.size(), MAX_TOTAL_CONTENTS);
 
@@ -68,7 +68,7 @@ void CourseContentsList::SetFromGameState()
 		FOREACH_EnabledPlayer(pn)
 		{
 			Trail* pTrail = GAMESTATE->m_pCurTrail[pn];
-			if( pTrail == NULL )
+			if( pTrail == nullptr )
 				continue;	// skip
 			if( unsigned(i) < pTrail->m_vEntries.size() )
 				pte[pn] = &pTrail->m_vEntries[i];

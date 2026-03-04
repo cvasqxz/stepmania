@@ -4,7 +4,7 @@
 #include "RageFile.h"
 #include "RageUtil.h"
 
-AnnouncerManager*	ANNOUNCER = NULL;	// global object accessable from anywhere in the program
+AnnouncerManager*	ANNOUNCER = nullptr;	// global object accessable from anywhere in the program
 
 
 const CString EMPTY_ANNOUNCER_NAME = "Empty";
@@ -96,7 +96,7 @@ CString AnnouncerManager::GetPathTo( CString sAnnouncerName, CString sFolderName
 
 	/* Search for the announcer folder in the list of aliases. */
 	int i;
-	for(i = 0; aliases[i][0] != NULL; ++i)
+	for(i = 0; aliases[i][0] != nullptr; ++i)
 	{
 		if(sFolderName.CompareNoCase(aliases[i][0]))
 			continue; /* no match */

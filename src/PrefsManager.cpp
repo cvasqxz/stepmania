@@ -16,7 +16,7 @@
 #define STEPMANIA_INI_PATH	"Data/StepMania.ini"	// overlay on Defaults.ini, contains the user's choices
 #define STATIC_INI_PATH		"Data/Static.ini"		// overlay on the 2 above, can't be overridden
 
-PrefsManager*	PREFSMAN = NULL;	// global and accessable from anywhere in our program
+PrefsManager*	PREFSMAN = nullptr;	// global and accessable from anywhere in our program
 
 const float DEFAULT_SOUND_VOLUME = 1.00f;
 const CString DEFAULT_LIGHTS_DRIVER = "Null";
@@ -25,7 +25,7 @@ const CString DEFAULT_LIGHTS_DRIVER = "Null";
 //
 // For self-registering prefs
 //
-vector<IPreference*> *g_pvpSubscribers = NULL;
+vector<IPreference*> *g_pvpSubscribers = nullptr;
 
 void Subscribe( IPreference *p )
 {
@@ -35,7 +35,7 @@ void Subscribe( IPreference *p )
 	// too tricky to enfore that, so we'll allocate the vector ourself
 	// so that the compiler can't possibly call the vector constructor
 	// after we've already added to the vector.
-	if( g_pvpSubscribers == NULL )
+	if( g_pvpSubscribers == nullptr )
 		g_pvpSubscribers = new vector<IPreference*>;
 	g_pvpSubscribers->push_back( p );
 }

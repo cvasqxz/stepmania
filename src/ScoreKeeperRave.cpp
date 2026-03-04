@@ -129,7 +129,7 @@ void ScoreKeeperRave::LaunchAttack( AttackLevel al )
 	CString* asAttacks = GAMESTATE->m_pCurCharacters[m_PlayerNumber]->m_sAttacks[al];	// [NUM_ATTACKS_PER_LEVEL]
 	CString sAttackToGive;
 
-	if (GAMESTATE->m_pCurCharacters[m_PlayerNumber] != NULL)		
+	if (GAMESTATE->m_pCurCharacters[m_PlayerNumber] != nullptr)		
 		sAttackToGive = asAttacks[ rand()%NUM_ATTACKS_PER_LEVEL ];
 	else
 	{

@@ -14,7 +14,7 @@ class ScreenPrompt : public Screen
 {
 public:
 	ScreenPrompt( CString sName );
-	ScreenPrompt( CString sText, bool bYesNoPrompt=false, bool bDefaultAnswer = false, void(*OnYes)(void*) = NULL, void(*OnNo)(void*) = NULL, void* pCallbackData = NULL );
+	ScreenPrompt( CString sText, bool bYesNoPrompt=false, bool bDefaultAnswer = false, void(*OnYes)(void*) = nullptr, void(*OnNo)(void*) = nullptr, void* pCallbackData = nullptr );
 
 	virtual void Update( float fDeltaTime );
 	virtual void DrawPrimitives();

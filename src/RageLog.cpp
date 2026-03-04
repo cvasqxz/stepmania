@@ -110,12 +110,12 @@ RageLog::~RageLog()
 	g_fileInfo->Close();
 
 	delete g_Mutex;
-	g_Mutex = NULL;
+	g_Mutex = nullptr;
 
 	delete g_fileLog;
-	g_fileLog = NULL;
+	g_fileLog = nullptr;
 	delete g_fileInfo;
-	g_fileInfo = NULL;
+	g_fileInfo = nullptr;
 }
 
 void RageLog::SetLogToDisk( bool b )

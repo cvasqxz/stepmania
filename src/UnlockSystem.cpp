@@ -10,7 +10,7 @@
 #include "MsdFile.h"
 #include "ProfileManager.h"
 
-UnlockSystem*	UNLOCKMAN = NULL;	// global and accessable from anywhere in our program
+UnlockSystem*	UNLOCKMAN = nullptr;	// global and accessable from anywhere in our program
 
 #define UNLOCKS_PATH "Data/Unlocks.dat"
 
@@ -49,7 +49,7 @@ bool UnlockSystem::CourseIsLocked( const Course *course ) const
 		return false;
 
 	const UnlockEntry *p = FindCourse( course );
-	if( p == NULL )
+	if( p == nullptr )
 		return false;
 
 	return p->IsLocked();
@@ -61,7 +61,7 @@ bool UnlockSystem::SongIsLocked( const Song *song ) const
 		return false;
 
 	const UnlockEntry *p = FindSong( song );
-	if( p == NULL )
+	if( p == nullptr )
 		return false;
 
 	return p->IsLocked();
@@ -117,8 +117,8 @@ UnlockEntry::UnlockEntry()
 	memset( m_fRequired, 0, sizeof(m_fRequired) );
 	m_iCode = -1;
 
-	m_pSong = NULL;
-	m_pCourse = NULL;
+	m_pSong = nullptr;
+	m_pCourse = nullptr;
 }
 
 static float GetArcadePoints( const Profile *pProfile )
@@ -353,15 +353,15 @@ void UnlockSystem::UpdateSongs()
 {
 	for( unsigned i = 0; i < m_SongEntries.size(); ++i )
 	{
-		m_SongEntries[i].m_pSong = NULL;
-		m_SongEntries[i].m_pCourse = NULL;
+		m_SongEntries[i].m_pSong = nullptr;
+		m_SongEntries[i].m_pCourse = nullptr;
 		m_SongEntries[i].m_pSong = SONGMAN->FindSong( m_SongEntries[i].m_sSongName );
-		if( m_SongEntries[i].m_pSong == NULL )
+		if( m_SongEntries[i].m_pSong == nullptr )
 			m_SongEntries[i].m_pCourse = SONGMAN->FindCourse( m_SongEntries[i].m_sSongName );
 
 		// display warning on invalid song entry
-		if (m_SongEntries[i].m_pSong   == NULL &&
-			m_SongEntries[i].m_pCourse == NULL)
+		if (m_SongEntries[i].m_pSong   == nullptr &&
+			m_SongEntries[i].m_pCourse == nullptr)
 		{
 			LOG->Warn("Unlock: Cannot find a matching entry for \"%s\"", m_SongEntries[i].m_sSongName.c_str() );
 			m_SongEntries.erase(m_SongEntries.begin() + i);

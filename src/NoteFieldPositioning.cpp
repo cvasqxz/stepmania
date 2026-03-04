@@ -94,10 +94,10 @@ void NoteFieldMode::Load(IniFile &ini, CString id, int pn)
 			ASSERT(bits.size() == 2);
 
 			const Game* pGame = GAMEMAN->StringToGameType( bits[0] );
-			ASSERT(pGame != NULL);
+			ASSERT(pGame != nullptr);
 
 			const Style *style = GAMEMAN->GameAndStringToStyle( pGame, bits[1] );
-			ASSERT(style != NULL);
+			ASSERT(style != nullptr);
 			Styles.insert(style);
 		}
 	}

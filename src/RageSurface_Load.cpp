@@ -12,7 +12,7 @@
 
 static RageSurface *TryOpenFile( CString sPath, bool bHeaderOnly, CString &error, CString format, bool &bKeepTrying )
 {
-	RageSurface *ret = NULL;
+	RageSurface *ret = nullptr;
 	RageSurfaceUtils::OpenResult result;
 	if( !format.CompareNoCase("png") )
 		result = RageSurface_Load_PNG( sPath, ret, bHeaderOnly, error );

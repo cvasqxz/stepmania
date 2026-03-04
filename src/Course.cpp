@@ -191,7 +191,7 @@ void Course::LoadFromCRSFile( CString sPath )
 				CString sSong = sParams[1];
 				new_entry.pSong = SONGMAN->FindSong( sSong );
 
-				if( new_entry.pSong == NULL )
+				if( new_entry.pSong == nullptr )
 				{
 					/* XXX: We need a place to put "user warnings".  This is too loud for info.txt--
 				     * it obscures important warnings--and regular users never look there, anyway. */
@@ -339,7 +339,7 @@ void Course::Save()
 			{
 				// strip off everything but the group name and song dir
 				CStringArray as;
-				ASSERT( entry.pSong != NULL );
+				ASSERT( entry.pSong != nullptr );
 				split( entry.pSong->GetSongDir(), "/", as );
 				ASSERT( as.size() >= 2 );
 				CString sGroup = as[ as.size()-2 ];
@@ -492,7 +492,7 @@ void Course::AutogenOniFromArtist( CString sArtistName, CString sArtistNameTrans
 
 bool Course::IsPlayableIn( StepsType st ) const
 {
-	return GetTrail( st ) != NULL;
+	return GetTrail( st ) != nullptr;
 }
 
 static vector<Song*> GetFilteredBestSongs( StepsType st )
@@ -717,8 +717,8 @@ bool Course::GetTrailUnsorted( StepsType st, CourseDifficulty cd, Trail &trail )
 		if( e.no_difficult && entry_difficulty == DIFFICULTY_HARD )
 			entry_difficulty = DIFFICULTY_MEDIUM;
 
-		Song* pSong = NULL;	// fill this in
-		Steps* pSteps = NULL;	// fill this in
+		Song* pSong = nullptr;	// fill this in
+		Steps* pSteps = nullptr;	// fill this in
 
 		/* This applies difficult mode for meter ranges.  (If it's a difficulty
 		 * class, we'll do it below.) */
@@ -770,8 +770,8 @@ bool Course::GetTrailUnsorted( StepsType st, CourseDifficulty cd, Trail &trail )
 					if( pSteps )	// found a match
 						break;		// stop searching
 
-					pSong = NULL;
-					pSteps = NULL;
+					pSong = nullptr;
+					pSteps = nullptr;
 				}
 			}
 			break;
@@ -804,7 +804,7 @@ bool Course::GetTrailUnsorted( StepsType st, CourseDifficulty cd, Trail &trail )
 				else
 					pSteps = pSong->GetStepsByDifficulty( st, e.difficulty );
 
-				if( pSteps == NULL )
+				if( pSteps == nullptr )
 					pSteps = pSong->GetClosestNotes( st, DIFFICULTY_MEDIUM );
 			}
 			break;
@@ -911,7 +911,7 @@ void Course::GetTrails( vector<Trail*> &AddTo, StepsType st ) const
 	FOREACH_ShownCourseDifficulty( cd )
 	{
 		Trail *pTrail = GetTrail( st, cd );
-		if( pTrail == NULL )
+		if( pTrail == nullptr )
 			continue;
 		AddTo.push_back( pTrail );
 	}
@@ -1088,7 +1088,7 @@ void Course::UpdateCourseStats( StepsType st )
 
 	const Trail* pTrail = GetTrail( st, DIFFICULTY_MEDIUM );
 
-	m_SortOrder_TotalDifficulty += pTrail != NULL? pTrail->GetTotalMeter():0;
+	m_SortOrder_TotalDifficulty += pTrail != nullptr? pTrail->GetTotalMeter():0;
 
 	// OPTIMIZATION: Ranking info isn't dependant on style, so
 	// call it sparingly.  Its handled on startup and when

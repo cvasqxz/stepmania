@@ -56,7 +56,7 @@ BitmapText::BitmapText()
 	}
 	iReloadCounter++;
 
-	m_pFont = NULL;
+	m_pFont = nullptr;
 
 	m_bRainbow = false;
 
@@ -78,7 +78,7 @@ bool BitmapText::LoadFromFont( CString sFontFilePath )
 
 	if( m_pFont ) {
 		FONT->UnloadFont( m_pFont );
-		m_pFont = NULL;
+		m_pFont = nullptr;
 	}
 
 	m_pFont = FONT->LoadFont( sFontFilePath );
@@ -95,7 +95,7 @@ bool BitmapText::LoadFromTextureAndChars( CString sTexturePath, CString sChars )
 
 	if( m_pFont ) {
 		FONT->UnloadFont( m_pFont );
-		m_pFont = NULL;
+		m_pFont = nullptr;
 	}
 
 	m_pFont = FONT->LoadFont( sTexturePath, sChars );
@@ -108,7 +108,7 @@ bool BitmapText::LoadFromTextureAndChars( CString sTexturePath, CString sChars )
 void BitmapText::BuildChars()
 {
 	/* If we don't have a font yet, we'll do this when it loads. */
-	if(m_pFont == NULL)
+	if(m_pFont == nullptr)
 		return;
 
 	/* calculate line lengths and widths */
@@ -140,8 +140,8 @@ void BitmapText::BuildChars()
 	switch( m_VertAlign )
 	{
 	case align_top:		iY = 0;					break;
-	case align_middle:	iY = -(int)roundf(m_size.y/2.0f);	break;
-	case align_bottom:	iY = -(int)m_size.y;	break;
+	case align_middle:	iY = -static_cast<int>(roundf(m_size.y/2.0f));	break;
+	case align_bottom:	iY = -static_cast<int>(m_size.y);	break;
 	default:			ASSERT( false );		return;
 	}
 
@@ -155,7 +155,7 @@ void BitmapText::BuildChars()
 		switch( m_HorizAlign )
 		{
 		case align_left:	iX = 0;				break;
-		case align_center:	iX = -(int)roundf(iLineWidth/2.0f);	break;
+		case align_center:	iX = -static_cast<int>(roundf(iLineWidth/2.0f));	break;
 		case align_right:	iX = -iLineWidth;	break;
 		default:			ASSERT( false );	return;
 		}
@@ -197,8 +197,8 @@ void BitmapText::DrawChars()
 		return; 
 
 	const int iNumGlyphs = tex.size();
-	int iStartGlyph = (int) roundf( SCALE( m_pTempState->crop.left, 0.f, 1.f, 0, (float) iNumGlyphs ) );
-	int iEndGlyph = (int) roundf( SCALE( m_pTempState->crop.right, 0.f, 1.f, (float) iNumGlyphs, 0 ) );
+	int iStartGlyph = static_cast<int>(roundf( SCALE( m_pTempState->crop.left, 0.f, 1.f, 0, static_cast<float>(iNumGlyphs) ) ));
+	int iEndGlyph = static_cast<int>(roundf( SCALE( m_pTempState->crop.right, 0.f, 1.f, static_cast<float>(iNumGlyphs), 0 ) ));
 	iStartGlyph = clamp( iStartGlyph, 0, iNumGlyphs );
 	iEndGlyph = clamp( iEndGlyph, 0, iNumGlyphs );
 
@@ -232,13 +232,13 @@ void BitmapText::DrawChars()
 
 		const float StartFadeLeftPercent = m_pTempState->crop.left;
 		const float StopFadeLeftPercent = m_pTempState->crop.left + FadeSize.left;
-		const float fLeftFadeStartGlyph = SCALE( StartFadeLeftPercent, 0.f, 1.f, 0, (float) iNumGlyphs );
-		const float fLeftFadeStopGlyph = SCALE( StopFadeLeftPercent, 0.f, 1.f, 0, (float) iNumGlyphs );
+		const float fLeftFadeStartGlyph = SCALE( StartFadeLeftPercent, 0.f, 1.f, 0, static_cast<float>(iNumGlyphs) );
+		const float fLeftFadeStopGlyph = SCALE( StopFadeLeftPercent, 0.f, 1.f, 0, static_cast<float>(iNumGlyphs) );
 
 		const float StartFadeRightPercent = 1-(m_pTempState->crop.right + FadeSize.right);
 		const float StopFadeRightPercent = 1-(m_pTempState->crop.right);
-		const float fRightFadeStartGlyph = SCALE( StartFadeRightPercent, 0.f, 1.f, 0, (float) iNumGlyphs );
-		const float fRightFadeStopGlyph = SCALE( StopFadeRightPercent, 0.f, 1.f, 0, (float) iNumGlyphs );
+		const float fRightFadeStartGlyph = SCALE( StartFadeRightPercent, 0.f, 1.f, 0, static_cast<float>(iNumGlyphs) );
+		const float fRightFadeStopGlyph = SCALE( StopFadeRightPercent, 0.f, 1.f, 0, static_cast<float>(iNumGlyphs) );
 
 		for( int start = iStartGlyph; start < iEndGlyph; ++start )
 		{

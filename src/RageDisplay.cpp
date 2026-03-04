@@ -28,7 +28,7 @@ static int			g_iFramesRenderedSinceLastCheck,
 					g_iVertsRenderedSinceLastCheck,
 					g_iNumChecksSinceLastReset;
 
-RageDisplay*		DISPLAY	= NULL;
+RageDisplay*		DISPLAY	= nullptr;
 
 Preference<bool>  LOG_FPS( Debug, "LogFPS", true );
 
@@ -691,7 +691,7 @@ bool RageDisplay::SaveScreenshot( CString sPath, GraphicsFileFormat format )
 	}
 
 	delete surface;
-	surface = NULL;
+	surface = nullptr;
 
 	if( !bSuccess )
 	{

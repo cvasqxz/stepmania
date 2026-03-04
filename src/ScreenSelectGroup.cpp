@@ -221,7 +221,7 @@ void ScreenSelectGroup::MenuStart( PlayerNumber pn )
 	m_MenuTimer->Stop();
 	m_bChosen = true;
 
-	GAMESTATE->m_pCurSong = NULL;
+	GAMESTATE->m_pCurSong = nullptr;
 	GAMESTATE->m_sPreferredGroup = (m_GroupList.GetSelectionName()=="ALL MUSIC" ? GROUP_ALL_MUSIC : m_GroupList.GetSelectionName() );
 
 	if( GAMESTATE->m_sPreferredGroup == GROUP_ALL_MUSIC )

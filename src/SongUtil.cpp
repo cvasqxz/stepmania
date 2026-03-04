@@ -216,7 +216,7 @@ void SongUtil::SortSongPointerArrayByGroupAndTitle( vector<Song*> &arraySongPoin
 void SongUtil::SortSongPointerArrayByNumPlays( vector<Song*> &arraySongPointers, ProfileSlot slot, bool bDescending )
 {
 	Profile* pProfile = PROFILEMAN->GetProfile(slot);
-	if( pProfile == NULL )
+	if( pProfile == nullptr )
 		return;	// nothing to do since we don't have data
 	SortSongPointerArrayByNumPlays( arraySongPointers, pProfile, bDescending );
 }
@@ -232,7 +232,7 @@ void SongUtil::SortSongPointerArrayByNumPlays( vector<Song*> &arraySongPointers,
 
 CString SongUtil::GetSectionNameFromSongAndSort( const Song* pSong, SortOrder so )
 {
-	if( pSong == NULL )
+	if( pSong == nullptr )
 		return "";
 
 	switch( so )

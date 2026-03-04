@@ -16,7 +16,7 @@ ScreenEndlessBreak::ScreenEndlessBreak( CString sName ) : Screen( sName )
 	if( (int)PREFSMAN->m_ShowDancingCharacters != 0 )
 	{
 		if( GAMESTATE->GetNumPlayersEnabled() == 1 )
-			if( GAMESTATE->m_pCurCharacters[0] != NULL )
+			if( GAMESTATE->m_pCurCharacters[0] != nullptr )
 				m_sprBreakPicture.LoadTABreakFromCharacter( GAMESTATE->m_pCurCharacters[0] );
 			else
 				m_sprBreakPicture.Load( THEME->GetPathToG("Common fallback takingabreak") );
@@ -26,7 +26,7 @@ ScreenEndlessBreak::ScreenEndlessBreak( CString sName ) : Screen( sName )
 			do
 			{
 				pn = (PlayerNumber)(rand()%NUM_PLAYERS);
-				if( GAMESTATE->IsPlayerEnabled(pn) && (GAMESTATE->m_pCurCharacters[pn] != NULL) )
+				if( GAMESTATE->IsPlayerEnabled(pn) && (GAMESTATE->m_pCurCharacters[pn] != nullptr) )
 				{
 					m_sprBreakPicture.LoadTABreakFromCharacter( GAMESTATE->m_pCurCharacters[pn] );
 					break;

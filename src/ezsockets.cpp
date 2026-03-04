@@ -172,7 +172,7 @@ bool EzSockets::connect(const std::string& host, unsigned short port)
 #else
 	struct hostent* phe;
 	phe = gethostbyname(host.c_str());
-	if (phe == NULL)
+	if (phe == nullptr)
 		return false;
 	memcpy(&addr.sin_addr, phe->h_addr, sizeof(struct in_addr));
 #endif 

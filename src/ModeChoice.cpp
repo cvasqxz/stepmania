@@ -22,19 +22,19 @@ void ModeChoice::Init()
 	m_sName = "";
 	m_bInvalid = true;
 	m_iIndex = -1;
-	m_pGame = NULL;
-	m_pStyle = NULL;
+	m_pGame = nullptr;
+	m_pStyle = nullptr;
 	m_pm = PLAY_MODE_INVALID;
 	m_dc = DIFFICULTY_INVALID;
 	m_CourseDifficulty = DIFFICULTY_INVALID;
 	m_sModifiers = "";
 	m_sAnnouncer = "";
 	m_sScreen = "";
-	m_pSong = NULL;
-	m_pSteps = NULL;
-	m_pCourse = NULL;
-	m_pTrail = NULL;
-	m_pCharacter = NULL;
+	m_pSong = nullptr;
+	m_pSteps = nullptr;
+	m_pCourse = nullptr;
+	m_pTrail = nullptr;
+	m_pCharacter = nullptr;
 }
 
 bool CompareSongOptions( const SongOptions &so1, const SongOptions &so2 );
@@ -50,7 +50,7 @@ bool ModeChoice::DescribesCurrentModeForAllPlayers() const
 
 bool ModeChoice::DescribesCurrentMode( PlayerNumber pn ) const
 {
-	if( m_pGame != NULL && m_pGame != GAMESTATE->m_pCurGame )
+	if( m_pGame != nullptr && m_pGame != GAMESTATE->m_pCurGame )
 		return false;
 	if( m_pm != PLAY_MODE_INVALID && GAMESTATE->m_PlayMode != m_pm )
 		return false;
@@ -59,7 +59,7 @@ bool ModeChoice::DescribesCurrentMode( PlayerNumber pn ) const
 	// HACK: don't compare m_dc if m_pSteps is set.  This causes problems 
 	// in ScreenSelectOptionsMaster::ImportOptions if m_PreferredDifficulty 
 	// doesn't match the difficulty of m_pCurSteps.
-	if( m_pSteps == NULL  &&  m_dc != DIFFICULTY_INVALID )
+	if( m_pSteps == nullptr  &&  m_dc != DIFFICULTY_INVALID )
 	{
 		// Why is this checking for all players?
 		FOREACH_PlayerNumber( pn )
@@ -123,7 +123,7 @@ void ModeChoice::Load( int iIndex, CString sChoice )
 		if( sName == "game" )
 		{
 			const Game* pGame = GAMEMAN->StringToGameType( sValue );
-			if( pGame != NULL )
+			if( pGame != nullptr )
 				m_pGame = pGame;
 			else
 				m_bInvalid |= true;
@@ -173,7 +173,7 @@ void ModeChoice::Load( int iIndex, CString sChoice )
 		if( sName == "song" )
 		{
 			m_pSong = SONGMAN->FindSong( sValue );
-			if( m_pSong == NULL )
+			if( m_pSong == nullptr )
 			{
 				m_sInvalidReason = ssprintf( "Song \"%s\" not found", sValue.c_str() );
 				m_bInvalid |= true;
@@ -190,7 +190,7 @@ void ModeChoice::Load( int iIndex, CString sChoice )
 		if( sName == "course" )
 		{
 			m_pCourse = SONGMAN->FindCourse( sValue );
-			if( m_pCourse == NULL )
+			if( m_pCourse == nullptr )
 			{
 				m_sInvalidReason = ssprintf( "Course \"%s\" not found", sValue.c_str() );
 				m_bInvalid |= true;
@@ -209,9 +209,9 @@ void ModeChoice::Load( int iIndex, CString sChoice )
 
 	if( !m_bInvalid && sSteps != "" )
 	{
-		Song *pSong = (m_pSong != NULL)? m_pSong:GAMESTATE->m_pCurSong;
+		Song *pSong = (m_pSong != nullptr)? m_pSong:GAMESTATE->m_pCurSong;
 		const Style *style = m_pStyle ? m_pStyle : GAMESTATE->m_pCurStyle;
-		if( pSong == NULL || style == NULL )
+		if( pSong == nullptr || style == nullptr )
 			RageException::Throw( "Must set Song and Style to set Steps" );
 
 		Difficulty dc = StringToDifficulty( sSteps );
@@ -219,7 +219,7 @@ void ModeChoice::Load( int iIndex, CString sChoice )
 			m_pSteps = pSong->GetStepsByDifficulty( m_pStyle->m_StepsType, dc );
 		else
 			m_pSteps = pSong->GetStepsByDescription( m_pStyle->m_StepsType, sSteps );
-		if( m_pSteps == NULL )
+		if( m_pSteps == nullptr )
 		{
 			m_sInvalidReason = "steps not found";
 			m_bInvalid |= true;
@@ -260,7 +260,7 @@ int GetCreditsRequiredToPlayStyle( const Style *style )
 
 static bool AreStyleAndPlayModeCompatible( const Style *style, PlayMode pm )
 {
-	if( style == NULL || pm == PLAY_MODE_INVALID )
+	if( style == nullptr || pm == PLAY_MODE_INVALID )
 		return true;
 
 	switch( pm )
@@ -347,10 +347,10 @@ bool ModeChoice::IsPlayable( CString *why ) const
 
 	/* Don't allow a PlayMode that's incompatible with our current Style (if set),
 	 * and vice versa. */
-	if( m_pm != PLAY_MODE_INVALID || m_pStyle != NULL )
+	if( m_pm != PLAY_MODE_INVALID || m_pStyle != nullptr )
 	{
 		const PlayMode pm = (m_pm != PLAY_MODE_INVALID) ? m_pm : GAMESTATE->m_PlayMode;
-		const Style *style = (m_pStyle != NULL)? m_pStyle: GAMESTATE->m_pCurStyle;
+		const Style *style = (m_pStyle != nullptr)? m_pStyle: GAMESTATE->m_pCurStyle;
 		if( !AreStyleAndPlayModeCompatible( style, pm ) )
 		{
 			if( why )
@@ -405,12 +405,12 @@ void ModeChoice::Apply( PlayerNumber pn ) const
 
 	const PlayMode OldPlayMode = GAMESTATE->m_PlayMode;
 
-	if( m_pGame != NULL )
+	if( m_pGame != nullptr )
 		GAMESTATE->m_pCurGame = m_pGame;
 	if( m_pm != PLAY_MODE_INVALID )
 		GAMESTATE->m_PlayMode = m_pm;
 
-	if( m_pStyle != NULL )
+	if( m_pStyle != nullptr )
 	{
 		GAMESTATE->m_pCurStyle = m_pStyle;
 
@@ -482,7 +482,7 @@ void ModeChoice::Apply( PlayerNumber pn ) const
 	//
 	// We know what players are joined at the time we set the Style
 	//
-	if( m_pStyle != NULL )
+	if( m_pStyle != nullptr )
 	{
 		GAMESTATE->PlayersFinalized();
 	}
@@ -490,17 +490,17 @@ void ModeChoice::Apply( PlayerNumber pn ) const
 
 bool ModeChoice::IsZero() const
 {
-	if( m_pGame != NULL ||
+	if( m_pGame != nullptr ||
 		m_pm != PLAY_MODE_INVALID ||
-		m_pStyle != NULL ||
+		m_pStyle != nullptr ||
 		m_dc != DIFFICULTY_INVALID ||
 		m_sAnnouncer != "" ||
 		m_sModifiers != "" ||
-		m_pSong != NULL || 
-		m_pSteps != NULL || 
-		m_pCourse != NULL || 
-		m_pTrail != NULL || 
-		m_pCharacter != NULL || 
+		m_pSong != nullptr || 
+		m_pSteps != nullptr || 
+		m_pCourse != nullptr || 
+		m_pTrail != nullptr || 
+		m_pCharacter != nullptr || 
 		m_CourseDifficulty != DIFFICULTY_INVALID )
 		return false;
 

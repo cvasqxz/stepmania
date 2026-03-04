@@ -126,7 +126,7 @@ void NORETURN sm_crash( const char *reason = "Internal error" );
 /* Use CStdString: */
 #include "StdString.h"
 
-typedef const CString& CCStringRef;
+using CCStringRef = const CString&;
 
 /* Include this here to make sure our assertion handler is always
  * used.  (This file is a dependency of most everything anyway,

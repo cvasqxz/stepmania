@@ -99,7 +99,7 @@ SoundReader_FileReader::OpenResult RageSoundReader_Vorbisfile::Open(CString file
 		SetError( ssprintf("ogg: opening \"%s\" failed: %s", filename.c_str(), f->GetError().c_str()) );
 		delete f;
 		delete vf;
-		vf = NULL;
+		vf = nullptr;
 		return OPEN_FATAL_ERROR;
 	}
 
@@ -115,7 +115,7 @@ SoundReader_FileReader::OpenResult RageSoundReader_Vorbisfile::Open(CString file
 		SetError( ov_ssprintf(ret, "ov_open failed") );
 		delete f;
 		delete vf;
-		vf = NULL;
+		vf = nullptr;
 		switch( ret )
 		{
 		case OV_ENOTVORBIS:
@@ -222,7 +222,7 @@ int RageSoundReader_Vorbisfile::Read(char *buf, unsigned len)
 #endif
 			{
 				vorbis_info *vi = ov_info( vf, -1 );
-				ASSERT( vi != NULL );
+				ASSERT( vi != nullptr );
 
 				if( (unsigned) vi->channels != channels )
 					RageException::Throw( "File \"%s\" changes channel count from %i to %i; not supported", channels, vi->channels );
@@ -259,14 +259,14 @@ int RageSoundReader_Vorbisfile::GetSampleRate() const
 	ASSERT(vf);
 
 	vorbis_info *vi = ov_info(vf, -1);
-	ASSERT(vi != NULL);
+	ASSERT(vi != nullptr);
 
 	return vi->rate;
 }
 
 RageSoundReader_Vorbisfile::RageSoundReader_Vorbisfile()
 {
-	vf = NULL;
+	vf = nullptr;
 }
 
 RageSoundReader_Vorbisfile::~RageSoundReader_Vorbisfile()

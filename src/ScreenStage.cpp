@@ -72,7 +72,7 @@ ScreenStage::ScreenStage( CString sClassName ) : Screen( sClassName )
 	this->AddChild( &m_SongTitle );
 	this->AddChild( &m_Artist );
 
-	if(GAMESTATE->m_pCurSong != NULL)
+	if(GAMESTATE->m_pCurSong != nullptr)
 	{
 		m_SongTitle.SetText( GAMESTATE->m_pCurSong->m_sMainTitle );
 		m_Artist.SetText( GAMESTATE->m_pCurSong->m_sArtist );

@@ -64,7 +64,7 @@ void RageFile_JPEG_init_source( j_decompress_ptr cinfo )
 {
 	RageFile_source_mgr *src = (RageFile_source_mgr *) cinfo->src;
 	src->start_of_file = true;
-	src->pub.next_input_byte = NULL;
+	src->pub.next_input_byte = nullptr;
 	src->pub.bytes_in_buffer = 0;
 }
 
@@ -119,7 +119,7 @@ static RageSurface *RageSurface_Load_JPEG( RageFile *f, const char *fn, char err
 	jerr.pub.error_exit = my_error_exit;
 	jerr.pub.output_message = my_output_message;
 	
-	RageSurface *volatile img = NULL; /* volatile to prevent possible problems with setjmp */
+	RageSurface *volatile img = nullptr; /* volatile to prevent possible problems with setjmp */
 
 	if( setjmp(jerr.setjmp_buffer) )
 	{
@@ -210,7 +210,7 @@ RageSurfaceUtils::OpenResult RageSurface_Load_JPEG( const CString &sPath, RageSu
 
 	char errorbuf[1024];
 	ret = RageSurface_Load_JPEG( &f, sPath, errorbuf );
-	if( ret == NULL )
+	if( ret == nullptr )
 	{
 		error = errorbuf;
 		return RageSurfaceUtils::OPEN_UNKNOWN_FILE_FORMAT; // XXX

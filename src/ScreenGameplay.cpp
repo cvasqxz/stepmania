@@ -105,16 +105,16 @@ void ScreenGameplay::Init()
 
     FOREACH_PlayerNumber(p)
 	{
-		m_pLifeMeter[p] = NULL;
-		m_pPrimaryScoreDisplay[p] = NULL;
-		m_pSecondaryScoreDisplay[p] = NULL;
-		m_pPrimaryScoreKeeper[p] = NULL;
-		m_pSecondaryScoreKeeper[p] = NULL;
-		m_pInventory[p] = NULL ;
+		m_pLifeMeter[p] = nullptr;
+		m_pPrimaryScoreDisplay[p] = nullptr;
+		m_pSecondaryScoreDisplay[p] = nullptr;
+		m_pPrimaryScoreKeeper[p] = nullptr;
+		m_pSecondaryScoreKeeper[p] = nullptr;
+		m_pInventory[p] = nullptr ;
 	}
-	m_pCombinedLifeMeter = NULL;
+	m_pCombinedLifeMeter = nullptr;
 
-	if( GAMESTATE->m_pCurSong == NULL && GAMESTATE->m_pCurCourse == NULL )
+	if( GAMESTATE->m_pCurSong == nullptr && GAMESTATE->m_pCurCourse == nullptr )
 		return;	// ScreenDemonstration will move us to the next scren.  We just need to survive for one update without crashing.
 
 	/* This is usually done already, but we might have come here without going through
@@ -1080,7 +1080,7 @@ void ScreenGameplay::LoadNextSong()
 		ASSERT( GAMESTATE->m_pCurSong );
 
 		Steps *pSteps = GAMESTATE->m_pCurSong->GetClosestNotes( STEPS_TYPE_LIGHTS_CABINET, StringToDifficulty(PREFSMAN->m_sLightsStepsDifficulty) );
-		if( pSteps != NULL )
+		if( pSteps != nullptr )
 		{
 			pSteps->GetNoteData( &m_CabinetLightsNoteData );
 		}
@@ -1187,7 +1187,7 @@ void ScreenGameplay::PlayAnnouncer( CString type, float fSeconds )
 	/* Don't play before the first beat, or after we're finished. */
 	if( m_DancingState != STATE_DANCING )
 		return;
-	if( GAMESTATE->m_pCurSong == NULL  ||	// this will be true on ScreenDemonstration sometimes
+	if( GAMESTATE->m_pCurSong == nullptr  ||	// this will be true on ScreenDemonstration sometimes
 		GAMESTATE->m_fSongBeat < GAMESTATE->m_pCurSong->m_fFirstBeat )
 		return;
 
@@ -1215,7 +1215,7 @@ void ScreenGameplay::UpdateSongPosition( float fDeltaTime )
 
 void ScreenGameplay::Update( float fDeltaTime )
 {
-	if( GAMESTATE->m_pCurSong == NULL  )
+	if( GAMESTATE->m_pCurSong == nullptr  )
 	{
 		/* ScreenDemonstration will move us to the next screen.  We just need to
 		 * survive for one update without crashing.  We need to call Screen::Update
@@ -1269,7 +1269,7 @@ void ScreenGameplay::Update( float fDeltaTime )
 
 	/* This happens if ScreenDemonstration::HandleScreenMessage sets a new screen when
 	 * PREFSMAN->m_bDelayedScreenLoad. */
-	if( GAMESTATE->m_pCurSong == NULL )
+	if( GAMESTATE->m_pCurSong == nullptr )
 		return;
 	/* This can happen if ScreenDemonstration::HandleScreenMessage sets a new screen when
 	 * !PREFSMAN->m_bDelayedScreenLoad.  (The new screen was loaded when we called Screen::Update,
@@ -1406,7 +1406,7 @@ void ScreenGameplay::Update( float fDeltaTime )
 		//
         FOREACH_EnabledPlayer(p)
 		{
-			if(m_Background.GetDancingCharacters() != NULL)
+			if(m_Background.GetDancingCharacters() != nullptr)
 			{
 				if(m_Player[p].GetDancingCharacterState() != AS2D_IGNORE) // grab the state of play from player and update the character
 					m_Background.GetDancingCharacters()->Change2DAnimState(p,m_Player[p].GetDancingCharacterState());

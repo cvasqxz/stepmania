@@ -13,7 +13,7 @@
 #include "Style.h"
 
 
-InputMapper*	INPUTMAPPER = NULL;	// global and accessable from anywhere in our program
+InputMapper*	INPUTMAPPER = nullptr;	// global and accessable from anywhere in our program
 
 #define KEYMAPS_PATH "Data/Keymaps.ini"
 
@@ -354,7 +354,7 @@ void InputMapper::AutoMapJoysticksForCurrentGame()
 
 void InputMapper::ReadMappingsFromDisk()
 {
-	ASSERT( GAMEMAN != NULL );
+	ASSERT( GAMEMAN != nullptr );
 
 	ClearAllMappings();
 
@@ -519,7 +519,7 @@ bool InputMapper::GameToDevice( GameInput GameI, int iSoltNum, DeviceInput& Devi
 
 void InputMapper::GameToStyle( GameInput GameI, StyleInput &StyleI )
 {
-	if( GAMESTATE->m_pCurStyle == NULL )
+	if( GAMESTATE->m_pCurStyle == nullptr )
 	{
 		StyleI.MakeInvalid();
 		return;

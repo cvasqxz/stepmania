@@ -109,7 +109,7 @@ void DifficultyMeter::SetFromGameState( PlayerNumber pn )
 
 void DifficultyMeter::SetFromSteps( const Steps* pSteps )
 {
-	if( pSteps == NULL )
+	if( pSteps == nullptr )
 	{
 		Unset();
 		return;
@@ -121,7 +121,7 @@ void DifficultyMeter::SetFromSteps( const Steps* pSteps )
 
 void DifficultyMeter::SetFromTrail( const Trail* pTrail )
 {
-	if( pTrail == NULL )
+	if( pTrail == nullptr )
 	{
 		Unset();
 		return;

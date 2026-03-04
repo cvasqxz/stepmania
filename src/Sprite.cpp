@@ -15,7 +15,7 @@
 
 Sprite::Sprite()
 {
-	m_pTexture = NULL;
+	m_pTexture = nullptr;
 	m_bDrawIfTextureNull = false;
 	m_iCurState = 0;
 	m_fSecsIntoState = 0.0;
@@ -197,10 +197,10 @@ retry:
 
 void Sprite::UnloadTexture()
 {
-	if( m_pTexture != NULL )			// If there was a previous bitmap...
+	if( m_pTexture != nullptr )			// If there was a previous bitmap...
 	{
 		TEXTUREMAN->UnloadTexture( m_pTexture );	// Unload it.
-		m_pTexture = NULL;
+		m_pTexture = nullptr;
 
 		/* Make sure we're reset to frame 0, so if we're reused, we aren't left on
 		 * a frame number that may be greater than the number of frames in the newly
@@ -231,7 +231,7 @@ bool Sprite::LoadFromTexture( RageTextureID ID )
 		ASSERT( m_pTexture->GetTextureHeight() >= 0 );
 	}
 
-	ASSERT( m_pTexture != NULL );
+	ASSERT( m_pTexture != nullptr );
 
 	/* Hack: if we load "_blank", mark the actor hidden, so we can short-circuit
 	 * rendering later on.  (This helps NoteField rendering.) */
@@ -239,8 +239,8 @@ bool Sprite::LoadFromTexture( RageTextureID ID )
 		this->SetHidden( true );
 	
 	// the size of the sprite is the size of the image before it was scaled
-	Sprite::m_size.x = (float)m_pTexture->GetSourceFrameWidth();
-	Sprite::m_size.y = (float)m_pTexture->GetSourceFrameHeight();		
+	Sprite::m_size.x = static_cast<float>(m_pTexture->GetSourceFrameWidth());
+	Sprite::m_size.y = static_cast<float>(m_pTexture->GetSourceFrameHeight());		
 
 	// Assume the frames of this animation play in sequential order with 0.1 second delay.
 	m_States.clear();
@@ -480,7 +480,7 @@ RageColor scale( float x, float l1, float h1, const RageColor &a, const RageColo
 
 bool Sprite::EarlyAbortDraw()
 {
-	return m_pTexture == NULL && !m_bDrawIfTextureNull;
+	return m_pTexture == nullptr && !m_bDrawIfTextureNull;
 //	return false;
 }
 
@@ -671,10 +671,10 @@ void Sprite::SetCustomTextureCoords( float fTexCoords[8] ) // order: top left, b
 void Sprite::SetCustomImageRect( RectF rectImageCoords )
 {
 	// Convert to a rectangle in texture coordinate space.
-	rectImageCoords.left	*= m_pTexture->GetImageWidth()	/ (float)m_pTexture->GetTextureWidth();
-	rectImageCoords.right	*= m_pTexture->GetImageWidth()	/ (float)m_pTexture->GetTextureWidth();
-	rectImageCoords.top		*= m_pTexture->GetImageHeight()	/ (float)m_pTexture->GetTextureHeight(); 
-	rectImageCoords.bottom	*= m_pTexture->GetImageHeight()	/ (float)m_pTexture->GetTextureHeight(); 
+	rectImageCoords.left	*= m_pTexture->GetImageWidth()	/ static_cast<float>(m_pTexture->GetTextureWidth());
+	rectImageCoords.right	*= m_pTexture->GetImageWidth()	/ static_cast<float>(m_pTexture->GetTextureWidth());
+	rectImageCoords.top		*= m_pTexture->GetImageHeight()	/ static_cast<float>(m_pTexture->GetTextureHeight());
+	rectImageCoords.bottom	*= m_pTexture->GetImageHeight()	/ static_cast<float>(m_pTexture->GetTextureHeight()); 
 
 	SetCustomTextureRect( rectImageCoords );
 }
@@ -684,8 +684,8 @@ void Sprite::SetCustomImageCoords( float fImageCoords[8] )	// order: top left, b
 	// convert image coords to texture coords in place
 	for( int i=0; i<8; i+=2 )
 	{
-		fImageCoords[i+0] *= m_pTexture->GetImageWidth()	/ (float)m_pTexture->GetTextureWidth(); 
-		fImageCoords[i+1] *= m_pTexture->GetImageHeight()	/ (float)m_pTexture->GetTextureHeight(); 
+		fImageCoords[i+0] *= m_pTexture->GetImageWidth()	/ static_cast<float>(m_pTexture->GetTextureWidth());
+		fImageCoords[i+1] *= m_pTexture->GetImageHeight()	/ static_cast<float>(m_pTexture->GetTextureHeight()); 
 	}
 
 	SetCustomTextureCoords( fImageCoords );

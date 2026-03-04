@@ -18,7 +18,7 @@
 
 SoundReader_FileReader *SoundReader_FileReader::TryOpenFile( CString filename, CString &error, CString format, bool &bKeepTrying )
 {
-	SoundReader_FileReader *Sample = NULL;
+	SoundReader_FileReader *Sample = nullptr;
 
 #ifndef NO_WAV_SUPPORT
 	if( !format.CompareNoCase("wav") )

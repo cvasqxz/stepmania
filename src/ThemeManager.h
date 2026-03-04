@@ -10,7 +10,7 @@
 
 class IniFile;
 
-enum ElementCategory { BGAnimations, Fonts, Graphics, Numbers, Sounds, Other, NUM_ELEMENT_CATEGORIES };
+enum ElementCategory : int { BGAnimations, Fonts, Graphics, Numbers, Sounds, Other, NUM_ELEMENT_CATEGORIES };
 
 struct Theme;
 

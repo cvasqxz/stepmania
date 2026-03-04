@@ -552,7 +552,7 @@ int RageSoundReader_WAV::Read(char *buf, unsigned len)
 #endif
 	}
 
-	static int16_t *tmpbuf = NULL;
+	static int16_t *tmpbuf = nullptr;
 	static unsigned tmpbufsize = 0;
 	if( len > tmpbufsize )
 	{

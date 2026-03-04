@@ -25,7 +25,7 @@ bool CompareStepsPointersBySortValueDescending(const Steps *pSteps1, const Steps
 void StepsUtil::SortStepsPointerArrayByNumPlays( vector<Steps*> &vStepsPointers, ProfileSlot slot, bool bDescending )
 {
 	Profile* pProfile = PROFILEMAN->GetProfile(slot);
-	if( pProfile == NULL )
+	if( pProfile == nullptr )
 		return;	// nothing to do since we don't have data
 	SortStepsPointerArrayByNumPlays( vStepsPointers, pProfile, bDescending );
 }
@@ -110,7 +110,7 @@ void StepsUtil::SortStepsByTypeAndDifficulty( vector<Steps*> &arraySongPointers 
 
 void StepsID::FromSteps( const Steps *p )
 {
-	if( p == NULL )
+	if( p == nullptr )
 	{
 		st = STEPS_TYPE_INVALID;
 		dc = DIFFICULTY_INVALID;
@@ -160,7 +160,7 @@ Steps *StepsID::ToSteps( const Song *p, bool bAllowNull, bool bUseCache ) const
 	else
 		p->GetSteps( vNotes, st, dc, -1, -1, "", true, 1 );
 
-	Steps *ret = NULL;
+	Steps *ret = nullptr;
 	if( !vNotes.empty() )
 		ret = vNotes[0];
 	else if( !bAllowNull )

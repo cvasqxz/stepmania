@@ -42,7 +42,7 @@ MusicBannerWheel::MusicBannerWheel()
 	bScanning = false;
 
 	// Use pref DefaultModifiers to acomplish this
-//	if(DEFAULT_SCROLL_DIRECTION && GAMESTATE->m_pCurSong == NULL) /* check the song is null... incase they have just come back from a song and changed their PlayerOptions */
+//	if(DEFAULT_SCROLL_DIRECTION && GAMESTATE->m_pCurSong == nullptr) /* check the song is null... incase they have just come back from a song and changed their PlayerOptions */
 //	{
 //		for(int i=0; i<NUM_PLAYERS; i++)
 //			GAMESTATE->m_PlayerOptions[i].m_fReverseScroll = 1;
@@ -70,7 +70,7 @@ MusicBannerWheel::MusicBannerWheel()
 
 
 	// If there is no currently selected song, select one.
-	if( GAMESTATE->m_pCurSong == NULL )
+	if( GAMESTATE->m_pCurSong == nullptr )
 	{
 		currentPos=0;
 	}
@@ -107,7 +107,7 @@ works only if there are 5 banners in the scrolling list.
 ********************************************/
 void MusicBannerWheel::InsertNewBanner(int direction)
 {
-	Song* pSong = NULL;
+	Song* pSong = nullptr;
 	CString sGraphicPath;
 	int elementtoreplace=0;	
 
@@ -128,7 +128,7 @@ void MusicBannerWheel::InsertNewBanner(int direction)
 		else
 			pSong = arraySongs[(arraySongs.size()-1) + (currentPos-2)];	// wrap around. (it does honestly!)		
 
-		if( pSong == NULL ) sGraphicPath = (THEME->GetPathToG("Common fallback banner"));
+		if( pSong == nullptr ) sGraphicPath = (THEME->GetPathToG("Common fallback banner"));
 		else if (pSong->HasBanner()) sGraphicPath = (pSong->GetBannerPath());
 		else sGraphicPath = (THEME->GetPathToG("Common fallback banner"));
 
@@ -154,7 +154,7 @@ void MusicBannerWheel::InsertNewBanner(int direction)
 		else
 			pSong = arraySongs[0+ (((currentPos+2) - (arraySongs.size()-1)) - 1)]; // wrap around. (it does honestly!)
 
-		if( pSong == NULL ) sGraphicPath = (THEME->GetPathToG("Common fallback banner"));
+		if( pSong == nullptr ) sGraphicPath = (THEME->GetPathToG("Common fallback banner"));
 		else if (pSong->HasBanner()) sGraphicPath = (pSong->GetBannerPath());
 		else sGraphicPath = (THEME->GetPathToG("Common fallback banner"));
 
@@ -190,7 +190,7 @@ and once only.
 *****************************/
 void MusicBannerWheel::LoadSongData()
 {
-	Song* pSong = NULL;
+	Song* pSong = nullptr;
 	CStringArray asGraphicPaths;
 
 	if(MAXSONGSINBUFFER >= arraySongs.size() && SingleLoad != 1)  // less than the MAXSONGSINBUFFER means we can get away with loading the lot in one go
@@ -205,7 +205,7 @@ void MusicBannerWheel::LoadSongData()
 			{
 				pSong = arraySongs[c];
 
-				if( pSong == NULL ) asGraphicPaths.push_back(THEME->GetPathToG("Common fallback banner"));
+				if( pSong == nullptr ) asGraphicPaths.push_back(THEME->GetPathToG("Common fallback banner"));
 				else if (pSong->HasBanner()) asGraphicPaths.push_back(pSong->GetBannerPath());
 				else asGraphicPaths.push_back(THEME->GetPathToG("Common fallback banner"));	
 			}
@@ -256,7 +256,7 @@ void MusicBannerWheel::LoadSongData()
 					pSong = arraySongs[arraySongs.size()-1];
 			}
 
-			if( pSong == NULL ) asGraphicPaths.push_back(THEME->GetPathToG("Common fallback banner"));
+			if( pSong == nullptr ) asGraphicPaths.push_back(THEME->GetPathToG("Common fallback banner"));
 			else if (pSong->HasBanner()) asGraphicPaths.push_back(pSong->GetBannerPath());
 			else asGraphicPaths.push_back(THEME->GetPathToG("Common fallback banner"));
 		}

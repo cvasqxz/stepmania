@@ -32,17 +32,17 @@
 #include <set>
 
 
-GameState*	GAMESTATE = NULL;	// global and accessable from anywhere in our program
+GameState*	GAMESTATE = nullptr;	// global and accessable from anywhere in our program
 
 #define CHARACTERS_DIR "Characters/"
 #define NAMES_BLACKLIST_FILE "Data/NamesBlacklist.dat"
 
 GameState::GameState()
 {
-	m_pPosition = NULL;
-	m_pCurStyle = NULL;
+	m_pPosition = nullptr;
+	m_pCurStyle = nullptr;
 
-	m_pCurGame = NULL;
+	m_pCurGame = nullptr;
 	m_iCoins = 0;
 	m_timeGameStarted.SetZero();
 	m_bIsOnSystemMenu = false;
@@ -105,7 +105,7 @@ void GameState::Reset()
 	ASSERT( THEME );
 
 	m_timeGameStarted.SetZero();
-	m_pCurStyle = NULL;
+	m_pCurStyle = nullptr;
 	FOREACH_PlayerNumber( p )
 		m_bSideIsJoined[p] = false;
 	m_bPlayersFinalized = false;
@@ -134,14 +134,14 @@ void GameState::Reset()
 	m_iGameSeed = rand();
 	m_iRoundSeed = rand();
 
-	m_pCurSong = NULL;
-	m_pPreferredSong = NULL;
+	m_pCurSong = nullptr;
+	m_pPreferredSong = nullptr;
 	FOREACH_PlayerNumber( p )
-		m_pCurSteps[p] = NULL;
-	m_pCurCourse = NULL;
-	m_pPreferredCourse = NULL;
+		m_pCurSteps[p] = nullptr;
+	m_pCurCourse = nullptr;
+	m_pPreferredCourse = nullptr;
 	FOREACH_PlayerNumber( p )
-		m_pCurTrail[p] = NULL;
+		m_pCurTrail[p] = nullptr;
 
 	SAFE_DELETE( m_pPosition );
 	m_pPosition = new NoteFieldPositioning("Positioning.ini");
@@ -259,9 +259,9 @@ void GameState::PlayersFinalized()
 			m_PreferredDifficulty[pn] = pProfile->m_LastDifficulty;
 		if( pProfile->m_LastCourseDifficulty != DIFFICULTY_INVALID )
 			m_PreferredCourseDifficulty[pn] = pProfile->m_LastCourseDifficulty;
-		if( m_pPreferredSong == NULL )
+		if( m_pPreferredSong == nullptr )
 			m_pPreferredSong = pProfile->m_lastSong.ToSong();
-		if( m_pPreferredCourse == NULL )
+		if( m_pPreferredCourse == nullptr )
 			m_pPreferredCourse = pProfile->m_lastCourse.ToCourse();
 	}
 
@@ -329,7 +329,7 @@ void GameState::EndGame()
 
 
 	// Update totalPlaySeconds stat
-	int iPlaySeconds = max( 0, (int) m_timeGameStarted.PeekDeltaTime() );
+	int iPlaySeconds = max( 0, static_cast<int>(m_timeGameStarted.PeekDeltaTime()) );
 
 	Profile* pMachineProfile = PROFILEMAN->GetMachineProfile();
 	pMachineProfile->m_iTotalPlaySeconds += iPlaySeconds;
@@ -450,7 +450,7 @@ void GameState::ReloadCharacters()
 	m_pCharacters.clear();
 
 	FOREACH_PlayerNumber( p )
-		m_pCurCharacters[p] = NULL;
+		m_pCurCharacters[p] = nullptr;
 
 	CStringArray as;
 	GetDirListing( CHARACTERS_DIR "*", as, true, true );
@@ -636,11 +636,11 @@ void GameState::FinishStage()
 	//
 	FOREACH_HumanPlayer( pn )
 	{
-		int iNumTapsAndHolds	= (int) g_CurStageStats.radarActual[pn][RADAR_NUM_TAPS_AND_HOLDS];
-		int iNumJumps			= (int) g_CurStageStats.radarActual[pn][RADAR_NUM_JUMPS];
-		int iNumHolds			= (int) g_CurStageStats.radarActual[pn][RADAR_NUM_HOLDS];
-		int iNumMines			= (int) g_CurStageStats.radarActual[pn][RADAR_NUM_MINES];
-		int iNumHands			= (int) g_CurStageStats.radarActual[pn][RADAR_NUM_HANDS];
+		int iNumTapsAndHolds	= static_cast<int>(g_CurStageStats.radarActual[pn][RADAR_NUM_TAPS_AND_HOLDS]);
+		int iNumJumps			= static_cast<int>(g_CurStageStats.radarActual[pn][RADAR_NUM_JUMPS]);
+		int iNumHolds			= static_cast<int>(g_CurStageStats.radarActual[pn][RADAR_NUM_HOLDS]);
+		int iNumMines			= static_cast<int>(g_CurStageStats.radarActual[pn][RADAR_NUM_MINES]);
+		int iNumHands			= static_cast<int>(g_CurStageStats.radarActual[pn][RADAR_NUM_HANDS]);
 		PROFILEMAN->AddStepTotals( pn, iNumTapsAndHolds, iNumJumps, iNumHolds, iNumMines, iNumHands );
 	}
 
@@ -648,7 +648,7 @@ void GameState::FinishStage()
 	// Update profile stats
 	Profile* pMachineProfile = PROFILEMAN->GetMachineProfile();
 
-	int iGameplaySeconds = (int)truncf(g_CurStageStats.fGameplaySeconds);
+	int iGameplaySeconds = static_cast<int>(truncf(g_CurStageStats.fGameplaySeconds));
 
 	pMachineProfile->m_iTotalGameplaySeconds += iGameplaySeconds;
 	pMachineProfile->m_iCurrentCombo = 0;
@@ -790,7 +790,7 @@ CString GameState::GetPlayerDisplayName( PlayerNumber pn ) const
 
 bool GameState::PlayersCanJoin() const
 {
-	return GetNumSidesJoined() == 0 || this->m_pCurStyle == NULL;	// selecting a style finalizes the players
+	return GetNumSidesJoined() == 0 || this->m_pCurStyle == nullptr;	// selecting a style finalizes the players
 }
 
 bool GameState::EnoughCreditsToJoin() const
@@ -819,7 +819,7 @@ int GameState::GetNumSidesJoined() const
 
 const Game* GameState::GetCurrentGame()
 {
-	ASSERT( m_pCurGame != NULL );	// the game must be set before calling this
+	ASSERT( m_pCurGame != nullptr );	// the game must be set before calling this
 	return m_pCurGame;
 }
 
@@ -858,7 +858,7 @@ bool GameState::PlayerUsingBothSides() const
 
 bool GameState::IsHumanPlayer( PlayerNumber pn ) const
 {
-	if( m_pCurStyle == NULL )	// no style chosen
+	if( m_pCurStyle == nullptr )	// no style chosen
 	{
 		if( this->PlayersCanJoin() )	
 			return m_bSideIsJoined[pn];	// only allow input from sides that have already joined
@@ -1016,7 +1016,7 @@ void GameState::GetFinalEvalStats( StageStats& statsOut ) const
 
 	// Show stats only for the latest 3 normal songs + passed extra stages
 	int PassedRegularSongsLeft = 3;
-	for( int i = (int)g_vPlayedStageStats.size()-1; i >= 0; --i )
+	for( int i = static_cast<int>(g_vPlayedStageStats.size())-1; i >= 0; --i )
 	{
 		const StageStats &s = g_vPlayedStageStats[i];
 
@@ -1395,7 +1395,7 @@ void GameState::GetRankingFeats( PlayerNumber pn, vector<RankingFeat> &asFeatsOu
 
 			for( unsigned i=0; i<g_vPlayedStageStats.size(); i++ )
 			{
-				CHECKPOINT_M( ssprintf("%u/%i", i, (int)g_vPlayedStageStats.size() ) );
+				CHECKPOINT_M( ssprintf("%u/%i", i, static_cast<int>(g_vPlayedStageStats.size()) ) );
 				SongAndSteps sas;
 				sas.pSong = g_vPlayedStageStats[i].vpSongs[0];
 				ASSERT( sas.pSong );
@@ -1830,7 +1830,7 @@ Difficulty GameState::GetEasiestNotesDifficulty() const
 	Difficulty dc = DIFFICULTY_INVALID;
 	FOREACH_HumanPlayer( p )
 	{
-		if( this->m_pCurSteps[p] == NULL )
+		if( this->m_pCurSteps[p] == nullptr )
 		{
 			LOG->Warn( "GetEasiestNotesDifficulty called but p%i hasn't chosen notes", p+1 );
 			continue;
@@ -1864,7 +1864,7 @@ LuaFunction_NoArgs( IsExtraStage,			GAMESTATE->IsExtraStage() )
 LuaFunction_NoArgs( IsExtraStage2,			GAMESTATE->IsExtraStage2() )
 LuaFunction_NoArgs( CourseSongIndex,		GAMESTATE->GetCourseSongIndex() )
 LuaFunction_NoArgs( PlayModeName,			PlayModeToString(GAMESTATE->m_PlayMode) )
-LuaFunction_NoArgs( CurStyleName,			CString( GAMESTATE->m_pCurStyle == NULL ? "none": GAMESTATE->GetCurrentStyle()->m_szName ) )
+LuaFunction_NoArgs( CurStyleName,			CString( GAMESTATE->m_pCurStyle == nullptr ? "none": GAMESTATE->GetCurrentStyle()->m_szName ) )
 LuaFunction_NoArgs( GetNumPlayersEnabled,	GAMESTATE->GetNumPlayersEnabled() )
 LuaFunction_NoArgs( PlayerUsingBothSides,	GAMESTATE->PlayerUsingBothSides() )
 LuaFunction_NoArgs( GetEasiestNotesDifficulty, GAMESTATE->GetEasiestNotesDifficulty() )

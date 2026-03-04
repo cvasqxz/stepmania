@@ -574,7 +574,7 @@ const ConfOption *ConfOption::Find( CString name )
 
 void ConfOption::MakeOptionsList( CStringArray &out ) const
 {
-	if( MakeOptionsListCB == NULL )
+	if( MakeOptionsListCB == nullptr )
 	{
 		out = names;
 		return;

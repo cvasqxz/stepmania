@@ -82,7 +82,7 @@ ScreenSelectMode::ScreenSelectMode( CString sClassName ) : ScreenSelect( sClassN
 
 		for(unsigned i=0; i<apCharacters.size(); i++)
 		{
-			if(apCharacters[i] != NULL) // check its not null
+			if(apCharacters[i] != nullptr) // check its not null
 			{
 				m_bCharsAvailable = true;
 				if(apCharacters[i]->Has2DElems())
@@ -194,7 +194,7 @@ void ScreenSelectMode::UpdateSelectableChoices()
 
 		// FIXME for new premium prefs
 		const int SidesJoinedToPlay = 
-			(mc.m_pStyle == NULL) ?
+			(mc.m_pStyle == nullptr) ?
 			1 :
 			1;
 			if( PREFSMAN->GetPremium()!=PrefsManager::JOINT_PREMIUM ||
@@ -263,7 +263,7 @@ void ScreenSelectMode::SetCharacters()
 			GAMESTATE->GetCharacters( apCharacters );
 			for(unsigned i=0; i<apCharacters.size(); i++)
 			{
-				if(apCharacters[i] != NULL) // check its not null
+				if(apCharacters[i] != nullptr) // check its not null
 				{
 					if(apCharacters[i]->Has2DElems())
 					{
@@ -363,7 +363,7 @@ void ScreenSelectMode::MenuUp(PlayerNumber pn)
 			GAMESTATE->GetCharacters( apCharacters );
 			for(unsigned i=0; i<apCharacters.size(); i++)
 			{
-				if(apCharacters[i] != NULL) // check its not null
+				if(apCharacters[i] != nullptr) // check its not null
 				{
 					if(apCharacters[i]->Has2DElems())
 					{
@@ -409,7 +409,7 @@ void ScreenSelectMode::MenuDown(PlayerNumber pn)
 			GAMESTATE->GetCharacters( apCharacters );
 			for(unsigned i=0; i<apCharacters.size(); i++)
 			{
-				if(apCharacters[i] != NULL) // check its not null
+				if(apCharacters[i] != nullptr) // check its not null
 				{
 					if(apCharacters[i]->Has2DElems())
 					{

@@ -37,7 +37,7 @@ ScreenDemonstration::ScreenDemonstration( CString sName ) : ScreenJukebox( sName
 {
 	LOG->Trace( "ScreenDemonstration::ScreenDemonstration()" );
 
-	if( GAMESTATE->m_pCurSong == NULL )	// we didn't find a song.
+	if( GAMESTATE->m_pCurSong == nullptr )	// we didn't find a song.
 	{
 		HandleScreenMessage( SM_GoToNextScreen );	// Abort demonstration.
 		return;

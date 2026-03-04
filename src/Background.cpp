@@ -39,8 +39,8 @@ Background::Background()
 	DANGER_ALL_IS_OPAQUE.Refresh();
 
 	m_iCurBGChangeIndex = -1;
-	m_pCurrentBGA = NULL;
-	m_pFadingBGA = NULL;
+	m_pCurrentBGA = nullptr;
+	m_pFadingBGA = nullptr;
 	m_fSecsLeftInFade = 0;
 
 	m_DangerAll.LoadFromAniDir( THEME->GetPathToB("ScreenGameplay danger all") );
@@ -66,7 +66,7 @@ Background::Background()
 	if( bOneOrMoreChars && !bShowingBeginnerHelper )
 		m_pDancingCharacters = new DancingCharacters;
 	else
-		m_pDancingCharacters = NULL;
+		m_pDancingCharacters = nullptr;
 
 	m_quadBorder[0].StretchTo( RectF(SCREEN_LEFT,SCREEN_TOP,LEFT_EDGE,SCREEN_BOTTOM) );
 	m_quadBorder[0].SetDiffuse( RageColor(0,0,0,1) );
@@ -101,9 +101,9 @@ void Background::Unload()
 	m_RandomBGAnimations.clear();
 	m_aBGChanges.clear();
 
-	m_pCurrentBGA = NULL;
-	m_pFadingBGA = NULL;
-	m_pSong = NULL;
+	m_pCurrentBGA = nullptr;
+	m_pFadingBGA = nullptr;
+	m_pSong = nullptr;
 	m_fSecsLeftInFade = 0;
 	m_iCurBGChangeIndex = -1;
 	m_fLastMusicSeconds	= -9999;
@@ -191,7 +191,7 @@ CString Background::CreateRandomBGA()
 		return "";
 
 	/* If we already have enough random BGAs loaded, use them round-robin. */
-	if( (int) m_RandomBGAnimations.size() >= PREFSMAN->m_iNumBackgrounds )
+	if( static_cast<int>(m_RandomBGAnimations.size()) >= PREFSMAN->m_iNumBackgrounds )
 	{
 		/* XXX: every time we fully loop, shuffle, so we don't play the same sequence
 		 * over and over; and nudge the shuffle so the next one won't be a repeat */
@@ -286,7 +286,7 @@ void Background::LoadFromRandom( float fFirstBeat, float fLastBeat, const Timing
 	{
 		const BPMSegment& bpmseg = timing.m_BPMSegments[i];
 
-		if( fmodf(bpmseg.m_fStartBeat, (float)BEATS_PER_MEASURE) != 0 )
+		if( fmodf(bpmseg.m_fStartBeat, static_cast<float>(BEATS_PER_MEASURE)) != 0 )
 			continue;	// skip
 
 		if( bpmseg.m_fStartBeat < fFirstBeat  || bpmseg.m_fStartBeat > fLastBeat )
@@ -314,8 +314,8 @@ void Background::LoadFromSong( const Song* pSong )
 
 	TEXTUREMAN->DisableOddDimensionWarning();
 
-	const float fXZoom = RECT_BACKGROUND.GetWidth() / (float)SCREEN_WIDTH;
-	const float fYZoom = RECT_BACKGROUND.GetHeight() / (float)SCREEN_HEIGHT;
+	const float fXZoom = RECT_BACKGROUND.GetWidth() / static_cast<float>(SCREEN_WIDTH);
+	const float fYZoom = RECT_BACKGROUND.GetHeight() / static_cast<float>(SCREEN_HEIGHT);
 
 	CString sSongBGPath = pSong && pSong->HasBackground() ? pSong->GetBackgroundPath() : THEME->GetPathToG("Common fallback background");
 
@@ -398,22 +398,22 @@ void Background::LoadFromSong( const Song* pSong )
 		 iter != m_BGAnimations.end();
 		 iter++ )
 	{
-		iter->second->SetXY( (float)LEFT_EDGE, (float)TOP_EDGE );
+		iter->second->SetXY( static_cast<float>(LEFT_EDGE), static_cast<float>(TOP_EDGE) );
 		iter->second->SetZoomX( fXZoom );
 		iter->second->SetZoomY( fYZoom );
 	}
 		
-	m_DangerAll.SetXY( (float)LEFT_EDGE, (float)TOP_EDGE );
+	m_DangerAll.SetXY( static_cast<float>(LEFT_EDGE), static_cast<float>(TOP_EDGE) );
 	m_DangerAll.SetZoomX( fXZoom );
 	m_DangerAll.SetZoomY( fYZoom );	
 
 	FOREACH_PlayerNumber( p )
 	{
-		m_DangerPlayer[p].SetXY( (float)LEFT_EDGE, (float)TOP_EDGE );
+		m_DangerPlayer[p].SetXY( static_cast<float>(LEFT_EDGE), static_cast<float>(TOP_EDGE) );
 		m_DangerPlayer[p].SetZoomX( fXZoom );
 		m_DangerPlayer[p].SetZoomY( fYZoom );	
 	
-		m_DeadPlayer[p].SetXY( (float)LEFT_EDGE, (float)TOP_EDGE );
+		m_DeadPlayer[p].SetXY( static_cast<float>(LEFT_EDGE), static_cast<float>(TOP_EDGE) );
 		m_DeadPlayer[p].SetZoomX( fXZoom );
 		m_DeadPlayer[p].SetZoomY( fYZoom );	
 	}
@@ -475,7 +475,7 @@ void Background::UpdateCurBGChange( float fCurrentTime )
 		if( change.m_bFadeLast )
 			m_pFadingBGA = m_pCurrentBGA;
 		else
-			m_pFadingBGA = NULL;
+			m_pFadingBGA = nullptr;
 
 		m_pCurrentBGA = m_BGAnimations[ change.m_sBGName ];
 
@@ -545,7 +545,7 @@ void Background::Update( float fDeltaTime )
 		{
 			/* Reset its diffuse color, in case we reuse it. */
 			m_pFadingBGA->SetDiffuse( RageColor(1,1,1,1) );
-			m_pFadingBGA = NULL;
+			m_pFadingBGA = nullptr;
 		}
 	}
 
@@ -606,7 +606,7 @@ bool Background::IsDangerAllVisible()
 		return false;
 
 	if( BLINK_DANGER_ALL )
-		return (RageTimer::GetTimeSinceStart() - (int)RageTimer::GetTimeSinceStart()) < 0.5f;
+		return (RageTimer::GetTimeSinceStart() - static_cast<int>(RageTimer::GetTimeSinceStart())) < 0.5f;
 	else
 		return true;
 }

@@ -17,7 +17,7 @@ void Actor::Reset()
 	m_TweenStates.clear();
 	m_TweenInfo.clear();
 
-	m_pTempState = NULL;
+	m_pTempState = nullptr;
 
 	m_baseRotation = RageVector3( 0, 0, 0 );
 	m_baseScale = RageVector3( 1, 1, 1 );
@@ -414,8 +414,8 @@ void Actor::HurryTweening( float factor )
 void Actor::ScaleTo( const RectI &rect, StretchType st )
 {
 	// width and height of rectangle
-	float rect_width = (float) rect.GetWidth();
-	float rect_height = (float) rect.GetHeight();
+	float rect_width = static_cast<float>(rect.GetWidth());
+	float rect_height = static_cast<float>(rect.GetHeight());
 
 	if( rect_width < 0 )	SetRotationY( 180 );
 	if( rect_height < 0 )	SetRotationX( 180 );
@@ -471,7 +471,7 @@ void Actor::SetEffectClock( CString s )
 
 void Actor::StretchTo( const RectI &r )
 {
-	RectF r2( (float)r.left, (float)r.top, (float)r.right, (float)r.bottom );
+	RectF r2( static_cast<float>(r.left), static_cast<float>(r.top), static_cast<float>(r.right), static_cast<float>(r.bottom) );
 	StretchTo( r2 );
 }
 

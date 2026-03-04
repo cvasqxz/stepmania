@@ -5,7 +5,7 @@
 #include "RageThreads.h"
 
 
-InputFilter*	INPUTFILTER = NULL;	// global and accessable from anywhere in our program
+InputFilter*	INPUTFILTER = nullptr;	// global and accessable from anywhere in our program
 
 static const float TIME_BEFORE_SLOW_REPEATS = 0.25f;
 static const float TIME_BEFORE_FAST_REPEATS = 1.5f;

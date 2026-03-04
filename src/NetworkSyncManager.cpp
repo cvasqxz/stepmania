@@ -46,7 +46,7 @@ const ScreenMessage SM_GotEval		= ScreenMessage(SM_User+6);
 
 NetworkSyncManager::NetworkSyncManager( LoadingWindow *ld )
 {
-	LANserver = NULL;	//So we know if it has been created yet
+	LANserver = nullptr;	//So we know if it has been created yet
 	if( GetCommandlineArgument( "runserver" ))
 	{
 		ld->SetText("Initilizing server...");
@@ -380,7 +380,7 @@ void NetworkSyncManager::StartRequest(short position)
 	ctr = char(position*16);
 	m_packet.Write1(ctr);
 
-	if (GAMESTATE->m_pCurSong != NULL)
+	if (GAMESTATE->m_pCurSong != nullptr)
 	{
 		m_packet.WriteNT(GAMESTATE->m_pCurSong->m_sMainTitle);
 		m_packet.WriteNT(GAMESTATE->m_pCurSong->m_sSubTitle);
@@ -393,7 +393,7 @@ void NetworkSyncManager::StartRequest(short position)
 		m_packet.WriteNT("");
 	}
 
-	if (GAMESTATE->m_pCurCourse != NULL)
+	if (GAMESTATE->m_pCurCourse != nullptr)
 		m_packet.WriteNT(GAMESTATE->m_pCurCourse->GetFullDisplayTitle());
 	else
 		m_packet.WriteNT(CString(""));

@@ -85,7 +85,7 @@ void NoteDataUtil::LoadFromSMNoteDataString( NoteData &out, CString sSMNoteData,
 				TrimLeft(sMeasureLine);
 				TrimRight(sMeasureLine);
 
-				const float fPercentIntoMeasure = l/(float)asMeasureLines.size();
+				const float fPercentIntoMeasure = l/static_cast<float>(asMeasureLines.size());
 				const float fBeat = (m + fPercentIntoMeasure) * BEATS_PER_MEASURE;
 				const int iIndex = BeatToNoteRow( fBeat );
 
@@ -426,11 +426,11 @@ void NoteDataUtil::GetRadarValues( const NoteData &in, float fSongSeconds, Radar
 		case RADAR_AIR:					out[rc] = GetAirRadarValue( in, fSongSeconds );		break;
 		case RADAR_FREEZE:				out[rc] = GetFreezeRadarValue( in, fSongSeconds );	break;
 		case RADAR_CHAOS:				out[rc] = GetChaosRadarValue( in, fSongSeconds );	break;
-		case RADAR_NUM_TAPS_AND_HOLDS:	out[rc] = (float) in.GetNumRowsWithTapOrHoldHead();	break;
-		case RADAR_NUM_JUMPS:			out[rc] = (float) in.GetNumDoubles();				break;
-		case RADAR_NUM_HOLDS:			out[rc] = (float) in.GetNumHoldNotes();				break;
-		case RADAR_NUM_MINES:			out[rc] = (float) in.GetNumMines();					break;
-		case RADAR_NUM_HANDS:			out[rc] = (float) in.GetNumHands();					break;
+		case RADAR_NUM_TAPS_AND_HOLDS:	out[rc] = static_cast<float>(in.GetNumRowsWithTapOrHoldHead());	break;
+		case RADAR_NUM_JUMPS:			out[rc] = static_cast<float>(in.GetNumDoubles());				break;
+		case RADAR_NUM_HOLDS:			out[rc] = static_cast<float>(in.GetNumHoldNotes());				break;
+		case RADAR_NUM_MINES:			out[rc] = static_cast<float>(in.GetNumMines());					break;
+		case RADAR_NUM_HANDS:			out[rc] = static_cast<float>(in.GetNumHands());					break;
 		default:	ASSERT(0);
 		}
 	}
@@ -462,8 +462,8 @@ float NoteDataUtil::GetVoltageRadarValue( const NoteData &in, float fSongSeconds
 
 	for( int i=0; i<=int(fLastBeat); i+=BEAT_WINDOW )
 	{
-		int iNumNotesThisWindow = in.GetNumTapNotes((float)i,(float)i+BEAT_WINDOW) + in.GetNumHoldNotes((float)i,(float)i+BEAT_WINDOW);
-		float fDensityThisWindow = iNumNotesThisWindow/(float)BEAT_WINDOW;
+		int iNumNotesThisWindow = in.GetNumTapNotes(static_cast<float>(i),static_cast<float>(i)+BEAT_WINDOW) + in.GetNumHoldNotes(static_cast<float>(i),static_cast<float>(i)+BEAT_WINDOW);
+		float fDensityThisWindow = iNumNotesThisWindow/static_cast<float>(BEAT_WINDOW);
 		fMaxDensitySoFar = max( fMaxDensitySoFar, fDensityThisWindow );
 	}
 
@@ -891,7 +891,7 @@ void NoteDataUtil::Wide( NoteData &in, float fStartBeat, float fEndBeat )
 			continue;	// skip
 
 		// add a note determinitsitcally
-		int iBeat = (int)roundf( NoteRowToBeat(i) );
+		int iBeat = static_cast<int>(roundf( NoteRowToBeat(i) ));
 		int iTrackOfNote = in.GetFirstTrackWithTap(i);
 		int iTrackToAdd = iTrackOfNote + (iBeat%5)-2;	// won't be more than 2 tracks away from the existing note
 		CLAMP( iTrackToAdd, 0, in.GetNumTracks()-1 );
@@ -1628,7 +1628,7 @@ void NoteDataUtil::AddTapAttacks( NoteData &nd, Song* pSong )
 	for( float sec=15; sec<pSong->m_fMusicLengthSeconds; sec+=30 )
 	{
 		float fBeat = pSong->GetBeatFromElapsedTime( sec );
-		int iBeat = (int)fBeat;
+		int iBeat = static_cast<int>(fBeat);
 		int iTrack = iBeat % nd.GetNumTracks();	// deterministically calculates track
 		Attack attack;
 		attack.fStartSecond = -1;
@@ -1678,7 +1678,7 @@ void NoteDataUtil::ScaleRegion( NoteData &nd, float fScale, float fStartBeat, fl
 	temp2.Config( nd );
 
 	const int iFirstRowAtEndOfRegion = min( nd.GetLastRow(), BeatToNoteRowNotRounded(fEndBeat) );
-	const int iScaledFirstRowAfterRegion = (int)((fStartBeat + (fEndBeat - fStartBeat) * fScale) * ROWS_PER_BEAT);
+	const int iScaledFirstRowAfterRegion = static_cast<int>((fStartBeat + (fEndBeat - fStartBeat) * fScale) * ROWS_PER_BEAT);
 
 	if( fStartBeat != 0 )
 		temp1.CopyRange( &nd, 0, BeatToNoteRowNotRounded(fStartBeat) );

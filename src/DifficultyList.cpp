@@ -32,7 +32,7 @@ DifficultyList::~DifficultyList()
 void DifficultyList::Load()
 {
 	m_Lines.resize( MAX_METERS );
-	m_CurSong = NULL;
+	m_CurSong = nullptr;
 
 	FOREACH_HumanPlayer( pn )
 	{
@@ -85,7 +85,7 @@ int DifficultyList::GetCurrentRowIndex( PlayerNumber pn ) const
 	{
 		const Row &row = m_Rows[i];
 
-		if( GAMESTATE->m_pCurSteps[pn] == NULL )
+		if( GAMESTATE->m_pCurSteps[pn] == nullptr )
 		{
 			if( row.m_dc == GAMESTATE->m_PreferredDifficulty[pn] )
 				return i;
@@ -142,15 +142,15 @@ void DifficultyList::UpdatePositions()
 		second_end = second_start + halfsize;
 	}
 
-	first_end = min( first_end, (int) Rows.size() );
-	second_end = min( second_end, (int) Rows.size() );
+	first_end = min( first_end, static_cast<int>(Rows.size()) );
+	second_end = min( second_end, static_cast<int>(Rows.size()) );
 
 	/* If less than total (and Rows.size()) are displayed, fill in the empty
 	 * space intelligently. */
 	while(1)
 	{
 		const int sum = (first_end - first_start) + (second_end - second_start);
-		if( sum >= (int) Rows.size() || sum >= total)
+		if( sum >= static_cast<int>(Rows.size()) || sum >= total)
 			break; /* nothing more to display, or no room */
 
 		/* First priority: expand the top of the second half until it meets
@@ -160,26 +160,26 @@ void DifficultyList::UpdatePositions()
 		/* Otherwise, expand either end. */
 		else if( first_start > 0 )
 			first_start--;
-		else if( second_end < (int) Rows.size() )
+		else if( second_end < static_cast<int>(Rows.size()) )
 			second_end++;
 		else
 			ASSERT(0); /* do we have room to grow or don't we? */
 	}
 
 	int pos = 0;
-	for( int i=0; i<(int) Rows.size(); i++ )		// foreach row
+	for( int i=0; i<static_cast<int>(Rows.size()); i++ )		// foreach row
 	{
 		float ItemPosition;
 		if( i < first_start )
 			ItemPosition = -0.5f;
 		else if( i < first_end )
-			ItemPosition = (float) pos++;
+			ItemPosition = static_cast<float>(pos++);
 		else if( i < second_start )
 			ItemPosition = halfsize - 0.5f;
 		else if( i < second_end )
-			ItemPosition = (float) pos++;
+			ItemPosition = static_cast<float>(pos++);
 		else
-			ItemPosition = (float) total - 0.5f;
+			ItemPosition = static_cast<float>(total) - 0.5f;
 			
 		Row &row = Rows[i];
 
@@ -196,14 +196,14 @@ void DifficultyList::PositionItems()
 {
 	for( int i = 0; i < MAX_METERS; ++i )
 	{
-		bool bUnused = ( i >= (int)m_Rows.size() );
+		bool bUnused = ( i >= static_cast<int>(m_Rows.size()) );
 		m_Lines[i].m_Description.SetHidden( bUnused );
 		m_Lines[i].m_Meter.SetHidden( bUnused );
 		m_Lines[i].m_Number.SetHidden( bUnused );
 	}
 
 	int m;
-	for( m = 0; m < (int)m_Rows.size(); ++m )
+	for( m = 0; m < static_cast<int>(m_Rows.size()); ++m )
 	{
 		Row &row = m_Rows[m];
 		bool bHidden = row.m_bHidden;
@@ -228,7 +228,7 @@ void DifficultyList::PositionItems()
 	for( m=0; m < MAX_METERS; ++m )
 	{
 		bool bHidden = true;
-		if( m_bShown && m < (int)m_Rows.size() )
+		if( m_bShown && m < static_cast<int>(m_Rows.size()) )
 			bHidden = m_Rows[m].m_bHidden;
 
 		const CString cmd = ssprintf( "diffusealpha,%f", bHidden? 0.0f:1.0f );
@@ -243,7 +243,7 @@ void DifficultyList::PositionItems()
 		int iCurrentRow = GetCurrentRowIndex( pn );
 
 		float fY = 0;
-		if( iCurrentRow < (int) m_Rows.size() )
+		if( iCurrentRow < static_cast<int>(m_Rows.size()) )
 			fY = m_Rows[iCurrentRow].m_fY;
 
 		COMMAND( m_CursorFrames[pn], "Change" );
@@ -271,7 +271,7 @@ void DifficultyList::SetFromGameState()
 
 		m_Rows.clear();
 
-		if( song == NULL )
+		if( song == nullptr )
 		{
 			// FIXME: This clamps to between the min and the max difficulty, but
 			// it really should round to the nearest difficulty that's in 

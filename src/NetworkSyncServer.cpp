@@ -66,7 +66,7 @@ void StepManiaLanServer::ServerStop()
 	for (unsigned int x = 0; x < Client.size(); ++x)
 	{
 		delete Client[x];
-		Client[x] = NULL;
+		Client[x] = nullptr;
 	}
 
 	Client.clear();
@@ -117,7 +117,7 @@ void StepManiaLanServer::Disconnect(const unsigned int clientNum)
 	if (clientNum == (Client.size()-1))
 	{
 		delete Client[Client.size()-1];
-		Client[Client.size()-1] = NULL;
+		Client[Client.size()-1] = nullptr;
 		Client.pop_back();
 	}
 	else
@@ -129,7 +129,7 @@ void StepManiaLanServer::Disconnect(const unsigned int clientNum)
 			if (x == clientNum)
 			{
 				delete Client[x];
-				Client[x] = NULL;
+				Client[x] = nullptr;
 				Client.erase(Iterator);
 			}
 			++Iterator;
@@ -425,7 +425,7 @@ void StepManiaLanServer::AssignPlayerIDs()
 void StepManiaLanServer::PopulatePlayersPtr(vector<LanPlayer*> &playersPtr) {
 
 	for (unsigned int x = 0; x < playersPtr.size(); ++x)
-		playersPtr[x] = NULL;
+		playersPtr[x] = nullptr;
 
 	playersPtr.clear();
 
@@ -579,12 +579,12 @@ void StepManiaLanServer::NewClientCheck()
 		else
 		{
 			delete tmp;
-			tmp = NULL;
+			tmp = nullptr;
 		}
 	else
 	{
 		delete tmp;
-		tmp = NULL;
+		tmp = nullptr;
 	}
 }
 

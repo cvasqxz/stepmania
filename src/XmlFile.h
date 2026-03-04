@@ -77,7 +77,7 @@ struct PARSEINFO
 	PCODE		error_code;			// [get] error code
 	CString		error_string;		// [get] error string
 
-	PARSEINFO() { trim_value = true; entity_value = true; entitys = &entityDefault; xml = NULL; erorr_occur = false; error_pointer = NULL; error_code = PIE_PARSE_WELFORMED; escape_value = 0; }
+	PARSEINFO() { trim_value = true; entity_value = true; entitys = &entityDefault; xml = nullptr; erorr_occur = false; error_pointer = nullptr; error_code = PIE_PARSE_WELFORMED; escape_value = 0; }
 };
 extern PARSEINFO piDefault;
 
@@ -183,8 +183,8 @@ struct XNode
 	int		GetChildCount();
 	XNode *GetChild( int i );
 	XNodes::iterator GetChildIterator( XNode *node );
-	XNode *CreateNode( const char* name = NULL, const char* value = NULL );
-	XNode	*AppendChild( const char* name = NULL, const char* value = NULL );
+	XNode *CreateNode( const char* name = nullptr, const char* value = nullptr );
+	XNode	*AppendChild( const char* name = nullptr, const char* value = nullptr );
 	XNode	*AppendChild( const char* name, float value );
 	XNode	*AppendChild( const char* name, int value );
 	XNode	*AppendChild( const char* name, unsigned value );
@@ -196,8 +196,8 @@ struct XNode
 
 	XAttr *GetAttr( int i );
 	XAttrs::iterator GetAttrIterator( XAttr *node );
-	XAttr *CreateAttr( const char* anem = NULL, const char* value = NULL );
-	XAttr *AppendAttr( const char* name = NULL, const char* value = NULL );
+	XAttr *CreateAttr( const char* anem = nullptr, const char* value = nullptr );
+	XAttr *AppendAttr( const char* name = nullptr, const char* value = nullptr );
 	XAttr *AppendAttr( const char* name, float value );
 	XAttr *AppendAttr( const char* name, int value );
 	XAttr *AppendAttr( const char* name, unsigned value );
@@ -209,7 +209,7 @@ struct XNode
 	// operator overloads
 	XNode* operator [] ( int i ) { return GetChild(i); }
 
-	XNode() { parent = NULL; }
+	XNode() { parent = nullptr; }
 	~XNode();
 
 	void Close();

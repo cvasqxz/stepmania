@@ -7,7 +7,7 @@
 #include "InputMapper.h"
 
 
-InputQueue*	INPUTQUEUE = NULL;	// global and accessable from anywhere in our program
+InputQueue*	INPUTQUEUE = nullptr;	// global and accessable from anywhere in our program
 
 
 InputQueue::InputQueue()

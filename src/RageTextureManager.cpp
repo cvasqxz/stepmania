@@ -40,7 +40,7 @@
 #include "RageException.h"
 #include "RageDisplay.h"
 
-RageTextureManager*		TEXTUREMAN		= NULL;
+RageTextureManager*		TEXTUREMAN		= nullptr;
 
 RageTextureManager::RageTextureManager()
 {
@@ -167,7 +167,7 @@ void RageTextureManager::PermanentTexture( RageTextureID ID )
 
 void RageTextureManager::UnloadTexture( RageTexture *t )
 {
-	if( t == NULL )
+	if( t == nullptr )
 		return;
 
 	t->m_iRefCount--;

@@ -10,7 +10,7 @@
 #include "Foreach.h"
 #include "GameState.h"
 
-MemoryCardManager*	MEMCARDMAN = NULL;	// global and accessable from anywhere in our program
+MemoryCardManager*	MEMCARDMAN = nullptr;	// global and accessable from anywhere in our program
 
 
 MemoryCardManager::MemoryCardManager()

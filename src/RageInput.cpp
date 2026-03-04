@@ -5,7 +5,7 @@
 #include "arch/arch.h"
 #include "arch/InputHandler/InputHandler.h"
 
-RageInput*		INPUTMAN	= NULL;		// globally accessable input device
+RageInput*		INPUTMAN	= nullptr;		// globally accessable input device
 
 RageInput::RageInput()
 {

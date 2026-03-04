@@ -7,7 +7,7 @@
 #include <map>
 #include "GameManager.h"
 
-FontManager*	FONT	= NULL;	// global and accessable from anywhere in our program
+FontManager*	FONT	= nullptr;	// global and accessable from anywhere in our program
 
 // map from file name to a texture holder
 typedef pair<CString,CString> FontName;

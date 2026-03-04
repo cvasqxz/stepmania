@@ -31,7 +31,7 @@ void CharacterHead::LoadFromCharacter( Character* pCharacter )
 
 void CharacterHead::Update( float fDelta )
 {
-	if( this->GetTexture() == NULL )
+	if( this->GetTexture() == nullptr )
 		return; /* not loaded */
 
 	if( m_fSecondsUntilReturnToNormal > 0 )

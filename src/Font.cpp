@@ -18,7 +18,7 @@ const wchar_t Font::DEFAULT_GLYPH = 0xF8FF;
 
 FontPage::FontPage()
 {
-	m_pTexture = NULL;
+	m_pTexture = nullptr;
 }
 
 void FontPage::Load( FontPageSettings cfg )
@@ -33,7 +33,7 @@ void FontPage::Load( FontPageSettings cfg )
 		ID.AdditionalTextureHints = "16bpp";
 
 	m_pTexture = TEXTUREMAN->LoadTexture( ID );
-	ASSERT( m_pTexture != NULL );
+	ASSERT( m_pTexture != nullptr );
 
 	// load character widths
 	vector<int> FrameWidths;
@@ -178,7 +178,7 @@ void FontPage::SetExtraPixels(int DrawExtraPixelsLeft, int DrawExtraPixelsRight)
 
 FontPage::~FontPage()
 {
-	if( m_pTexture != NULL )
+	if( m_pTexture != nullptr )
 		TEXTUREMAN->UnloadTexture( m_pTexture );
 }
 
@@ -209,7 +209,7 @@ Font::Font()
 	//LOG->Trace( "Font::LoadFromFontName(%s)", sASCIITexturePath.c_str() );
 
 	m_iRefCount = 1;
-	def = NULL;
+	def = nullptr;
 }
 
 Font::~Font()
@@ -226,7 +226,7 @@ void Font::Unload()
 	pages.clear();
 	
 	m_iCharToGlyph.clear();
-	def = NULL;
+	def = nullptr;
 
 	/* Don't clear the refcount.  We've unloaded, but that doesn't mean things
 	 * aren't still pointing to us. */
@@ -257,7 +257,7 @@ void Font::MergeFont(Font &f)
 	 * page.  It'll usually be overridden later on by one of our own font
 	 * pages; this will be used only if we don't have any font pages at
 	 * all. */
-	if(def == NULL)
+	if(def == nullptr)
 		def = f.def;
 
 	for(map<longchar,glyph*>::iterator it = f.m_iCharToGlyph.begin();
@@ -509,7 +509,7 @@ void Font::LoadFontPageSettings(FontPageSettings &cfg, IniFile &ini, const CStri
 				 */
 				CString codepoint = val.substr(4); /* "CODEPOINT" */
 			
-				const Game* pGame = NULL;
+				const Game* pGame = nullptr;
 
 				if(codepoint.find_first_of(' ') != codepoint.npos)
 				{
@@ -520,7 +520,7 @@ void Font::LoadFontPageSettings(FontPageSettings &cfg, IniFile &ini, const CStri
 
 					pGame = GameManager::StringToGameType(gamename);
 
-					if(pGame == NULL)
+					if(pGame == nullptr)
 					{
 						LOG->Warn( "Font definition '%s' uses unknown game type '%s'",
 							ini.GetPath().c_str(), gamename.c_str() );
@@ -546,7 +546,7 @@ void Font::LoadFontPageSettings(FontPageSettings &cfg, IniFile &ini, const CStri
 					continue;
 				}
 
-				if(pGame != NULL)
+				if(pGame != nullptr)
 				{
 					longchar lc = FontManager::MakeGameGlyph(c, pGame);
 					cfg.CharToGlyphNo[lc] = atoi(data);
@@ -686,7 +686,7 @@ CString FontPageSettings::MapRange(CString Mapping, int map_offset, int glyphno,
 	}
 
 	const wchar_t *mapping = FontCharmaps::get_char_map(Mapping);
-	if(mapping == NULL)
+	if(mapping == nullptr)
 		return "Unknown mapping";
 
 	while(*mapping != 0 && map_offset) { mapping++; map_offset--; }

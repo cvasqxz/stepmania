@@ -84,7 +84,7 @@ void ScreenNetworkOptions::HandleScreenMessage( const ScreenMessage SM )
 	case SM_ServerNameEnter:
 		if( !ScreenTextEntry::s_bCancelledLast )
 		{
-			if ( NSMAN->LANserver == NULL)
+			if ( NSMAN->LANserver == nullptr)
 				NSMAN->LANserver = new StepManiaLanServer;
 			NSMAN->LANserver->servername = ScreenTextEntry::s_sLastAnswer;
 			if (NSMAN->LANserver->ServerStart())
@@ -125,7 +125,7 @@ void ScreenNetworkOptions::MenuStart( PlayerNumber pn, const InputEventType type
 				SCREENMAN->TextEntry( SM_ServerNameEnter, "Enter a server name...", "", NULL );
 			break;
 		case NO_STOP_SERVER:
-			if ( NSMAN->LANserver != NULL )
+			if ( NSMAN->LANserver != nullptr )
 				NSMAN->LANserver->ServerStop();
 			SCREENMAN->SystemMessage( "Server Stopped." );
 			NSMAN->isLanServer = false;

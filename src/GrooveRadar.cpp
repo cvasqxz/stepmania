@@ -83,7 +83,7 @@ void GrooveRadar::GrooveRadarValueMap::SetFromSteps( PlayerNumber pn, Steps* pSt
 {
 	if(DISABLE_RADAR == 1) // if the theme says not to disable it
 		return;
-	if( pSteps != NULL )
+	if( pSteps != nullptr )
 	{
 		for( int c=0; c<NUM_SHOWN_RADAR_CATEGORIES; c++ )
 		{
@@ -99,7 +99,7 @@ void GrooveRadar::GrooveRadarValueMap::SetFromSteps( PlayerNumber pn, Steps* pSt
 
 		m_bValuesVisible[pn] = true;
 	}
-	else	// pSteps == NULL
+	else	// pSteps == nullptr
 	{
 		m_bValuesVisible[pn] = false;
 	}

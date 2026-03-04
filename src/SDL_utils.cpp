@@ -118,7 +118,7 @@ void mySDL_WM_SetIcon( CString sIconFile )
 
 	CString error;
 	RageSurface *srf = RageSurfaceUtils::LoadFile( sIconFile, error );
-	if( srf == NULL )
+	if( srf == nullptr )
 		return;
 
 	/* Windows icons are 32x32 and SDL can't resize them for us, which
@@ -140,7 +140,7 @@ SDL_Surface *SDLSurfaceFromRageSurface( RageSurface *surf )
 {
 	/* SDL will free the data with free(), so we can't just give it surf->pixels. */
 	char *buf = (char *) malloc( surf->pitch * surf->h );
-	if( buf == NULL )
+	if( buf == nullptr )
 		RageException::Throw( "malloc(%i): %s", surf->pitch * surf->h, strerror(errno) );
 	memcpy( buf, surf->pixels, surf->pitch * surf->h );
 	SDL_Surface *ret = SDL_CreateRGBSurfaceFrom( buf,
@@ -273,7 +273,7 @@ void SetupSDL()
 		/* Most people don't have this set.  SDL has a habit of trying to
 		 * fall back on other drivers (svgalib, aalib), so set it to "x11". */
 		const char *sVideoDriver = getenv("SDL_VIDEODRIVER");
-		if( sVideoDriver == NULL || sVideoDriver[0] == 0 )
+		if( sVideoDriver == nullptr || sVideoDriver[0] == 0 )
 		{
 			static char env[] = "SDL_VIDEODRIVER=x11";
 			putenv( env );

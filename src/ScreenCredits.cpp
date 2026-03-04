@@ -189,7 +189,7 @@ ScreenCredits::ScreenCredits( CString sName ) : ScreenAttract( sName )
 	{
 		for( int i=0; i<NUM_BACKGROUNDS; i++ )
 		{
-			Song* pSong = NULL;
+			Song* pSong = nullptr;
 			for( int j=0; j<50; j++ )
 			{
 				pSong = arraySongs[ rand()%arraySongs.size() ];

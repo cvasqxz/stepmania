@@ -151,7 +151,7 @@ bool RageSurfaceUtils::ConvertSurface( RageSurface *src, RageSurface *&dst,
 	if( width == src->w && height == src->h && src->format->Equivalent( *dst->format ) )
 	{
 		delete dst;
-		dst = NULL;
+		dst = nullptr;
 		return false;
 	}
 
@@ -185,7 +185,7 @@ static void FindAlphaRGB(const RageSurface *img, uint8_t &r, uint8_t &g, uint8_t
 	for(int y = reverse? img->h-1:0;
 		reverse? (y >=0):(y < img->h); reverse? (--y):(++y))
 	{
-		uint8_t *row = (uint8_t *)img->pixels + img->pitch*y;
+		uint8_t *row = reinterpret_cast<uint8_t*>(img->pixels) + img->pitch*y;
 		if(reverse)
 			row += img->format->BytesPerPixel * (img->w-1);
 
@@ -336,7 +336,7 @@ int RageSurfaceUtils::FindSurfaceTraits( const RageSurface *img )
 
 	for(int y = 0; y < img->h; ++y)
 	{
-		uint8_t *row = (uint8_t *)img->pixels + img->pitch*y;
+		uint8_t *row = reinterpret_cast<uint8_t*>(img->pixels) + img->pitch*y;
 
 		for(int x = 0; x < img->w; ++x)
 		{
@@ -402,7 +402,7 @@ void RageSurfaceUtils::BlitTransform( const RageSurface *src, RageSurface *dst,
 
 	for( int y = 0; y < dst->h; ++y )
 	{
-		uint8_t *dstp = (uint8_t *) dst->pixels + (y * dst->pitch); /* line */
+		uint8_t *dstp = reinterpret_cast<uint8_t*>(dst->pixels) + (y * dst->pitch); /* line */
 		uint8_t *dstpx = dstp; /* pixel */
 
 		const float start_y = scale(float(y), 0, float(dst->h), Coords[TL_Y], Coords[BL_Y]);
@@ -684,7 +684,7 @@ void RageSurfaceUtils::Blit( const RageSurface *src, RageSurface *dst, int width
 	{
 		/* Duplicate the last column. */
 		int offset = dst->format->BytesPerPixel * (width-1);
-		uint8_t *p = (uint8_t *) dst->pixels + offset;
+		uint8_t *p = reinterpret_cast<uint8_t*>(dst->pixels) + offset;
 
 		for( int y = 0; y < height; ++y )
 		{

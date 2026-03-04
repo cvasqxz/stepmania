@@ -23,7 +23,7 @@
 #include "Style.h"
 
 
-ProfileManager*	PROFILEMAN = NULL;	// global and accessable from anywhere in our program
+ProfileManager*	PROFILEMAN = nullptr;	// global and accessable from anywhere in our program
 
 #define NEW_MEM_CARD_NAME		""
 #define USER_PROFILES_DIR		"Data/LocalProfiles/"

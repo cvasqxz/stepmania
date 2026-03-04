@@ -315,11 +315,11 @@ ScreenRanking::ScreenRanking( CString sClassName ) : ScreenAttract( sClassName )
 				pts.colorIndex = i;
 				pts.nt = aStepsTypesToShow[i];
 				pts.pCourse = SONGMAN->GetCourseFromPath( asCoursePaths[c] );
-				if( pts.pCourse == NULL )
+				if( pts.pCourse == nullptr )
 					continue;
 
 				pts.pTrail = pts.pCourse->GetTrail( pts.nt );
-				if( pts.pTrail == NULL )
+				if( pts.pTrail == nullptr )
 					continue;
 
 				m_vPagesToShow.push_back( pts );
@@ -776,7 +776,7 @@ float ScreenRanking::SetPage( PageToShow pts )
 					const Steps* pSteps = pSong->GetStepsByDifficulty( pts.nt, *dc_iter, false );
 					BitmapText* pTextStepsScore = &pStepsScoreRowItem->m_textStepsScore[*dc_iter];
 
-					if( pSteps == NULL )
+					if( pSteps == nullptr )
 					{
 						pTextStepsScore->SetHidden( true );
 					}
@@ -821,7 +821,7 @@ float ScreenRanking::SetPage( PageToShow pts )
 
 					Trail *pTrail = pCourse->GetTrail( pts.nt, cd );
 					pTextStepsScore->SetHidden( pTrail==NULL );
-					if( pTrail == NULL )
+					if( pTrail == nullptr )
 						continue;
 
 					const HighScoreList &hsl = PROFILEMAN->GetMachineProfile()->GetCourseHighScoreList( pCourse, pTrail );

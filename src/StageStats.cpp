@@ -15,7 +15,7 @@ vector<StageStats>	g_vPlayedStageStats;
 void StageStats::Init()
 {
 	playMode = PLAY_MODE_INVALID;
-	pStyle = NULL;
+	pStyle = nullptr;
 	vpSongs.clear();
 	StageType = STAGE_INVALID;
 	fGameplaySeconds = 0;
@@ -47,7 +47,7 @@ void StageStats::AssertValid( PlayerNumber pn ) const
 		CHECKPOINT_M( vpSongs[0]->GetFullTranslitTitle() );
 	ASSERT( vpSteps[pn][0] );
 	ASSERT_M( playMode < NUM_PLAY_MODES, ssprintf("playmode %i", playMode) );
-	ASSERT( pStyle != NULL );
+	ASSERT( pStyle != nullptr );
 	ASSERT_M( vpSteps[pn][0]->GetDifficulty() < NUM_DIFFICULTIES, ssprintf("difficulty %i", vpSteps[pn][0]->GetDifficulty()) );
 	ASSERT( vpSongs.size() == vpSteps[pn].size() );
 }
@@ -495,7 +495,7 @@ const StageStats *GetStageStatsN( int n )
 Grade GetGrade( int n, PlayerNumber pn )
 {
 	const StageStats *pStats = GetStageStatsN( n );
-	if( pStats == NULL )
+	if( pStats == nullptr )
 		return GRADE_NO_DATA;
 	return pStats->GetGrade( pn );
 }

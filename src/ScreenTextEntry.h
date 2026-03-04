@@ -12,7 +12,7 @@
 class ScreenTextEntry : public Screen
 {
 public:
-	ScreenTextEntry( CString sName, CString sQuestion, CString sInitialAnswer, void(*OnOK)(CString sAnswer) = NULL, void(*OnCanel)() = NULL );
+	ScreenTextEntry( CString sName, CString sQuestion, CString sInitialAnswer, void(*OnOK)(CString sAnswer) = nullptr, void(*OnCanel)() = nullptr );
 
 	virtual void Update( float fDeltaTime );
 	virtual void DrawPrimitives();

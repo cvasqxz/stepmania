@@ -29,7 +29,7 @@ NoteField::NoteField()
 	m_fBeginMarker = m_fEndMarker = -1;
 
 	m_fPercentFadeToFail = -1;
-	LastDisplay = NULL;
+	LastDisplay = nullptr;
 }
 
 NoteField::~NoteField()
@@ -43,7 +43,7 @@ void NoteField::Unload()
 		it != m_NoteDisplays.end(); ++it )
 		delete it->second;
 	m_NoteDisplays.clear();
-	LastDisplay = NULL;
+	LastDisplay = nullptr;
 }
 
 void NoteField::CacheNoteSkin( CString skin )

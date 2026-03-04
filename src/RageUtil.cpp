@@ -440,7 +440,7 @@ CString GetCwd()
 	return SYS_BASE_PATH;
 #else
 	char buf[PATH_MAX];
-	bool ret = getcwd(buf, PATH_MAX) != NULL;
+	bool ret = getcwd(buf, PATH_MAX) != nullptr;
 	ASSERT(ret);
 	return buf;
 #endif
@@ -606,7 +606,7 @@ void Regex::Compile()
 	int offset;
 	reg = pcre_compile(pattern.c_str(), PCRE_CASELESS, &error, &offset, NULL);
 
-    if(reg == NULL)
+    if(reg == nullptr)
 		RageException::Throw("Invalid regex: '%s' (%s)", pattern.c_str(), error);
 
 	int ret = pcre_fullinfo( (pcre *) reg, NULL, PCRE_INFO_CAPTURECOUNT, &backrefs);
@@ -626,19 +626,19 @@ void Regex::Set(const CString &str)
 void Regex::Release()
 {
     pcre_free(reg);
-	reg = NULL;
+	reg = nullptr;
 	pattern = "";
 }
 
 Regex::Regex(const CString &str)
 {
-	reg = NULL;
+	reg = nullptr;
 	Set(str);
 }
 
 Regex::Regex(const Regex &rhs)
 {
-	reg = NULL;
+	reg = nullptr;
     Set(rhs.pattern);
 }
 
@@ -720,19 +720,19 @@ void Regex::Set(const CString &str)
 void Regex::Release()
 {
     delete (regex_t *)reg;
-	reg = NULL;
+	reg = nullptr;
 	pattern = "";
 }
 
 Regex::Regex(const CString &str)
 {
-	reg = NULL;
+	reg = nullptr;
 	Set(str);
 }
 
 Regex::Regex(const Regex &rhs)
 {
-	reg = NULL;
+	reg = nullptr;
     Set(rhs.pattern);
 }
 

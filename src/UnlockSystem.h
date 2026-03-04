@@ -36,7 +36,7 @@ struct UnlockEntry
 	float	m_fRequired[NUM_UNLOCK_TYPES];
 	int		m_iCode;
 
-	bool	IsCourse() const { return m_pCourse != NULL; }
+	bool	IsCourse() const { return m_pCourse != nullptr; }
 
 	bool	IsLocked() const;
 };

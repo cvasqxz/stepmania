@@ -70,11 +70,11 @@ void RageBitmapTexture::Create()
 	RageSurface *img = RageSurfaceUtils::LoadFile( actualID.filename, error );
 
 	/* Tolerate corrupt/unknown images. */
-	if( img == NULL )
+	if( img == nullptr )
 	{
 		LOG->Warn( "RageBitmapTexture: Couldn't load %s: %s", actualID.filename.c_str(), error.c_str() );
 		img = RageSurfaceUtils::MakeDummySurface( 64, 64 );
-		ASSERT( img != NULL );
+		ASSERT( img != nullptr );
 	}
 
 	if( actualID.bHotPinkColorKey )
