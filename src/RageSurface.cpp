@@ -1,6 +1,7 @@
 #include "global.h"
 #include "RageSurface.h"
 #include "RageUtil.h"
+#include <new>  /* for std::nothrow */
 
 bool RageSurfaceColor::operator== ( const RageSurfaceColor &rhs ) const
 {
@@ -43,7 +44,7 @@ RageSurfaceFormat::RageSurfaceFormat():
 	Rmask(Mask[0]), Gmask(Mask[1]), Bmask(Mask[2]), Amask(Mask[3]),
 	Rshift(Shift[0]), Gshift(Shift[1]), Bshift(Shift[2]), Ashift(Shift[3])
 {
-	palette = NULL;	
+	palette = nullptr;	
 }
 
 RageSurfaceFormat::RageSurfaceFormat( const RageSurfaceFormat &cpy ):
@@ -122,7 +123,7 @@ bool RageSurfaceFormat::Equivalent( const RageSurfaceFormat &rhs ) const
 RageSurface::RageSurface()
 {
 	format = &fmt;
-	pixels = NULL;
+	pixels = nullptr;
 	pixels_owned = true;
 }
 
@@ -137,11 +138,19 @@ RageSurface::RageSurface( const RageSurface &cpy )
 	pixels_owned = true;
 	if( cpy.pixels )
 	{
-		pixels = new uint8_t[ pitch*h ];
-		memcpy( pixels, cpy.pixels, pitch*h );
+		/* Security fix: check for integer overflow before allocation */
+		size_t alloc_size = (size_t)pitch * (size_t)h;
+		if( h > 0 && alloc_size / h != (size_t)pitch )
+		{
+			pixels = nullptr;
+			return;
+		}
+		pixels = new (std::nothrow) uint8_t[ alloc_size ];
+		if( pixels != nullptr )
+			memcpy( pixels, cpy.pixels, alloc_size );
 	}
 	else
-		pixels = NULL;
+		pixels = nullptr;
 }
 
 RageSurface::~RageSurface()
@@ -226,7 +235,20 @@ RageSurface *CreateSurface( int width, int height, int BitsPerPixel, uint32_t Rm
 	pImg->h = height;
 	pImg->flags = 0;
 	pImg->pitch = width*BitsPerPixel/8;
-	pImg->pixels = new uint8_t[ pImg->pitch*height ];
+
+	/* Security fix: check for integer overflow before allocation */
+	size_t alloc_size = (size_t)pImg->pitch * (size_t)height;
+	if( height > 0 && alloc_size / height != (size_t)pImg->pitch )
+	{
+		delete pImg;
+		return NULL;
+	}
+	pImg->pixels = new (std::nothrow) uint8_t[ alloc_size ];
+	if( pImg->pixels == nullptr )
+	{
+		delete pImg;
+		return NULL;
+	}
 
 //	if( BitsPerPixel == 8 )
 //	{

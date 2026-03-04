@@ -120,10 +120,9 @@ CString LowLevelWindow_SDL::TryVideoMode( RageDisplay::VideoModeParams p, bool &
 	 * This only works the first time we set up a window; after that, the
 	 * drivers appear to cache the value, so you have to actually restart
 	 * the program to change it again. */
-	static char buf[128];
-	strcpy( buf, "__GL_SYNC_TO_VBLANK=" );
-	strcat( buf, p.vsync?"1":"0" );
-	putenv( buf );
+	/* Security fix: use setenv instead of strcpy/strcat/putenv to avoid
+	 * buffer overflow risks and dangling pointer issues */
+	setenv("__GL_SYNC_TO_VBLANK", p.vsync ? "1" : "0", 1);
 #endif
 
 #if defined(WIN32)

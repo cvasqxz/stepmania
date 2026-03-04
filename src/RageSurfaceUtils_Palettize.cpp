@@ -51,7 +51,7 @@ struct acolorhash_hash
 		for ( int i = 0; i < HASH_SIZE; ++i )
 		{
 			acolorhist_list achl, achlnext;
-			for ( achl = hash[i]; achl != NULL; achl = achlnext )
+			for ( achl = hash[i]; achl != nullptr; achl = achlnext )
 			{
 				achlnext = achl->next;
 				free( (char*) achl );
@@ -130,7 +130,7 @@ void RageSurfaceUtils::Palettize( RageSurface *&pImg, int iColors, bool bDither 
         while(1)
 		{
             achv = pam_computeacolorhist( pImg, MAXCOLORS, &colors );
-            if( achv != NULL )
+            if( achv != nullptr )
                 break;
             pixval newmaxval = maxval / 2;
 
@@ -173,7 +173,7 @@ void RageSurfaceUtils::Palettize( RageSurface *&pImg, int iColors, bool bDither 
 	acolorhash_hash acht;
 
 	bool fs_direction = 0;
-	error_t *thiserr = NULL, *nexterr = NULL;
+	error_t *thiserr = nullptr, *nexterr = nullptr;
 
 	if( bDither )
 	{
@@ -326,10 +326,16 @@ static acolorhist_item *mediancut( acolorhist_item *achv, int colors, int sum, i
 	box_vector bv;
 	int boxes;
 
+	/* Security fix: check malloc return values at runtime, not just in debug */
 	bv = (box_vector) malloc( sizeof(struct box) * newcolors );
-	ASSERT( bv );
+	if( bv == nullptr )
+		return NULL;
 	acolormap = (acolorhist_item*) malloc( sizeof(struct acolorhist_item) * newcolors);
-	ASSERT( acolormap );
+	if( acolormap == nullptr )
+	{
+		free( bv );
+		return NULL;
+	}
 
 	for ( int i = 0; i < newcolors; ++i )
 		PAM_ASSIGN( acolormap[i].acolor, 0, 0, 0, 0 );
@@ -473,6 +479,8 @@ static acolorhist_item *mediancut( acolorhist_item *achv, int colors, int sum, i
 	}
 
 	/* All done. */
+	/* Security fix: free bv to prevent memory leak */
+	free( bv );
 	return acolormap;
 }
 
@@ -514,17 +522,19 @@ static bool pam_computeacolorhash( const RageSurface *src, int maxacolors, int* 
 		{
 			int hashval = pam_hashapixel( *pP );
 			acolorhist_list achl;
-			for ( achl = hash.hash[hashval]; achl != NULL; achl = achl->next )
+			for ( achl = hash.hash[hashval]; achl != nullptr; achl = achl->next )
 				if ( PAM_EQUAL( achl->ch.acolor, *pP ) )
 					break;
-			if ( achl != NULL )
+			if ( achl != nullptr )
 				++achl->ch.value;
 			else
 			{
 				if ( ++(*acolorsP) > maxacolors )
 					return false;
 				achl = (acolorhist_list) malloc( sizeof(struct acolorhist_list_item) );
-				ASSERT( achl != NULL );
+				/* Security fix: check malloc return at runtime */
+				if( achl == nullptr )
+					return false;
 
 				memcpy( achl->ch.acolor, *pP, sizeof(apixel) );
 				achl->ch.value = 1;
@@ -541,13 +551,15 @@ static acolorhist_item *pam_acolorhashtoacolorhist( const acolorhash_hash &acht,
 {
 	/* Collate the hash table into a simple acolorhist array. */
 	acolorhist_item *achv = (acolorhist_item*) malloc( maxacolors * sizeof(struct acolorhist_item) );
-	ASSERT( achv != NULL );
+	/* Security fix: check malloc return at runtime */
+	if( achv == nullptr )
+		return NULL;
 
 	/* Loop through the hash table. */
 	int j = 0;
 	for ( int i = 0; i < HASH_SIZE; ++i )
 	{
-		for ( acolorhist_list achl = acht.hash[i]; achl != NULL; achl = achl->next )
+		for ( acolorhist_list achl = acht.hash[i]; achl != nullptr; achl = achl->next )
 		{
 			/* Add the new entry. */
 			achv[j] = achl->ch;
@@ -572,7 +584,9 @@ static acolorhist_item *pam_computeacolorhist( const RageSurface *src, int maxac
 static void pam_addtoacolorhash( acolorhash_hash &acht, const uint8_t acolorP[4], int value )
 {
 	acolorhist_list achl = (acolorhist_list) malloc( sizeof(struct acolorhist_list_item) );
-	ASSERT( achl != NULL );
+	/* Security fix: check malloc return at runtime */
+	if( achl == nullptr )
+		return;
 
 	int hash = pam_hashapixel( acolorP );
 	memcpy( achl->ch.acolor, acolorP, sizeof(apixel) );
@@ -585,7 +599,7 @@ static void pam_addtoacolorhash( acolorhash_hash &acht, const uint8_t acolorP[4]
 static int pam_lookupacolor( const acolorhash_hash &acht, const uint8_t acolorP[4] )
 {
 	const int hash = pam_hashapixel( acolorP );
-	for ( acolorhist_list_item *achl = acht.hash[hash]; achl != NULL; achl = achl->next )
+	for ( acolorhist_list_item *achl = acht.hash[hash]; achl != nullptr; achl = achl->next )
 		if ( PAM_EQUAL( achl->ch.acolor, acolorP ) )
 			return achl->ch.value;
 

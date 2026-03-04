@@ -50,7 +50,7 @@ void DisableWrites() { }
 static RageMutex g_DeletionMutex("SoundDeletionMutex");
 static RageMutex g_SoundManMutex("SoundMan");
 
-RageSoundManager *SOUNDMAN = NULL;
+RageSoundManager *SOUNDMAN = nullptr;
 
 RageSoundManager::RageSoundManager()
 {
@@ -62,7 +62,7 @@ RageSoundManager::RageSoundManager()
 void RageSoundManager::Init( CString drivers )
 {
 	driver = MakeRageSoundDriver(drivers);
-	if( driver == NULL )
+	if( driver == nullptr )
 		RageException::Throw( "Couldn't find a sound driver that works" );
 }
 
@@ -216,7 +216,7 @@ void RageSoundManager::FlushPosMapQueue()
 		RageSound *pSound = GetSoundByID( p.ID );
 
 		/* If we can't find the ID, the sound was probably deleted before we got here. */
-		if( pSound == NULL )
+		if( pSound == nullptr )
 		{
 			// LOG->Trace("ignored unknown (stale?) commit ID %i", p.ID);
 			continue;
@@ -395,7 +395,7 @@ void RageSoundManager::AttenuateBuf( int16_t *buf, int samples, float vol )
 SoundMixBuffer::SoundMixBuffer()
 {
 	bufsize = used = 0;
-	mixbuf = NULL;
+	mixbuf = nullptr;
 	SetVolume( SOUNDMAN->GetMixVolume() );
 }
 
@@ -415,10 +415,24 @@ void SoundMixBuffer::write( const int16_t *buf, unsigned size, float volume, int
 	if( volume != -1 )
 		factor = int( 256*volume );
 
-	const unsigned realsize = size+offset;
+	/* Security fix: validate offset to prevent integer overflow */
+	if( offset < 0 || (unsigned)offset > UINT_MAX - size )
+		return;
+
+	const unsigned realsize = size + (unsigned)offset;
+
+	/* Security fix: check for multiplication overflow before allocation */
+	const size_t alloc_size = sizeof(int32_t) * realsize;
+	if( realsize > 0 && alloc_size / realsize != sizeof(int32_t) )
+		return;
+
 	if( bufsize < realsize )
 	{
-		mixbuf = (int32_t *) realloc( mixbuf, sizeof(int32_t) * realsize );
+		/* Security fix: check realloc return value before assignment */
+		int32_t *newbuf = (int32_t *) realloc( mixbuf, alloc_size );
+		if( newbuf == nullptr )
+			return;  /* Keep existing buffer, drop this write */
+		mixbuf = newbuf;
 		bufsize = realsize;
 	}
 

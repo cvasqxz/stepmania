@@ -10,6 +10,45 @@
 
 #define MAX_EDIT_SIZE_BYTES  20*1024	// 20 KB
 
+/* Security fix: validate asset paths from song files to prevent path traversal */
+static bool IsValidAssetPath( const CString &sPath )
+{
+	if( sPath.empty() )
+		return true;  /* Empty paths are OK */
+
+	/* Normalize separators for checking */
+	CString sNormalized = sPath;
+	sNormalized.Replace( "\\", "/" );
+
+	/* Reject absolute paths */
+	if( sNormalized.Left(1) == "/" )
+		return false;
+
+#if defined(_WINDOWS)
+	/* Reject Windows absolute paths (C:\ etc) */
+	if( sNormalized.size() >= 2 && sNormalized[1] == ':' )
+		return false;
+#endif
+
+	/* Count directory traversal depth */
+	int depth = 0;
+	CStringArray parts;
+	split( sNormalized, "/", parts, true );
+	for( unsigned i = 0; i < parts.size(); ++i )
+	{
+		if( parts[i] == ".." )
+			depth--;
+		else if( parts[i] != "." && !parts[i].empty() )
+			depth++;
+
+		/* If depth goes too negative, we're escaping too far */
+		if( depth < -2 )
+			return false;
+	}
+
+	return true;
+}
+
 void SMLoader::LoadFromSMTokens( 
 	CString sStepsType, 
 	CString sDescription,
@@ -219,20 +258,46 @@ bool SMLoader::LoadFromSMFile( CString sPath, Song &out )
 			out.m_sCredit = sParams[1];
 
 		else if( 0==stricmp(sValueName,"BANNER") )
-			out.m_sBannerFile = sParams[1];
+		{
+			/* Security fix: validate asset path to prevent path traversal */
+			if( IsValidAssetPath(sParams[1]) )
+				out.m_sBannerFile = sParams[1];
+			else if( LOG )
+				LOG->Warn( "Invalid BANNER path in '%s': %s", sPath.c_str(), sParams[1].c_str() );
+		}
 
 		else if( 0==stricmp(sValueName,"BACKGROUND") )
-			out.m_sBackgroundFile = sParams[1];
+		{
+			if( IsValidAssetPath(sParams[1]) )
+				out.m_sBackgroundFile = sParams[1];
+			else if( LOG )
+				LOG->Warn( "Invalid BACKGROUND path in '%s': %s", sPath.c_str(), sParams[1].c_str() );
+		}
 
 		/* Save "#LYRICS" for later, so we can add an internal lyrics tag. */
 		else if( 0==stricmp(sValueName,"LYRICSPATH") )
-			out.m_sLyricsFile = sParams[1];
+		{
+			if( IsValidAssetPath(sParams[1]) )
+				out.m_sLyricsFile = sParams[1];
+			else if( LOG )
+				LOG->Warn( "Invalid LYRICSPATH in '%s': %s", sPath.c_str(), sParams[1].c_str() );
+		}
 
 		else if( 0==stricmp(sValueName,"CDTITLE") )
-			out.m_sCDTitleFile = sParams[1];
+		{
+			if( IsValidAssetPath(sParams[1]) )
+				out.m_sCDTitleFile = sParams[1];
+			else if( LOG )
+				LOG->Warn( "Invalid CDTITLE path in '%s': %s", sPath.c_str(), sParams[1].c_str() );
+		}
 
 		else if( 0==stricmp(sValueName,"MUSIC") )
-			out.m_sMusicFile = sParams[1];
+		{
+			if( IsValidAssetPath(sParams[1]) )
+				out.m_sMusicFile = sParams[1];
+			else if( LOG )
+				LOG->Warn( "Invalid MUSIC path in '%s': %s", sPath.c_str(), sParams[1].c_str() );
+		}
 
 		else if( 0==stricmp(sValueName,"MUSICLENGTH") )
 		{
@@ -393,7 +458,7 @@ bool SMLoader::LoadEdit( CString sEditFilePath, ProfileSlot slot )
 	if( !msd.ReadFile( sEditFilePath ) )
 		RageException::Throw( "Error opening file \"%s\": %s", sEditFilePath.c_str(), msd.GetError().c_str() );
 
-	Song* pSong = NULL;
+	Song* pSong = nullptr;
 
 	for( unsigned i=0; i<msd.GetNumValues(); i++ )
 	{
@@ -414,7 +479,7 @@ bool SMLoader::LoadEdit( CString sEditFilePath, ProfileSlot slot )
 			sSongFullTitle.Replace( '\\', '/' );
 
 			pSong = SONGMAN->FindSong( sSongFullTitle );
-			if( pSong == NULL )
+			if( pSong == nullptr )
 			{
 				LOG->Warn( "The edit file '%s' required a song '%s' that isn't present.", sEditFilePath.c_str(), sSongFullTitle.c_str() );
 				return false;
@@ -429,7 +494,7 @@ bool SMLoader::LoadEdit( CString sEditFilePath, ProfileSlot slot )
 
 		else if( 0==stricmp(sValueName,"NOTES") )
 		{
-			if( pSong == NULL )
+			if( pSong == nullptr )
 			{
 				LOG->Warn( "The edit file '%s' has doesn't have a #SONG tag preceeding the first #NOTES tag.", sEditFilePath.c_str() );
 				return false;

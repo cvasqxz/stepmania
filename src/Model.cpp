@@ -21,12 +21,12 @@ Model::Model ()
 	m_bTextureWrapping = true;
 	SetUseZBuffer( true );
 	SetCullMode( CULL_BACK );
-	m_pGeometry = NULL;
-	m_pCurAnimation = NULL;
+	m_pGeometry = nullptr;
+	m_pCurAnimation = nullptr;
 	m_bRevertToDefaultAnimation = false;
 	m_fDefaultAnimationRate = 1;
 	m_fCurAnimationRate = 1;
-	m_pTempGeometry = NULL;
+	m_pTempGeometry = nullptr;
 }
 
 Model::~Model ()
@@ -39,12 +39,12 @@ void Model::Clear ()
 	if( m_pGeometry )
 	{
 		MODELMAN->UnloadModel( m_pGeometry );
-		m_pGeometry = NULL;
+		m_pGeometry = nullptr;
 	}
 	m_vpBones.clear();
 	m_Materials.clear();
 	m_mapNameToAnimation.clear();
-	m_pCurAnimation = NULL;
+	m_pCurAnimation = nullptr;
 
 	if( m_pTempGeometry )
 		DISPLAY->DeleteCompiledGeometry( m_pTempGeometry );
@@ -94,7 +94,7 @@ void Model::LoadPieces( CString sMeshesPath, CString sMaterialsPath, CString sBo
 {
 	Clear();
 
-	ASSERT( m_pGeometry == NULL );
+	ASSERT( m_pGeometry == nullptr );
 	m_pGeometry = MODELMAN->LoadMilkshapeAscii( sMeshesPath );
 
 	LoadMaterialsFromMilkshapeAscii( sMaterialsPath );
@@ -164,8 +164,10 @@ void Model::LoadMaterialsFromMilkshapeAscii( CString sPath )
                 // name
 			    if( f.GetLine( sLine ) <= 0 )
 					THROW;
-                if (sscanf (sLine, "\"%[^\"]\"", szName) != 1)
+                /* Security fix: limit sscanf to buffer size - 1 */
+                if (sscanf (sLine, "\"%255[^\"]\"", szName) != 1)
 					THROW;
+                szName[sizeof(szName)-1] = '\0';
                 Material.sName = szName;
 
                 // ambient
@@ -220,8 +222,10 @@ void Model::LoadMaterialsFromMilkshapeAscii( CString sPath )
                 // diffuse texture
 			    if( f.GetLine( sLine ) <= 0 )
 					THROW;
-                strcpy (szName, "");
-                sscanf (sLine, "\"%[^\"]\"", szName);
+                szName[0] = '\0';
+                /* Security fix: limit sscanf to buffer size - 1 */
+                sscanf (sLine, "\"%255[^\"]\"", szName);
+                szName[sizeof(szName)-1] = '\0';
                 CString sDiffuseTexture = szName;
 
 				if( sDiffuseTexture != "" )
@@ -241,8 +245,10 @@ void Model::LoadMaterialsFromMilkshapeAscii( CString sPath )
                 // alpha texture
 			    if( f.GetLine( sLine ) <= 0 )
 					THROW;
-                strcpy (szName, "");
-                sscanf (sLine, "\"%[^\"]\"", szName);
+                szName[0] = '\0';
+                /* Security fix: limit sscanf to buffer size - 1 */
+                sscanf (sLine, "\"%255[^\"]\"", szName);
+                szName[sizeof(szName)-1] = '\0';
 				CString sAlphaTexture = szName;
 
 				if( sAlphaTexture != "" )
@@ -281,7 +287,7 @@ bool Model::LoadMilkshapeAsciiBones( CString sAniName, CString sPath )
 
 bool Model::EarlyAbortDraw()
 {
-	return m_pGeometry == NULL || m_pGeometry->m_Meshes.empty();
+	return m_pGeometry == nullptr || m_pGeometry->m_Meshes.empty();
 }
 
 void Model::DrawCelShaded()
@@ -517,7 +523,7 @@ void Model::PlayAnimation( CString sAniName, float fPlayRate )
 
 void Model::AdvanceFrame( float fDeltaTime )
 {
-	if( m_pGeometry == NULL || 
+	if( m_pGeometry == nullptr || 
 		m_pGeometry->m_Meshes.empty() || 
 		!m_pCurAnimation )
 	{
@@ -563,7 +569,7 @@ void Model::SetBones( const msAnimation* pAnimation, float fFrame, vector<myBone
 			//
 			// search for the adjacent position keys
 			//
-			const msPositionKey *pLastPositionKey = NULL, *pThisPositionKey = NULL;
+			const msPositionKey *pLastPositionKey = nullptr, *pThisPositionKey = nullptr;
 			for( int j = 0; j < nPositionKeyCount; j++ )
 			{
 				const msPositionKey *pPositionKey = &pBone->PositionKeys[j];
@@ -574,15 +580,15 @@ void Model::SetBones( const msAnimation* pAnimation, float fFrame, vector<myBone
 				}
 				pLastPositionKey = pPositionKey;
 			}
-			if( pLastPositionKey != NULL && pThisPositionKey != NULL )
+			if( pLastPositionKey != nullptr && pThisPositionKey != nullptr )
 			{
 				float d = pThisPositionKey->fTime - pLastPositionKey->fTime;
 				float s = (fFrame - pLastPositionKey->fTime) / d;
 				vPos = pLastPositionKey->Position + (pThisPositionKey->Position - pLastPositionKey->Position) * s;
 			}
-			else if( pLastPositionKey == NULL )
+			else if( pLastPositionKey == nullptr )
 				vPos = pThisPositionKey->Position;
-			else if( pThisPositionKey == NULL )
+			else if( pThisPositionKey == nullptr )
 				vPos = pLastPositionKey->Position;
 
 			//
@@ -590,7 +596,7 @@ void Model::SetBones( const msAnimation* pAnimation, float fFrame, vector<myBone
 			//
 			RageMatrix m;
 			RageMatrixIdentity( &m );
-			const msRotationKey *pLastRotationKey = NULL, *pThisRotationKey = NULL;
+			const msRotationKey *pLastRotationKey = nullptr, *pThisRotationKey = nullptr;
 			for( int j = 0; j < nRotationKeyCount; j++ )
 			{
 				const msRotationKey *pRotationKey = &pBone->RotationKeys[j];
@@ -639,7 +645,7 @@ void Model::SetBones( const msAnimation* pAnimation, float fFrame, vector<myBone
 
 void Model::UpdateTempGeometry()
 {
-	if( m_pGeometry == NULL || m_pTempGeometry == NULL )
+	if( m_pGeometry == nullptr || m_pTempGeometry == nullptr )
 		return;
 
 	for( unsigned i = 0; i < m_pGeometry->m_Meshes.size(); ++i )

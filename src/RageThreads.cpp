@@ -34,7 +34,7 @@
 bool RageThread::m_bSystemSupportsTLS = false;
 
 #define MAX_THREADS 128
-//static vector<RageMutex*> *g_MutexList = NULL; /* watch out for static initialization order problems */
+//static vector<RageMutex*> *g_MutexList = nullptr; /* watch out for static initialization order problems */
 
 struct ThreadSlot
 {
@@ -69,7 +69,7 @@ struct ThreadSlot
 	{
 		id = GetInvalidThreadId();
 		CurCheckpoint = NumCheckpoints = 0;
-		pImpl = NULL;
+		pImpl = nullptr;
 
 		/* Reset used last; otherwise, a thread creation might pick up the slot. */
 		used = false;
@@ -84,13 +84,15 @@ void ThreadSlot::ThreadCheckpoint::Set(const char *File_, int Line_, const char 
 	File=File_;
 	Line=Line_;
 	Message=Message_;
-	sprintf( FormattedBuf, "        %s:%i %s",
+	/* Security fix: use snprintf to prevent buffer overflow */
+	snprintf( FormattedBuf, sizeof(FormattedBuf), "        %s:%i %s",
 		File, Line, Message? Message:"" );
+	FormattedBuf[sizeof(FormattedBuf)-1] = '\0';
 }
 
 const char *ThreadSlot::ThreadCheckpoint::GetFormattedCheckpoint()
 {
-	if( File == NULL )
+	if( File == nullptr )
 		return NULL;
 
 	/* Make sure it's terminated: */
@@ -114,7 +116,7 @@ const char *ThreadSlot::GetFormattedCheckpoint( int lineno )
 }
 
 static ThreadSlot g_ThreadSlots[MAX_THREADS];
-struct ThreadSlot *g_pUnknownThreadSlot = NULL;
+struct ThreadSlot *g_pUnknownThreadSlot = nullptr;
 
 /* Lock this mutex before using or modifying pImpl.  Other values are just identifiers,
  * so possibly racing over them is harmless (simply using a stale thread ID, etc). */
@@ -156,9 +158,11 @@ static void InitThreads()
 
 	/* Register the "unknown thread" slot. */
 	int slot = FindEmptyThreadSlot();
-	strcpy( g_ThreadSlots[slot].name, "Unknown thread" );
+	/* Security fix: use strncpy/snprintf to prevent buffer overflow */
+	strncpy( g_ThreadSlots[slot].name, "Unknown thread", sizeof(g_ThreadSlots[slot].name) - 1 );
+	g_ThreadSlots[slot].name[sizeof(g_ThreadSlots[slot].name) - 1] = '\0';
 	g_ThreadSlots[slot].id = GetInvalidThreadId();
-	sprintf( g_ThreadSlots[slot].ThreadFormattedOutput, "Unknown thread" );
+	snprintf( g_ThreadSlots[slot].ThreadFormattedOutput, sizeof(g_ThreadSlots[slot].ThreadFormattedOutput), "Unknown thread" );
 	g_pUnknownThreadSlot = &g_ThreadSlots[slot];
 
 	g_ThreadSlotsLock.Unlock();
@@ -191,7 +195,7 @@ static ThreadSlot *GetUnknownThreadSlot()
 
 RageThread::RageThread()
 {
-	m_pSlot = NULL;
+	m_pSlot = nullptr;
 }
 
 RageThread::~RageThread()
@@ -211,7 +215,7 @@ const char *ThreadSlot::GetThreadName() const
 void RageThread::Create( int (*fn)(void *), void *data )
 {
 	/* Don't create a thread that's already running: */
-	ASSERT( m_pSlot == NULL );
+	ASSERT( m_pSlot == nullptr );
 
 	InitThreads();
 
@@ -226,15 +230,19 @@ void RageThread::Create( int (*fn)(void *), void *data )
 		if( LOG )
 			LOG->Warn("Created a thread without naming it first.");
 
+		/* Security fix: use strncpy to prevent buffer overflow */
 		/* If you don't name it, I will: */
-		strcpy( m_pSlot->name, "Joe" );
+		strncpy( m_pSlot->name, "Joe", sizeof(m_pSlot->name) - 1 );
+		m_pSlot->name[sizeof(m_pSlot->name) - 1] = '\0';
 	} else {
-		strcpy( m_pSlot->name, name.c_str() );
+		strncpy( m_pSlot->name, name.c_str(), sizeof(m_pSlot->name) - 1 );
+		m_pSlot->name[sizeof(m_pSlot->name) - 1] = '\0';
 	}
 
 	if( LOG )
 		LOG->Trace( "Starting thread: %s", name.c_str() );
-	sprintf( m_pSlot->ThreadFormattedOutput, "Thread: %s", name.c_str() );
+	/* Security fix: use snprintf to prevent buffer overflow */
+	snprintf( m_pSlot->ThreadFormattedOutput, sizeof(m_pSlot->ThreadFormattedOutput), "Thread: %s", name.c_str() );
 
 	/* Start a thread using our own startup function.  We pass the id to fill in,
 	 * to make sure it's set before the thread actually starts.  (Otherwise, early
@@ -250,8 +258,11 @@ static struct SetupMainThread
 	{
 		LockMut(g_ThreadSlotsLock);
 		int slot = FindEmptyThreadSlot();
-		strcpy( g_ThreadSlots[slot].name, "Main thread" );
-		sprintf( g_ThreadSlots[slot].ThreadFormattedOutput, "Thread: %s", g_ThreadSlots[slot].name );
+		/* Security fix: use strncpy/snprintf to prevent buffer overflow */
+		strncpy( g_ThreadSlots[slot].name, "Main thread", sizeof(g_ThreadSlots[slot].name) - 1 );
+		g_ThreadSlots[slot].name[sizeof(g_ThreadSlots[slot].name) - 1] = '\0';
+		snprintf( g_ThreadSlots[slot].ThreadFormattedOutput, sizeof(g_ThreadSlots[slot].ThreadFormattedOutput),
+			"Thread: %s", g_ThreadSlots[slot].name );
 		g_ThreadSlots[slot].pImpl = MakeThisThread();
 		g_ThreadSlots[slot].id = RageThread::GetCurrentThreadID();
 	}
@@ -266,7 +277,7 @@ const char *RageThread::GetCurThreadName()
 const char *RageThread::GetThreadNameByID( uint64_t iID )
 {
 	ThreadSlot *slot = GetThreadSlotFromID( iID );
-	if( slot == NULL )
+	if( slot == nullptr )
 		return "???";
 
 	return slot->GetThreadName();
@@ -290,16 +301,16 @@ bool RageThread::EnumThreadIDs( int n, uint64_t &iID )
 
 int RageThread::Wait()
 {
-	ASSERT( m_pSlot != NULL );
-	ASSERT( m_pSlot->pImpl != NULL );
+	ASSERT( m_pSlot != nullptr );
+	ASSERT( m_pSlot->pImpl != nullptr );
 	int ret = m_pSlot->pImpl->Wait();
 
 	LockMut(g_ThreadSlotsLock);
 
 	delete m_pSlot->pImpl;
-	m_pSlot->pImpl = NULL;
+	m_pSlot->pImpl = nullptr;
 	m_pSlot->Init();
-	m_pSlot = NULL;
+	m_pSlot = nullptr;
 
 	return ret;
 }
@@ -312,7 +323,7 @@ void RageThread::HaltAllThreads( bool Kill )
 	{
 		if( !g_ThreadSlots[entry].used )
 			continue;
-		if( ThisThreadID == g_ThreadSlots[entry].id || g_ThreadSlots[entry].pImpl == NULL )
+		if( ThisThreadID == g_ThreadSlots[entry].id || g_ThreadSlots[entry].pImpl == nullptr )
 			continue;
 		g_ThreadSlots[entry].pImpl->Halt( Kill );
 	}
@@ -325,7 +336,7 @@ void RageThread::ResumeAllThreads()
 	{
 		if( !g_ThreadSlots[entry].used )
 			continue;
-		if( ThisThreadID == g_ThreadSlots[entry].id || g_ThreadSlots[entry].pImpl == NULL )
+		if( ThisThreadID == g_ThreadSlots[entry].id || g_ThreadSlots[entry].pImpl == nullptr )
 			continue;
 
 		g_ThreadSlots[entry].pImpl->Resume();
@@ -348,10 +359,10 @@ void Checkpoints::LogCheckpoints( bool on )
 void Checkpoints::SetCheckpoint( const char *file, int line, const char *message )
 {
 	ThreadSlot *slot = GetCurThreadSlot();
-	if( slot == NULL )
+	if( slot == nullptr )
 		slot = GetUnknownThreadSlot();
 	/* We can't ASSERT here, since that uses checkpoints. */
-	if( slot == NULL )
+	if( slot == nullptr )
 		sm_crash( "GetUnknownThreadSlot() returned NULL" );
 
 	slot->Checkpoints[slot->CurCheckpoint].Set( file, line, message );
@@ -375,7 +386,7 @@ static const char *GetCheckpointLog( int slotno, int lineno )
 		return NULL;
 
 	/* Only show the "Unknown thread" entry if it has at least one checkpoint. */
-	if( &slot == g_pUnknownThreadSlot && slot.GetFormattedCheckpoint( 0 ) == NULL )
+	if( &slot == g_pUnknownThreadSlot && slot.GetFormattedCheckpoint( 0 ) == nullptr )
 		return NULL;
 
 	if( lineno != 0 )
@@ -394,12 +405,12 @@ const char *Checkpoints::GetLogs( const char *delim )
 	for( int slotno = 0; slotno < MAX_THREADS; ++slotno )
 	{
 		const char *buf = GetCheckpointLog( slotno, 0 );
-		if( buf == NULL )
+		if( buf == nullptr )
 			continue;
 		strcat( ret, buf );
 		strcat( ret, delim );
 		
-		for( int line = 1; (buf = GetCheckpointLog( slotno, line )) != NULL; ++line )
+		for( int line = 1; (buf = GetCheckpointLog( slotno, line )) != nullptr; ++line )
 		{
 			strcat( ret, buf );
 			strcat( ret, delim );
@@ -490,7 +501,7 @@ void RageMutex::MarkLockedMutex()
 }
 
 /* XXX: How can g_FreeMutexIDs and g_MutexList be threadsafed? */
-static set<int> *g_FreeMutexIDs = NULL;
+static set<int> *g_FreeMutexIDs = nullptr;
 #endif
 
 RageMutex::RageMutex( const CString name ):
@@ -501,7 +512,7 @@ RageMutex::RageMutex( const CString name ):
 	m_LockCnt = 0;
 
 
-/*	if( g_FreeMutexIDs == NULL )
+/*	if( g_FreeMutexIDs == nullptr )
 	{
 		g_FreeMutexIDs = new set<int>;
 		for( int i = 0; i < MAX_MUTEXES; ++i )
@@ -526,7 +537,7 @@ RageMutex::RageMutex( const CString name ):
 
 	g_FreeMutexIDs->erase( g_FreeMutexIDs->begin() );
 
-	if( g_MutexList == NULL )
+	if( g_MutexList == nullptr )
 		g_MutexList = new vector<RageMutex*>;
 
 	g_MutexList->push_back( this );
@@ -543,7 +554,7 @@ RageMutex::~RageMutex()
 	if( g_MutexList->empty() )
 	{
 		delete g_MutexList;
-		g_MutexList = NULL;
+		g_MutexList = nullptr;
 	}
 
 	delete m_pMutex;

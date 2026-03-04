@@ -457,7 +457,7 @@ void Song::TidyUpData()
 	{
 		CString error;
 		SoundReader *Sample = SoundReader_FileReader::OpenFile( GetMusicPath(), error );
-		if( Sample == NULL )
+		if( Sample == nullptr )
 		{
 			LOG->Warn( "Error opening sound \"%s\": %s", GetMusicPath().c_str(), error.c_str() );
 
@@ -1188,6 +1188,18 @@ CString GetSongAssetPath( CString sPath, const CString &sSongPath )
 	if( sPath == "" )
 		return "";
 
+	/* Security fix: normalize path separators first */
+	sPath.Replace( "\\", "/" );
+
+	/* Security fix: reject absolute paths */
+	if( sPath.Left(1) == "/" )
+		return "";
+#if defined(_WINDOWS)
+	/* Reject Windows absolute paths (C:\ etc) */
+	if( sPath.size() >= 2 && sPath[1] == ':' )
+		return "";
+#endif
+
 	/* If there's no path in the file, the file is in the same directory
 	 * as the song.  (This is the preferred configuration.) */
 	if( sPath.Find('/') == -1 )
@@ -1202,10 +1214,17 @@ CString GetSongAssetPath( CString sPath, const CString &sSongPath )
 
 	CollapsePath( sPath );
 
+	/* Security fix: after collapsing, verify the path stays within bounds */
 	/* If the path still begins with "../", then there were an unreasonable number
 	 * of them at the beginning of the path.  Ignore the path entirely. */
-	if( sPath.Left(3) == "../" )
+	if( sPath.Left(3) == "../" || sPath.Left(1) == "/" )
 		return "";
+
+	/* Security fix: verify the resolved path starts with the song directory */
+	CString sNormalizedSongPath = sSongPath;
+	CollapsePath( sNormalizedSongPath );
+	if( sPath.Left(sNormalizedSongPath.size()) != sNormalizedSongPath )
+		return "";  /* Path escaped song directory */
 
 	return sPath;
 }
