@@ -80,9 +80,9 @@ enum
 	MAX_NOTE_TRACKS		// leave this at the end
 };
 
-const int BEATS_PER_MEASURE = 4;
-const int ROWS_PER_BEAT	= 48;	// It is important that this number is evenly divisible by 2, 3, and 4.
-const int ROWS_PER_MEASURE = ROWS_PER_BEAT * BEATS_PER_MEASURE;
+constexpr int BEATS_PER_MEASURE = 4;
+constexpr int ROWS_PER_BEAT = 48;	// It is important that this number is evenly divisible by 2, 3, and 4.
+constexpr int ROWS_PER_MEASURE = ROWS_PER_BEAT * BEATS_PER_MEASURE;
 
 enum NoteType 
 { 

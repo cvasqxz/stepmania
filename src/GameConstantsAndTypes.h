@@ -10,33 +10,33 @@
 //
 // Screen Dimensions
 //
-#define	SCREEN_WIDTH	(640)
-#define	SCREEN_HEIGHT	(480)
+constexpr int SCREEN_WIDTH = 640;
+constexpr int SCREEN_HEIGHT = 480;
 
-#define	SCREEN_LEFT		(0)
-#define	SCREEN_RIGHT	(SCREEN_WIDTH)
-#define	SCREEN_TOP		(0)
-#define	SCREEN_BOTTOM	(SCREEN_HEIGHT)
+constexpr int SCREEN_LEFT = 0;
+constexpr int SCREEN_RIGHT = SCREEN_WIDTH;
+constexpr int SCREEN_TOP = 0;
+constexpr int SCREEN_BOTTOM = SCREEN_HEIGHT;
 
-#define	CENTER_X		(SCREEN_LEFT + (SCREEN_RIGHT - SCREEN_LEFT)/2.0f)
-#define	CENTER_Y		(SCREEN_TOP + (SCREEN_BOTTOM - SCREEN_TOP)/2.0f)
+constexpr float CENTER_X = SCREEN_LEFT + (SCREEN_RIGHT - SCREEN_LEFT) / 2.0f;
+constexpr float CENTER_Y = SCREEN_TOP + (SCREEN_BOTTOM - SCREEN_TOP) / 2.0f;
 
-#define	SCREEN_NEAR		(-1000)
-#define	SCREEN_FAR		(1000)
+constexpr int SCREEN_NEAR = -1000;
+constexpr int SCREEN_FAR = 1000;
 
-#define	ARROW_SIZE		(64)
+constexpr int ARROW_SIZE = 64;
 
 
 //
 // Note definitions
 //
-const int MAX_METER = 13;
-const int MIN_METER = 1;
+constexpr int MAX_METER = 13;
+constexpr int MIN_METER = 1;
 
 
 /* This is just cached song data.  Not all of it may actually be displayed
  * in the radar. */
-enum RadarCategory
+enum RadarCategory : int
 {
 	RADAR_STREAM = 0,
 	RADAR_VOLTAGE,
@@ -56,7 +56,7 @@ CString RadarCategoryToThemedString( RadarCategory cat );
 
 
 
-enum StepsType
+enum StepsType : int
 {
 	STEPS_TYPE_DANCE_SINGLE = 0,
 	STEPS_TYPE_DANCE_DOUBLE,
@@ -99,7 +99,7 @@ enum StepsType
 //
 // Play mode stuff
 //
-enum PlayMode
+enum PlayMode : int
 {
 	PLAY_MODE_REGULAR,
 	PLAY_MODE_NONSTOP,	// DDR EX Nonstop
@@ -118,7 +118,7 @@ PlayMode StringToPlayMode( const CString& s );
 
 
 
-enum SortOrder {
+enum SortOrder : int {
 	SORT_PREFERRED,
 	SORT_GROUP, 
 	SORT_TITLE, 
@@ -151,7 +151,7 @@ inline bool IsSongSort( SortOrder so ) { return so >= SORT_PREFERRED && so <= SO
 // Scoring stuff
 //
 
-enum TapNoteScore { 
+enum TapNoteScore : int { 
 	TNS_NONE, 
 	TNS_HIT_MINE,
 	TNS_MISS,
@@ -184,7 +184,7 @@ HoldNoteScore StringToHoldNoteScore( const CString& str );
 //
 // Profile and MemCard stuff
 //
-enum ProfileSlot
+enum ProfileSlot : int
 {
 	PROFILE_SLOT_PLAYER_1,
 	PROFILE_SLOT_PLAYER_2,
@@ -195,7 +195,7 @@ enum ProfileSlot
 #define FOREACH_ProfileSlot( slot ) FOREACH_ENUM( ProfileSlot, NUM_PROFILE_SLOTS, slot )
 
 
-enum MemoryCardState
+enum MemoryCardState : int
 { 
 	MEMORY_CARD_STATE_READY, 
 	MEMORY_CARD_STATE_TOO_LATE, 
@@ -211,7 +211,7 @@ const CString& MemoryCardStateToString( MemoryCardState mcs );
 //
 // Ranking stuff
 //
-enum RankingCategory
+enum RankingCategory : int
 {
 	RANKING_A,	// 1-3 meter per song avg.
 	RANKING_B,	// 4-6 meter per song avg.
@@ -241,7 +241,7 @@ const int NUM_RANKING_LINES	= 5;
 //
 //
 //
-enum PlayerController
+enum PlayerController : int
 {
 	PC_HUMAN,
 	PC_CPU,
@@ -253,7 +253,7 @@ const int MIN_SKILL = 0;
 const int MAX_SKILL = 10;
 
 
-enum StageResult
+enum StageResult : int
 {
 	RESULT_WIN,
 	RESULT_LOSE,
@@ -265,7 +265,7 @@ enum StageResult
 // Battle stuff
 //
 const int NUM_INVENTORY_SLOTS	= 3;
-enum AttackLevel
+enum AttackLevel : int
 {
 	ATTACK_LEVEL_1,
 	ATTACK_LEVEL_2,
@@ -286,7 +286,7 @@ const int ITEM_NONE = -1;
 // Coin stuff
 //
 
-enum CoinMode { COIN_HOME, COIN_PAY, COIN_FREE, NUM_COIN_MODES };
+enum CoinMode : int { COIN_HOME, COIN_PAY, COIN_FREE, NUM_COIN_MODES };
 
 const CString& CoinModeToString( CoinMode cm );
 
@@ -295,7 +295,7 @@ const CString& CoinModeToString( CoinMode cm );
 // Award stuff
 //
 
-enum PerDifficultyAward
+enum PerDifficultyAward : int
 {
 	AWARD_FULL_COMBO_GREATS,
 	AWARD_SINGLE_DIGIT_GREATS,
