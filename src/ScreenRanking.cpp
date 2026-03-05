@@ -680,7 +680,7 @@ float ScreenRanking::SetPage( PageToShow pts )
 				HighScoreList& hsl = PROFILEMAN->GetMachineProfile()->GetCategoryHighScoreList(pts.nt,pts.category);
 				HighScore hs;
 				bool bRecentHighScore = false;
-				if( l < (int)hsl.vHighScores.size() )
+				if( l < static_cast<int>(hsl.vHighScores.size()) )
 				{
 					hs = hsl.vHighScores[l];
 					CString *psName = &hsl.vHighScores[l].sName;
@@ -720,7 +720,7 @@ float ScreenRanking::SetPage( PageToShow pts )
 			{
 				HighScore hs;
 				bool bRecentHighScore = false;
-				if( l < (int)hsl.vHighScores.size() )
+				if( l < static_cast<int>(hsl.vHighScores.size()) )
 				{
 					hs = hsl.vHighScores[l];
 					const CString *psName = &hsl.vHighScores[l].sName;

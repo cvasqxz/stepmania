@@ -300,7 +300,7 @@ void ScreenGameplay::Init()
 
     FOREACH_EnabledPlayer(p)
 	{
-		float fPlayerX = (float) GAMESTATE->GetCurrentStyle()->m_iCenterX[p];
+		float fPlayerX = static_cast<float>(GAMESTATE->GetCurrentStyle()->m_iCenterX[p]);
 
 		// TODO: expand this to include ANY game type where m_bNeedsZoomOutWith2Players == true,
 		// not just "techno".  (eg: solo rave, etc.)
@@ -800,7 +800,7 @@ bool ScreenGameplay::IsLastSong()
 {
 	if( GAMESTATE->m_pCurCourse  &&  GAMESTATE->m_pCurCourse->m_bRepeat )
 		return false;
-	return GAMESTATE->GetCourseSongIndex()+1 == (int)m_apSongsQueue.size(); // GetCourseSongIndex() is 0-based but size() is not
+	return GAMESTATE->GetCourseSongIndex()+1 == static_cast<int>(m_apSongsQueue.size()); // GetCourseSongIndex() is 0-based but size() is not
 }
 
 void ScreenGameplay::SetupSong( PlayerNumber p, int iSongIndex )
@@ -1146,7 +1146,7 @@ void ScreenGameplay::PlayTicks()
 	 * ahead.  This is just to make sure that we request the sound early enough for it to
 	 * come out on time; the actual precise timing is handled by SetStartTime. */
 	float fPositionSeconds = GAMESTATE->m_fMusicSeconds;
-	fPositionSeconds += SOUND->GetPlayLatency() + (float)TICK_EARLY_SECONDS + 0.250f;
+	fPositionSeconds += SOUND->GetPlayLatency() + static_cast<float>(TICK_EARLY_SECONDS) + 0.250f;
 	const float fSongBeat = GAMESTATE->m_pCurSong->GetBeatFromElapsedTime( fPositionSeconds );
 
 	const int iSongRow = max( 0, BeatToNoteRowNotRounded( fSongBeat ) );
@@ -1169,7 +1169,7 @@ void ScreenGameplay::PlayTicks()
 		fSecondsUntil /= GAMESTATE->m_SongOptions.m_fMusicRate; /* 2x music rate means the time until the tick is halved */
 
 		RageSoundParams p;
-		p.StartTime = GAMESTATE->m_LastBeatUpdate + (fSecondsUntil - (float)TICK_EARLY_SECONDS);
+		p.StartTime = GAMESTATE->m_LastBeatUpdate + (fSecondsUntil - static_cast<float>(TICK_EARLY_SECONDS));
 		m_soundAssistTick.Play( &p );
 	}
 }
@@ -1341,7 +1341,7 @@ void ScreenGameplay::Update( float fDeltaTime )
 					PREFSMAN->m_bTwoPlayerRecovery && !GAMESTATE->AllAreDead() )
 					continue;
 
-				LOG->Trace("Player %d failed", (int)pn);
+				LOG->Trace("Player %d failed", static_cast<int>(pn));
 				g_CurStageStats.bFailed[pn] = true;	// fail
 
 				if( GAMESTATE->m_SongOptions.m_LifeType == SongOptions::LIFE_BATTERY &&

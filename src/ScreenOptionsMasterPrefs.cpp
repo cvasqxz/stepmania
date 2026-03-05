@@ -415,7 +415,7 @@ static void MovieColor( int &sel, bool ToSel, const CStringArray &choices )
 
 static void RefreshRate( int &sel, bool ToSel, const CStringArray &choices )
 {
-	const int mapping[] = { (int) REFRESH_DEFAULT,60,70,72,75,80,85,90,100,120,150 };
+	const int mapping[] = { static_cast<int>(REFRESH_DEFAULT),60,70,72,75,80,85,90,100,120,150 };
 	MoveMap( sel, PREFSMAN->m_iRefreshRate, ToSel, mapping, ARRAYSIZE(mapping) );
 }
 
