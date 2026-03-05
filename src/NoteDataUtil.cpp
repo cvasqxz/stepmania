@@ -691,7 +691,7 @@ static void GetTrackMapping( StepsType st, NoteDataUtil::TrackMapping tt, int Nu
 			int iShuffleSeed = GAMESTATE->m_iRoundSeed;
 			do {
 				RandomGen rnd( iShuffleSeed );
-				random_shuffle( &iTakeFromTrack[0], &iTakeFromTrack[NumTracks], rnd );
+				std::shuffle( &iTakeFromTrack[0], &iTakeFromTrack[NumTracks], rnd );
 				iShuffleSeed++;
 			}
 			while ( !memcmp( iOrig, iTakeFromTrack, sizeof(iOrig) ) );

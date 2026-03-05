@@ -472,7 +472,7 @@ void Course::AutogenOniFromArtist( CString sArtistName, CString sArtistNameTrans
 	 * so we always get the same set of songs unless the song set changes. */
 	{
 		RandomGen rng( GetHashForString( sArtistName ) + aSongs.size() );
-		random_shuffle( aSongs.begin(), aSongs.end(), rng );
+		std::shuffle( aSongs.begin(), aSongs.end(), rng );
 	}
 
 	/* Only use up to four songs. */
@@ -691,7 +691,7 @@ bool Course::GetTrailUnsorted( StepsType st, CourseDifficulty cd, Trail &trail )
 		 * will change every time it's viewed, and the displayed order will have no
 		 * bearing on what you'll actually play. */
 		tmp_entries = m_entries;
-		random_shuffle( tmp_entries.begin(), tmp_entries.end(), rnd );
+		std::shuffle( tmp_entries.begin(), tmp_entries.end(), rnd );
 	}
 
 	const vector<CourseEntry> &entries = m_bRandomize? tmp_entries:m_entries;
@@ -745,7 +745,7 @@ bool Course::GetTrailUnsorted( StepsType st, CourseDifficulty cd, Trail &trail )
 				if( !bShuffledSet )
 				{
 					AllSongsShuffled = SONGMAN->GetAllSongs();
-					random_shuffle( AllSongsShuffled.begin(), AllSongsShuffled.end(), rnd );
+					std::shuffle( AllSongsShuffled.begin(), AllSongsShuffled.end(), rnd );
 					bShuffledSet = true;
 				}
 

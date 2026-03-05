@@ -13,6 +13,9 @@
 #include "Steps.h"
 #include "DancingCharacters.h"
 #include "arch/arch.h"
+
+#include <random>
+#include <algorithm>
 #include "BeginnerHelper.h"
 #include "StageStats.h"
 
@@ -233,7 +236,9 @@ CString Background::CreateRandomBGA()
 	if( arrayPaths.empty() )
 		return "";
 
-	random_shuffle( arrayPaths.begin(), arrayPaths.end() );
+	static std::random_device rd;
+	static std::mt19937 rng(rd());
+	std::shuffle( arrayPaths.begin(), arrayPaths.end(), rng );
 
 	/* Find the first file in arrayPaths we havn't already loaded. */
 	CString file;

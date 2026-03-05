@@ -44,6 +44,12 @@ RandomGen::RandomGen( unsigned long seed_ )
 		seed = time(NULL);
 }
 
+RandomGen::result_type RandomGen::operator()()
+{
+	// For std::shuffle - return value in full range [0, INT_MAX-1]
+	return static_cast<result_type>(RandomFloat( seed ) * max());
+}
+
 int RandomGen::operator() ( int maximum )
 {
 	return int(RandomFloat( seed ) * maximum);

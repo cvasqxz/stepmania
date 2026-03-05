@@ -1314,7 +1314,7 @@ void MusicWheel::StartRandom()
 {
 	/* Shuffle the roulette wheel. */
 	RandomGen rnd;
-	random_shuffle( m_WheelItemDatas[SORT_ROULETTE].begin(), m_WheelItemDatas[SORT_ROULETTE].end(), rnd );
+	std::shuffle( m_WheelItemDatas[SORT_ROULETTE].begin(), m_WheelItemDatas[SORT_ROULETTE].end(), rnd );
 
 	SetOpenGroup("", SortOrder(SORT_ROULETTE));
 

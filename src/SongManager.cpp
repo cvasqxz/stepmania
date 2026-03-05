@@ -7,6 +7,9 @@
 #include "BannerCache.h"
 #include "arch/arch.h"
 
+#include <random>
+#include <algorithm>
+
 #include "GameState.h"
 #include "PrefsManager.h"
 #include "RageException.h"
@@ -1147,11 +1150,14 @@ void SongManager::UpdateBest()
 void SongManager::UpdateShuffled()
 {
 	// update shuffled
+	static std::random_device rd;
+	static std::mt19937 rng(rd());
+
 	m_pShuffledSongs = m_pSongs;
-	random_shuffle( m_pShuffledSongs.begin(), m_pShuffledSongs.end() );
+	std::shuffle( m_pShuffledSongs.begin(), m_pShuffledSongs.end(), rng );
 
 	m_pShuffledCourses = m_pCourses;
-	random_shuffle( m_pShuffledCourses.begin(), m_pShuffledCourses.end() );
+	std::shuffle( m_pShuffledCourses.begin(), m_pShuffledCourses.end(), rng );
 }
 
 void SongManager::SortSongs()

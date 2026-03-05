@@ -142,8 +142,14 @@ class RandomGen
 	int seed;
 
 public:
+	// UniformRandomBitGenerator requirements for std::shuffle
+	typedef unsigned int result_type;
+	static constexpr result_type min() { return 0; }
+	static constexpr result_type max() { return INT_MAX-1; }
+
 	RandomGen( unsigned long seed = 0 );
-	int operator() ( int maximum = INT_MAX-1 );
+	result_type operator()();  // For std::shuffle
+	int operator() ( int maximum );  // Legacy interface
 };
 
 
