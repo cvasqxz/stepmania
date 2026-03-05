@@ -668,9 +668,19 @@ void SetupExtensions()
 #elif defined(LINUX)
 	/* Try GLX_EXT_swap_control first, then fall back to GLX_SGI_swap_control */
 	if( HasExtension("GLX_EXT_swap_control") )
+	{
 		GLExt.glXSwapIntervalEXT = (PGLXSWAPINTERVALEXTPROC) wind->GetProcAddress("glXSwapIntervalEXT");
+		LOG->Info("GLX_EXT_swap_control extension detected");
+	}
 	else if( HasExtension("GLX_SGI_swap_control") )
+	{
 		GLExt.glXSwapIntervalSGI = (PGLXSWAPINTERVALSGIPROC) wind->GetProcAddress("glXSwapIntervalSGI");
+		LOG->Info("GLX_SGI_swap_control extension detected");
+	}
+	else
+	{
+		LOG->Warn("No GLX swap control extensions found. VSYNC will use __GL_SYNC_TO_VBLANK environment variable only.");
+	}
 #endif
 
 	if( HasExtension("GL_EXT_paletted_texture") )
@@ -807,18 +817,38 @@ CString RageDisplay_OGL::TryVideoMode( VideoModeParams p, bool &bNewDeviceOut )
 	/* Set vsync based on platform */
 #if defined(WIN32)
 	if( GLExt.wglSwapIntervalEXT )
-	    GLExt.wglSwapIntervalEXT(p.vsync);
+	{
+		GLExt.wglSwapIntervalEXT(p.vsync);
+		LOG->Info("Windows VSYNC set to: %s", p.vsync ? "ENABLED" : "DISABLED");
+	}
+	else if( p.vsync )
+	{
+		LOG->Warn("VSYNC requested but wglSwapIntervalEXT extension not available!");
+	}
 #elif defined(LINUX)
 	if( GLExt.glXSwapIntervalEXT )
 	{
 		Display* dpy = glXGetCurrentDisplay();
 		GLXDrawable drawable = glXGetCurrentDrawable();
 		if( dpy && drawable )
+		{
 			GLExt.glXSwapIntervalEXT(dpy, drawable, p.vsync ? 1 : 0);
+			LOG->Info("Linux GLX_EXT_swap_control VSYNC set to: %s", p.vsync ? "ENABLED" : "DISABLED");
+		}
+		else
+		{
+			LOG->Warn("VSYNC requested but could not get GLX display/drawable!");
+		}
 	}
 	else if( GLExt.glXSwapIntervalSGI )
 	{
 		GLExt.glXSwapIntervalSGI(p.vsync ? 1 : 0);
+		LOG->Info("Linux GLX_SGI_swap_control VSYNC set to: %s", p.vsync ? "ENABLED" : "DISABLED");
+	}
+	else if( p.vsync )
+	{
+		LOG->Warn("VSYNC requested but no GLX extension available!");
+		LOG->Warn("Using environment variable __GL_SYNC_TO_VBLANK (may require restart)");
 	}
 #endif
 	
