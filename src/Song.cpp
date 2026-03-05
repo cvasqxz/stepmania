@@ -545,13 +545,13 @@ void Song::TidyUpData()
 		if( m_fMusicSampleStartSeconds+m_fMusicSampleLengthSeconds > this->m_fMusicLengthSeconds )
 		{
 			// fix for BAG and other slow songs
-			int iBeat = (int)(m_fLastBeat/2);
+			int iBeat = static_cast<int>(m_fLastBeat/2);
 			/* Er.  I see that this truncates the beat down to a multiple
 			 * of 10, but what's the logic behind doing that?  (It'd make
 			 * sense to use a multiple of 4, so we try to line up to a
 			 * measure ...) -glenn */
 			iBeat = iBeat - iBeat%10;
-			m_fMusicSampleStartSeconds = this->GetElapsedTimeFromBeat( (float)iBeat );
+			m_fMusicSampleStartSeconds = this->GetElapsedTimeFromBeat( static_cast<float>(iBeat) );
 		}
 	}
 	

@@ -268,7 +268,7 @@ float StageStats::GetPercentDancePoints( PlayerNumber pn ) const
 	/* This can happen in battle, with transform attacks. */
 	//ASSERT_M( iActualDancePoints[pn] <= iPossibleDancePoints[pn], ssprintf("%i/%i", iActualDancePoints[pn], iPossibleDancePoints[pn]) );
 
-	float fPercentDancePoints =  iActualDancePoints[pn] / (float)iPossibleDancePoints[pn];
+	float fPercentDancePoints =  iActualDancePoints[pn] / static_cast<float>(iPossibleDancePoints[pn]);
 	
 	return fPercentDancePoints;
 }
@@ -328,7 +328,7 @@ void StageStats::GetLifeRecord( PlayerNumber pn, float *fLifeOut, int iNumSample
 {
 	for( int i = 0; i < iNumSamples; ++i )
 	{
-		float from = SCALE( i, 0, (float)iNumSamples, fFirstSecond[pn], fLastSecond[pn] );
+		float from = SCALE( i, 0, static_cast<float>(iNumSamples), fFirstSecond[pn], fLastSecond[pn] );
 		fLifeOut[i] = GetLifeRecordLerpAt( pn, from );
 	}
 }
@@ -451,7 +451,7 @@ float StageStats::GetPercentageOfTaps( PlayerNumber pn, TapNoteScore tns ) const
 	{
 		iTotalTaps += iTapNoteScores[pn][i];
 	}
-	return iTapNoteScores[pn][tns] / (float)iTotalTaps;
+	return iTapNoteScores[pn][tns] / static_cast<float>(iTotalTaps);
 }
 
 static Grade GetBestGrade()
@@ -471,7 +471,7 @@ static Grade GetWorstGrade()
 }
 
 #include "LuaFunctions.h"
-LuaFunction_NoArgs( GetStagesPlayed,		(int) g_vPlayedStageStats.size() );
+LuaFunction_NoArgs( GetStagesPlayed,		static_cast<int>(g_vPlayedStageStats.size()) );
 LuaFunction_NoArgs( GetBestGrade,			GetBestGrade() );
 LuaFunction_NoArgs( GetWorstGrade,			GetWorstGrade() );
 LuaFunction_NoArgs( OnePassed,				g_CurStageStats.OnePassed() );
@@ -482,9 +482,9 @@ LuaFunction_Str( Grade,						StringToGrade(str) );
 
 const StageStats *GetStageStatsN( int n )
 {
-	if( n == (int) g_vPlayedStageStats.size() )
+	if( n == static_cast<int>(g_vPlayedStageStats.size()) )
 		return &g_CurStageStats;
-	if( n > (int) g_vPlayedStageStats.size() )
+	if( n > static_cast<int>(g_vPlayedStageStats.size()) )
 		return NULL;
 	return &g_vPlayedStageStats[n];
 }

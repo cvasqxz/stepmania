@@ -142,7 +142,7 @@ int GameClient::GetData(PacketFunctions& Packet)
 {
 	int length = -1;
 	Packet.ClearPacket();
-	length = clientSocket.ReadPack((char*)Packet.Data, NETMAXBUFFERSIZE);
+	length = clientSocket.ReadPack(reinterpret_cast<char*>(Packet.Data), NETMAXBUFFERSIZE);
 	return length;
 }
 
@@ -385,15 +385,15 @@ void StepManiaLanServer::GameOver(PacketFunctions& Packet, const unsigned int cl
 		SortStats(playersPtr);
 		Reply.ClearPacket();
 		Reply.Write1( NSCGON + NSServerOffset );
-		Reply.Write1( (uint8_t) numPlayers );
+		Reply.Write1( static_cast<uint8_t>(numPlayers) );
 		for (x = 0; x < numPlayers; ++x) 
-			Reply.Write1((uint8_t)playersPtr[x]->PlayerID);
+			Reply.Write1(static_cast<uint8_t>(playersPtr[x]->PlayerID));
 		for (x = 0; x < numPlayers; ++x) 
 			Reply.Write4(playersPtr[x]->score);
 		for (x = 0; x < numPlayers; ++x) 
-			Reply.Write1( (uint8_t) playersPtr[x]->projgrade );
+			Reply.Write1( static_cast<uint8_t>(playersPtr[x]->projgrade) );
 		for (x = 0; x < numPlayers; ++x) 
-			Reply.Write1( (uint8_t) playersPtr[x]->diff );
+			Reply.Write1( static_cast<uint8_t>(playersPtr[x]->diff) );
 		for (int y = 6; y >= 1; --y)
 			for (x = 0; x < numPlayers; ++x)
 				Reply.Write2( (uint16_t) playersPtr[x]->steps[y] );
@@ -470,7 +470,7 @@ void StepManiaLanServer::SendStatsToClients()
 	Reply.ClearPacket();
 	Reply.Write1(NSCGSU + NSServerOffset);
 	Reply.Write1(0);
-	Reply.Write1( (uint8_t) playersPtr.size());
+	Reply.Write1( static_cast<uint8_t>(playersPtr.size()));
 	StatsNameColumn(Reply, playersPtr);
 
 	//Send to in game clients only.
@@ -484,7 +484,7 @@ void StepManiaLanServer::SendStatsToClients()
 
 	Reply.Write1(NSCGSU + NSServerOffset);
 	Reply.Write1(1);
-	Reply.Write1( (uint8_t) playersPtr.size() );
+	Reply.Write1( static_cast<uint8_t>(playersPtr.size()) );
 	StatsComboColumn(Reply, playersPtr);
 
 	//Send to in game clients only.
@@ -500,7 +500,7 @@ void StepManiaLanServer::SendStatsToClients()
 
 	Reply.Write1(NSCGSU + NSServerOffset);
 	Reply.Write1(2);
-	Reply.Write1( (uint8_t) playersPtr.size());
+	Reply.Write1( static_cast<uint8_t>(playersPtr.size()));
 	StatsProjgradeColumn(Reply, playersPtr);
 
 	//Send to in game clients only.
@@ -513,7 +513,7 @@ void StepManiaLanServer::SendStatsToClients()
 void StepManiaLanServer::SendNetPacket(const unsigned int client, PacketFunctions& Packet)
 {
 	if ( client < Client.size() )
-		Client[client]->clientSocket.SendPack((char*)Packet.Data, Packet.Position);
+		Client[client]->clientSocket.SendPack(reinterpret_cast<char*>(Packet.Data), Packet.Position);
 }
 
 void StepManiaLanServer::StatsNameColumn(PacketFunctions &data, vector<LanPlayer*> &playersPtr)
@@ -531,7 +531,7 @@ void StepManiaLanServer::StatsComboColumn(PacketFunctions &data, vector<LanPlaye
 void StepManiaLanServer::StatsProjgradeColumn(PacketFunctions& data, vector<LanPlayer*> &playersPtr)
 {
 	for(unsigned int x = 0; x < playersPtr.size(); ++x )
-		data.Write1( (uint8_t) playersPtr[x]->projgrade );
+		data.Write1( static_cast<uint8_t>(playersPtr[x]->projgrade) );
 }
 
 bool GameClient::IsPlaying(int x)
@@ -591,7 +591,7 @@ void StepManiaLanServer::NewClientCheck()
 void StepManiaLanServer::SendValue(uint8_t value, const unsigned int clientNum)
 {
 	if ( clientNum < Client.size() )
-		Client[clientNum]->clientSocket.SendPack((char*)&value, sizeof(uint8_t));
+		Client[clientNum]->clientSocket.SendPack(reinterpret_cast<char*>(&value), sizeof(uint8_t));
 }
 
 void StepManiaLanServer::AnalizeChat(PacketFunctions &Packet, const unsigned int clientNum)
@@ -825,8 +825,8 @@ void StepManiaLanServer::SendUserList()
 {
 	Reply.ClearPacket();
 	Reply.Write1(NSCUUL + NSServerOffset);
-	Reply.Write1( (uint8_t) Client.size()*2 );
-	Reply.Write1( (uint8_t) Client.size()*2 );
+	Reply.Write1( static_cast<uint8_t>(Client.size()*2) );
+	Reply.Write1( static_cast<uint8_t>(Client.size()*2) );
 
 	for (unsigned int x = 0; x < Client.size(); ++x)
 		for (int y = 0; y < 2; ++y)

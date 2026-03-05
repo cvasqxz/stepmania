@@ -652,7 +652,7 @@ void PlayerMinus::Step( int col, RageTimer tm )
 	if( iIndexOverlappingNote != -1 )
 	{
 		// compute the score for this hit
-		const float fStepBeat = NoteRowToBeat( (float)iIndexOverlappingNote );
+		const float fStepBeat = NoteRowToBeat( static_cast<float>(iIndexOverlappingNote) );
 		const float fStepSeconds = GAMESTATE->m_pCurSong->GetElapsedTimeFromBeat(fStepBeat);
 
 		/* We actually stepped on the note this long ago: */
@@ -827,7 +827,7 @@ void PlayerMinus::Step( int col, RageTimer tm )
 
 		if( score != TNS_NONE && score != TNS_MISS )
 		{
-			int ms_error = (int) roundf( fSecondsFromPerfect * 1000 );
+			int ms_error = static_cast<int>(roundf( fSecondsFromPerfect * 1000 ));
 			ms_error = min( ms_error, MAX_PRO_TIMING_ERROR );
 
 			g_CurStageStats.iTotalError[m_PlayerNumber] += ms_error;
@@ -959,7 +959,7 @@ void PlayerMinus::OnRowCompletelyJudged( int iIndexThatWasSteppedOn )
 			case TNS_PERFECT:
 			case TNS_MARVELOUS:
 				{
-					bool bBright = g_CurStageStats.iCurCombo[m_PlayerNumber]>(int)BRIGHT_GHOST_COMBO_THRESHOLD;
+					bool bBright = g_CurStageStats.iCurCombo[m_PlayerNumber]>static_cast<int>(BRIGHT_GHOST_COMBO_THRESHOLD);
 					m_pNoteField->DidTapNote( c, score, bBright );
 				}
 				break;
