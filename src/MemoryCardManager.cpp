@@ -44,24 +44,24 @@ void MemoryCardManager::Update( float fDelta )
 		vector<UsbStorageDevice> vDisconnects;	// fill these in below
 		
 		// check for disconnects
-		FOREACH( UsbStorageDevice, vOld, old )
+		for (auto& old : vOld)
 		{
-			vector<UsbStorageDevice>::iterator iter = find( vNew.begin(), vNew.end(), *old );
+			vector<UsbStorageDevice>::iterator iter = find( vNew.begin(), vNew.end(), old );
 			if( iter == vNew.end() )	// card no longer present
 			{
-				LOG->Trace( "Disconnected bus %d port %d device %d path %s", old->iBus, old->iPort, old->iLevel, old->sOsMountDir.c_str() );
-				vDisconnects.push_back( *old );
+				LOG->Trace( "Disconnected bus %d port %d device %d path %s", old.iBus, old.iPort, old.iLevel, old.sOsMountDir.c_str() );
+				vDisconnects.push_back( old );
 			}
 		}
 		
 		// check for connects
-		FOREACH( UsbStorageDevice, vNew, newd )
+		for (auto& newd : vNew)
 		{
-			vector<UsbStorageDevice>::iterator iter = find( vOld.begin(), vOld.end(), *newd );
+			vector<UsbStorageDevice>::iterator iter = find( vOld.begin(), vOld.end(), newd );
 			if( iter == vOld.end() )	// card wasn't present last update
 			{
-				LOG->Trace( "Connected bus %d port %d device %d path %s", newd->iBus, newd->iPort, newd->iLevel, newd->sOsMountDir.c_str() );
-				vDisconnects.push_back( *newd );
+				LOG->Trace( "Connected bus %d port %d device %d path %s", newd.iBus, newd.iPort, newd.iLevel, newd.sOsMountDir.c_str() );
+				vDisconnects.push_back( newd );
 			}
 		}
 		
@@ -113,14 +113,9 @@ void MemoryCardManager::Update( float fDelta )
 			if( assigned_device.IsBlank() )     // no card assigned to this player
 				continue;
 			
-			FOREACH( UsbStorageDevice, vUnassignedDevices, d )
-			{
-				if( *d == assigned_device )
-				{
-					vUnassignedDevices.erase( d );
-					break;
-				}
-			}
+			auto it = std::find(vUnassignedDevices.begin(), vUnassignedDevices.end(), assigned_device);
+			if (it != vUnassignedDevices.end())
+				vUnassignedDevices.erase(it);
 		}
 		
 		// try to assign each device to a player
@@ -135,37 +130,36 @@ void MemoryCardManager::Update( float fDelta )
 				continue;       // skip
 			}
 			
-			FOREACH( UsbStorageDevice, vUnassignedDevices, d )
-			{
+			for (size_t _dev_idx = 0; _dev_idx < vUnassignedDevices.size(); ++_dev_idx) { auto& d = vUnassignedDevices[_dev_idx];
 				// search for card dir match
 				if( !PREFSMAN->m_sMemoryCardOsMountPoint[p].empty() &&
-					d->sOsMountDir.CompareNoCase(PREFSMAN->m_sMemoryCardOsMountPoint[p]) )
+					d.sOsMountDir.CompareNoCase(PREFSMAN->m_sMemoryCardOsMountPoint[p]) )
 					continue;      // not a match
 				
 				// search for USB bus match
 				if( PREFSMAN->m_iMemoryCardUsbBus[p] != -1 &&
-					PREFSMAN->m_iMemoryCardUsbBus[p] != d->iBus )
+					PREFSMAN->m_iMemoryCardUsbBus[p] != d.iBus )
 					continue;       // not a match
 				
 				if( PREFSMAN->m_iMemoryCardUsbPort[p] != -1 &&
-					PREFSMAN->m_iMemoryCardUsbPort[p] != d->iPort )
+					PREFSMAN->m_iMemoryCardUsbPort[p] != d.iPort )
 					continue;       // not a match
 				
 				if( PREFSMAN->m_iMemoryCardUsbLevel[p] != -1 &&
-					PREFSMAN->m_iMemoryCardUsbLevel[p] != d->iLevel )
+					PREFSMAN->m_iMemoryCardUsbLevel[p] != d.iLevel )
 					continue;       // not a match
 				
 				LOG->Trace( "device match:  iScsiIndex: %d, iBus: %d, iLevel: %d, iPort: %d, sOsMountDir: %s",
-					d->iScsiIndex, d->iBus, d->iLevel, d->iPort, d->sOsMountDir.c_str() );
+					d.iScsiIndex, d.iBus, d.iLevel, d.iPort, d.sOsMountDir.c_str() );
 				
-				assigned_device = *d;    // save a copy
-				vUnassignedDevices.erase( d );       // remove the device so we don't match it for another player
+				assigned_device = d;    // save a copy
+				vUnassignedDevices.erase(vUnassignedDevices.begin() + _dev_idx);       // remove the device so we don't match it for another player
 				m_bTooLate[p] = GAMESTATE->m_bPlayersFinalized;    // the device is too late if inserted when cards were locked
 				
 				// play sound
 				if( m_bTooLate[p] )
 					m_soundTooLate.Play();
-				else if( !d->bNeedsWriteTest && !d->bWriteTestSucceeded )
+				else if( !d.bNeedsWriteTest && !d.bWriteTestSucceeded )
 					m_soundError.Play();
 				else
 					m_soundReady.Play();

@@ -645,11 +645,11 @@ void ScreenNameEntryTraditional::MenuStart( PlayerNumber pn, const InputEventTyp
 
 void ScreenNameEntryTraditional::SelectChar( PlayerNumber pn, int c )
 {
-	FOREACH( int, m_AlphabetLetter[pn], letter )
+	for (size_t i = 0; i < m_AlphabetLetter[pn].size(); ++i)
 	{
-		if( *letter == c )	// character found
+		if( m_AlphabetLetter[pn][i] == c )	// character found
 		{
-			m_SelectedChar[pn] = letter - m_AlphabetLetter[pn].begin();
+			m_SelectedChar[pn] = i;
 			PositionCharsAndCursor( pn );
 			return;
 		}

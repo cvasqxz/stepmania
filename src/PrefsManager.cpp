@@ -580,7 +580,7 @@ void PrefsManager::ReadPrefsFromFile( CString sIni )
 	ini.GetValue( "Debug", "ShowLoadingWindow",					m_bShowLoadingWindow );
 
 
-	FOREACH( IPreference*, *g_pvpSubscribers, p ) (*p)->ReadFrom( ini );
+	for (auto p : *g_pvpSubscribers) p->ReadFrom( ini );
 }
 
 void PrefsManager::SaveGlobalPrefsToDisk() const

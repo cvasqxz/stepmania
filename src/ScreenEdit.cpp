@@ -1675,12 +1675,12 @@ void ScreenEdit::HandleMainMenuChoice( MainMenuChoice c, int* iAnswers )
 				//
 				bool bAlreadyBGChangeHere = false;
 				BackgroundChange bgChange; 
-				FOREACH( BackgroundChange, m_pSong->m_BackgroundChanges, bgc )
+				for (auto& bgc : m_pSong->m_BackgroundChanges)
 				{
-					if( bgc->m_fStartBeat == GAMESTATE->m_fSongBeat )
+					if( bgc.m_fStartBeat == GAMESTATE->m_fSongBeat )
 					{
 						bAlreadyBGChangeHere = true;
-						bgChange = *bgc;
+						bgChange = bgc;
 					}
 				}
 
@@ -2155,11 +2155,11 @@ void ScreenEdit::HandleBGChangeChoice( BGChangeChoice c, int* iAnswers )
 {
 	BackgroundChange newChange;
 
-	FOREACH( BackgroundChange, m_pSong->m_BackgroundChanges, iter )
+	for (auto& iter : m_pSong->m_BackgroundChanges)
 	{
-		if( iter->m_fStartBeat == GAMESTATE->m_fSongBeat )
+		if( iter.m_fStartBeat == GAMESTATE->m_fSongBeat )
 		{
-			newChange = *iter;
+			newChange = iter;
 			// delete the old change.  We'll add a new one below.
 			m_pSong->m_BackgroundChanges.erase( iter );
 			break;

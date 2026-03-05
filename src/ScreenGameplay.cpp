@@ -1871,9 +1871,9 @@ void SaveChanges( void* papSongsQueue )
 void RevertChanges( void* papSongsQueue )
 {
 	vector<Song*>& apSongsQueue = *(vector<Song*>*)papSongsQueue;
-	FOREACH( Song*, apSongsQueue, pSong )
+	for (auto pSong : apSongsQueue)
 	{
-		SONGMAN->RevertFromDisk( *pSong );
+		SONGMAN->RevertFromDisk( pSong );
 	}
 }
 

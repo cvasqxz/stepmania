@@ -701,27 +701,27 @@ int Model::GetNumStates() const
 
 void Model::SetState( int iNewState )
 {
-	FOREACH( msMaterial, m_Materials, m )
+	for (auto& m : m_Materials)
 	{
-		m->diffuse.SetState( iNewState );
-		m->alpha.SetState( iNewState );
+		m.diffuse.SetState( iNewState );
+		m.alpha.SetState( iNewState );
 	}
 }
 
 float Model::GetAnimationLengthSeconds() const
 {
 	float fSeconds = 0;
-	FOREACH_CONST( msMaterial, m_Materials, m )
-		fSeconds = max( fSeconds, m->diffuse.GetAnimationLengthSeconds() );
+	for (const auto& m : m_Materials)
+		fSeconds = max( fSeconds, m.diffuse.GetAnimationLengthSeconds() );
 	return fSeconds;
 }
 
 void Model::SetSecondsIntoAnimation( float fSeconds )
 {
-	FOREACH( msMaterial, m_Materials, m )
+	for (auto& m : m_Materials)
 	{
-		m->diffuse.SetSecondsIntoAnimation( fSeconds );
-		m->alpha.SetSecondsIntoAnimation( fSeconds );
+		m.diffuse.SetSecondsIntoAnimation( fSeconds );
+		m.alpha.SetSecondsIntoAnimation( fSeconds );
 	}
 }
 

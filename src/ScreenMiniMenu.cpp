@@ -304,11 +304,11 @@ MenuRowInternal::MenuRowInternal( const MenuRow &r )
 
 void MenuRowInternal::SetDefaultChoiceIfPresent( const CString &s )
 {
-	FOREACH( CString, choices, c )
+	for (size_t i = 0; i < choices.size(); ++i)
 	{
-		if( *c == s )
+		if( choices[i] == s )
 		{
-			defaultChoice = c - choices.begin();
+			defaultChoice = i;
 			return;
 		}
 	}

@@ -77,8 +77,8 @@ Song::Song()
 
 Song::~Song()
 {
-	FOREACH( Steps*, m_vpSteps, s )
-		SAFE_DELETE( *s );
+	for (auto s : m_vpSteps)
+		SAFE_DELETE( s );
 	m_vpSteps.clear();
 	
 	// It's the responsibility of the owner of this Song to make sure
@@ -88,8 +88,8 @@ Song::~Song()
 /* Reset to an empty song. */
 void Song::Reset()
 {
-	FOREACH( Steps*, m_vpSteps, s )
-		SAFE_DELETE( *s );
+	for (auto s : m_vpSteps)
+		SAFE_DELETE( s );
 	m_vpSteps.clear();
 	FOREACH_StepsType( st )
 		m_vpStepsByType[st].clear();
@@ -1138,11 +1138,11 @@ bool Song::IsEasy( StepsType st ) const
 bool Song::IsTutorial() const
 {
 	// A Song is a tutorial song is it has only Beginner steps.
-	FOREACH_CONST( Steps*, m_vpSteps, s )
+	for (const auto s : m_vpSteps)
 	{
-		if( (*s)->m_StepsType == STEPS_TYPE_LIGHTS_CABINET )
+		if( s->m_StepsType == STEPS_TYPE_LIGHTS_CABINET )
 			continue;	// ignore
-		if( (*s)->GetDifficulty() != DIFFICULTY_BEGINNER )
+		if( s->GetDifficulty() != DIFFICULTY_BEGINNER )
 			return false;
 	}
 

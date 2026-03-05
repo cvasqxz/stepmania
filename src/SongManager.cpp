@@ -811,12 +811,12 @@ void SongManager::RevertFromDisk( Song *pSong, bool bAllowNotesLoss )
 	{
 		CONVERT_STEPS_POINTER( GAMESTATE->m_pCurSteps[p] );
 
-		FOREACH( Steps*, g_CurStageStats.vpSteps[p], pSteps )
-			CONVERT_STEPS_POINTER( *pSteps );
+		for (auto pSteps : g_CurStageStats.vpSteps[p])
+			CONVERT_STEPS_POINTER( pSteps );
 
-		FOREACH( StageStats, g_vPlayedStageStats, ss )
-			FOREACH( Steps*, ss->vpSteps[p], pSteps )
-				CONVERT_STEPS_POINTER( *pSteps );
+		for (auto& ss : g_vPlayedStageStats)
+			for (auto pSteps : ss->vpSteps[p])
+				CONVERT_STEPS_POINTER( pSteps );
 	}
 }
 

@@ -1596,8 +1596,8 @@ Song *MusicWheel::GetPreferredSelectionForRandomOrPortal()
 		if( i < 900 && pSong->IsTutorial() )
 			continue;
 
-		FOREACH( Difficulty, vDifficultiesToRequire, d )
-			if( !pSong->HasStepsTypeAndDifficulty(st,*d) )
+		for (auto d : vDifficultiesToRequire)
+			if( !pSong->HasStepsTypeAndDifficulty(st,d) )
 				continue;
 		return wid[iSelection].m_pSong;
 	}

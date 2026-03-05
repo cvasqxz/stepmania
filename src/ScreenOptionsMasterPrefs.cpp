@@ -86,9 +86,9 @@ static void GameChoices( CStringArray &out )
 {
 	vector<const Game*> aGames;
 	GAMEMAN->GetEnabledGames( aGames );
-	FOREACH( const Game*, aGames, g )
+	for (auto g : aGames)
 	{
-		CString sGameName = (*g)->m_szName;
+		CString sGameName = g->m_szName;
 		sGameName.MakeUpper();
 		out.push_back( sGameName );
 	}

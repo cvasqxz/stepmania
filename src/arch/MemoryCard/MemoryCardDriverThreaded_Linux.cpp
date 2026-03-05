@@ -149,9 +149,9 @@ void MemoryCardDriverThreaded_Linux::ResetUsbStorage()
 	//
 	
 	// unmount all devices before trying to remove the module
-	FOREACH( UsbStorageDevice, m_vDevicesLastSeen, d )
+	for (auto& d : m_vDevicesLastSeen)
     {
-		CString sCommand = "umount " + d->sOsMountDir;
+		CString sCommand = "umount " + d.sOsMountDir;
 		LOG->Trace( "reset unmount (%s)", sCommand.c_str() );
 		ExecuteCommand( sCommand );
 		LOG->Trace( "reset unmount done" );
@@ -221,12 +221,12 @@ void MemoryCardDriverThreaded_Linux::MountThreadDoOneUpdate()
 	
 	// check for disconnects
 	vector<UsbStorageDevice> vDisconnects;
-	FOREACH( UsbStorageDevice, vOld, old )
+	for (auto& old : vOld)
 	{
 		vector<UsbStorageDevice>::iterator iter = find( vNew.begin(), vNew.end(), *old );
 		if( iter == vNew.end() )    // didn't find
 		{
-			LOG->Trace( "Disconnected bus %d port %d level %d path %s", old->iBus, old->iPort, old->iLevel, old->sOsMountDir.c_str() );
+			LOG->Trace( "Disconnected bus %d port %d level %d path %s", old.iBus, old->iPort, old->iLevel, old.sOsMountDir.c_str() );
 			vDisconnects.push_back( *old );
 			
 			vector<UsbStorageDevice>::iterator iter = find( m_vDevicesLastSeen.begin(), m_vDevicesLastSeen.end(), *old );
@@ -238,12 +238,12 @@ void MemoryCardDriverThreaded_Linux::MountThreadDoOneUpdate()
 	
 	// check for connects
 	vector<UsbStorageDevice> vConnects;
-	FOREACH( UsbStorageDevice, vNew, newd )
+	for (auto& newd : vNew)
 	{
 		vector<UsbStorageDevice>::iterator iter = find( vOld.begin(), vOld.end(), *newd );
 		if( iter == vOld.end() )    // didn't find
 		{
-			LOG->Trace( "Connected bus %d port %d level %d path %s", newd->iBus, newd->iPort, newd->iLevel, newd->sOsMountDir.c_str() );
+			LOG->Trace( "Connected bus %d port %d level %d path %s", newd.iBus, newd->iPort, newd->iLevel, newd.sOsMountDir.c_str() );
 			vConnects.push_back( *newd );
 			
 			m_vDevicesLastSeen.push_back( *newd );

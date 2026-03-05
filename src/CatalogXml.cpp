@@ -188,14 +188,14 @@ void SaveCatalogXml()
 		{
 			vector<const Style*> vpStyle;
 			GAMEMAN->GetStylesForGame( GAMESTATE->m_pCurGame, vpStyle );
-			FOREACH( const Style*, vpStyle, pStyle )
+			for (auto pStyle : vpStyle)
 			{
-				if( !SHOW_STYLE(*pStyle) )
+				if( !SHOW_STYLE(pStyle) )
 					continue;
 				StyleID sID;
-				sID.FromStyle( (*pStyle) );
+				sID.FromStyle( pStyle );
 				XNode* pNode2 = pNode->AppendChild( sID.CreateNode() );
-				pNode2->AppendAttr( "DisplayAs", GAMEMAN->StyleToThemedString(*pStyle) );
+				pNode2->AppendAttr( "DisplayAs", GAMEMAN->StyleToThemedString(pStyle) );
 			}
 		}
 
