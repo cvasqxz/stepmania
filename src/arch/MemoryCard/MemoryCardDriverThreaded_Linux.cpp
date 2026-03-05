@@ -155,10 +155,10 @@ void MemoryCardDriverThreaded_Linux::ResetUsbStorage()
 		LOG->Trace( "reset unmount (%s)", sCommand.c_str() );
 		ExecuteCommand( sCommand );
 		LOG->Trace( "reset unmount done" );
-		
+
 		// force a remount the next time cards aren't locked
-		d->bNeedsWriteTest = true;
-		d->bWriteTestSucceeded = false;
+		d.bNeedsWriteTest = true;
+		d.bWriteTestSucceeded = false;
     }
 	
 	ExecuteCommand( "rmmod usb-storage" );
@@ -223,13 +223,13 @@ void MemoryCardDriverThreaded_Linux::MountThreadDoOneUpdate()
 	vector<UsbStorageDevice> vDisconnects;
 	for (auto& old : vOld)
 	{
-		vector<UsbStorageDevice>::iterator iter = find( vNew.begin(), vNew.end(), *old );
+		vector<UsbStorageDevice>::iterator iter = find( vNew.begin(), vNew.end(), old );
 		if( iter == vNew.end() )    // didn't find
 		{
-			LOG->Trace( "Disconnected bus %d port %d level %d path %s", old.iBus, old->iPort, old->iLevel, old.sOsMountDir.c_str() );
-			vDisconnects.push_back( *old );
-			
-			vector<UsbStorageDevice>::iterator iter = find( m_vDevicesLastSeen.begin(), m_vDevicesLastSeen.end(), *old );
+			LOG->Trace( "Disconnected bus %d port %d level %d path %s", old.iBus, old.iPort, old.iLevel, old.sOsMountDir.c_str() );
+			vDisconnects.push_back( old );
+
+			vector<UsbStorageDevice>::iterator iter = find( m_vDevicesLastSeen.begin(), m_vDevicesLastSeen.end(), old );
 			ASSERT( iter != m_vDevicesLastSeen.end() );
 			m_vDevicesLastSeen.erase( iter );
 		}
@@ -240,13 +240,13 @@ void MemoryCardDriverThreaded_Linux::MountThreadDoOneUpdate()
 	vector<UsbStorageDevice> vConnects;
 	for (auto& newd : vNew)
 	{
-		vector<UsbStorageDevice>::iterator iter = find( vOld.begin(), vOld.end(), *newd );
+		vector<UsbStorageDevice>::iterator iter = find( vOld.begin(), vOld.end(), newd );
 		if( iter == vOld.end() )    // didn't find
 		{
-			LOG->Trace( "Connected bus %d port %d level %d path %s", newd.iBus, newd->iPort, newd->iLevel, newd.sOsMountDir.c_str() );
-			vConnects.push_back( *newd );
-			
-			m_vDevicesLastSeen.push_back( *newd );
+			LOG->Trace( "Connected bus %d port %d level %d path %s", newd.iBus, newd.iPort, newd.iLevel, newd.sOsMountDir.c_str() );
+			vConnects.push_back( newd );
+
+			m_vDevicesLastSeen.push_back( newd );
 		}
 	}
 	

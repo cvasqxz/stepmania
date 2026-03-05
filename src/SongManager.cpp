@@ -815,7 +815,7 @@ void SongManager::RevertFromDisk( Song *pSong, bool bAllowNotesLoss )
 			CONVERT_STEPS_POINTER( pSteps );
 
 		for (auto& ss : g_vPlayedStageStats)
-			for (auto pSteps : ss->vpSteps[p])
+			for (auto pSteps : ss.vpSteps[p])
 				CONVERT_STEPS_POINTER( pSteps );
 	}
 }

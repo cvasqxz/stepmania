@@ -2155,13 +2155,13 @@ void ScreenEdit::HandleBGChangeChoice( BGChangeChoice c, int* iAnswers )
 {
 	BackgroundChange newChange;
 
-	for (auto& iter : m_pSong->m_BackgroundChanges)
+	for (size_t i = 0; i < m_pSong->m_BackgroundChanges.size(); ++i)
 	{
-		if( iter.m_fStartBeat == GAMESTATE->m_fSongBeat )
+		if( m_pSong->m_BackgroundChanges[i].m_fStartBeat == GAMESTATE->m_fSongBeat )
 		{
-			newChange = iter;
+			newChange = m_pSong->m_BackgroundChanges[i];
 			// delete the old change.  We'll add a new one below.
-			m_pSong->m_BackgroundChanges.erase( iter );
+			m_pSong->m_BackgroundChanges.erase( m_pSong->m_BackgroundChanges.begin() + i );
 			break;
 		}
 	}
