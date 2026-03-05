@@ -17,6 +17,9 @@
 # include <GL/gl.h>
 # include <GL/glu.h>
 # include <GL/glext.h>
+# ifdef LINUX
+#  include <GL/glx.h>
+# endif
 #endif
 
 /* Compatibility typedefs for paletted texture extensions (deprecated but used by this code) */
@@ -42,12 +45,22 @@ typedef void (APIENTRYP PFNGLCOLORTABLEPARAMETERIVPROC) (GLenum target, GLenum p
 /* Not in glext.h: */
 typedef bool (APIENTRY * PWSWAPINTERVALEXTPROC) (int interval);
 
+/* Linux GLX swap interval extensions */
+#ifdef LINUX
+typedef int (APIENTRY * PGLXSWAPINTERVALEXTPROC) (Display*, GLXDrawable, int);
+typedef int (APIENTRY * PGLXSWAPINTERVALSGIPROC) (int);
+#endif
+
 
 /* Extension functions we use.  Put these in a namespace instead of in oglspecs_t,
  * so they can be called like regular functions. */
 static struct GLExt_t
 {
 	PWSWAPINTERVALEXTPROC wglSwapIntervalEXT;
+#ifdef LINUX
+	PGLXSWAPINTERVALEXTPROC glXSwapIntervalEXT;
+	PGLXSWAPINTERVALSGIPROC glXSwapIntervalSGI;
+#endif
 	PFNGLCOLORTABLEPROC glColorTableEXT;
 	PFNGLCOLORTABLEPARAMETERIVPROC glGetColorTableParameterivEXT;
 	PFNGLACTIVETEXTUREARBPROC glActiveTextureARB;
@@ -652,6 +665,12 @@ void SetupExtensions()
 		GLExt.wglSwapIntervalEXT = (PWSWAPINTERVALEXTPROC) wind->GetProcAddress("wglSwapIntervalEXT");
 #elif defined(DARWIN)
 	GLExt.wglSwapIntervalEXT = wglSwapIntervalEXT;
+#elif defined(LINUX)
+	/* Try GLX_EXT_swap_control first, then fall back to GLX_SGI_swap_control */
+	if( HasExtension("GLX_EXT_swap_control") )
+		GLExt.glXSwapIntervalEXT = (PGLXSWAPINTERVALEXTPROC) wind->GetProcAddress("glXSwapIntervalEXT");
+	else if( HasExtension("GLX_SGI_swap_control") )
+		GLExt.glXSwapIntervalSGI = (PGLXSWAPINTERVALSGIPROC) wind->GetProcAddress("glXSwapIntervalSGI");
 #endif
 
 	if( HasExtension("GL_EXT_paletted_texture") )
@@ -785,10 +804,23 @@ CString RageDisplay_OGL::TryVideoMode( VideoModeParams p, bool &bNewDeviceOut )
 	 * we may need to set up the video mode). */
 	SetupExtensions();
 
-	/* Set vsync the Windows way, if we can.  (What other extensions are there
-	 * to do this, for other archs?) */
+	/* Set vsync based on platform */
+#if defined(WIN32)
 	if( GLExt.wglSwapIntervalEXT )
 	    GLExt.wglSwapIntervalEXT(p.vsync);
+#elif defined(LINUX)
+	if( GLExt.glXSwapIntervalEXT )
+	{
+		Display* dpy = glXGetCurrentDisplay();
+		GLXDrawable drawable = glXGetCurrentDrawable();
+		if( dpy && drawable )
+			GLExt.glXSwapIntervalEXT(dpy, drawable, p.vsync ? 1 : 0);
+	}
+	else if( GLExt.glXSwapIntervalSGI )
+	{
+		GLExt.glXSwapIntervalSGI(p.vsync ? 1 : 0);
+	}
+#endif
 	
 	ResolutionChanged();
 
