@@ -80,7 +80,7 @@ void GameState::ApplyCmdline()
 		if( !IsAnInt( sPlayer ) || pn < 0 || pn >= NUM_PLAYERS )
 			RageException::Throw( "Invalid argument \"--player=%s\"", sPlayer.c_str() );
 
-		this->JoinPlayer( (PlayerNumber) pn );
+		this->JoinPlayer( static_cast<PlayerNumber>(pn) );
 	}
 
 	CString sMode;
@@ -434,7 +434,7 @@ void GameState::Update( float fDelta )
 		}
 
 		if( bRebuildPlayerOptions )
-			RebuildPlayerOptionsFromActiveAttacks( (PlayerNumber)p );
+			RebuildPlayerOptionsFromActiveAttacks( static_cast<PlayerNumber>(p) );
 
 		if( m_fSecondsUntilAttacksPhasedOut[p] > 0 )
 			m_fSecondsUntilAttacksPhasedOut[p] = max( 0, m_fSecondsUntilAttacksPhasedOut[p] - fDelta );
@@ -504,7 +504,7 @@ void GameState::ResetStageStatistics()
 		{
 			FOREACH_PlayerNumber( p )
 			{
-				Profile* pProfile = PROFILEMAN->GetProfile((PlayerNumber)p);
+				Profile* pProfile = PROFILEMAN->GetProfile(static_cast<PlayerNumber>(p));
 				if( pProfile )
 					g_CurStageStats.iCurCombo[p] = pProfile->m_iCurrentCombo;
 			}
@@ -962,7 +962,7 @@ bool GameState::HasEarnedExtraStage() const
 			if( PREFSMAN->m_bPickExtraStage && this->IsExtraStage() && !this->m_bAllow2ndExtraStage )
 				continue;
 
-			if( g_CurStageStats.GetGrade((PlayerNumber)p) <= GRADE_TIER_3 )
+			if( g_CurStageStats.GetGrade(static_cast<PlayerNumber>(p)) <= GRADE_TIER_3 )
 				return true;
 		}
 	}
@@ -972,8 +972,8 @@ bool GameState::HasEarnedExtraStage() const
 PlayerNumber GameState::GetBestPlayer() const
 {
 	for( int p=PLAYER_1; p<NUM_PLAYERS; p++ )
-		if( GetStageResult( (PlayerNumber)p ) == RESULT_WIN )
-			return (PlayerNumber)p;
+		if( GetStageResult( static_cast<PlayerNumber>(p) ) == RESULT_WIN )
+			return static_cast<PlayerNumber>(p);
 	return PLAYER_INVALID;	// draw
 }
 
@@ -1104,7 +1104,7 @@ bool GameState::IsDisqualified( PlayerNumber pn )
 void GameState::ResetNoteSkins()
 {
 	FOREACH_PlayerNumber( pn )
-		ResetNoteSkinsForPlayer( (PlayerNumber) pn );
+		ResetNoteSkinsForPlayer( static_cast<PlayerNumber>(pn) );
 
 	++m_BeatToNoteSkinRev;
 }
@@ -1260,7 +1260,7 @@ void GameState::RebuildPlayerOptionsFromActiveAttacks( PlayerNumber pn )
 void GameState::RemoveAllActiveAttacks()	// called on end of song
 {
 	FOREACH_PlayerNumber( p )
-		RemoveActiveAttacksForPlayer( (PlayerNumber)p );
+		RemoveActiveAttacksForPlayer( static_cast<PlayerNumber>(p) );
 }
 
 int GameState::GetSumOfActiveAttackLevels( PlayerNumber pn ) const
@@ -1882,7 +1882,7 @@ int LuaFunc_UsingModifier( lua_State *L )
 	REQ_ARG_NUMBER_RANGE( "UsingModifier", 1, 1, NUM_PLAYERS );
 	REQ_ARG( "UsingModifier", 2, string );
 
-	const PlayerNumber pn = (PlayerNumber) (int(lua_tonumber( L, 1 ))-1);
+	const PlayerNumber pn = static_cast<PlayerNumber>(static_cast<int>(lua_tonumber( L, 1 ))-1);
 	const CString modifier = lua_tostring( L, 2 );
 	LUA_RETURN( PlayerIsUsingModifier( pn, modifier ) );
 }
