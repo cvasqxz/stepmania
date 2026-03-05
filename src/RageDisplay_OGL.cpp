@@ -516,6 +516,23 @@ bool HasExtension(CString ext)
 	return g_glExts.find(ext) != g_glExts.end();
 }
 
+#ifdef LINUX
+/* Check for GLX extensions (X11-specific, different from GL extensions) */
+static bool HasGLXExtension(const char* ext)
+{
+	Display* dpy = glXGetCurrentDisplay();
+	if( !dpy )
+		return false;
+
+	const char* extensions = glXQueryExtensionsString(dpy, DefaultScreen(dpy));
+	if( !extensions )
+		return false;
+
+	/* Simple substring search - extension names are space-separated */
+	return strstr(extensions, ext) != nullptr;
+}
+#endif
+
 static void CheckPalettedTextures()
 {
 	CString error;
@@ -667,12 +684,12 @@ void SetupExtensions()
 	GLExt.wglSwapIntervalEXT = wglSwapIntervalEXT;
 #elif defined(LINUX)
 	/* Try GLX_EXT_swap_control first, then fall back to GLX_SGI_swap_control */
-	if( HasExtension("GLX_EXT_swap_control") )
+	if( HasGLXExtension("GLX_EXT_swap_control") )
 	{
 		GLExt.glXSwapIntervalEXT = (PGLXSWAPINTERVALEXTPROC) wind->GetProcAddress("glXSwapIntervalEXT");
 		LOG->Info("GLX_EXT_swap_control extension detected");
 	}
-	else if( HasExtension("GLX_SGI_swap_control") )
+	else if( HasGLXExtension("GLX_SGI_swap_control") )
 	{
 		GLExt.glXSwapIntervalSGI = (PGLXSWAPINTERVALSGIPROC) wind->GetProcAddress("glXSwapIntervalSGI");
 		LOG->Info("GLX_SGI_swap_control extension detected");
