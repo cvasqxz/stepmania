@@ -21,7 +21,7 @@ void InputQueue::RememberInput( const GameInput GameI )
 	int c = GameI.controller;
 	if( m_aQueue[c].size() >= MAX_INPUT_QUEUE_LENGTH )	// full
 		m_aQueue[c].erase( m_aQueue[c].begin(), m_aQueue[c].begin() + (m_aQueue[c].size()-MAX_INPUT_QUEUE_LENGTH+1) );
-	m_aQueue[c].push_back( GameButtonAndTime(GameI.button,RageTimer::GetTimeSinceStart()) );
+	m_aQueue[c].emplace_back(GameI.button,RageTimer::GetTimeSinceStart());
 }
 
 bool InputQueue::MatchesSequence( GameController c, const MenuButton* button_sequence, const int iNumButtons, float fMaxSecondsBack )

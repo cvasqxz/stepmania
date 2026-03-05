@@ -120,7 +120,7 @@ void Background::LoadFromAniDir( CString sAniDir )
 	pTempBGA = new BGAnimation;
 	pTempBGA->LoadFromAniDir( sAniDir );
 	m_BGAnimations[STATIC_BACKGROUND] = pTempBGA;
-	m_aBGChanges.push_back( BackgroundChange(-1000, STATIC_BACKGROUND) );
+	m_aBGChanges.emplace_back(-1000, STATIC_BACKGROUND);
 }
 
 BGAnimation *Background::CreateSongBGA( CString sBGName ) const
@@ -278,7 +278,7 @@ void Background::LoadFromRandom( float fFirstBeat, float fLastBeat, const Timing
 		
 		CString sBGName = CreateRandomBGA();
 		if( sBGName != "" )
-			m_aBGChanges.push_back( BackgroundChange(f,sBGName,1.f,bFade) );
+			m_aBGChanges.emplace_back(f,sBGName,1.f,bFade);
 	}
 
 	// change BG every BPM change that is at the beginning of a measure
@@ -294,7 +294,7 @@ void Background::LoadFromRandom( float fFirstBeat, float fLastBeat, const Timing
 
 		CString sBGName = CreateRandomBGA();
 		if( sBGName != "" )
-			m_aBGChanges.push_back( BackgroundChange(bpmseg.m_fStartBeat,sBGName) );
+			m_aBGChanges.emplace_back(bpmseg.m_fStartBeat,sBGName);
 	}
 }
 
@@ -328,7 +328,7 @@ void Background::LoadFromSong( const Song* pSong )
 
 
 	// start off showing the static song background
-	m_aBGChanges.push_back( BackgroundChange(-10000,STATIC_BACKGROUND) );
+	m_aBGChanges.emplace_back(-10000,STATIC_BACKGROUND);
 
 
 	if( pSong->HasBGChanges() )
@@ -362,7 +362,7 @@ void Background::LoadFromSong( const Song* pSong )
 		LoadFromRandom( pSong->m_fFirstBeat, pSong->m_fLastBeat, pSong->m_Timing );
 
 		// end showing the static song background
-		m_aBGChanges.push_back( BackgroundChange(pSong->m_fLastBeat,STATIC_BACKGROUND) );
+		m_aBGChanges.emplace_back(pSong->m_fLastBeat,STATIC_BACKGROUND);
 	}
 
 		

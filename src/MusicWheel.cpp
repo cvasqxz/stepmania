@@ -571,11 +571,11 @@ void MusicWheel::BuildWheelItemDatas( vector<WheelItemData> &arrayWheelItemDatas
 				{
 					RageColor colorSection = (so==SORT_GROUP) ? SONGMAN->GetGroupColor(pSong->m_sGroupName) : SECTION_COLORS(iSectionColorIndex);
 					iSectionColorIndex = (iSectionColorIndex+1) % NUM_SECTION_COLORS;
-					arrayWheelItemDatas.push_back( WheelItemData(TYPE_SECTION, NULL, sThisSection, NULL, colorSection, SORT_INVALID) );
+					arrayWheelItemDatas.emplace_back(TYPE_SECTION, NULL, sThisSection, NULL, colorSection, SORT_INVALID);
 					sLastSection = sThisSection;
 				}
 
-				arrayWheelItemDatas.push_back( WheelItemData( TYPE_SONG, pSong, sThisSection, NULL, SONGMAN->GetSongColor(pSong), SORT_INVALID) );
+				arrayWheelItemDatas.emplace_back( TYPE_SONG, pSong, sThisSection, NULL, SONGMAN->GetSongColor(pSong), SORT_INVALID);
 			}
 		}
 		else
@@ -583,14 +583,14 @@ void MusicWheel::BuildWheelItemDatas( vector<WheelItemData> &arrayWheelItemDatas
 			for( unsigned i=0; i<arraySongs.size(); i++ )
 			{
 				Song* pSong = arraySongs[i];
-				arrayWheelItemDatas.push_back( WheelItemData(TYPE_SONG, pSong, "", NULL, SONGMAN->GetSongColor(pSong), SORT_INVALID) );
+				arrayWheelItemDatas.emplace_back(TYPE_SONG, pSong, "", NULL, SONGMAN->GetSongColor(pSong), SORT_INVALID);
 			}
 		}
 
 		if( so != SORT_ROULETTE )
 		{
 			if( SHOW_ROULETTE )
-				arrayWheelItemDatas.push_back( WheelItemData(TYPE_ROULETTE, NULL, "", NULL, RageColor(1,0,0,1), SORT_INVALID) );
+				arrayWheelItemDatas.emplace_back(TYPE_ROULETTE, NULL, "", NULL, RageColor(1,0,0,1), SORT_INVALID);
 
 			/* Only add TYPE_PORTAL and TYPE_RANDOM if there's at least one song on the list. */
 			bool bFoundAnySong = false;
@@ -599,10 +599,10 @@ void MusicWheel::BuildWheelItemDatas( vector<WheelItemData> &arrayWheelItemDatas
 					bFoundAnySong = true;
 
 			if( SHOW_RANDOM && bFoundAnySong )
-				arrayWheelItemDatas.push_back( WheelItemData(TYPE_RANDOM, NULL, "", NULL, RageColor(1,0,0,1), SORT_INVALID) );
+				arrayWheelItemDatas.emplace_back(TYPE_RANDOM, NULL, "", NULL, RageColor(1,0,0,1), SORT_INVALID);
 
 			if( SHOW_PORTAL && bFoundAnySong )
-				arrayWheelItemDatas.push_back( WheelItemData(TYPE_PORTAL, NULL, "", NULL, RageColor(1,0,0,1), SORT_INVALID) );
+				arrayWheelItemDatas.emplace_back(TYPE_PORTAL, NULL, "", NULL, RageColor(1,0,0,1), SORT_INVALID);
 		}
 
 		if( GAMESTATE->IsExtraStage() || GAMESTATE->IsExtraStage2() )
@@ -690,11 +690,11 @@ void MusicWheel::BuildWheelItemDatas( vector<WheelItemData> &arrayWheelItemDatas
 			{
 				RageColor c = SECTION_COLORS(iSectionColorIndex);
 				iSectionColorIndex = (iSectionColorIndex+1) % NUM_SECTION_COLORS;
-				arrayWheelItemDatas.push_back( WheelItemData(TYPE_SECTION, NULL, sThisSection, NULL, c, SORT_INVALID) );
+				arrayWheelItemDatas.emplace_back(TYPE_SECTION, NULL, sThisSection, NULL, c, SORT_INVALID);
 				sLastSection = sThisSection;
 			}
 
-            arrayWheelItemDatas.push_back( WheelItemData(TYPE_COURSE, NULL, sThisSection, pCourse, pCourse->GetColor(), SORT_INVALID) );
+            arrayWheelItemDatas.emplace_back(TYPE_COURSE, NULL, sThisSection, pCourse, pCourse->GetColor(), SORT_INVALID);
 		}
 		break;
 	}
@@ -726,7 +726,7 @@ void MusicWheel::BuildWheelItemDatas( vector<WheelItemData> &arrayWheelItemDatas
 
 	if( arrayWheelItemDatas.empty() )
 	{
-		arrayWheelItemDatas.push_back( WheelItemData(TYPE_SECTION, NULL, "- EMPTY -", NULL, RageColor(1,0,0,1), SORT_INVALID) );
+		arrayWheelItemDatas.emplace_back(TYPE_SECTION, NULL, "- EMPTY -", NULL, RageColor(1,0,0,1), SORT_INVALID);
 	}
 }
 

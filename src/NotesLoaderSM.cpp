@@ -583,7 +583,7 @@ void SMLoader::TidyUpData( Song &song, bool cache )
 			if( !IsAFile( song.GetBackgroundPath() ) )
 				break;
 
-			bg.push_back( BackgroundChange(song.m_fLastBeat,song.m_sBackgroundFile) );
+			bg.emplace_back(song.m_fLastBeat,song.m_sBackgroundFile);
 		} while(0);
 	}
 }

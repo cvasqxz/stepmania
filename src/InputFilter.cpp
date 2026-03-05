@@ -67,7 +67,7 @@ void InputFilter::ButtonPressed( DeviceInput di, bool Down )
 	if( WasBeingPressed != IsBeingPressed(di) )
 	{
 		InputEventType iet = IsBeingPressed(di)? IET_FIRST_PRESS:IET_RELEASE;
-		queue.push_back( InputEvent(di,iet) );
+		queue.emplace_back(di,iet);
 	}
 }
 
@@ -115,7 +115,7 @@ void InputFilter::Update(float fDeltaTime)
 			/* Generate IET_LEVEL_CHANGED events. */
 			if( bs.m_LastLevel != bs.m_Level )
 			{
-				queue.push_back( InputEvent(di,IET_LEVEL_CHANGED) );
+				queue.emplace_back(di,IET_LEVEL_CHANGED);
 				bs.m_LastLevel = bs.m_Level;
 			}
 
@@ -143,7 +143,7 @@ void InputFilter::Update(float fDeltaTime)
 				}
 				if( int(fOldHoldTime/fTimeBetweenRepeats) != int(fNewHoldTime/fTimeBetweenRepeats) )
 				{
-					queue.push_back( InputEvent(di,iet) );
+					queue.emplace_back(di,iet);
 				}
 			}
 		}
