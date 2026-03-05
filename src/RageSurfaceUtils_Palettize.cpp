@@ -19,10 +19,10 @@ typedef uint8_t apixel[4];
    ((p)[0] == (q)[0] && (p)[1] == (q)[1] && (p)[2] == (q)[2] && (p)[3] == (q)[3])
 #define PAM_DEPTH(newp,p,oldmaxval,newmaxval) \
    PAM_ASSIGN( (newp), \
-      ( (uint8_t) PAM_GETR(p) * (newmaxval) + (oldmaxval) / 2 ) / (oldmaxval), \
-      ( (uint8_t) PAM_GETG(p) * (newmaxval) + (oldmaxval) / 2 ) / (oldmaxval), \
-      ( (uint8_t) PAM_GETB(p) * (newmaxval) + (oldmaxval) / 2 ) / (oldmaxval), \
-      ( (uint8_t) PAM_GETA(p) * (newmaxval) + (oldmaxval) / 2 ) / (oldmaxval) )
+      ( static_cast<uint8_t>(PAM_GETR(p)) * (newmaxval) + (oldmaxval) / 2 ) / (oldmaxval), \
+      ( static_cast<uint8_t>(PAM_GETG(p)) * (newmaxval) + (oldmaxval) / 2 ) / (oldmaxval), \
+      ( static_cast<uint8_t>(PAM_GETB(p)) * (newmaxval) + (oldmaxval) / 2 ) / (oldmaxval), \
+      ( static_cast<uint8_t>(PAM_GETA(p)) * (newmaxval) + (oldmaxval) / 2 ) / (oldmaxval) )
 
 struct acolorhist_item
 {
@@ -217,7 +217,7 @@ void RageSurfaceUtils::Palettize( RageSurface *&pImg, int iColors, bool bDither 
 					sc[c] = clamp( sc[c], 0, (int32_t) maxval );
 				}
 
-				PAM_ASSIGN( pixel, (uint8_t)sc[0], (uint8_t)sc[1], (uint8_t)sc[2], (uint8_t)sc[3] );
+				PAM_ASSIGN( pixel, static_cast<uint8_t>(sc[0]), static_cast<uint8_t>(sc[1]), static_cast<uint8_t>(sc[2]), static_cast<uint8_t>(sc[3]) );
 			}
 
 			/* Check hash table to see if we have already matched this color. */
@@ -269,7 +269,7 @@ void RageSurfaceUtils::Palettize( RageSurface *&pImg, int iColors, bool bDither 
 				}
 			}
 
-            *pOut = (uint8_t) ind;
+            *pOut = static_cast<uint8_t>(ind);
 
             if( !fs_direction )
 			{
@@ -474,7 +474,7 @@ static acolorhist_item *mediancut( acolorhist_item *achv, int colors, int sum, i
 		b = min( b, (long) maxval );
 		a = a / sum;
 		a = min( a, (long) maxval );
-		PAM_ASSIGN( acolormap[bi].acolor, (uint8_t)r, (uint8_t)g, (uint8_t)b, (uint8_t)a );
+		PAM_ASSIGN( acolormap[bi].acolor, static_cast<uint8_t>(r), static_cast<uint8_t>(g), static_cast<uint8_t>(b), static_cast<uint8_t>(a) );
 #endif /*REP_AVERAGE_PIXELS*/
 	}
 

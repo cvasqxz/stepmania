@@ -445,7 +445,7 @@ void ScreenOptions::Init( InputMode im, OptionRowData OptionRows[], int iNumOpti
 
 	// poke once at all the explanation metrics so that we catch missing ones early
 	{
-		for( int r=0; r<(int)m_Rows.size(); r++ )		// foreach row
+		for( int r=0; r<static_cast<int>(m_Rows.size()); r++ )		// foreach row
 		{
 			GetExplanationText( r );
 			GetExplanationTitle( r );
@@ -470,7 +470,7 @@ void ScreenOptions::Init( InputMode im, OptionRowData OptionRows[], int iNumOpti
 	/* It's tweening into position, but on the initial tween-in we only want to
 	 * tween in the whole page at once.  Since the tweens are nontrivial, it's
 	 * easiest to queue the tweens and then force them to finish. */
-	for( int r=0; r<(int) m_Rows.size(); r++ )	// foreach options line
+	for( int r=0; r<static_cast<int>(m_Rows.size()); r++ )	// foreach options line
 	{
 		Row &row = *m_Rows[r];
 		row.m_sprBullet.FinishTweening();
@@ -555,7 +555,7 @@ CString ScreenOptions::GetExplanationTitle( int iRow ) const
 
 BitmapText &ScreenOptions::GetTextItemForRow( PlayerNumber pn, int iRow, int iChoiceOnRow )
 {
-	ASSERT_M( iRow < (int)m_Rows.size(), ssprintf("%i < %i", iRow, (int)m_Rows.size() ) );
+	ASSERT_M( iRow < static_cast<int>(m_Rows.size()), ssprintf("%i < %i", iRow, static_cast<int>(m_Rows.size()) ) );
 	Row &row = *m_Rows[iRow];
 	if( row.Type == Row::ROW_EXIT )
 		return *row.m_textItems[0];
@@ -652,7 +652,7 @@ void ScreenOptions::PositionUnderlines()
 				/* Don't tween X movement and color changes. */
 				int iWidth, iX, iY;
 				GetWidthXY( (PlayerNumber)p, r, iChoiceWithFocus, iWidth, iX, iY );
-				ul.SetGlobalX( (float)iX );
+				ul.SetGlobalX( static_cast<float>(iX) );
 				ul.SetGlobalDiffuseColor( RageColor(1,1,1, 1.0f) );
 
 				// Don't show underlines on the ScreenOptionsMenu.  We know we're on this
@@ -670,7 +670,7 @@ void ScreenOptions::PositionUnderlines()
 				/* XXX: diffuse doesn't work since underline is an ActorFrame */
 				ul.SetDiffuse( RageColor(1,1,1,bHidden? 0.0f:1.0f) );
 				ul.SetBarWidth( iWidth );
-				ul.SetY( (float)iY );
+				ul.SetY( static_cast<float>(iY) );
 			}
 		}
 	}
@@ -703,7 +703,7 @@ void ScreenOptions::PositionIcons()
 				icon.BeginTweening( 0.3f );
 			}
 
-			icon.SetY( (float)iY );
+			icon.SetY( static_cast<float>(iY) );
 			/* XXX: this doesn't work since icon is an ActorFrame */
 			icon.SetDiffuse( RageColor(1,1,1, row.m_bHidden? 0.0f:1.0f) );
 		}
@@ -726,7 +726,7 @@ void ScreenOptions::PositionCursors()
 			continue;
 
 		const int iRow = m_iCurrentRow[pn];
-		ASSERT_M( iRow < (int)m_Rows.size(), ssprintf("%i < %i", iRow, (int)m_Rows.size() ) );
+		ASSERT_M( iRow < static_cast<int>(m_Rows.size()), ssprintf("%i < %i", iRow, static_cast<int>(m_Rows.size()) ) );
 		Row &Row = *m_Rows[iRow];
 
 		OptionsCursor &highlight = m_Highlight[pn];
@@ -736,7 +736,7 @@ void ScreenOptions::PositionCursors()
 		int iWidth, iX, iY;
 		GetWidthXY( (PlayerNumber)pn, iRow, iChoiceWithFocus, iWidth, iX, iY );
 		highlight.SetBarWidth( iWidth );
-		highlight.SetXY( (float)iX, (float)iY );
+		highlight.SetXY( static_cast<float>(iX), static_cast<float>(iY) );
 	}
 }
 
@@ -744,7 +744,7 @@ void ScreenOptions::TweenCursor( PlayerNumber pn )
 {
 	// Set the position of the highlight showing the current option the user is changing.
 	const int iRow = m_iCurrentRow[pn];
-	ASSERT_M( iRow < (int)m_Rows.size(), ssprintf("%i < %i", iRow, (int)m_Rows.size() ) );
+	ASSERT_M( iRow < static_cast<int>(m_Rows.size()), ssprintf("%i < %i", iRow, static_cast<int>(m_Rows.size()) ) );
 
 	const Row &Row = *m_Rows[iRow];
 	const int iChoiceWithFocus = Row.m_iChoiceWithFocus[pn];
@@ -756,14 +756,14 @@ void ScreenOptions::TweenCursor( PlayerNumber pn )
 	highlight.StopTweening();
 	highlight.BeginTweening( 0.2f );
 	highlight.TweenBarWidth( iWidth );
-	highlight.SetXY( (float)iX, (float)iY );
+	highlight.SetXY( static_cast<float>(iX), static_cast<float>(iY) );
 
 	if( GAMESTATE->IsHumanPlayer(pn) )  
 	{
 		UtilCommand( m_sprLineHighlight[pn], "ScreenOptions", "Change" );
 		if( m_Rows[iRow]->Type == Row::ROW_EXIT )
 			UtilCommand( m_sprLineHighlight[pn], "ScreenOptions", "ChangeToExit" );
-		m_sprLineHighlight[pn].SetY( (float)iY );
+		m_sprLineHighlight[pn].SetY( static_cast<float>(iY) );
 	}
 }
 
@@ -950,9 +950,9 @@ void ScreenOptions::PositionItems()
 		ExitRow = &*Rows.back();
 
 		/* Remove the exit row for purposes of positioning everything else. */
-		if( P1Choice == (int) Rows.size()-1 )
+		if( P1Choice == static_cast<int>(Rows.size())-1 )
 			--P1Choice;
-		if( P2Choice == (int) Rows.size()-1 )
+		if( P2Choice == static_cast<int>(Rows.size())-1 )
 			--P2Choice;
 
 		Rows.erase( Rows.begin()+Rows.size()-1, Rows.end() );
@@ -982,15 +982,15 @@ void ScreenOptions::PositionItems()
 		second_end = second_start + halfsize;
 	}
 
-	first_end = min( first_end, (int) Rows.size() );
-	second_end = min( second_end, (int) Rows.size() );
+	first_end = min( first_end, static_cast<int>(Rows.size()) );
+	second_end = min( second_end, static_cast<int>(Rows.size()) );
 
 	/* If less than total (and Rows.size()) are displayed, fill in the empty
 	 * space intelligently. */
 	while(1)
 	{
 		const int sum = (first_end - first_start) + (second_end - second_start);
-		if( sum >= (int) Rows.size() || sum >= total)
+		if( sum >= static_cast<int>(Rows.size()) || sum >= total)
 			break; /* nothing more to display, or no room */
 
 		/* First priority: expand the top of the second half until it meets
@@ -1000,14 +1000,14 @@ void ScreenOptions::PositionItems()
 		/* Otherwise, expand either end. */
 		else if( first_start > 0 )
 			first_start--;
-		else if( second_end < (int) Rows.size() )
+		else if( second_end < static_cast<int>(Rows.size()) )
 			second_end++;
 		else
 			ASSERT(0); /* do we have room to grow or don't we? */
 	}
 
 	int pos = 0;
-	for( int i=0; i<(int) Rows.size(); i++ )		// foreach row
+	for( int i=0; i<static_cast<int>(Rows.size()); i++ )		// foreach row
 	{
 		float ItemPosition;
 		if( i < first_start )
@@ -1033,7 +1033,7 @@ void ScreenOptions::PositionItems()
 	if( ExitRow )
 	{
 		ExitRow->m_fY = SEPARATE_EXIT_ROW_Y;
-		ExitRow->m_bHidden = ( second_end != (int) Rows.size() );
+		ExitRow->m_bHidden = ( second_end != static_cast<int>(Rows.size()) );
 	}
 }
 
@@ -1378,7 +1378,7 @@ void ScreenOptions::MoveRow( PlayerNumber pn, int dir, bool Repeat )
 			continue;	// skip
 
 		int row = m_iCurrentRow[p] + dir;
-		if( Repeat && ( row == -1 || row == (int) m_Rows.size() ) )
+		if( Repeat && ( row == -1 || row == static_cast<int>(m_Rows.size()) ) )
 			continue; // don't wrap while repeating
 
 		wrap( row, m_Rows.size() );

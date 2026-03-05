@@ -55,7 +55,7 @@ void ProfileManager::GetLocalProfileNames( vector<CString> &asNamesOut ) const
 {
 	CStringArray vsProfileIDs;
 	GetLocalProfileIDs( vsProfileIDs );
-	LOG->Trace("GetLocalProfileNames: %u", unsigned(vsProfileIDs.size()));
+	LOG->Trace("GetLocalProfileNames: %u", static_cast<unsigned>(vsProfileIDs.size()));
 	for( unsigned i=0; i<vsProfileIDs.size(); i++ )
 	{
 		CString sProfileID = vsProfileIDs[i];
