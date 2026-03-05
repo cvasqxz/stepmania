@@ -24,7 +24,7 @@
 
 void MsdFile::AddParam( char *buf, int len )
 {
-	values.back().params.push_back(CString(buf, len));
+	values.back().params.emplace_back(buf, len);
 }
 
 void MsdFile::AddValue() /* (no extra charge) */

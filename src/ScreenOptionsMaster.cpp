@@ -104,7 +104,7 @@ void ScreenOptionsMaster::SetStep( OptionRowData &row, OptionRowHandler &hand )
 	if( GAMESTATE->m_bEditing )
 	{
 		row.choices.push_back( "" );
-		hand.ListEntries.push_back( ModeChoice() );
+		hand.ListEntries.emplace_back();
 	}
 	else if( GAMESTATE->IsCourseMode() )   // playing a course
 	{

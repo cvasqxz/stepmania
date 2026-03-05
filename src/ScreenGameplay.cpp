@@ -214,7 +214,7 @@ void ScreenGameplay::Init()
         FOREACH_PlayerNumber(p)
 		{
 			m_vpStepsQueue[p].push_back( GAMESTATE->m_pCurSteps[p] );
-			m_asModifiersQueue[p].push_back( AttackArray() );
+			m_asModifiersQueue[p].emplace_back();
 		}
 	}
 

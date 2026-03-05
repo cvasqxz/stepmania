@@ -619,7 +619,7 @@ CString PlayerOptions::GetThemedString() const
 	for( unsigned j=0; j<asMods.size(); j++ )
 	{
 		CString& sMod = asMods[j];
-		asThemedMods.push_back( ThemeMod(sMod) );
+		asThemedMods.emplace_back(sMod);
 	}
 	return join( ", ", asThemedMods );
 }
