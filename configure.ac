@@ -195,6 +195,12 @@ AM_CONDITIONAL(HAVE_FFMPEG, test "$have_ffmpeg" = "yes")
 
 SM_CHECK_CRASH_HANDLER
 
+# Check for PulseAudio
+PKG_CHECK_MODULES([PULSEAUDIO], [libpulse-simple >= 0.9.0], [
+  AC_DEFINE([HAVE_PULSEAUDIO], 1, [Define if PulseAudio is available])
+  have_pulseaudio=yes
+], [have_pulseaudio=no])
+
 AM_PATH_ALSA(0.9.0,AC_DEFINE([HAVE_ALSA],1,[Define presence of ALSA]),alsa=false)
 
 AC_ARG_ENABLE(gtk2, AC_HELP_STRING([--disable-gtk2], [Disable GTK support]), enable_gtk2=$enableval, enable_gtk2=yes)
@@ -224,6 +230,7 @@ AC_CHECK_LIB( pthread, pthread_mutex_timedlock, AC_DEFINE([HAVE_PTHREAD_MUTEX_TI
 # Always:
 AC_DEFINE(_GNU_SOURCE, 1, [Use GNU extensions])
 
+AM_CONDITIONAL(HAVE_PULSEAUDIO, test "$have_pulseaudio" = "yes" )
 AM_CONDITIONAL(HAVE_ALSA, test x$alsa != xfalse )
 AM_CONDITIONAL(HAVE_GTK, test "$enable_gtk2" != "no" )
 AM_CONDITIONAL(HAVE_OSS, test x$ac_cv_header_sys_soundcard_h = xyes )

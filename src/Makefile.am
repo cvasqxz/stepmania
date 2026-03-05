@@ -93,6 +93,11 @@ Sound = arch/Sound/RageSoundDriver_Null.cpp arch/Sound/RageSoundDriver_Null.h \
 		arch/Sound/RageSoundDriver_Generic_Software.cpp arch/Sound/RageSoundDriver_Generic_Software.h
 
 
+if HAVE_PULSEAUDIO
+Sound += arch/Sound/RageSoundDriver_PulseAudio.cpp arch/Sound/RageSoundDriver_PulseAudio.h
+AM_CXXFLAGS += $(PULSEAUDIO_CFLAGS)
+endif
+
 if HAVE_OSS
 Sound += arch/Sound/RageSoundDriver_OSS.cpp arch/Sound/RageSoundDriver_OSS.h
 endif
@@ -305,6 +310,7 @@ main_LDADD = \
 		  $(LUA_LIBS) \
 		  $(SDL_LIBS) \
 		  $(XLIBS) \
+		  $(PULSEAUDIO_LIBS) \
 		  $(srcdir)/libresample/libresample.a
 
 stepmania_SOURCES = $(main_SOURCES)

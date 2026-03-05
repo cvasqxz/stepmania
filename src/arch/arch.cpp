@@ -100,10 +100,13 @@ RageSoundDriver *MakeRageSoundDriver(CString drivers)
 #ifdef _XBOX
 			if(!DriversToTry[i].CompareNoCase("DirectSound")) ret = new RageSound_DSound;
 #endif
+#ifdef HAVE_PULSEAUDIO
+			if(!DriversToTry[i].CompareNoCase("PulseAudio")) ret = new RageSound_PulseAudio;
+#endif
 #ifdef HAVE_ALSA
 			if(!DriversToTry[i].CompareNoCase("ALSA")) ret = new RageSound_ALSA9;
 			if(!DriversToTry[i].CompareNoCase("ALSA-sw")) ret = new RageSound_ALSA9_Software;
-#endif		
+#endif
 #ifdef HAVE_OSS
 			if(!DriversToTry[i].CompareNoCase("OSS")) ret = new RageSound_OSS;
 #endif

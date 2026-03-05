@@ -1,39 +1,37 @@
-#ifndef LINUX_ARCH_H
-#define LINUX_ARCH_H
+#ifndef RAGE_SOUND_DRIVER_PULSEAUDIO_H
+#define RAGE_SOUND_DRIVER_PULSEAUDIO_H
 
-#ifdef HAVE_PULSEAUDIO
-#include "Sound/RageSoundDriver_PulseAudio.h"
-#endif
+#include "RageSoundDriver_Generic_Software.h"
 
-#ifdef HAVE_ALSA
-#include "Sound/RageSoundDriver_ALSA9.h"
-#include "Sound/RageSoundDriver_ALSA9_Software.h"
-#endif
+class RageSound_PulseAudio: public RageSound_Generic_Software
+{
+public:
+	RageSound_PulseAudio();
+	~RageSound_PulseAudio();
 
-#ifdef HAVE_OSS
-#include "Sound/RageSoundDriver_OSS.h"
-#endif
+	int64_t GetPosition( const RageSoundBase *snd ) const;
+	float GetPlayLatency() const;
+	int GetSampleRate( int rate ) const { return 44100; }
 
-#ifdef HAVE_GTK
-#include "LoadingWindow/LoadingWindow_Gtk.h"
-#endif
+private:
+	static int MixerThread_start( void *p );
+	void MixerThread();
+	void SetupDecodingThread();
 
-/* Load this even if we have GTK, since we can fall back if GTK is missing. */
-#include "LoadingWindow/LoadingWindow_SDL.h"
+	RageThread m_MixingThread;
+	bool m_bShutdown;
+	int64_t m_iWritePos;
 
-#include "ArchHooks/ArchHooks_Unix.h"
-
-#include "Lights/LightsDriver_LinuxWeedTech.h"
-#include "Lights/LightsDriver_LinuxParallel.h"
-
-#include "MemoryCard/MemoryCardDriverThreaded_Linux.h"
+	void *m_pPulseAudio;      // pa_simple* (opaque pointer)
+	float m_fLatency;
+};
 
 #endif
 
 /*
- * (c) 2002-2003 Glenn Maynard
+ * (c) 2026 StepMania Development Team
  * All rights reserved.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the
  * "Software"), to deal in the Software without restriction, including
@@ -43,7 +41,7 @@
  * copyright notice(s) and this permission notice appear in all copies of
  * the Software and that both the above copyright notice(s) and this
  * permission notice appear in supporting documentation.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
  * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT OF
@@ -54,4 +52,3 @@
  * OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
  * PERFORMANCE OF THIS SOFTWARE.
  */
-
