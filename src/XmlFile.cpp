@@ -346,7 +346,7 @@ char* XNode::Load( const char* pszXml, PARSEINFO *pi /*= &piDefault*/ )
 	// open/close tag <TAG ..> ... </TAG>
 	//                        ^- current pointer
 	{
-		// text value°¡ ¾øÀ¸¸E³Öµµ·ÏÇÑ´Ù.
+		// text valueï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Eï¿½Öµï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 		//if( this->value.empty() || this->value == ("") )
 		if( XIsEmptyString( value ) )
 		{
@@ -442,7 +442,7 @@ char* XNode::Load( const char* pszXml, PARSEINFO *pi /*= &piDefault*/ )
 				}
 			}
 			else	// Alone child Tag Loaded
-					// else ÇØ¾ßÇÏ´ÂÁE¸»¾Æ¾ßÇÏ´ÂÁEÀÇ½É°£´Ù.
+					// else ï¿½Ø¾ï¿½ï¿½Ï´ï¿½ï¿½ï¿½Eï¿½ï¿½ï¿½Æ¾ï¿½ï¿½Ï´ï¿½ï¿½ï¿½Eï¿½Ç½É°ï¿½ï¿½ï¿½.
 			{
 				
 				//if( xml && this->value.empty() && *xml !=chXMLTagOpen )
@@ -601,14 +601,14 @@ void XNode::GetValue(CString &out) const	{ out = value; }
 void XNode::GetValue(int &out) const		{ out = atoi(value); }
 void XNode::GetValue(float &out) const		{ out = strtof(value, NULL); }
 void XNode::GetValue(bool &out) const		{ out = atoi(value) != 0; }
-void XNode::GetValue(unsigned &out) const	{ out = (unsigned)atoi(value) != 0; }
+void XNode::GetValue(unsigned &out) const	{ out = static_cast<unsigned>(atoi(value)) != 0; }
 void XNode::GetValue(DateTime &out) const	{ out.FromString( value ); }
 
 void XAttr::GetValue(CString &out) const	{ out = value; }
 void XAttr::GetValue(int &out) const		{ out = atoi(value); }
 void XAttr::GetValue(float &out) const		{ out = strtof(value, NULL); }
 void XAttr::GetValue(bool &out) const		{ out = atoi(value) != 0; }
-void XAttr::GetValue(unsigned &out) const	{ out = (unsigned)atoi(value) != 0; }
+void XAttr::GetValue(unsigned &out) const	{ out = static_cast<unsigned>(atoi(value)) != 0; }
 void XAttr::GetValue(DateTime &out) const	{ out.FromString( value ); }
 
 //========================================================
@@ -741,7 +741,7 @@ XNodes XNode::GetChilds( const char* name )
 //========================================================
 XNode *XNode::GetChild( int i )
 {
-	if( i >= 0 && i < (int)childs.size() )
+	if( i >= 0 && i < static_cast<int>(childs.size()) )
 		return childs[i];
 	return NULL;
 }
@@ -908,7 +908,7 @@ bool XNode::RemoveChild( XNode *node )
 //========================================================
 XAttr *XNode::GetAttr( int i )
 {
-	if( i >= 0 && i < (int)attrs.size() )
+	if( i >= 0 && i < static_cast<int>(attrs.size()) )
 		return attrs[i];
 	return NULL;
 }

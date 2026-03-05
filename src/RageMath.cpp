@@ -217,7 +217,7 @@ RageMatrix RageMatrixRotationZ( float theta )
 static CString GetParam( const CStringArray& sParams, int iIndex, int& iMaxIndexAccessed )
 {
 	iMaxIndexAccessed = max( iIndex, iMaxIndexAccessed );
-	if( iIndex < int(sParams.size()) )
+	if( iIndex < static_cast<int>(sParams.size()) )
 		return sParams[iIndex];
 	else
 		return "";
@@ -263,9 +263,9 @@ void RageMatrixCommand( CString sCommandString, RageMatrix &mat )
 		}
 
 
-		if( iMaxIndexAccessed != (int)asTokens.size()-1 )
+		if( iMaxIndexAccessed != static_cast<int>(asTokens.size())-1 )
 		{
-			CString sError = ssprintf( "MatrixCommand:  Wrong number of parameters in command '%s'.  Expected %d but there are %d.", join(",",asTokens).c_str(), iMaxIndexAccessed+1, (int)asTokens.size() );
+			CString sError = ssprintf( "MatrixCommand:  Wrong number of parameters in command '%s'.  Expected %d but there are %d.", join(",",asTokens).c_str(), iMaxIndexAccessed+1, static_cast<int>(asTokens.size()) );
 			LOG->Warn( sError );
 			Dialog::OK( sError );
 			continue;

@@ -158,7 +158,7 @@ CString Profile::GetDisplayName() const
 
 static CString FormatCalories( float fCals )
 {
-	return Commify((int)fCals) + " Cal";
+	return Commify(static_cast<int>(fCals)) + " Cal";
 }
 
 CString Profile::GetDisplayTotalCaloriesBurned() const
@@ -223,7 +223,7 @@ float Profile::GetSongsPossible( StepsType st, Difficulty dc ) const
 		}
 	}
 
-	return (float) iTotalSteps;
+	return static_cast<float>(iTotalSteps);
 }
 
 float Profile::GetSongsActual( StepsType st, Difficulty dc ) const
@@ -303,7 +303,7 @@ float Profile::GetCoursesPossible( StepsType st, CourseDifficulty cd ) const
 		iTotalTrails++;
 	}
 	
-	return (float) iTotalTrails;
+	return static_cast<float>(iTotalTrails);
 }
 	
 float Profile::GetCoursesActual( StepsType st, CourseDifficulty cd ) const
@@ -1407,7 +1407,7 @@ XNode* Profile::SaveRecentSongScoresCreateNode() const
 	XNode* pNode = new XNode;
 	pNode->name = "RecentSongScores";
 
-	unsigned uNumToSave = min( m_vRecentStepsScores.size(), (unsigned)MAX_RECENT_SCORES_TO_SAVE );
+	unsigned uNumToSave = min( m_vRecentStepsScores.size(), static_cast<unsigned>(MAX_RECENT_SCORES_TO_SAVE) );
 
 	for( unsigned i=0; i<uNumToSave; i++ )
 	{
@@ -1484,7 +1484,7 @@ XNode* Profile::SaveRecentCourseScoresCreateNode() const
 	XNode* pNode = new XNode;
 	pNode->name = "RecentCourseScores";
 
-	unsigned uNumToSave = min( m_vRecentCourseScores.size(), (unsigned)MAX_RECENT_SCORES_TO_SAVE );
+	unsigned uNumToSave = min( m_vRecentCourseScores.size(), static_cast<unsigned>(MAX_RECENT_SCORES_TO_SAVE) );
 
 	for( unsigned i=0; i<uNumToSave; i++ )
 	{

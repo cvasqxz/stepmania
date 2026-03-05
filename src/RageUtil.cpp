@@ -130,26 +130,26 @@ float HHMMSSToSeconds( const CString &sHHMMSS )
 
 CString SecondsToHHMMSS( float fSecs )
 {
-	const int iMinsDisplay = (int)fSecs/60;
-	const int iSecsDisplay = (int)fSecs - iMinsDisplay*60;
+	const int iMinsDisplay = static_cast<int>(fSecs)/60;
+	const int iSecsDisplay = static_cast<int>(fSecs) - iMinsDisplay*60;
 	CString sReturn = ssprintf( "%02d:%02d:%02d", iMinsDisplay/60, iMinsDisplay%60, iSecsDisplay );
 	return sReturn;
 }
 
 CString SecondsToMMSSMsMs( float fSecs )
 {
-	const int iMinsDisplay = (int)fSecs/60;
-	const int iSecsDisplay = (int)fSecs - iMinsDisplay*60;
-	const int iLeftoverDisplay = (int) ( (fSecs - iMinsDisplay*60 - iSecsDisplay) * 100 );
+	const int iMinsDisplay = static_cast<int>(fSecs)/60;
+	const int iSecsDisplay = static_cast<int>(fSecs) - iMinsDisplay*60;
+	const int iLeftoverDisplay = static_cast<int>( (fSecs - iMinsDisplay*60 - iSecsDisplay) * 100 );
 	CString sReturn = ssprintf( "%02d:%02d.%02d", iMinsDisplay, iSecsDisplay, min(99,iLeftoverDisplay) );
 	return sReturn;
 }
 
 CString SecondsToMMSSMsMsMs( float fSecs )
 {
-	const int iMinsDisplay = (int)fSecs/60;
-	const int iSecsDisplay = (int)fSecs - iMinsDisplay*60;
-	const int iLeftoverDisplay = (int) ( (fSecs - iMinsDisplay*60 - iSecsDisplay) * 1000 );
+	const int iMinsDisplay = static_cast<int>(fSecs)/60;
+	const int iSecsDisplay = static_cast<int>(fSecs) - iMinsDisplay*60;
+	const int iLeftoverDisplay = static_cast<int>( (fSecs - iMinsDisplay*60 - iSecsDisplay) * 1000 );
 	CString sReturn = ssprintf( "%02d:%02d.%03d", iMinsDisplay, iSecsDisplay, min(999,iLeftoverDisplay) );
 	return sReturn;
 }
@@ -357,7 +357,7 @@ void do_split( const S &Source, const S &Delimitor, int &begin, int &size, int l
 		pos = Source.find( Delimitor[0], begin );
 	else
 		pos = Source.find( Delimitor, begin );
-	if( pos == Source.npos || (int) pos > len )
+	if( pos == Source.npos || static_cast<int>(pos) > len )
 		pos = len;
 	size = pos - begin;
 }
@@ -845,8 +845,8 @@ bool utf8_to_wchar_ec( const CString &s, unsigned &start, wchar_t &ch )
 
 	bool bValid = true;
 	{
-		unsigned c1 = (unsigned) s[start] & 0xFF;
-		unsigned c2 = (unsigned) s[start+1] & 0xFF;
+		unsigned c1 = static_cast<unsigned>(s[start]) & 0xFF;
+		unsigned c2 = static_cast<unsigned>(s[start+1]) & 0xFF;
 		int c = (c1 << 8) + c2;
 		if( (c & 0xFE00) == 0xC000 ||
 		    (c & 0xFFE0) == 0xE080 ||
@@ -928,7 +928,7 @@ bool utf8_to_wchar( const CString &s, unsigned &start, wchar_t &ch )
 /* UTF-8 encode ch and append to out. */
 void wchar_to_utf8( wchar_t ch, CString &out )
 {
-	if( ch < 0x80 ) { out.append( 1, (char) ch ); return; }
+	if( ch < 0x80 ) { out.append( 1, static_cast<char>(ch) ); return; }
 
 	int cbytes = 0;
 	if( ch < 0x800 ) cbytes = 1;
@@ -940,13 +940,13 @@ void wchar_to_utf8( wchar_t ch, CString &out )
 	{
 		int shift = cbytes*6;
 		const int init_masks[] = { 0xC0, 0xE0, 0xF0, 0xF8, 0xFC };
-		out.append( 1, (char) (init_masks[cbytes-1] | (ch>>shift)) );
+		out.append( 1, static_cast<char>(init_masks[cbytes-1] | (ch>>shift)) );
 	}
 
 	for( int i = 0; i < cbytes; ++i )
 	{
 		int shift = (cbytes-i-1)*6;
-		out.append( 1, (char) (0x80 | ((ch>>shift)&0x3F)) );
+		out.append( 1, static_cast<char>(0x80 | ((ch>>shift)&0x3F)) );
 	}
 }
 
@@ -1135,7 +1135,7 @@ CString Capitalize( const CString &s )
 	CString s2 = s;
 	/* XXX: utf-8 */
 	if( !(s2[0] & 0x80) )
-		s2[0] = (char) toupper( s2[0] );
+		s2[0] = static_cast<char>(toupper( s2[0] ));
 	return s2;
 }
 
@@ -1277,7 +1277,7 @@ void FileWrite(RageFile& f, int iWrite)
 
 void FileWrite(RageFile& f, size_t uWrite)
 {
-	f.PutLine( ssprintf("%i", (int)uWrite) );
+	f.PutLine( ssprintf("%i", static_cast<int>(uWrite)) );
 }
 
 void FileWrite(RageFile& f, float fWrite)

@@ -368,11 +368,11 @@ void NetworkSyncManager::StartRequest(short position)
 
 	tSteps = GAMESTATE->m_pCurSteps[PLAYER_1];
 	if ((tSteps!=NULL) && (GAMESTATE->IsPlayerEnabled(PLAYER_1)))
-		ctr = uint8_t(ctr + (int) tSteps->GetDifficulty()*16);
+		ctr = uint8_t(ctr + static_cast<int>(tSteps->GetDifficulty())*16);
 
 	tSteps = GAMESTATE->m_pCurSteps[PLAYER_2];
 	if ((tSteps!=NULL) && (GAMESTATE->IsPlayerEnabled(PLAYER_2)))
-		ctr = uint8_t(ctr + (int) tSteps->GetDifficulty());
+		ctr = uint8_t(ctr + static_cast<int>(tSteps->GetDifficulty()));
 
 	m_packet.Write1(ctr);
 	
@@ -732,8 +732,8 @@ CString PacketFunctions::ReadNT()
 {
 	//int Orig=Packet.Position;
 	CString TempStr;
-	while ((Position<NETMAXBUFFERSIZE)&& (((char*)Data)[Position]!=0))
-		TempStr= TempStr + (char)Data[Position++];
+	while ((Position<NETMAXBUFFERSIZE)&& (reinterpret_cast<char*>(Data)[Position]!=0))
+		TempStr= TempStr + static_cast<char>(Data[Position++]);
 
 	++Position;
 	return TempStr;

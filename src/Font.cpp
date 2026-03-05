@@ -90,7 +90,7 @@ void FontPage::Load( FontPageSettings cfg )
 	height = baseline-cfg.Top;
 
 	/* Shift the character up so the top will be rendered at the baseline. */
-	vshift = (float) -baseline;
+	vshift = static_cast<float>(-baseline);
 
 	SetTextureCoords(FrameWidths, cfg.AdvanceExtraPixels);
 	SetExtraPixels(cfg.DrawExtraPixelsLeft, cfg.DrawExtraPixelsRight);
