@@ -74,7 +74,7 @@ RageTimer RageTimer::Sum(const RageTimer &lhs, float tm)
 {
 	/* tm == 5.25  -> secs =  5, us = 5.25  - ( 5) = .25
 	 * tm == -1.25 -> secs = -2, us = -1.25 - (-2) = .75 */
-	int seconds = (int) floorf(tm);
+	int seconds = static_cast<int>(floorf(tm));
 	int us = int( (tm - seconds) * TIMESTAMP_RESOLUTION );
 
 	RageTimer ret;

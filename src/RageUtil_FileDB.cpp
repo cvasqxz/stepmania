@@ -153,7 +153,7 @@ bool FilenameDB::ResolvePath(CString &path)
 	while( 1 )
 	{
 		split( path, slash, begin, size, true );
-		if( begin == (int) path.size() )
+		if( begin == static_cast<int>(path.size()) )
 			break;
 
 		if( fs == nullptr )

@@ -51,8 +51,8 @@ void RageSoundResampler::write(const void *data_, int bytes)
 	{
 		for(int u = 0; u < upsamp; ++u)
 		{
-			int ipos_begin = (int) roundf(ipos / div);
-			int ipos_end = (int) roundf((ipos+1) / div);
+			int ipos_begin = static_cast<int>(roundf(ipos / div));
+			int ipos_end = static_cast<int>(roundf((ipos+1) / div));
 
 			for(int c = 0; c < Channels; ++c)
 			{

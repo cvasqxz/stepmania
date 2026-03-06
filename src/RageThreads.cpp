@@ -579,9 +579,9 @@ void RageMutex::Lock()
 		CString ThisSlotName = "(???" ")"; // stupid trigraph warnings
 		CString OtherSlotName = "(???" ")"; // stupid trigraph warnings
 		if( ThisSlot )
-			ThisSlotName = ssprintf( "%s (%i)", ThisSlot->GetThreadName(), (int) ThisSlot->id );
+			ThisSlotName = ssprintf( "%s (%i)", ThisSlot->GetThreadName(), static_cast<int>(ThisSlot->id) );
 		if( OtherSlot )
-			OtherSlotName = ssprintf( "%s (%i)", OtherSlot->GetThreadName(), (int) OtherSlot->id );
+			OtherSlotName = ssprintf( "%s (%i)", OtherSlot->GetThreadName(), static_cast<int>(OtherSlot->id) );
 		const CString sReason = ssprintf( "Thread deadlock on mutex %s between %s and %s",
 			GetName().c_str(), ThisSlotName.c_str(), OtherSlotName.c_str() );
 

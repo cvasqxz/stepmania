@@ -152,8 +152,8 @@ void ScreenCenterImage::Move( Axis axis, float fDelta )
 {
 	float fValues[4] =
 	{
-		(float) PREFSMAN->m_iCenterImageTranslateX,
-		(float) PREFSMAN->m_iCenterImageTranslateY,
+		static_cast<float>(PREFSMAN->m_iCenterImageTranslateX),
+		static_cast<float>(PREFSMAN->m_iCenterImageTranslateY),
 		PREFSMAN->m_fCenterImageScaleX,
 		PREFSMAN->m_fCenterImageScaleY
 	};

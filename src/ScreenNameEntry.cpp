@@ -166,7 +166,7 @@ ScreenNameEntry::ScreenNameEntry( CString sClassName ) : Screen( sClassName )
 
 		// resize string to MAX_RANKING_NAME_LENGTH
 		m_sSelectedName[p] = ssprintf( "%*.*s", MAX_RANKING_NAME_LENGTH, MAX_RANKING_NAME_LENGTH, m_sSelectedName[p].c_str() );
-		ASSERT( (int) m_sSelectedName[p].length() == MAX_RANKING_NAME_LENGTH );
+		ASSERT( static_cast<int>(m_sSelectedName[p].length()) == MAX_RANKING_NAME_LENGTH );
 
 		// don't load player if they aren't going to enter their name
 		if( !m_bStillEnteringName[p] )

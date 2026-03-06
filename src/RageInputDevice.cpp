@@ -263,7 +263,7 @@ char DeviceInput::ToChar() const
 	{
 	case DEVICE_KEYBOARD:
 		if( button < 128 )
-			return (char) button;
+			return static_cast<char>(button);
 		return '\0';
 	default:
 		return '\0';
