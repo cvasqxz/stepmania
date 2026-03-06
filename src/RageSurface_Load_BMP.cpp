@@ -163,11 +163,11 @@ try { /* file reading may throw */
 		int ret = f.Seek( iDataOffset );
 		if( ret == -1 )
 			throw FatalError( f.GetError() );
-		if( ret != (int) iDataOffset )
+		if( ret != static_cast<int>(iDataOffset) )
 			throw UnexpectedEOF();
 	}
 
-	for( int y = (int) iHeight-1; y >= 0; --y )
+	for( int y = static_cast<int>(iHeight)-1; y >= 0; --y )
 	{
 		uint8_t *pRow = img->pixels + img->pitch*y;
 		CString buf;

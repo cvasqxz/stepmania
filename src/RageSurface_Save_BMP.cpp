@@ -49,7 +49,7 @@ try {
 	write_le32( f, surface->w ); // width (offset 0x14)
 	write_le32( f, surface->h ); // height (offset 0x18)
 	write_le16( f, 1 ); // planes (offset 0x1A)
-	write_le16( f, (uint16_t) converted_surface->fmt.BytesPerPixel*8 ); // bpp (offset 0x1C)
+	write_le16( f, static_cast<uint16_t>(converted_surface->fmt.BytesPerPixel*8) ); // bpp (offset 0x1C)
 	write_le32( f, 0 ); // compression (offset 0x1E)
 	write_le32( f, iDataSize ); // bitmap size (offset 0x22)
 	write_le32( f, 0 ); // horiz resolution (offset 0x26)

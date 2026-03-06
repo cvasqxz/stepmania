@@ -127,7 +127,7 @@ void RageModelGeometry::LoadMilkshapeAscii( CString sPath )
 
                 strcpy( mesh.szName, szName );
 //                mesh.nFlags = nFlags;
-                mesh.nMaterialIndex = (uint8_t) nIndex;
+                mesh.nMaterialIndex = static_cast<uint8_t>(nIndex);
 
 				mesh.nBoneIndex = -1;
 
@@ -161,7 +161,7 @@ void RageModelGeometry::LoadMilkshapeAscii( CString sPath )
                     }
 
 //                  vertex.nFlags = nFlags;
-                    v.bone = (uint8_t) nIndex;
+                    v.bone = static_cast<uint8_t>(nIndex);
 					RageVec3AddToBounds( v.p, m_vMins, m_vMaxs );
                 }
 

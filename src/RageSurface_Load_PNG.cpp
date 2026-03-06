@@ -53,7 +53,7 @@ void RageFile_png_read( png_struct *png, png_byte *p, png_size_t size )
 		error[sizeof(error)-1] = 0;
 		png_error( png, error );
 	}
-	else if( got != (int) size )
+	else if( got != static_cast<int>(size) )
 		png_error( png, "Unexpected EOF" );
 }
 

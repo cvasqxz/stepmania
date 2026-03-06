@@ -608,7 +608,7 @@ RageSurface *RageDisplay::CreateSurfaceFromPixfmt( PixelFormat pixfmt,
 	RageSurface *surf = CreateSurfaceFrom(
 		width, height, tpf->bpp, 
 		tpf->masks[0], tpf->masks[1], tpf->masks[2], tpf->masks[3],
-		(uint8_t *) pixels, pitch );
+		reinterpret_cast<uint8_t*>(pixels), pitch );
 
 	return surf;
 }

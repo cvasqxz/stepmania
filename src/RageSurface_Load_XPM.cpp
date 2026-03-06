@@ -42,7 +42,7 @@ RageSurface *RageSurface_Load_XPM( char * const *xpm, CString &error )
 		/* "id c #AABBCC"; id is color_length long.  id may contain spaces. */
 		CString color = xpm[line++];
 
-		if( color_length+4 > (int) color.size() )
+		if( color_length+4 > static_cast<int>(color.size()) )
 			continue;
 
 		CString name;
@@ -80,7 +80,7 @@ RageSurface *RageSurface_Load_XPM( char * const *xpm, CString &error )
 	{
 		CheckLine();
 		const CString row = xpm[line++];
-		if( (int) row.size() != width*color_length )
+		if( static_cast<int>(row.size()) != width*color_length )
 		{
 			error = ssprintf( "row %i is not expected length (%i != %i)", y, int(row.size()), width*color_length );
 			delete img;
