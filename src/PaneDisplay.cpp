@@ -191,7 +191,7 @@ void PaneDisplay::SetContent( PaneContents c )
 			val = 100.0f * PROFILEMAN->GetProfile(m_PlayerNumber)->GetStepsHighScoreList(pSong,pSteps).GetTopScore().fPercentDP;
 			break;
 		case SONG_PROFILE_NUM_PLAYS:
-			val = (float) PROFILEMAN->GetProfile(m_PlayerNumber)->GetStepsNumTimesPlayed(pSong,pSteps);
+			val = static_cast<float>(PROFILEMAN->GetProfile(m_PlayerNumber)->GetStepsNumTimesPlayed(pSong,pSteps));
 			break;
 
 		case SONG_MACHINE_HIGH_NAME: /* set val for color */
@@ -205,7 +205,7 @@ void PaneDisplay::SetContent( PaneContents c )
 		case SONG_MACHINE_RANK:
 			{
 			const vector<Song*> best = SONGMAN->GetBestSongs( PROFILE_SLOT_MACHINE );
-			val = (float) FindIndex( best.begin(), best.end(), pSong );
+			val = static_cast<float>(FindIndex( best.begin(), best.end(), pSong ));
 			val += 1;
 			break;
 			}
@@ -213,7 +213,7 @@ void PaneDisplay::SetContent( PaneContents c )
 		case SONG_PROFILE_RANK:
 			{
 			const vector<Song*> best = SONGMAN->GetBestSongs( PlayerMemCard(m_PlayerNumber) );
-			val = (float) FindIndex( best.begin(), best.end(), pSong );
+			val = static_cast<float>(FindIndex( best.begin(), best.end(), pSong ));
 			val += 1;
 			break;
 			}
@@ -224,13 +224,13 @@ void PaneDisplay::SetContent( PaneContents c )
 			break;
 
 		case COURSE_MACHINE_NUM_PLAYS:
-			val = (float) PROFILEMAN->GetMachineProfile()->GetCourseNumTimesPlayed( pCourse );
+			val = static_cast<float>(PROFILEMAN->GetMachineProfile()->GetCourseNumTimesPlayed( pCourse ));
 			break;
 
 		case COURSE_MACHINE_RANK:
 			{
 			const vector<Course*> best = SONGMAN->GetBestCourses( PROFILE_SLOT_MACHINE );
-			val = (float) FindIndex( best.begin(), best.end(), pCourse );
+			val = static_cast<float>(FindIndex( best.begin(), best.end(), pCourse ));
 			val += 1;
 			}
 			break;
@@ -239,12 +239,12 @@ void PaneDisplay::SetContent( PaneContents c )
 			val = 100.0f * PROFILEMAN->GetProfile(m_PlayerNumber)->GetCourseHighScoreList(pCourse,pTrail).GetTopScore().fPercentDP;
 			break;
 		case COURSE_PROFILE_NUM_PLAYS:
-			val = (float) PROFILEMAN->GetProfile(m_PlayerNumber)->GetCourseNumTimesPlayed( pCourse );
+			val = static_cast<float>(PROFILEMAN->GetProfile(m_PlayerNumber)->GetCourseNumTimesPlayed( pCourse ));
 			break;
 
 		case COURSE_PROFILE_RANK:
 			const vector<Course*> best = SONGMAN->GetBestCourses( PlayerMemCard(m_PlayerNumber) );
-			val = (float) FindIndex( best.begin(), best.end(), pCourse );
+			val = static_cast<float>(FindIndex( best.begin(), best.end(), pCourse ));
 			val += 1;
 			break;
 		};

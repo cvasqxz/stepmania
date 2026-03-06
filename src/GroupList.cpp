@@ -116,7 +116,7 @@ void GroupList::AfterChange()
 	m_Frame.Command( SCROLL_TWEEN_COMMAND );
 	m_Frame.SetY( -m_iTop*SPACING_Y );
 
-	for( int i=0; i < (int) m_asLabels.size(); i++ )
+	for( int i=0; i < static_cast<int>(m_asLabels.size()); i++ )
 	{
 		const bool IsHidden = !ItemIsOnScreen(i);
 		const bool WasHidden = m_bHidden[i];
@@ -186,7 +186,7 @@ void GroupList::SetSelection( unsigned sel )
 
 void GroupList::TweenOnScreen()
 {
-	for( int i=0; i < (int) m_asLabels.size(); i++ )
+	for( int i=0; i < static_cast<int>(m_asLabels.size()); i++ )
 	{
 		const int offset = max(0, i-m_iTop);
 		
@@ -216,7 +216,7 @@ void GroupList::TweenOnScreen()
 
 void GroupList::TweenOffScreen()
 {
-	for( int i=m_iTop; i < min(m_iTop+MAX_GROUPS_ONSCREEN, (int) m_asLabels.size()); i++ )
+	for( int i=m_iTop; i < min(m_iTop+MAX_GROUPS_ONSCREEN, static_cast<int>(m_asLabels.size())); i++ )
 	{
 		const int offset = max(0, i-m_iTop);
 		if( i == m_iSelection )

@@ -105,7 +105,7 @@ void ListDisplay::Update( float fDeltaTime )
 		}
 
 		if( m_bLoop )
-			m_fItemAtTopOfList = fmodf( m_fItemAtTopOfList, (float) m_SubActors.size() );
+			m_fItemAtTopOfList = fmodf( m_fItemAtTopOfList, static_cast<float>(m_SubActors.size()) );
 	}
 }
 
@@ -132,7 +132,7 @@ void ListDisplay::DrawPrimitives()
 
 	for( int i=0; i<m_iNumItemsToShow+1; i++ )
 	{
-		if( iItemToDraw >= 0 && iItemToDraw < (int) m_SubActors.size() )
+		if( iItemToDraw >= 0 && iItemToDraw < static_cast<int>(m_SubActors.size()) )
 		{			
 			float fX = 0;
 			if( m_bSlide && fIndex>fIndexFullyOnScreenBottom-1 )

@@ -101,8 +101,8 @@ void BPMDisplay::SetBPMRange( const DisplayBpms &bpms )
 		int MaxBPM=-99999999;
 		for( i = 0; i < BPMS.size(); ++i )
 		{
-			MinBPM = min( MinBPM, (int) roundf(BPMS[i]) );
-			MaxBPM = max( MaxBPM, (int) roundf(BPMS[i]) );
+			MinBPM = min( MinBPM, static_cast<int>(roundf(BPMS[i])) );
+			MaxBPM = max( MaxBPM, static_cast<int>(roundf(BPMS[i])) );
 		}
 		if( MinBPM == MaxBPM )
 		{

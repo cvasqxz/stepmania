@@ -259,7 +259,7 @@ void DancingCharacters::Update( float fDelta )
 		int iCurBeat = (int)GAMESTATE->m_fSongBeat;
 		iCurBeat -= iCurBeat%8;
 
-		m_fThisCameraStartBeat = (float) iCurBeat;
+		m_fThisCameraStartBeat = static_cast<float>(iCurBeat);
 		m_fThisCameraEndBeat = float(iCurBeat + 8);
 	}
 

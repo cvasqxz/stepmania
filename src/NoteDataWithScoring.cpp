@@ -263,11 +263,11 @@ void NoteDataWithScoring::GetActualRadarValues( PlayerNumber pn, float fSongSeco
 		case RADAR_AIR:					out[rc] = GetActualAirRadarValue( fSongSeconds, pn );		break;
 		case RADAR_FREEZE:				out[rc] = GetActualFreezeRadarValue( fSongSeconds, pn );	break;
 		case RADAR_CHAOS:				out[rc] = GetActualChaosRadarValue( fSongSeconds, pn );		break;
-		case RADAR_NUM_TAPS_AND_HOLDS:	out[rc] = (float) GetNumNWithScore( TNS_GOOD, 1 );			break;
-		case RADAR_NUM_JUMPS:			out[rc] = (float) GetNumNWithScore( TNS_GOOD, 2 );			break;
-		case RADAR_NUM_HOLDS:			out[rc] = (float) GetNumHoldNotesWithScore( HNS_OK );		break;
-		case RADAR_NUM_MINES:			out[rc] = (float) GetSuccessfulMines();						break;
-		case RADAR_NUM_HANDS:			out[rc] = (float) GetSuccessfulHands();						break;
+		case RADAR_NUM_TAPS_AND_HOLDS:	out[rc] = static_cast<float>(GetNumNWithScore( TNS_GOOD, 1 ));			break;
+		case RADAR_NUM_JUMPS:			out[rc] = static_cast<float>(GetNumNWithScore( TNS_GOOD, 2 ));			break;
+		case RADAR_NUM_HOLDS:			out[rc] = static_cast<float>(GetNumHoldNotesWithScore( HNS_OK ));		break;
+		case RADAR_NUM_MINES:			out[rc] = static_cast<float>(GetSuccessfulMines());						break;
+		case RADAR_NUM_HANDS:			out[rc] = static_cast<float>(GetSuccessfulHands());						break;
 		default:	ASSERT(0);
 		}
 	}
