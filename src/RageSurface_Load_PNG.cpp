@@ -40,7 +40,7 @@ namespace
 void RageFile_png_read( png_struct *png, png_byte *p, png_size_t size )
 {
 	CHECKPOINT;
-	RageFile *f = (RageFile *) png_get_io_ptr(png);
+	RageFile *f = static_cast<RageFile *>(png_get_io_ptr(png));
 
 	int got = f->Read( p, size );
 	if( got == -1 )
@@ -66,7 +66,7 @@ struct error_info
 void PNG_Error( png_struct *png, const char *error )
 {
 	CHECKPOINT;
-	error_info *info = (error_info *) png_get_error_ptr(png);
+	error_info *info = static_cast<error_info *>(png_get_error_ptr(png));
 	strncpy( info->err, error, 1024 );
 	info->err[1023] = 0;
 	LOG->Trace( "loading \"%s\": err: %s", info->fn, info->err );
@@ -76,7 +76,7 @@ void PNG_Error( png_struct *png, const char *error )
 void PNG_Warning( png_struct *png, const char *warning )
 {
 	CHECKPOINT;
-	error_info *info = (error_info *) png_get_error_ptr(png);
+	error_info *info = static_cast<error_info *>(png_get_error_ptr(png));
 	LOG->Trace( "loading \"%s\": warning: %s", info->fn, warning );
 }
 
@@ -255,12 +255,12 @@ static RageSurface *RageSurface_Load_PNG( RageFile *f, const char *fn, char erro
 	ASSERT( img );
 
 	/* alloca to prevent memleaks if libpng longjmps us */
-	png_byte **row_pointers = (png_byte **) alloca( sizeof(png_byte*) * height );
+	png_byte **row_pointers = static_cast<png_byte **>(alloca( sizeof(png_byte*) * height ));
 	CHECKPOINT_M( ssprintf("%p",row_pointers) );
 
 	for( unsigned y = 0; y < height; ++y )
 	{
-		png_byte *p = (png_byte *) img->pixels;
+		png_byte *p = static_cast<png_byte *>(img->pixels);
 		row_pointers[y] = p + img->pitch*y;
 	}
 
