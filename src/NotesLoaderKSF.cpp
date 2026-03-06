@@ -16,8 +16,8 @@ void KSFLoader::RemoveHoles( NoteData &out, const Song &song )
 	{
 //		const float FromBeat = song.m_Timing.m_BPMSegments[seg].m_fStartBeat;
 		const float FromBeat = song.m_Timing.m_BPMSegments[seg].m_fStartBeat * song.m_BPMSegments[seg].m_fBPM / song.m_BPMSegments[0].m_fBPM;
-		const int FromRow = (int) BeatToNoteRow(FromBeat);
-		const int ToRow = (int) BeatToNoteRow(song.m_Timing.m_BPMSegments[seg].m_fStartBeat);
+		const int FromRow = static_cast<int>(BeatToNoteRow(FromBeat));
+		const int ToRow = static_cast<int>(BeatToNoteRow(song.m_Timing.m_BPMSegments[seg].m_fStartBeat));
 
 		LOG->Trace("from %f (%i) to (%i)", FromBeat, FromRow, ToRow);
 //		const int ToRow = (int) roundf(FromRow * song.m_Timing.m_BPMSegments[0].m_fBPM / song.m_BPMSegments[seg].m_fBPM);
@@ -46,7 +46,7 @@ void KSFLoader::RemoveHoles( NoteData &out, const Song &song )
 			if( tn == TAP_EMPTY )
 				continue;
 
-			const int RealRow = (int) roundf(row * OrigBPM / CurBPM);
+			const int RealRow = static_cast<int>(roundf(row * OrigBPM / CurBPM));
 			if( RealRow == row )
 				continue;
 			LOG->Trace("from %i to %i", row, RealRow);
@@ -174,7 +174,7 @@ bool KSFLoader::LoadFromKSFFile( const CString &sPath, Steps &out, const Song &s
 			sRowString.erase( 0, 2 );
 
 		// the length of a note in a row depends on TICKCOUNT
-		float fBeatThisRow = r/(float)iTickCount;
+		float fBeatThisRow = r/static_cast<float>(iTickCount);
 		int row = BeatToNoteRow(fBeatThisRow);
 		for( int t=0; t < notedata.GetNumTracks(); t++ )
 		{
@@ -191,8 +191,8 @@ bool KSFLoader::LoadFromKSFFile( const CString &sPath, Steps &out, const Song &s
 			{
 				HoldNote hn (
 					t, /* button */
-					BeatToNoteRow(iHoldStartRow[t]/(float)iTickCount), /* start */
-					BeatToNoteRow((r-1)/(float)iTickCount) /* end */
+					BeatToNoteRow(iHoldStartRow[t]/static_cast<float>(iTickCount)), /* start */
+					BeatToNoteRow((r-1)/static_cast<float>(iTickCount)) /* end */
 				);
 				notedata.AddHoldNote( hn );
 				iHoldStartRow[t] = -1;

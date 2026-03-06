@@ -236,7 +236,7 @@ void NotesWriterDWI::WriteDWINotesField( RageFile &f, const Steps &out, int star
 
 		for( double b=fFirstBeatInMeasure; b<=fLastBeatInMeasure-1/64.0f; b+=fCurrentIncrementer )	// need the -0.0001 to account for rounding errors
 		{
-			int row = BeatToNoteRow( (float)b );
+			int row = BeatToNoteRow( static_cast<float>(b) );
 
 			CString str;
 			switch( out.m_StepsType )
@@ -365,9 +365,9 @@ bool NotesWriterDWI::Write( CString sPath, const Song &out )
 		break;
 	case Song::DISPLAY_SPECIFIED:
 		if( out.m_fSpecifiedBPMMin == out.m_fSpecifiedBPMMax )
-			f.PutLine( ssprintf("#DISPLAYBPM:%i;\n", (int) out.m_fSpecifiedBPMMin) );
+			f.PutLine( ssprintf("#DISPLAYBPM:%i;\n", static_cast<int>(out.m_fSpecifiedBPMMin)) );
 		else
-			f.PutLine( ssprintf("#DISPLAYBPM:%i..%i;\n", (int) out.m_fSpecifiedBPMMin, (int) out.m_fSpecifiedBPMMax) );
+			f.PutLine( ssprintf("#DISPLAYBPM:%i..%i;\n", static_cast<int>(out.m_fSpecifiedBPMMin), static_cast<int>(out.m_fSpecifiedBPMMax)) );
 		break;
 	case Song::DISPLAY_RANDOM:
 		f.PutLine( "#DISPLAYBPM:*" );

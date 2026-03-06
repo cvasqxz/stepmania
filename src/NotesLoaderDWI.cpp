@@ -102,7 +102,7 @@ void DWILoader::DWIcharToNoteCol( char c, GameController i, int &col1Out, int &c
  * it's most likely a jump.  Search for a 0 before the next >: */
 bool DWILoader::Is192( const CString &sStepData, int pos )
 {
-	while( pos < (int) sStepData.size() )
+	while( pos < static_cast<int>(sStepData.size()) )
 	{
 		if( sStepData[pos] == '>' )
 			return false;
@@ -254,7 +254,7 @@ bool DWILoader::LoadFromDWITokens(
 					i++;
 				}
 				
-				const int iIndex = BeatToNoteRow( (float)fCurrentBeat );
+				const int iIndex = BeatToNoteRow( static_cast<float>(fCurrentBeat) );
 				i--;
 				do {
 					c = sStepData[i++];
@@ -388,13 +388,13 @@ bool DWILoader::LoadFromDWIFile( CString sPath, Song &out )
 		    if( sscanf( sParams[1], "%i..%i", &iMin, &iMax ) == 2 )
 			{
 				out.m_DisplayBPMType = Song::DISPLAY_SPECIFIED;
-				out.m_fSpecifiedBPMMin = (float) iMin;
-				out.m_fSpecifiedBPMMax = (float) iMax;
+				out.m_fSpecifiedBPMMin = static_cast<float>(iMin);
+				out.m_fSpecifiedBPMMax = static_cast<float>(iMax);
 			}
 			else if( sscanf( sParams[1], "%i", &iMin ) == 1 )
 			{
 				out.m_DisplayBPMType = Song::DISPLAY_SPECIFIED;
-				out.m_fSpecifiedBPMMin = out.m_fSpecifiedBPMMax = (float) iMin;
+				out.m_fSpecifiedBPMMin = out.m_fSpecifiedBPMMax = static_cast<float>(iMin);
 			}
 			else
 			{

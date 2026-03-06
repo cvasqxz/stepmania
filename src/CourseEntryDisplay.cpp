@@ -23,8 +23,8 @@ void CourseEntryDisplay::Load()
 	SET_XY_AND_ON_COMMAND( &m_sprFrame );
 	this->AddChild( &m_sprFrame );
 
-	this->m_size.x = (float) m_sprFrame.GetTexture()->GetSourceFrameWidth();
-	this->m_size.y = (float) m_sprFrame.GetTexture()->GetSourceFrameHeight();
+	this->m_size.x = static_cast<float>(m_sprFrame.GetTexture()->GetSourceFrameWidth());
+	this->m_size.y = static_cast<float>(m_sprFrame.GetTexture()->GetSourceFrameHeight());
 
 	m_textNumber.SetName( "Number" );
 	m_textNumber.LoadFromFont( THEME->GetPathToF("CourseEntryDisplay number") );
