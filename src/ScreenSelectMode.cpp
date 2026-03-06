@@ -427,7 +427,7 @@ void ScreenSelectMode::MenuDown(PlayerNumber pn)
 	m_CurChar[pn].UnloadTexture();
 	if(ENABLE_CHAR_SELECT && m_bCharsAvailable)
 	{
-		if(m_iCurrentChar[pn] < (int)apCharactersToUse.size() - 1 || m_iCurrentChar[pn] == -1)
+		if(m_iCurrentChar[pn] < static_cast<int>(apCharactersToUse.size()) - 1 || m_iCurrentChar[pn] == -1)
 			m_iCurrentChar[pn]++;
 		else
 			m_iCurrentChar[pn] = -1; // set to no character

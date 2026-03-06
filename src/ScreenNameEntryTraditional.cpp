@@ -270,9 +270,9 @@ ScreenNameEntryTraditional::ScreenNameEntryTraditional( CString sClassName ) : S
 			if( pProfile && !pProfile->m_sLastUsedHighScoreName.empty() )
 			{
 				m_sSelection[p] = CStringToWstring( pProfile->m_sLastUsedHighScoreName );
-				if( (int) m_sSelection[p].size() > MAX_RANKING_NAME_LENGTH )
+				if( static_cast<int>(m_sSelection[p].size()) > MAX_RANKING_NAME_LENGTH )
 					m_sSelection[p].erase( MAX_RANKING_NAME_LENGTH );
-				ASSERT( (int) m_sSelection[p].size() <= MAX_RANKING_NAME_LENGTH );
+				ASSERT( static_cast<int>(m_sSelection[p].size()) <= MAX_RANKING_NAME_LENGTH );
 				if( m_sSelection[p].size() )
 					SelectChar(  p, CHAR_OK );
 			}
@@ -427,14 +427,14 @@ void ScreenNameEntryTraditional::PositionCharsAndCursor( int pn )
 	const int Selected = m_SelectedChar[pn];
 	const int NumDisplayed = NUM_ALPHABET_DISPLAYED;
 
-	const int TotalDisplayed = (int)m_textAlphabet[pn].size();
+	const int TotalDisplayed = static_cast<int>(m_textAlphabet[pn].size());
 	const int Start = wrapn( Selected - TotalDisplayed/2, TotalDisplayed );
 
 	const int First = -NumDisplayed/2;
 	const int Last = NumDisplayed/2;
-	for( int i = 0; i < (int)m_textAlphabet[pn].size(); ++i )
+	for( int i = 0; i < static_cast<int>(m_textAlphabet[pn].size()); ++i )
 	{
-		const int Num = wrapn( Start+i, (int) m_textAlphabet[pn].size() );
+		const int Num = wrapn( Start+i, static_cast<int>(m_textAlphabet[pn].size()) );
 		BitmapText *bt = m_textAlphabet[pn][Num];
 
 		const int Pos = i - TotalDisplayed/2;
@@ -573,7 +573,7 @@ void ScreenNameEntryTraditional::Finish( PlayerNumber pn )
 	GAMESTATE->StoreRankingName( pn, selection );
 
 	OFF_COMMAND( m_Keyboard[pn] );
-	for( int i = 0; i < (int)m_textAlphabet[pn].size(); ++i )
+	for( int i = 0; i < static_cast<int>(m_textAlphabet[pn].size()); ++i )
 		OFF_COMMAND( m_textAlphabet[pn][i] );
 	OFF_COMMAND( m_sprCursor[pn] );
 
@@ -584,7 +584,7 @@ void ScreenNameEntryTraditional::Finish( PlayerNumber pn )
 void ScreenNameEntryTraditional::UpdateSelectionText( int pn )
 {
 	wstring text = m_sSelection[pn];
-	if( m_bStillEnteringName[pn] && (int) text.size() < MAX_RANKING_NAME_LENGTH )
+	if( m_bStillEnteringName[pn] && static_cast<int>(text.size()) < MAX_RANKING_NAME_LENGTH )
 		text += L"_";
 
 	m_textSelection[pn].SetText( WStringToCString(text) );
@@ -627,7 +627,7 @@ void ScreenNameEntryTraditional::MenuStart( PlayerNumber pn, const InputEventTyp
 
 	default:
 		/* If we have room, add a new character. */
-		if( (int) m_sSelection[pn].size() == MAX_RANKING_NAME_LENGTH )
+		if( static_cast<int>(m_sSelection[pn].size()) == MAX_RANKING_NAME_LENGTH )
 		{
 			m_soundInvalid.Play();
 			SelectChar( pn, CHAR_BACK );
@@ -638,7 +638,7 @@ void ScreenNameEntryTraditional::MenuStart( PlayerNumber pn, const InputEventTyp
 		m_soundKey.Play();
 
 		/* If that filled the string, set the cursor on OK. */
-		if( (int) m_sSelection[pn].size() == MAX_RANKING_NAME_LENGTH )
+		if( static_cast<int>(m_sSelection[pn].size()) == MAX_RANKING_NAME_LENGTH )
 			SelectChar( pn, CHAR_OK );
 	}
 }

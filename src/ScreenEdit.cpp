@@ -1598,7 +1598,7 @@ void ScreenEdit::HandleMainMenuChoice( MainMenuChoice c, int* iAnswers )
 				// we shouldn't say we're saving a DWI if we're on any game besides
 				// dance, it just looks tacky and people may be wondering where the
 				// DWI file is :-)
-				if ((int)pSteps->m_StepsType <= (int)STEPS_TYPE_DANCE_SOLO) 
+				if (static_cast<int>(pSteps->m_StepsType) <= static_cast<int>(STEPS_TYPE_DANCE_SOLO)) 
 					SCREENMAN->SystemMessage( "Saved as SM and DWI." );
 				else
 					SCREENMAN->SystemMessage( "Saved as SM." );

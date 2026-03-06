@@ -38,7 +38,7 @@ ScreenSelectDifficulty::ScreenSelectDifficulty( CString sClassName ) : ScreenSel
 	unsigned c; // GCC is bitching again.
 	for( c=0; c<m_aModeChoices.size(); c++ )
 	{
-		if( (int)c < NUM_CHOICES_ON_PAGE_1 )
+		if( static_cast<int>(c) < NUM_CHOICES_ON_PAGE_1 )
 			m_ModeChoices[PAGE_1].push_back( m_aModeChoices[c] );
 		else
 			m_ModeChoices[PAGE_2].push_back( m_aModeChoices[c] );
@@ -75,7 +75,7 @@ ScreenSelectDifficulty::ScreenSelectDifficulty( CString sClassName ) : ScreenSel
 
 	FOREACH_PlayerNumber( p )
 	{
-		CLAMP( m_iChoiceOnPage[p], 0, (int)m_ModeChoices[0].size()-1 );
+		CLAMP( m_iChoiceOnPage[p], 0, static_cast<int>(m_ModeChoices[0].size())-1 );
 		m_bChosen[p] = false;
 
 		if( !GAMESTATE->IsHumanPlayer(p) )
@@ -241,7 +241,7 @@ void ScreenSelectDifficulty::MenuRight( PlayerNumber pn )
 			AnotherPlayerSelected = true;
 
 	int iSwitchToIndex = -1;
-	for( int i=m_iChoiceOnPage[pn]+1; i<(int) m_ModeChoices[m_CurrentPage].size(); i++ )
+	for( int i=m_iChoiceOnPage[pn]+1; i<static_cast<int>(m_ModeChoices[m_CurrentPage].size()); i++ )
 	{
 		const ModeChoice &mc = m_ModeChoices[m_CurrentPage][i];
 		if( AnotherPlayerSelected && BothPlayersModeChoice(mc) )
@@ -323,7 +323,7 @@ void ScreenSelectDifficulty::ChangePage( Page newPage )
 
 bool ScreenSelectDifficulty::ChangeWithinPage( PlayerNumber pn, int iNewChoice, bool bChangingPages )
 {
-	ASSERT_M( iNewChoice >= 0 && iNewChoice < (int) m_ModeChoices[m_CurrentPage].size(), ssprintf("%i, %i", iNewChoice, (int) m_ModeChoices[m_CurrentPage].size()) );
+	ASSERT_M( iNewChoice >= 0 && iNewChoice < static_cast<int>(m_ModeChoices[m_CurrentPage].size()), ssprintf("%i, %i", iNewChoice, static_cast<int>(m_ModeChoices[m_CurrentPage].size())) );
 
 	bool bAnyChanged = false;
 	FOREACH_HumanPlayer( p )
@@ -406,7 +406,7 @@ void ScreenSelectDifficulty::MenuStart( PlayerNumber pn )
 			 * the selection just made. */
 			int iSwitchToIndex = -1;
 			int i;
-			for( i=m_iChoiceOnPage[p]+1; iSwitchToIndex == -1 && i < (int) m_ModeChoices[m_CurrentPage].size(); ++i )
+			for( i=m_iChoiceOnPage[p]+1; iSwitchToIndex == -1 && i < static_cast<int>(m_ModeChoices[m_CurrentPage].size()); ++i )
 			{
 				const ModeChoice &mc = m_ModeChoices[m_CurrentPage][i];
 				if( mc.IsPlayable() && !BothPlayersModeChoice(mc) )

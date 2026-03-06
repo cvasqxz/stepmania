@@ -189,7 +189,7 @@ ScreenSelectMaster::ScreenSelectMaster( CString sClassName ) : ScreenSelect( sCl
 
 	FOREACH_PlayerNumber( p )
 	{
-		CLAMP( m_iChoice[p], 0, (int)m_aModeChoices.size()-1 );
+		CLAMP( m_iChoice[p], 0, static_cast<int>(m_aModeChoices.size())-1 );
 		m_bChosen[p] = false;
 	}
 	
@@ -215,7 +215,7 @@ ScreenSelectMaster::ScreenSelectMaster( CString sClassName ) : ScreenSelect( sCl
 			if( dir == DIR_AUTO )
 				wrap( m_Next[dir][c], m_aModeChoices.size() );
 			else
-				m_Next[dir][c] = clamp( m_Next[dir][c], 0, (int)m_aModeChoices.size()-1 );
+				m_Next[dir][c] = clamp( m_Next[dir][c], 0, static_cast<int>(m_aModeChoices.size())-1 );
 		}
 
 		const CString dirname = dirs[dir];
@@ -740,12 +740,12 @@ void ScreenSelectMaster::TweenOffScreen()
 		bool SelectedByEitherPlayer = false;
 		if( SHARED_PREVIEW_AND_CURSOR )
 		{
-			if( m_iChoice[0] == (int)c )
+			if( m_iChoice[0] == static_cast<int>(c) )
 				SelectedByEitherPlayer = true;
 		}
 		else
 			FOREACH_HumanPlayer( p )
-				if( m_iChoice[p] == (int)c )
+				if( m_iChoice[p] == static_cast<int>(c) )
 					SelectedByEitherPlayer = true;
 
 		for( int i=0; i<NUM_ICON_PARTS; i++ )

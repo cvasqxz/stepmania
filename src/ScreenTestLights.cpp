@@ -44,11 +44,11 @@ void ScreenTestLights::Update( float fDeltaTime )
 {
 	Screen::Update( fDeltaTime );
 
-	int iSec = (int)RageTimer::GetTimeSinceStart();
+	int iSec = static_cast<int>(RageTimer::GetTimeSinceStart());
 
-	CabinetLight cl = (CabinetLight)(iSec%NUM_CABINET_LIGHTS);
+	CabinetLight cl = static_cast<CabinetLight>(iSec%NUM_CABINET_LIGHTS);
 	int iNumGameButtonsToShow = GAMESTATE->GetCurrentGame()->GetNumGameplayButtons();
-	GameButton gb = (GameButton)(iSec%iNumGameButtonsToShow);
+	GameButton gb = static_cast<GameButton>(iSec%iNumGameButtonsToShow);
 	CString sCabLight = CabinetLightToString(cl);
 	CString sGameButton = GAMESTATE->GetCurrentGame()->m_szButtonNames[gb];
 

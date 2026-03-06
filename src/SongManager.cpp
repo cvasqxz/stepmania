@@ -133,7 +133,7 @@ void SongManager::InitSongsFromDisk( LoadingWindow *ld )
 {
 	RageTimer tm;
 	LoadStepManiaSongDir( SONGS_DIR, ld );
-	LOG->Trace( "Found %d songs in %f seconds.", (int)m_pSongs.size(), tm.GetDeltaTime() );
+	LOG->Trace( "Found %d songs in %f seconds.", static_cast<int>(m_pSongs.size()), tm.GetDeltaTime() );
 }
 
 void SongManager::SanityCheckGroupDir( CString sDir ) const

@@ -13,7 +13,7 @@ ScreenEndlessBreak::ScreenEndlessBreak( CString sName ) : Screen( sName )
 
 	bool	m_bPicLoaded = false;	// I don't know of a better way to see if we failed to load a break picture. If someone does, please do it.
 
-	if( (int)PREFSMAN->m_ShowDancingCharacters != 0 )
+	if( static_cast<int>(PREFSMAN->m_ShowDancingCharacters) != 0 )
 	{
 		if( GAMESTATE->GetNumPlayersEnabled() == 1 )
 			if( GAMESTATE->m_pCurCharacters[0] != nullptr )
