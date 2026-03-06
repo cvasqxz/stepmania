@@ -65,7 +65,7 @@ static CString AddPart( float level, CString name )
 	if( level == 0 )
 		return "";
 
-	const CString LevelStr = (level == 1)? CString(""): ssprintf( "%i%% ", (int) roundf(level*100) );
+	const CString LevelStr = (level == 1)? CString(""): ssprintf( "%i%% ", static_cast<int>(roundf(level*100)) );
 
 	return LevelStr + name + ", ";
 }
@@ -208,7 +208,7 @@ void PlayerOptions::FromString( CString sOptions )
 		else if( sscanf( sBit, "c%d", &i1 ) == 1 )
 		{
 			m_fTimeSpacing = 1.0f;
-			m_fScrollBPM = (float) i1;
+			m_fScrollBPM = static_cast<float>(i1);
 			continue;
 		}
 

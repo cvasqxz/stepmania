@@ -327,7 +327,7 @@ void EditCoursesSongMenu::OnRowValueChanged( Row row )
 
 Song *EditCoursesSongMenu::GetSelectedSong() const
 {
-	if( m_iSelection[ROW_SONG] < (int) m_aSongs.size() )
+	if( m_iSelection[ROW_SONG] < static_cast<int>(m_aSongs.size()) )
 		return m_aSongs[ m_iSelection[ROW_SONG] ];
 	else
 		return NULL;

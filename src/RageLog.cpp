@@ -363,7 +363,7 @@ void RageLog::UpdateMappedLog()
 
 const char *RageLog::GetAdditionalLog()
 {
-	int size = min( g_AdditionalLogSize, (int) sizeof(g_AdditionalLogStr)-1 );
+	int size = min( g_AdditionalLogSize, static_cast<int>(sizeof(g_AdditionalLogStr))-1 );
 	g_AdditionalLogStr[size] = 0;
 	return g_AdditionalLogStr;
 }

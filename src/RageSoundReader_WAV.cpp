@@ -28,18 +28,18 @@ enum
 /* Call this to convert milliseconds to an actual byte position, based on audio data characteristics. */
 uint32_t RageSoundReader_WAV::ConvertMsToBytePos(int BytesPerSample, int channels, uint32_t ms) const
 {
-    const float frames_per_ms = ((float) SampleRate) / 1000.0f;
-    const uint32_t frame_offset = (uint32_t) (frames_per_ms * float(ms) + 0.5f);
-    const uint32_t frame_size = (uint32_t) BytesPerSample * channels;
+    const float frames_per_ms = static_cast<float>(SampleRate) / 1000.0f;
+    const uint32_t frame_offset = static_cast<uint32_t>(frames_per_ms * float(ms) + 0.5f);
+    const uint32_t frame_size = static_cast<uint32_t>(BytesPerSample) * channels;
     return frame_offset * frame_size;
 }
 
 uint32_t RageSoundReader_WAV::ConvertBytePosToMs(int BytesPerSample, int channels, uint32_t pos) const
 {
-    const uint32_t frame_size = (uint32_t) BytesPerSample * channels;
+    const uint32_t frame_size = static_cast<uint32_t>(BytesPerSample) * channels;
     const uint32_t frame_no = pos / frame_size;
-    const float frames_per_ms = ((float) SampleRate) / 1000.0f;
-    return (uint32_t) ((frame_no / frames_per_ms) + 0.5f);
+    const float frames_per_ms = static_cast<float>(SampleRate) / 1000.0f;
+    return static_cast<uint32_t>((frame_no / frames_per_ms) + 0.5f);
 }
 
 bool RageSoundReader_WAV::read_le16( RageFile &f, int16_t *si16 ) const
@@ -160,7 +160,7 @@ int RageSoundReader_WAV::read_sample_fmt_normal(char *buf, unsigned len)
 int RageSoundReader_WAV::seek_sample_fmt_normal( uint32_t ms )
 {
     const int offset = ConvertMsToBytePos( BytesPerSample, Channels, ms);
-    const int pos = (int) (this->fmt.data_starting_offset + offset);
+    const int pos = static_cast<int>(this->fmt.data_starting_offset + offset);
 
 	const int ret = this->rw.Seek( pos );
 	BAIL_IF_MACRO( ret == -1, this->rw.GetError(), -1 );

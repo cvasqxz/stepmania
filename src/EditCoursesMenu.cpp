@@ -312,7 +312,7 @@ void EditCoursesMenu::Start()
 
 			SCREENMAN->PlayStartSound();
 			pCourse->m_entries.erase( pCourse->m_entries.begin()+m_iSelection[ROW_ENTRY] );
-			CLAMP( m_iSelection[ROW_ENTRY], 0, (int) pCourse->m_entries.size()-1 );
+			CLAMP( m_iSelection[ROW_ENTRY], 0, static_cast<int>(pCourse->m_entries.size())-1 );
 			OnRowValueChanged( ROW_ENTRY );
 			break;
 		default:

@@ -1006,7 +1006,7 @@ int RageSoundReader_MP3::GetLengthInternal( bool fast )
 	/* XXX use mad_header_decode and check more than one frame */
 	if(mad->length != -1 &&
 	   do_mad_frame_decode() &&
-	   mad->bitrate == (int) mad->Frame.header.bitrate)
+	   mad->bitrate == static_cast<int>(mad->Frame.header.bitrate))
 	{
 		return mad->length;
 	}

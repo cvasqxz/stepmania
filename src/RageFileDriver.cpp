@@ -25,7 +25,7 @@ int RageFileObj::Seek( int offset )
 	while( offset )
 	{
 		/* Must call parent.Read: */
-		int got = parent.Read( buf, min( (int) sizeof(buf), offset ) );
+		int got = parent.Read( buf, min( static_cast<int>(sizeof(buf)), offset ) );
 		if( got == -1 )
 			return -1;
 

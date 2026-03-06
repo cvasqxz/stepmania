@@ -516,7 +516,7 @@ int RageFileObjZipDeflated::Read( void *buf, size_t bytes )
 {
 	bool done=false;
 	int ret = 0;
-	while( bytes && CFilePos < (int) info.compr_size && !done )
+	while( bytes && CFilePos < static_cast<int>(info.compr_size) && !done )
 	{
 		if ( !decomp_buf_avail )
 		{
@@ -588,7 +588,7 @@ int RageFileObjZipDeflated::Seek( int offset )
 {
 	/* Optimization: if offset is the end of the file, it's a lseek(0,SEEK_END).  Don't
 	 * decode anything. */
-	if( offset == (int) info.uncompr_size )
+	if( offset == static_cast<int>(info.uncompr_size) )
 	{
 		UFilePos = info.uncompr_size;
 		CFilePos = info.compr_size;
@@ -614,7 +614,7 @@ RageFileObjZipStored::RageFileObjZipStored( const RageFile &f, const FileInfo &i
 int RageFileObjZipStored::Read( void *buf, size_t bytes )
 {
 	const int bytes_left = info.compr_size-this->FilePos;
-	const int got = zip.Read( buf, min( (int) bytes, bytes_left ) );
+	const int got = zip.Read( buf, min( static_cast<int>(bytes), bytes_left ) );
 	if( got == -1 )
 	{
 		SetError( zip.GetError() );
@@ -630,7 +630,7 @@ int RageFileObjZipStored::Read( void *buf, size_t bytes )
 int RageFileObjZipStored::Seek( int offset )
 {
 	ASSERT( offset >= 0 );
-	offset = min( (unsigned) offset, info.compr_size );
+	offset = min( static_cast<unsigned>(offset), info.compr_size );
 
 	int ret = zip.Seek( info.data_offset + offset );
 	if( ret == -1 )
