@@ -288,9 +288,9 @@ bool BMSLoader::LoadFromBMSFile( const CString &sPath, Steps &out )
 			{
 				if( arrayNotes[j] )
 				{
-					float fPercentThroughMeasure = (float)j/(float)iNumNotesInThisMeasure;
+					float fPercentThroughMeasure = static_cast<float>(j)/static_cast<float>(iNumNotesInThisMeasure);
 
-					const int iNoteIndex = (int) ( (iMeasureNo + fPercentThroughMeasure)
+					const int iNoteIndex = static_cast<int>( (iMeasureNo + fPercentThroughMeasure)
 									 * BEATS_PER_MEASURE * ROWS_PER_BEAT );
 					int iColumnNumber;
 					TapNote tapNoteOut;
@@ -570,16 +570,16 @@ bool BMSLoader::LoadFromDir( CString sDir, Song &out )
 				if( arrayNotes[j] == 0 )
 					continue;
 
-				float fPercentThroughMeasure = (float)j/(float)iNumNotesInThisMeasure;
+				float fPercentThroughMeasure = static_cast<float>(j)/static_cast<float>(iNumNotesInThisMeasure);
 
 				// index is in quarter beats starting at beat 0
-				int iStepIndex = (int) ( (iMeasureNo + fPercentThroughMeasure)
+				int iStepIndex = static_cast<int>( (iMeasureNo + fPercentThroughMeasure)
 								 * BEATS_PER_MEASURE * ROWS_PER_BEAT );
 
 				switch( iBMSTrackNo )
 				{
 				case 1:	{ // background music track
-					float fBeatOffset = fBeatOffset = NoteRowToBeat( (float)iStepIndex );
+					float fBeatOffset = fBeatOffset = NoteRowToBeat( static_cast<float>(iStepIndex) );
 					if( fBeatOffset > 10 )	// some BPMs's play the music again at the end.  Why?  Who knows...
 						break;
 					float fBPS;
@@ -588,7 +588,7 @@ bool BMSLoader::LoadFromDir( CString sDir, Song &out )
 					break;
 				}
 				case 3:	{ // bpm change
-					BPMSegment newSeg( NoteRowToBeat(iStepIndex), (float)arrayNotes[j] );
+					BPMSegment newSeg( NoteRowToBeat(iStepIndex), static_cast<float>(arrayNotes[j]) );
 					out.AddBPMSegment( newSeg );
 					LOG->Trace( "Inserting new BPM change at beat %f, BPM %f", newSeg.m_fStartBeat, newSeg.m_fBPM );
 					break;

@@ -222,7 +222,7 @@ void Course::LoadFromCRSFile( CString sPath )
 				 * on or off. */
 				CStringArray mods;
 				split( sParams[3], ",", mods, true );
-				for( int j = (int) mods.size()-1; j >= 0 ; --j )
+				for( int j = static_cast<int>(mods.size())-1; j >= 0 ; --j )
 				{
 					if( !mods[j].CompareNoCase("showcourse") )
 						new_entry.mystery = false;
@@ -784,7 +784,7 @@ bool Course::GetTrailUnsorted( StepsType st, CourseDifficulty cd, Trail &trail )
 					vSongsByMostPlayed = GetFilteredBestSongs( st );
 				}
 
-				if( e.players_index >= (int)vSongsByMostPlayed.size() )
+				if( e.players_index >= static_cast<int>(vSongsByMostPlayed.size()) )
 					break;
 
 				switch( e.type )

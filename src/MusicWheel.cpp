@@ -46,7 +46,7 @@ CachedThemeMetricF CIRCLE_PERCENT	("MusicWheel","CirclePercent");
 #define SHOW_PORTAL					THEME->GetMetricB("MusicWheel","ShowPortal")
 CachedThemeMetricB	USE_3D			("MusicWheel","Use3D");
 CachedThemeMetricI  NUM_WHEEL_ITEMS_METRIC	("MusicWheel","NumWheelItems");
-#define NUM_WHEEL_ITEMS				min( MAX_WHEEL_ITEMS, (int) NUM_WHEEL_ITEMS_METRIC )
+#define NUM_WHEEL_ITEMS				min( MAX_WHEEL_ITEMS, static_cast<int>(NUM_WHEEL_ITEMS_METRIC) )
 #define MOST_PLAYED_SONGS_TO_SHOW	THEME->GetMetricI("MusicWheel","MostPlayedSongsToShow")
 #define SORT_MENU_NAMES				THEME->GetMetric ("MusicWheel","SortMenuNames")
 #define SORT_MENU_ACTIONS			THEME->GetMetric ("MusicWheel","SortMenuActions")
@@ -510,7 +510,7 @@ void MusicWheel::BuildWheelItemDatas( vector<WheelItemData> &arrayWheelItemDatas
 			SongUtil::SortSongPointerArrayByBPM( arraySongs );
 			break;
 		case SORT_MOST_PLAYED:
-			if( (int) arraySongs.size() > MOST_PLAYED_SONGS_TO_SHOW )
+			if( static_cast<int>(arraySongs.size()) > MOST_PLAYED_SONGS_TO_SHOW )
 				arraySongs.erase( arraySongs.begin()+MOST_PLAYED_SONGS_TO_SHOW, arraySongs.end() );
 			bUseSections = false;
 			break;

@@ -116,7 +116,7 @@ void HighScoreList::Init()
 void HighScoreList::AddHighScore( HighScore hs, int &iIndexOut, bool bIsMachine )
 {
 	int i;
-	for( i=0; i<(int)vHighScores.size(); i++ )
+	for( i=0; i<static_cast<int>(vHighScores.size()); i++ )
 	{
 		if( hs >= vHighScores[i] )
 			break;

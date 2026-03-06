@@ -183,8 +183,8 @@ float NoteField::GetWidth()
 
 void NoteField::DrawBeatBar( const float fBeat )
 {
-	bool bIsMeasure = fmodf( fBeat, (float)BEATS_PER_MEASURE ) == 0;
-	int iMeasureIndex = (int)fBeat / BEATS_PER_MEASURE;
+	bool bIsMeasure = fmodf( fBeat, static_cast<float>(BEATS_PER_MEASURE) ) == 0;
+	int iMeasureIndex = static_cast<int>(fBeat) / BEATS_PER_MEASURE;
 	int iMeasureNoDisplay = iMeasureIndex+1;
 
 	NoteType nt = BeatToNoteType( fBeat );
@@ -422,8 +422,8 @@ void NoteField::DrawPrimitives()
 	float fFirstDrawScale = g_NoteFieldMode[m_PlayerNumber].m_fFirstPixelToDrawScale;
 	float fLastDrawScale = g_NoteFieldMode[m_PlayerNumber].m_fLastPixelToDrawScale;
 
-	iFirstPixelToDraw = (int)(iFirstPixelToDraw * fFirstDrawScale * fDrawScale);
-	iLastPixelToDraw = (int)(iLastPixelToDraw * fLastDrawScale * fDrawScale);
+	iFirstPixelToDraw = static_cast<int>(iFirstPixelToDraw * fFirstDrawScale * fDrawScale);
+	iLastPixelToDraw = static_cast<int>(iLastPixelToDraw * fLastDrawScale * fDrawScale);
 
 
 	// Probe for first and last notes on the screen
