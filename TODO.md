@@ -1,6 +1,6 @@
 # TODO.md - StepMania 3.9 Modernization Roadmap
 
-**Version:** 1.13 (2026-03-05)
+**Version:** 1.14 (2026-03-05)
 
 This document outlines opportunities to modernize the StepMania 3.9 codebase (originally from 2004-2005) to modern C++ standards and practices.
 
@@ -737,7 +737,7 @@ void main() {
   - [x] Full backward compatibility maintained with operator()(int maximum)
 
 ### In Progress
-- [x] **Priority 3.4: C-style casts** (2026-03-05) - 🔨 In Progress (49.9% complete)
+- [x] **Priority 3.4: C-style casts** (2026-03-05) - 🔨 In Progress (55.1% complete)
   - ✅ Batch 1: ~30 casts (RageMath, NetworkSyncManager, Profile, Font, XmlFile, RageUtil) - commit 67da24f
   - ✅ Batch 2: 8 casts (ScreenRanking, ScreenOptionsMasterPrefs, ScreenGameplay) - commit d534248
   - ✅ Batch 3: 40 casts (ProfileManager, RageSurfaceUtils_Palettize, ScreenOptions) - commit d95bf50
@@ -746,7 +746,8 @@ void main() {
   - ✅ Batch 6: 17 casts (HighScore, Course, NoteField, NotesLoaderBMS, MusicWheel, Inventory) - commit 28316ba
   - ✅ Batch 7: 19 casts (CourseEntryDisplay, CourseUtil, NotesLoaderDWI, NotesLoaderKSF, NotesWriterDWI) - commit 4235f3e
   - ✅ Batch 8: 23 casts (BPMDisplay, DancingCharacters, GraphDisplay, GroupList, ListDisplay, MusicBannerWheel, NoteDataWithScoring, PaneDisplay) - commit ebf1063
-  - Total converted: 170 of 341 remaining (49.9% complete)
+  - ✅ Batch 9: 18 casts (EditCoursesMenu, EditCoursesSongMenu, PlayerOptions, RageLog, RageFileDriver, RageFileDriverZip, RageSoundReader_MP3, RageSoundReader_WAV) - commit 92a567d
+  - Total converted: 188 of 341 remaining (55.1% complete)
   - Next: Continue with remaining utility files and graphics code
 
 ### Not Started
@@ -811,7 +812,7 @@ void main() {
 **Overall Progress: 18/32 major tasks completed (56%)**
 
 ### Recent Achievements (2026-03-05)
-- 🔨 **Priority 3.4**: C-style casts → static_cast (170 conversions in 8 batches, 49.9% complete)
+- 🔨 **Priority 3.4**: C-style casts → static_cast (188 conversions in 9 batches, 55.1% complete)
 - ✅ **Priority 4.3**: random_shuffle → std::shuffle (9 conversions, RandomGen modernized)
 - ✅ **VSYNC Fix**: Dynamic VSYNC control on Linux (GLX extensions working)
 - ✅ **Priority 4.4**: emplace_back optimization (30 conversions)
