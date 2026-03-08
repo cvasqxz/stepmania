@@ -133,7 +133,7 @@ RageFileObj *RageFileDriverMem::Open( const CString &sPath, int mode, RageFile &
 		return new RageFileObjMem( pFile, p );
 	}
 
-	RageFileObjMemFile *pFile = (RageFileObjMemFile *) FDB->GetFilePriv( sPath );
+	RageFileObjMemFile *pFile = static_cast<RageFileObjMemFile*>(const_cast<void*>(FDB->GetFilePriv( sPath )));
 	if( pFile == nullptr )
 	{
 		err = ENOENT;
@@ -147,7 +147,7 @@ bool RageFileDriverMem::Remove( const CString &sPath )
 {
 	LockMut(m_Mutex);
 
-	RageFileObjMemFile *pFile = (RageFileObjMemFile *) FDB->GetFilePriv( sPath );
+	RageFileObjMemFile *pFile = static_cast<RageFileObjMemFile*>(const_cast<void*>(FDB->GetFilePriv( sPath )));
 	if( pFile == nullptr )
 		return false;
 

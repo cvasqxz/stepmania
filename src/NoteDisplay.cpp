@@ -177,7 +177,7 @@ Actor *MakeRefcountedActor( const CString &sPath )
 Sprite *MakeRefcountedSprite( const CString &sPath )
 {
 	NoteResource *pRes = MakeNoteResource( sPath, true );
-	return (Sprite *) pRes->m_pActor; /* XXX ick */
+	return static_cast<Sprite*>(pRes->m_pActor); /* XXX ick */
 }
 
 NoteDisplay::NoteDisplay()

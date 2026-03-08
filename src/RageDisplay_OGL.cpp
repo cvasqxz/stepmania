@@ -580,7 +580,7 @@ static void CheckPalettedTextures()
 		GL_CHECK_ERROR( "glTexImage2D" );
 
 		GLuint ifmt = 0;
-		glGetTexLevelParameteriv( GL_PROXY_TEXTURE_2D, 0, GLenum(GL_TEXTURE_INTERNAL_FORMAT), (GLint *)&ifmt );
+		glGetTexLevelParameteriv( GL_PROXY_TEXTURE_2D, 0, GLenum(GL_TEXTURE_INTERNAL_FORMAT), reinterpret_cast<GLint*>(&ifmt) );
 		GL_CHECK_ERROR( "glGetTexLevelParameteriv(GL_TEXTURE_INTERNAL_FORMAT)" );
 		if( ifmt != glTexFormat )
 		{
