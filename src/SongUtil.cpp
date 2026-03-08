@@ -155,7 +155,7 @@ void SongUtil::SortSongPointerArrayByGrade( vector<Song*> &arraySongPointers )
 
 		CString foo;
 		foo.reserve(256);
-		for( int g=GRADE_TIER_1; g<=GRADE_NO_DATA; ++g )
+		for( int g=GRADE_TIER_1; g<NUM_GRADES; ++g )
 			AppendOctal( iCounts[g], 3, foo );
 		vals.push_back( val(pSong, foo) );
 	}
