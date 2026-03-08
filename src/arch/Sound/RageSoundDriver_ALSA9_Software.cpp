@@ -29,7 +29,7 @@ const int num_chunks = 8;
 
 int RageSound_ALSA9_Software::MixerThread_start(void *p)
 {
-	((RageSound_ALSA9_Software *) p)->MixerThread();
+	static_cast<RageSound_ALSA9_Software*>(p)->MixerThread();
 	return 0;
 }
 

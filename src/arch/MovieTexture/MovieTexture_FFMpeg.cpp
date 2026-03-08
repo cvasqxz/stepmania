@@ -518,19 +518,19 @@ int URLRageFile_open( avcodec::URLContext *h, const char *filename, int flags )
 
 int URLRageFile_read( avcodec::URLContext *h, unsigned char *buf, int size )
 {
-	RageFile *f = (RageFile *) h->priv_data;
+	RageFile *f = static_cast<RageFile*>(h->priv_data);
 	return f->Read( buf, size );
 }
 
 avcodec::offset_t URLRageFile_seek( avcodec::URLContext *h, avcodec::offset_t pos, int whence )
 {
-	RageFile *f = (RageFile *) h->priv_data;
+	RageFile *f = static_cast<RageFile*>(h->priv_data);
 	return f->Seek( (int) pos, whence );
 }
 
 int URLRageFile_close( avcodec::URLContext *h )
 {
-	RageFile *f = (RageFile *) h->priv_data;
+	RageFile *f = static_cast<RageFile*>(h->priv_data);
 	delete f;
 	return 0;
 }

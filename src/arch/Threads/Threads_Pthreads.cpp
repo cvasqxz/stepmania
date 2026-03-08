@@ -59,7 +59,7 @@ ThreadImpl *MakeThisThread()
 
 static void *StartThread( void *pData )
 {
-	ThreadImpl_Pthreads *pThis = (ThreadImpl_Pthreads *) pData;
+	ThreadImpl_Pthreads *pThis = static_cast<ThreadImpl_Pthreads*>(pData);
 
 	pThis->threadHandle = GetCurrentThreadId();
 	*pThis->m_piThreadID = pThis->threadHandle;

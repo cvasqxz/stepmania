@@ -256,7 +256,7 @@ void DancingCharacters::Update( float fDelta )
 			m_fLookAtHeight = CAMERA_STILL_LOOK_AT_HEIGHT;
 		}
 
-		int iCurBeat = (int)GAMESTATE->m_fSongBeat;
+		int iCurBeat = static_cast<int>(GAMESTATE->m_fSongBeat);
 		iCurBeat -= iCurBeat%8;
 
 		m_fThisCameraStartBeat = static_cast<float>(iCurBeat);

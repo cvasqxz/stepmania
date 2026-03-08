@@ -19,7 +19,7 @@ const int chunksize = max_writeahead / num_chunks;
 
 int RageSound_ALSA9::MixerThread_start(void *p)
 {
-	((RageSound_ALSA9 *) p)->MixerThread();
+	static_cast<RageSound_ALSA9*>(p)->MixerThread();
 	return 0;
 }
 

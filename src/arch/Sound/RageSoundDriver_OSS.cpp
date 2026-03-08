@@ -24,7 +24,7 @@ const int buffersize_frames = buffersize/bytes_per_frame;	/* in frames */
 
 int RageSound_OSS::MixerThread_start(void *p)
 {
-	((RageSound_OSS *) p)->MixerThread();
+	static_cast<RageSound_OSS*>(p)->MixerThread();
 	return 0;
 }
 

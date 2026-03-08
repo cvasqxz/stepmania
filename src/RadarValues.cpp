@@ -36,7 +36,7 @@ XNode* RadarValues::CreateNode() const
 		if( rc >= RADAR_NUM_TAPS_AND_HOLDS )
 		{
 			if( WRITE_SIMPLE_VALUES )
-				pNode->AppendChild( RadarCategoryToString(rc),	(int)m_fValues[rc] );
+				pNode->AppendChild( RadarCategoryToString(rc),	static_cast<int>(m_fValues[rc]) );
 		}
 		else
 		{

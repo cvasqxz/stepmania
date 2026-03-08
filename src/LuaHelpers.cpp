@@ -93,7 +93,7 @@ bool Lua::GetStack( lua_State *L, int pos, int &out )
 	if( pos < 1 )
 		return false;
 	
-	out = (int) lua_tonumber( L, pos );
+	out = static_cast<int>(lua_tonumber( L, pos ));
 	return true;
 }
 
