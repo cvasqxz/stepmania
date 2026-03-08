@@ -26,7 +26,7 @@ static const XENTITY x_EntityTable[] = {
 
 PARSEINFO piDefault;
 DISP_OPT optDefault;
-XENTITYS entityDefault((XENTITY*)x_EntityTable, sizeof(x_EntityTable)/sizeof(x_EntityTable[0]) );
+XENTITYS entityDefault(const_cast<XENTITY*>(x_EntityTable), sizeof(x_EntityTable)/sizeof(x_EntityTable[0]) );
 
 // skip spaces
 char* tcsskip( const char* psz )
@@ -1073,7 +1073,7 @@ XENTITY *XENTITYS::GetEntity( int entity )
 	for( unsigned i = 0 ; i < size(); i ++ )
 	{
 		if( at(i).entity == entity )
-			return (XENTITY *) (&at(i));
+			return const_cast<XENTITY*>(&at(i));
 	}
 	return NULL;
 }
@@ -1082,13 +1082,13 @@ XENTITY *XENTITYS::GetEntity( char* entity )
 {
 	for( unsigned i = 0 ; i < size(); i ++ )
 	{
-		char* ref = (char*)at(i).ref;
+		char* ref = const_cast<char*>(at(i).ref);
 		char* ps = entity;
 		while( ref && *ref )
 			if( *ref++ != *ps++ )
 				break;
 		if( ref && !*ref )	// found!
-			return (XENTITY *) (&at(i));
+			return const_cast<XENTITY*>(&at(i));
 	}
 	return NULL;
 }

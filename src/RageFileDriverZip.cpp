@@ -398,7 +398,7 @@ RageFileObj *RageFileDriverZip::Open( const CString &path, int mode, RageFile &p
 		return NULL;
 	}
 
-	FileInfo *info = (FileInfo *) FDB->GetFilePriv( path );
+	FileInfo *info = static_cast<FileInfo*>(const_cast<void*>(FDB->GetFilePriv( path )));
 	if( info == nullptr )
 	{
 		err = ENOENT;
@@ -534,9 +534,9 @@ int RageFileObjZipDeflated::Read( void *buf, size_t bytes )
 			decomp_buf_avail = got;
 		}
 
-		dstrm.next_in = (Bytef *) decomp_buf_ptr;
+		dstrm.next_in = reinterpret_cast<Bytef*>(decomp_buf_ptr);
 		dstrm.avail_in = decomp_buf_avail;
-		dstrm.next_out = (Bytef *) buf;
+		dstrm.next_out = static_cast<Bytef*>(buf);
 		dstrm.avail_out = bytes;
 
 
