@@ -1,6 +1,6 @@
 # TODO.md - StepMania 3.9 Modernization Roadmap
 
-**Version:** 1.20 (2026-03-08)
+**Version:** 1.21 (2026-03-08)
 
 This document outlines opportunities to modernize the StepMania 3.9 codebase (originally from 2004-2005) to modern C++ standards and practices.
 
@@ -743,7 +743,7 @@ void main() {
   - [x] Fix: Changed loop condition from g<=GRADE_NO_DATA to g<NUM_GRADES
 
 ### In Progress
-- [x] **Priority 3.4: C-style casts** (2026-03-05) - 🔨 In Progress (80.1% complete)
+- [x] **Priority 3.4: C-style casts** (2026-03-05) - 🔨 In Progress (83.6% complete)
   - ✅ Batch 1: ~30 casts (RageMath, NetworkSyncManager, Profile, Font, XmlFile, RageUtil) - commit 67da24f
   - ✅ Batch 2: 8 casts (ScreenRanking, ScreenOptionsMasterPrefs, ScreenGameplay) - commit d534248
   - ✅ Batch 3: 40 casts (ProfileManager, RageSurfaceUtils_Palettize, ScreenOptions) - commit d95bf50
@@ -758,8 +758,9 @@ void main() {
   - ✅ Batch 12: 31 casts (ScreenNameEntryTraditional, ScreenEdit, SongManager, ScreenTestLights, ScreenSelectMusic, ScreenSelectMode, ScreenSelectMaster, ScreenSelectDifficulty, ScreenEndlessBreak, ScreenAttract, ActorScroller) - commit 653e903
   - ✅ Batch 13: 12 casts (XmlFile, Profile, RageSurface_Load_JPEG, RageFileDriverZip) - commit 7f29b5a
   - ✅ Batch 14: 13 casts (LuaHelpers, RageFileDriverMemory, NoteDisplay, RageSoundReader_Vorbisfile, RageSoundReader_MP3, RageDisplay_OGL, ScreenNetSelectMusic) - commit 46e73eb
-  - Total converted: 273 of 341 remaining (80.1% complete)
-  - Next: Continue with remaining arch/ and utility files
+  - ✅ Batch 15: 12 casts (arch/Threads, arch/Sound drivers, arch/MovieTexture, RadarValues, LuaHelpers, BGAnimationLayer, DancingCharacters) - commit e8c3b6b
+  - Total converted: 285 of 341 remaining (83.6% complete)
+  - Next: Continue with remaining arch/ platform-specific files (56 casts remaining)
 
 ### Not Started
 
