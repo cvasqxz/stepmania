@@ -269,10 +269,10 @@ void RageBitmapTexture::Create()
 		{
 			CString sWarning = ssprintf(
 				"The graphic '%s' has frame dimensions that aren't even numbers.\n\n"
-				"The entire image is %dx%d and frame size is %.1fx%.1f.\n\n"
-				"Image quality will be much improved if you resize the graphic to %.0fx%.0f, which is a frame size of %.0fx%.0f.", 
-				actualID.filename.c_str(), 
-				this->GetSourceWidth(), this->GetSourceHeight(), 
+				"The entire image is %dx%d and frame size is %.0fx%.0f.\n\n"
+				"Image quality will be much improved if you resize the graphic to %.0fx%.0f, which is a frame size of %.0fx%.0f.",
+				actualID.filename.c_str(),
+				this->GetSourceWidth(), this->GetSourceHeight(),
 				fFrameWidth, fFrameHeight,
 				fBetterSourceWidth, fBetterSourceHeight,
 				fBetterFrameWidth, fBetterFrameHeight );
