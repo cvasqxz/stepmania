@@ -187,7 +187,7 @@ void ScreenOptions::Init( InputMode im, OptionRowData OptionRows[], int iNumOpti
 
 				if( !bHasSelection )
 				{
-					LOG->Warn( "Options menu \"%s\" row %i has no selection", m_sName.c_str(), i );
+					LOG->Warn( "Options menu \"%s\" row %u has no selection", m_sName.c_str(), i );
 					Row.m_vbSelected[p][0] = true;
 				}
 				
@@ -321,7 +321,7 @@ void ScreenOptions::Init( InputMode im, OptionRowData OptionRows[], int iNumOpti
 
 				if( optline.bOneChoiceForAllPlayers )
 				{
-					bt->SetX( truncf((ITEM_X[0]+ITEM_X[1])/2) );	// center the item
+					bt->SetX( truncf((ITEM_X[0]+ITEM_X[1])/2.0f) );	// center the item
 					break;	// only initialize one item since it's shared
 				}
 				else
@@ -338,8 +338,8 @@ void ScreenOptions::Init( InputMode im, OptionRowData OptionRows[], int iNumOpti
 				ul->Load( (PlayerNumber)p, true );
 				int iWidth, iX, iY;
 				GetWidthXY( (PlayerNumber) p, r, c, iWidth, iX, iY );
-				ul->SetX( float(iX) );
-				ul->SetWidth( float(iWidth) );
+				ul->SetX( static_cast<float>(iX) );
+				ul->SetWidth( static_cast<float>(iWidth) );
 			}
 		}
 
@@ -572,7 +572,7 @@ BitmapText &ScreenOptions::GetTextItemForRow( PlayerNumber pn, int iRow, int iCh
 	else
 		index = iChoiceOnRow;
 
-	ASSERT_M( index < (int)row.m_textItems.size(), ssprintf("%i < %i", index, (int)row.m_textItems.size() ) );
+	ASSERT_M( index < static_cast<int>(row.m_textItems.size()), ssprintf("%i < %i", index, static_cast<int>(row.m_textItems.size())) );
 	return *row.m_textItems[index];
 }
 
@@ -804,7 +804,7 @@ void ScreenOptions::UpdateEnabledDisabled()
 
 		bool bThisRowIsSelected = false;
 		FOREACH_PlayerNumber( p )
-			if( GAMESTATE->IsHumanPlayer(p) && m_iCurrentRow[p] == (int) i )
+			if( GAMESTATE->IsHumanPlayer(p) && m_iCurrentRow[p] == static_cast<int>(i) )
 				bThisRowIsSelected = true;
 
 		/* Don't tween selection colors at all. */
@@ -836,7 +836,7 @@ void ScreenOptions::UpdateEnabledDisabled()
 		{
 			bool bExitRowIsSelectedByBoth = true;
 			FOREACH_PlayerNumber( p )
-				if( GAMESTATE->IsHumanPlayer(p)  &&  m_iCurrentRow[p] != (int) i )
+				if( GAMESTATE->IsHumanPlayer(p)  &&  m_iCurrentRow[p] != static_cast<int>(i) )
 					bExitRowIsSelectedByBoth = false;
 
 			if( bExitRowIsSelectedByBoth )

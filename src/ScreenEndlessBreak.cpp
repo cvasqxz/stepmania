@@ -25,7 +25,7 @@ ScreenEndlessBreak::ScreenEndlessBreak( CString sName ) : Screen( sName )
 			PlayerNumber pn;
 			do
 			{
-				pn = (PlayerNumber)(rand()%NUM_PLAYERS);
+				pn = static_cast<PlayerNumber>(rand()%NUM_PLAYERS);
 				if( GAMESTATE->IsPlayerEnabled(pn) && (GAMESTATE->m_pCurCharacters[pn] != nullptr) )
 				{
 					m_sprBreakPicture.LoadTABreakFromCharacter( GAMESTATE->m_pCurCharacters[pn] );
@@ -42,7 +42,7 @@ ScreenEndlessBreak::ScreenEndlessBreak( CString sName ) : Screen( sName )
 		this->AddChild(&m_sprBreakPicture);
 
 	// Set up our countdown clock.
-	m_fCountdownSecs = (float)(PREFSMAN->m_iEndlessBreakLength*60);	// Stored in minutes.
+	m_fCountdownSecs = static_cast<float>(PREFSMAN->m_iEndlessBreakLength*60);	// Stored in minutes.
 
 	//BitmapText stuff
 	m_textTimeRemaining.LoadFromFont( THEME->GetPathToF("Common Normal") );
