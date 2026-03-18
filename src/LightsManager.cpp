@@ -75,7 +75,7 @@ void LightsManager::Update( float fDeltaTime )
 	{
 	case LIGHTSMODE_JOINING:
 		{
-//			int iBeat = (int)(GAMESTATE->m_fSongBeat);
+//			int iBeat = static_cast<int>(GAMESTATE->m_fSongBeat);
 //			bool bBlinkOn = (iBeat%2)==0;
 
 			FOREACH_PlayerNumber( pn )
@@ -92,7 +92,7 @@ void LightsManager::Update( float fDeltaTime )
 		break;
 	case LIGHTSMODE_ATTRACT:
 		{
-			int iSec = (int)RageTimer::GetTimeSinceStart();
+			int iSec = static_cast<int>(RageTimer::GetTimeSinceStart());
 			int iTopIndex = iSec % 4;
 			switch( iTopIndex )
 			{
@@ -113,7 +113,7 @@ void LightsManager::Update( float fDeltaTime )
 			FOREACH_CabinetLight( cl )
 				m_LightsState.m_bCabinetLights[cl] = false;
 
-			int iBeat = (int)(GAMESTATE->m_fSongBeat);
+			int iBeat = static_cast<int>(GAMESTATE->m_fSongBeat);
 			int iTopIndex = iBeat;
 			wrap( iTopIndex, 4 );
 			switch( iTopIndex )
@@ -150,7 +150,7 @@ void LightsManager::Update( float fDeltaTime )
 		break;
 	case LIGHTSMODE_TEST:
 		{
-			int iSec = (int)RageTimer::GetTimeSinceStart();
+			int iSec = static_cast<int>(RageTimer::GetTimeSinceStart());
 			FOREACH_CabinetLight( cl )
 			{
 				bool bOn = (iSec%NUM_CABINET_LIGHTS) == cl;
@@ -166,7 +166,7 @@ void LightsManager::Update( float fDeltaTime )
 	// If not joined, has enough credits, and not too late to join, then 
 	// blink the menu buttons rapidly so they'll press Start
 	{
-		int iBeat = (int)(GAMESTATE->m_fSongBeat*4);
+		int iBeat = static_cast<int>(GAMESTATE->m_fSongBeat*4);
 		bool bBlinkOn = (iBeat%2)==0;
 		FOREACH_PlayerNumber( pn )
 		{
@@ -242,7 +242,7 @@ void LightsManager::Update( float fDeltaTime )
 		break;
 	case LIGHTSMODE_TEST:
 		{
-			int iSec = (int)RageTimer::GetTimeSinceStart();
+			int iSec = static_cast<int>(RageTimer::GetTimeSinceStart());
 
 			int iNumGameButtonsToShow = GAMESTATE->GetCurrentGame()->GetNumGameplayButtons();
 

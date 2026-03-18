@@ -44,7 +44,7 @@ void OptionsCursor::SetBarWidth( int iWidth )
 		iWidth++;	// round up to nearest even number
 	float fFrameWidth = m_sprLeft.GetUnzoomedWidth();
 
-	m_sprMiddle.SetZoomX( iWidth/(float)fFrameWidth );
+	m_sprMiddle.SetZoomX( iWidth/static_cast<float>(fFrameWidth) );
 
 	m_sprLeft.SetX( -iWidth/2 - fFrameWidth/2 );
 	m_sprRight.SetX( +iWidth/2 + fFrameWidth/2 );

@@ -54,7 +54,7 @@ void CourseContentsList::SetFromGameState()
 	Trail* pMasterTrail = GAMESTATE->m_pCurTrail[GAMESTATE->m_MasterPlayerNumber];
 	if( pMasterTrail == nullptr )
 		return;
-	int iNumEntriesToShow = min((int)pMasterTrail->m_vEntries.size(), MAX_TOTAL_CONTENTS);
+	int iNumEntriesToShow = min(static_cast<int>(pMasterTrail->m_vEntries.size()), MAX_TOTAL_CONTENTS);
 
 	m_iNumContents = 0;
 	
@@ -109,10 +109,10 @@ void CourseContentsList::DrawPrimitives()
 	m_quad.SetY( ((MAX_VISIBLE_CONTENTS-1)/2 + 1) * float(ContentsBarHeight) );
 	m_quad.Draw();
 
-	int iItemToDraw = (int)m_fItemAtTopOfList;
+	int iItemToDraw = static_cast<int>(m_fItemAtTopOfList);
 
 	// HACK:  Insert a little pause as a new item appears on the screen
-	float fRemainder = m_fItemAtTopOfList - (int)m_fItemAtTopOfList;
+	float fRemainder = m_fItemAtTopOfList - static_cast<int>(m_fItemAtTopOfList);
 	fRemainder = min( fRemainder*1.5f, 1 );
 
 	const float fY = (-fRemainder-(MAX_VISIBLE_CONTENTS-1)/2) * ContentsBarHeight;

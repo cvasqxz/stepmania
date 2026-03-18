@@ -72,26 +72,26 @@ public:
 
 	void GetChamberIndexAndOverslow( float fPercent, int& iChamberOut, float& fChamberOverflowPercentOut )
 	{
-		iChamberOut = (int)(fPercent*NUM_CHAMBERS);
+		iChamberOut = static_cast<int>(fPercent*NUM_CHAMBERS);
 		fChamberOverflowPercentOut = fPercent*NUM_CHAMBERS - iChamberOut;
 	}
 
 	float GetChamberLeftPercent( int iChamber )
 	{
-		return (iChamber+0) / (float)NUM_CHAMBERS;
+		return (iChamber+0) / static_cast<float>(NUM_CHAMBERS);
 	}
 
 	float GetChamberRightPercent( int iChamber )
 	{
-		return (iChamber+1) / (float)NUM_CHAMBERS;
+		return (iChamber+1) / static_cast<float>(NUM_CHAMBERS);
 	}
 
 	float GetRightEdgePercent( int iChamber, float fChamberOverflowPercent )
 	{
 		if( (iChamber%2) == 0 )
-			return (iChamber+fChamberOverflowPercent) / (float)NUM_CHAMBERS;
+			return (iChamber+fChamberOverflowPercent) / static_cast<float>(NUM_CHAMBERS);
 		else
-			return (iChamber+1) / (float)NUM_CHAMBERS;
+			return (iChamber+1) / static_cast<float>(NUM_CHAMBERS);
 	}
 
 	float GetHeightPercent( int iChamber, float fChamberOverflowPercent )
@@ -200,7 +200,7 @@ public:
 		m_quadMask.Draw();
 
 		// draw mask for horizontal chambers
-		rect.left	= (int)(-METER_WIDTH/2 + fRightPercent*METER_WIDTH); 
+		rect.left	= static_cast<int>(-METER_WIDTH/2 + fRightPercent*METER_WIDTH); 
 		rect.top	= -METER_HEIGHT/2;
 		rect.right	= +METER_WIDTH/2;
 		rect.bottom	= +METER_HEIGHT/2;
@@ -236,8 +236,8 @@ LifeMeterBar::LifeMeterBar()
 	m_fLifeDifficulty = m_fBaseLifeDifficulty;
 
 	m_quadBlackBackground.SetDiffuse( RageColor(0,0,0,1) );
-	m_quadBlackBackground.SetZoomX( (float)METER_WIDTH );
-	m_quadBlackBackground.SetZoomY( (float)METER_HEIGHT );
+	m_quadBlackBackground.SetZoomX( static_cast<float>(METER_WIDTH) );
+	m_quadBlackBackground.SetZoomY( static_cast<float>(METER_HEIGHT) );
 
 	this->AddChild( &m_quadBlackBackground );
 	this->AddChild( m_pStream );
@@ -381,7 +381,7 @@ void LifeMeterBar::ChangeLife( float fDeltaLife )
 	}
 	else
 	{
-		fDeltaLife *= 1 + (float)m_iProgressiveLifebar/8 * m_iMissCombo;
+		fDeltaLife *= 1 + static_cast<float>(m_iProgressiveLifebar)/8 * m_iMissCombo;
 		// do this after; only successive boo/miss will
 		// increase the amount of life lost.
 		m_iMissCombo++;
@@ -541,7 +541,7 @@ void LifeMeterBar::UpdateNonstopLifebar(const int cleared,
 	} */
 
 	if (total > 1)
-		m_fLifeDifficulty = m_fBaseLifeDifficulty - 0.2f * (int)(ProgressiveLifebarDifficulty * cleared / (total - 1));
+		m_fLifeDifficulty = m_fBaseLifeDifficulty - 0.2f * static_cast<int>(ProgressiveLifebarDifficulty * cleared / (total - 1));
 	else
 		m_fLifeDifficulty = m_fBaseLifeDifficulty - 0.2f * ProgressiveLifebarDifficulty;
 

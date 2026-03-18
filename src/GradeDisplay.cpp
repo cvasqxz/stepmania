@@ -10,7 +10,7 @@
 const float SCROLL_TIME = 5.0f;
 const float QUICK_SCROLL_TIME = .25f;
 const int NUM_GRADE_FRAMES = 8;
-const float GRADE_FRAME_HEIGHT = 1/(float)NUM_GRADE_FRAMES;
+const float GRADE_FRAME_HEIGHT = 1/static_cast<float>(NUM_GRADE_FRAMES);
 const float GRADES_TO_SCROLL = NUM_GRADE_FRAMES*4;
 
 

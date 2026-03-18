@@ -56,7 +56,7 @@ void Banner::Update( float fDeltaTime )
 	if( m_bScrolling )
 	{
         m_fPercentScrolling += fDeltaTime/2;
-		m_fPercentScrolling -= (int)m_fPercentScrolling;
+		m_fPercentScrolling -= static_cast<int>(m_fPercentScrolling);
 
 		const RectF *pTextureRect = m_pTexture->GetTextureCoordRect(0);
  

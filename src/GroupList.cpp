@@ -92,7 +92,7 @@ void GroupList::Load( const CStringArray& asGroupNames )
 void GroupList::ResetTextSize( int i )
 {
 	BitmapText *label = m_textLabels[i];
-	const float fTextWidth = (float)label->GetUnzoomedWidth();
+	const float fTextWidth = static_cast<float>(label->GetUnzoomedWidth());
 	const float fButtonWidth = m_sprButtons[i]->GetZoomedWidth();
 
 	float fZoom = fButtonWidth/fTextWidth;
@@ -168,7 +168,7 @@ void GroupList::SetSelection( unsigned sel )
 
 	m_iSelection=sel;
 
-	if( (int)m_asLabels.size() <= MAX_GROUPS_ONSCREEN ||
+	if( static_cast<int>(m_asLabels.size()) <= MAX_GROUPS_ONSCREEN ||
 		  sel <= MAX_GROUPS_ONSCREEN/2 )
 		m_iTop = 0;
 	else if ( sel >= m_asLabels.size() - MAX_GROUPS_ONSCREEN/2 )

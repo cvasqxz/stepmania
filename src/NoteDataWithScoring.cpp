@@ -302,7 +302,7 @@ float NoteDataWithScoring::GetActualAirRadarValue( float fSongSeconds, PlayerNum
 
 	// number of doubles
 	const int iNumDoubles = GetNumNWithScore( TNS_PERFECT, 2 );
-	return clamp( (float)iNumDoubles / iTotalDoubles, 0.0f, 1.0f );
+	return clamp( static_cast<float>(iNumDoubles) / iTotalDoubles, 0.0f, 1.0f );
 }
 
 float NoteDataWithScoring::GetActualChaosRadarValue( float fSongSeconds, PlayerNumber pn ) const

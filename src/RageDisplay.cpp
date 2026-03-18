@@ -518,7 +518,7 @@ void RageDisplay::LoadMenuPerspective( float fovDegrees, float fVanishPointX, fl
 //	g_ProjectionStack.Push();
 //	g_WorldStack.Push();
 //
-//	float aspect = SCREEN_WIDTH/(float)SCREEN_HEIGHT;
+//	float aspect = SCREEN_WIDTH/static_cast<float>(SCREEN_HEIGHT);
 //	g_ProjectionStack.LoadMatrix( GetPerspectiveMatrix(fov, aspect, near_clip, far_clip) );
 //	/* Flip the Y coordinate, so positive numbers go down. */
 //	g_ProjectionStack.Scale(1, -1, 1);
@@ -581,7 +581,7 @@ void RageDisplay::CameraPopMatrix()
  * post-multiplied. */
 void RageDisplay::LoadLookAt(float fov, const RageVector3 &Eye, const RageVector3 &At, const RageVector3 &Up)
 {
-	float aspect = SCREEN_WIDTH/(float)SCREEN_HEIGHT;
+	float aspect = SCREEN_WIDTH/static_cast<float>(SCREEN_HEIGHT);
 	g_ProjectionStack.LoadMatrix( GetPerspectiveMatrix(fov, aspect, 1, 1000) );
 	/* Flip the Y coordinate, so positive numbers go down. */
 	g_ProjectionStack.Scale(1, -1, 1);

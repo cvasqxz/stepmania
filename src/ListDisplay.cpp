@@ -50,7 +50,7 @@ void ListDisplay::Load(
 	m_fSecondsPerItem = fSecondsPerItem; 
 	m_fSecondsPauseBetweenItems = fSecondsPauseBetweenItems;
 	m_bSlide = bSlide;
-	m_fItemAtTopOfList = m_bLoop ? 0 : (float)-m_iNumItemsToShow;
+	m_fItemAtTopOfList = m_bLoop ? 0 : static_cast<float>(-m_iNumItemsToShow);
 	m_fSecondsPauseCountdown = 0;
 
 	RectF rectBarSize(-m_fItemWidth/2, -m_fItemHeight/2,
@@ -89,7 +89,7 @@ void ListDisplay::Update( float fDeltaTime )
 		}
 
 		// handle scrolling
-		float fPercentUntilNextItem = (int)m_fItemAtTopOfList+1 - m_fItemAtTopOfList;
+		float fPercentUntilNextItem = static_cast<int>(m_fItemAtTopOfList)+1 - m_fItemAtTopOfList;
 		float fSecsUntilNextItem = fPercentUntilNextItem * m_fSecondsPerItem;
 
 		if( fDeltaTime > fSecsUntilNextItem )
@@ -125,8 +125,8 @@ void ListDisplay::DrawPrimitives()
 	m_quadMask.SetY( fIndexCompletelyOffScreenBottom * m_fItemHeight );
 	m_quadMask.Draw();
 
-	int iItemToDraw = (int)m_fItemAtTopOfList;
-	float fRemainder = m_fItemAtTopOfList - (int)m_fItemAtTopOfList;
+	int iItemToDraw = static_cast<int>(m_fItemAtTopOfList);
+	float fRemainder = m_fItemAtTopOfList - static_cast<int>(m_fItemAtTopOfList);
 	float fIndex = fIndexFullyOnScreenTop - fRemainder;
 	float fY = (fIndex)*m_fItemHeight;
 

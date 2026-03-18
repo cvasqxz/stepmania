@@ -259,8 +259,8 @@ void RageBitmapTexture::Create()
 
 	if( bRunCheck  )
 	{
-		float fFrameWidth = this->GetSourceWidth() / (float)this->GetFramesWide();
-		float fFrameHeight = this->GetSourceHeight() / (float)this->GetFramesHigh();
+		float fFrameWidth = this->GetSourceWidth() / static_cast<float>(this->GetFramesWide());
+		float fFrameHeight = this->GetSourceHeight() / static_cast<float>(this->GetFramesHigh());
 		float fBetterFrameWidth = roundf((fFrameWidth+0.99f)/2)*2;
 		float fBetterFrameHeight = roundf((fFrameHeight+0.99f)/2)*2;
 		float fBetterSourceWidth = this->GetFramesWide() * fBetterFrameWidth;

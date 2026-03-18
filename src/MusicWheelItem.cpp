@@ -147,7 +147,7 @@ void MusicWheelItem::LoadFromWheelItemData( WheelItemData* pWID )
 			bt->SetDiffuse( data->m_color );
 			bt->TurnRainbowOff();
 
-			const float fSourcePixelWidth = (float)bt->GetUnzoomedWidth();
+			const float fSourcePixelWidth = static_cast<float>(bt->GetUnzoomedWidth());
 			const float fMaxTextWidth = 200;
 			if( fSourcePixelWidth > fMaxTextWidth  )
 				bt->SetZoomX( fMaxTextWidth / fSourcePixelWidth );
