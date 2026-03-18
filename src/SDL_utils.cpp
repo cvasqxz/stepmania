@@ -151,7 +151,7 @@ SDL_Surface *SDLSurfaceFromRageSurface( RageSurface *surf )
 	if( surf->format->BytesPerPixel == 1 )
 	{
 		ASSERT( sizeof(RageSurfaceColor) == sizeof(SDL_Color) );
-		SDL_SetPalette( ret, SDL_LOGPAL, (SDL_Color *) surf->fmt.palette->colors, 0, 256 );
+		SDL_SetPalette( ret, SDL_LOGPAL, reinterpret_cast<SDL_Color*>(surf->fmt.palette->colors), 0, 256 );
 
 		/* If we have one alpha value, transfer it to the color key. */
 		int iKey = -1;

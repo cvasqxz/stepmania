@@ -508,7 +508,7 @@ float ScreenRanking::SetPage( PageToShow pts )
 
 	// UGLY: We have to call AddChild every time we re-load an AutoActor
 	// because the internal Actor* changes.
-	if( (Actor*)m_sprPageType )
+	if( static_cast<Actor*>(m_sprPageType) )
 		this->RemoveChild( m_sprPageType );
 	m_sprPageType.Load( THEME->GetPathG(m_sName, "PageType "+PageTypeToString(pts.type)) );
 	m_sprPageType->SetName( "PageType" );

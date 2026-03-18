@@ -170,7 +170,7 @@ bool FilenameDB::ResolvePath(CString &path)
 
 		if( prev_file )
 			prev_file->dirp = fs;
-		prev_file = (File*) &*it;
+		prev_file = const_cast<File*>(&*it);
 
 		if( ret.size() != 0 )
 			ret += "/";

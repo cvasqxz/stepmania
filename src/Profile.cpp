@@ -404,7 +404,7 @@ void Profile::AddStepsHighScore( const Song* pSong, const Steps* pSteps, HighSco
 
 const HighScoreList& Profile::GetStepsHighScoreList( const Song* pSong, const Steps* pSteps ) const
 {
-	return ((Profile*)this)->GetStepsHighScoreList(pSong,pSteps);
+	return const_cast<Profile*>(this)->GetStepsHighScoreList(pSong,pSteps);
 }
 
 HighScoreList& Profile::GetStepsHighScoreList( const Song* pSong, const Steps* pSteps )
@@ -468,7 +468,7 @@ void Profile::AddCourseHighScore( const Course* pCourse, const Trail* pTrail, Hi
 
 const HighScoreList& Profile::GetCourseHighScoreList( const Course* pCourse, const Trail* pTrail ) const
 {
-	return ((Profile *)this)->GetCourseHighScoreList( pCourse, pTrail );
+	return const_cast<Profile*>(this)->GetCourseHighScoreList( pCourse, pTrail );
 }
 
 HighScoreList& Profile::GetCourseHighScoreList( const Course* pCourse, const Trail* pTrail )
@@ -526,7 +526,7 @@ void Profile::AddCategoryHighScore( StepsType st, RankingCategory rc, HighScore 
 
 const HighScoreList& Profile::GetCategoryHighScoreList( StepsType st, RankingCategory rc ) const
 {
-	return ((Profile *)this)->m_CategoryHighScores[st][rc];
+	return const_cast<Profile*>(this)->m_CategoryHighScores[st][rc];
 }
 
 HighScoreList& Profile::GetCategoryHighScoreList( StepsType st, RankingCategory rc )

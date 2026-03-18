@@ -31,26 +31,26 @@
 #include "RageFile.h"
 static size_t OggRageFile_read_func( void *ptr, size_t size, size_t nmemb, void *datasource )
 {
-	RageFile *f = (RageFile *) datasource;
+	RageFile *f = static_cast<RageFile*>(datasource);
 	return f->Read( ptr, size, nmemb );
 }
 
 static int OggRageFile_seek_func( void *datasource, ogg_int64_t offset, int whence )
 {
-	RageFile *f = (RageFile *) datasource;
-	return f->Seek( (int) offset, whence );
+	RageFile *f = static_cast<RageFile*>(datasource);
+	return f->Seek( static_cast<int>(offset), whence );
 }
 
 static int OggRageFile_close_func( void *datasource )
 {
-	RageFile *f = (RageFile *) datasource;
+	RageFile *f = static_cast<RageFile*>(datasource);
 	delete f;
 	return 0;
 }
 
 static long OggRageFile_tell_func( void *datasource )
 {
-	RageFile *f = (RageFile *) datasource;
+	RageFile *f = static_cast<RageFile*>(datasource);
 	return f->Tell();
 }
 

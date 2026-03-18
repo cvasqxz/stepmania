@@ -62,7 +62,7 @@ struct RageFile_source_mgr
 
 void RageFile_JPEG_init_source( j_decompress_ptr cinfo )
 {
-	RageFile_source_mgr *src = (RageFile_source_mgr *) cinfo->src;
+	RageFile_source_mgr *src = reinterpret_cast<RageFile_source_mgr*>(cinfo->src);
 	src->start_of_file = true;
 	src->pub.next_input_byte = nullptr;
 	src->pub.bytes_in_buffer = 0;
@@ -70,7 +70,7 @@ void RageFile_JPEG_init_source( j_decompress_ptr cinfo )
 
 boolean RageFile_JPEG_fill_input_buffer( j_decompress_ptr cinfo )
 {
-	RageFile_source_mgr *src = (RageFile_source_mgr *) cinfo->src;
+	RageFile_source_mgr *src = reinterpret_cast<RageFile_source_mgr*>(cinfo->src);
 	size_t nbytes = src->file->Read( src->buffer, sizeof(src->buffer) );
 
 	if( nbytes <= 0 )
@@ -95,7 +95,7 @@ boolean RageFile_JPEG_fill_input_buffer( j_decompress_ptr cinfo )
 
 void RageFile_JPEG_skip_input_data( j_decompress_ptr cinfo, long num_bytes )
 {
-	RageFile_source_mgr *src = (RageFile_source_mgr *) cinfo->src;
+	RageFile_source_mgr *src = reinterpret_cast<RageFile_source_mgr*>(cinfo->src);
 
 	int in_buffer = min( (long) src->pub.bytes_in_buffer, num_bytes );
 	src->pub.next_input_byte += in_buffer;

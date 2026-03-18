@@ -735,17 +735,17 @@ RageDisplay::VideoModeParams RageDisplay_D3D::GetVideoModeParams() const { retur
 
 void RageDisplay_D3D::SendCurrentMatrices()
 {
-	g_pd3dDevice->SetTransform( D3DTS_PROJECTION, (D3DMATRIX*)GetProjectionTop() );
+	g_pd3dDevice->SetTransform( D3DTS_PROJECTION, reinterpret_cast<D3DMATRIX*>(GetProjectionTop()) );
 	RageMatrix modelView;
 	RageMatrixMultiply( &modelView, GetCentering(), GetViewTop() );
-	g_pd3dDevice->SetTransform( D3DTS_VIEW, (D3DMATRIX*)&modelView );
+	g_pd3dDevice->SetTransform( D3DTS_VIEW, reinterpret_cast<D3DMATRIX*>(&modelView) );
 
 	/* Convert to OpenGL-style "pixel-centered" coords */
 	RageMatrix m;
 	RageMatrixTranslation( &m, -0.5f, -0.5f, 0 );
 	RageMatrixMultiply( &m, &m, GetWorldTop() );
-	g_pd3dDevice->SetTransform( D3DTS_WORLD, (D3DMATRIX*)&m );
-	g_pd3dDevice->SetTransform( D3DTS_TEXTURE0, (D3DMATRIX*)GetTextureTop() );
+	g_pd3dDevice->SetTransform( D3DTS_WORLD, reinterpret_cast<D3DMATRIX*>(&m) );
+	g_pd3dDevice->SetTransform( D3DTS_TEXTURE0, reinterpret_cast<D3DMATRIX*>(GetTextureTop()) );
 }
 
 class RageCompiledGeometrySWD3D : public RageCompiledGeometry
@@ -962,7 +962,7 @@ void RageDisplay_D3D::SetTexture( int iTextureUnitIndex, RageTexture* pTexture )
 	else
 	{
 		unsigned uTexHandle = pTexture->GetTexHandle();
-		IDirect3DTexture8* pTex = (IDirect3DTexture8*)uTexHandle;
+		IDirect3DTexture8* pTex = reinterpret_cast<IDirect3DTexture8*>(uTexHandle);
 		g_pd3dDevice->SetTexture( g_iCurrentTextureIndex, pTex );
 		
 		g_pd3dDevice->SetTextureStageState( g_iCurrentTextureIndex, D3DTSS_COLOROP,   D3DTOP_MODULATE );
@@ -1177,7 +1177,7 @@ void RageDisplay_D3D::SetCullMode( CullMode mode )
 
 void RageDisplay_D3D::DeleteTexture( unsigned uTexHandle )
 {
-	IDirect3DTexture8* pTex = (IDirect3DTexture8*) uTexHandle;
+	IDirect3DTexture8* pTex = reinterpret_cast<IDirect3DTexture8*>(uTexHandle);
 	pTex->Release();
 
 	// Delete palette (if any)
@@ -1235,7 +1235,7 @@ void RageDisplay_D3D::UpdateTexture(
 	RageSurface* img,
 	int xoffset, int yoffset, int width, int height )
 {
-	IDirect3DTexture8* pTex = (IDirect3DTexture8*)uTexHandle;
+	IDirect3DTexture8* pTex = reinterpret_cast<IDirect3DTexture8*>(uTexHandle);
 	ASSERT( pTex != nullptr );
 	
 	/* Make sure that the pixel format of the image is legit.  We don't actually
@@ -1325,7 +1325,7 @@ void RageDisplay_D3D::SetSphereEnironmentMapping( bool b )
 			0.0f,   0.0f,  0.0f, 0.0f,
 			0.50,  -0.50,  0.0f, 1.0f
 		);
-		g_pd3dDevice->SetTransform((D3DTRANSFORMSTATETYPE)(D3DTS_TEXTURE0+g_iCurrentTextureIndex), (D3DMATRIX*)&tex);
+		g_pd3dDevice->SetTransform(static_cast<D3DTRANSFORMSTATETYPE>(D3DTS_TEXTURE0+g_iCurrentTextureIndex), reinterpret_cast<D3DMATRIX*>(&tex));
 	}
 
     // Tell D3D to use transformed reflection vectors as texture co-ordinate 0

@@ -580,7 +580,7 @@ static void CheckPalettedTextures()
 		GL_CHECK_ERROR( "glTexImage2D" );
 
 		GLuint ifmt = 0;
-		glGetTexLevelParameteriv( GL_PROXY_TEXTURE_2D, 0, GLenum(GL_TEXTURE_INTERNAL_FORMAT), (GLint *)&ifmt );
+		glGetTexLevelParameteriv( GL_PROXY_TEXTURE_2D, 0, static_cast<GLenum>(GL_TEXTURE_INTERNAL_FORMAT), reinterpret_cast<GLint*>(&ifmt) );
 		GL_CHECK_ERROR( "glGetTexLevelParameteriv(GL_TEXTURE_INTERNAL_FORMAT)" );
 		if( ifmt != glTexFormat )
 		{
@@ -1541,7 +1541,7 @@ bool RageDisplay_OGL::IsZWriteEnabled() const
 bool RageDisplay_OGL::IsZTestEnabled() const
 {
 	GLenum a;
-	glGetIntegerv( GL_DEPTH_FUNC, (GLint*)&a );
+	glGetIntegerv( GL_DEPTH_FUNC, reinterpret_cast<GLint*>(&a) );
 	return a != GL_ALWAYS;
 }
 
