@@ -2,6 +2,7 @@
 #include <cassert>
 
 #include "Sprite.h"
+#include "RageUtil.h"
 #include "RageTextureManager.h"
 #include "IniFile.h"
 #include "RageLog.h"
@@ -235,7 +236,7 @@ bool Sprite::LoadFromTexture( RageTextureID ID )
 
 	/* Hack: if we load "_blank", mark the actor hidden, so we can short-circuit
 	 * rendering later on.  (This helps NoteField rendering.) */
-	if( !SetExtension(Basename(ID.filename), "").CompareNoCase("_blank") )
+	if( !CompareNoCase(SetExtension(Basename(ID.filename), ""), "_blank") )
 		this->SetHidden( true );
 	
 	// the size of the sprite is the size of the image before it was scaled

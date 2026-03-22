@@ -222,7 +222,7 @@ void SongManager::LoadStepManiaSongDir( CString sDir, LoadingWindow *ld )
 		{
 			CString sSongDirName = arraySongDirs[j];
 
-			if( 0 == stricmp( Basename(sSongDirName), "cvs" ) )	// the directory called "CVS"
+			if( !CompareNoCase(Basename(sSongDirName), "cvs") )	// the directory called "CVS"
 				continue;		// ignore it
 
 			// this is a song directory.  Load a new song!

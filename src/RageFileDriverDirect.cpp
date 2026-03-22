@@ -210,7 +210,7 @@ bool RageFileObjDirect::FinalFlush()
 
 #if !defined(WIN32)
 	/* Wait for the directory to be flushed. */
-	int dirfd = open( Dirname(path), O_RDONLY );
+	int dirfd = open( Dirname(path).c_str(), O_RDONLY );
 	if( dirfd == -1 )
 	{
 		LOG->Warn( "Error synchronizing open(%s dir): %s", this->path.c_str(), strerror(errno) );

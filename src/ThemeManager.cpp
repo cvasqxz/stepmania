@@ -349,7 +349,7 @@ try_element_again:
 
 
 	CString sPath = asElementPaths[0];
-	bool bIsARedirect = GetExtension(sPath).CompareNoCase("redir")==0;
+	bool bIsARedirect = !CompareNoCase(GetExtension(sPath), "redir");
 
 	if( !bIsARedirect )
 	{

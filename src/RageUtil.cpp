@@ -128,7 +128,7 @@ float HHMMSSToSeconds( const CString &sHHMMSS )
 	return fSeconds;
 }
 
-CString SecondsToHHMMSS( float fSecs )
+std::string SecondsToHHMMSS( float fSecs )
 {
 	const int iMinsDisplay = static_cast<int>(fSecs)/60;
 	const int iSecsDisplay = static_cast<int>(fSecs) - iMinsDisplay*60;
@@ -136,7 +136,7 @@ CString SecondsToHHMMSS( float fSecs )
 	return sReturn;
 }
 
-CString SecondsToMMSSMsMs( float fSecs )
+std::string SecondsToMMSSMsMs( float fSecs )
 {
 	const int iMinsDisplay = static_cast<int>(fSecs)/60;
 	const int iSecsDisplay = static_cast<int>(fSecs) - iMinsDisplay*60;
@@ -145,7 +145,7 @@ CString SecondsToMMSSMsMs( float fSecs )
 	return sReturn;
 }
 
-CString SecondsToMMSSMsMsMs( float fSecs )
+std::string SecondsToMMSSMsMsMs( float fSecs )
 {
 	const int iMinsDisplay = static_cast<int>(fSecs)/60;
 	const int iSecsDisplay = static_cast<int>(fSecs) - iMinsDisplay*60;
@@ -154,21 +154,21 @@ CString SecondsToMMSSMsMsMs( float fSecs )
 	return sReturn;
 }
 
-CString PrettyPercent( float fNumerator, float fDenominator)
+std::string PrettyPercent( float fNumerator, float fDenominator)
 {
 	return ssprintf("%0.2f%%",fNumerator/fDenominator*100);
 }
 
-CString Commify( int iNum ) 
+std::string Commify( int iNum )
 {
-	CString sNum = ssprintf("%d",iNum);
-	CString sReturn;
+	std::string sNum = ssprintf("%d",iNum);
+	std::string sReturn;
 	for( unsigned i=0; i<sNum.length(); i++ )
 	{
 		char cDigit = sNum[sNum.length()-1-i];
 		if( i!=0 && i%3 == 0 )
-			sReturn = ',' + sReturn;
-		sReturn = cDigit + sReturn;
+			sReturn = std::string(1,',') + sReturn;
+		sReturn = std::string(1,cDigit) + sReturn;
 	}
 	return sReturn;
 }
@@ -247,7 +247,7 @@ CString werr_ssprintf( int err, const char *fmt, ...)
 
 #endif
 
-CString join( const CString &Deliminator, const CStringArray& Source)
+std::string join( const CString &Deliminator, const CStringArray& Source)
 {
 	if( Source.empty() )
 		return "";
@@ -263,7 +263,7 @@ CString join( const CString &Deliminator, const CStringArray& Source)
 	return csTmp;
 }
 
-CString join( const CString &Delimitor, CStringArray::const_iterator begin, CStringArray::const_iterator end )
+std::string join( const CString &Delimitor, CStringArray::const_iterator begin, CStringArray::const_iterator end )
 {
 	if( begin == end )
 		return "";
@@ -420,14 +420,14 @@ void splitpath( const CString &Path, CString& Dir, CString& Filename, CString& E
 /* "foo.bar", "baz" -> "foo.baz"
  * "foo", "baz" -> "foo.baz"
  * "foo.bar", "" -> "foo" */
-CString SetExtension( const CString &path, const CString &ext )
+std::string SetExtension( const CString &path, const CString &ext )
 {
 	CString Dir, FName, OldExt;
 	splitpath( path, Dir, FName, OldExt );
 	return Dir + FName + (ext.size()? ".":"") + ext;
 }
 
-CString GetExtension( const CString &sPath )
+std::string GetExtension( const CString &sPath )
 {
 	size_t pos = sPath.rfind( '.' );
 	if( pos == sPath.npos )
@@ -440,7 +440,7 @@ CString GetExtension( const CString &sPath )
 	return sPath.substr( pos+1, sPath.size()-pos+1 );
 }
 
-CString GetCwd()
+std::string GetCwd()
 {
 #ifdef _XBOX
 	return SYS_BASE_PATH;
@@ -556,7 +556,7 @@ void StripCrnl(CString &s)
 }
 
 /* path is a .redir pathname.  Read it and return the real one. */
-CString DerefRedir(const CString &path)
+std::string DerefRedir(const CString &path)
 {
 	if( GetExtension(path) != "redir" )
 	{
@@ -583,7 +583,7 @@ CString DerefRedir(const CString &path)
 }
 
 /* XXX: This can be used to read one line from any file; rename it. */
-CString GetRedirContents(const CString &path)
+std::string GetRedirContents(const CString &path)
 {
 	RageFile file;
 	if( !file.Open(path) )
@@ -1009,7 +1009,7 @@ wstring CStringToWstring( const CString &s )
 	return ret;
 }
 
-CString WStringToCString(const wstring &str)
+std::string WStringToCString(const wstring &str)
 {
 	CString ret;
 
@@ -1020,7 +1020,7 @@ CString WStringToCString(const wstring &str)
 }
 
 
-CString WcharToUTF8( wchar_t c )
+std::string WcharToUTF8( wchar_t c )
 {
 	CString ret;
 	wchar_to_utf8( c, ret );
@@ -1085,7 +1085,7 @@ CString WcharDisplayText(wchar_t c)
  * a/b/c -> c
  * a/b/c/ -> c
  */
-CString Basename( const CString &dir )
+std::string Basename( const CString &dir )
 {
 	size_t  end = dir.find_last_not_of( "/\\" );
 	if( end == dir.npos )
@@ -1107,7 +1107,7 @@ CString Basename( const CString &dir )
  * /foo -> /
  * / -> /
  */
-CString Dirname( const CString &dir )
+std::string Dirname( const CString &dir )
 {
         /* Special case: "/" -> "/". */
         if( dir.size() == 1 && dir[0] == '/' )
@@ -1128,11 +1128,11 @@ CString Dirname( const CString &dir )
         return dir.substr(0, pos+1);
 }
 
-CString Capitalize( const CString &s )	
+std::string Capitalize( const CString &s )
 {
-	if( s.GetLength()==0 )
+	if( s.size()==0 )
 		return "";
-	CString s2 = s;
+	std::string s2 = s;
 	/* XXX: utf-8 */
 	if( !(s2[0] & 0x80) )
 		s2[0] = static_cast<char>(toupper( s2[0] ));

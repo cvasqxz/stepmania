@@ -174,12 +174,12 @@ int power_of_two(int input);
 bool IsAnInt( const CString &s );
 bool IsHexVal( const CString &s );
 float HHMMSSToSeconds( const CString &sHMS );
-CString SecondsToHHMMSS( float fSecs );
-CString SecondsToMMSSMsMs( float fSecs );
-CString SecondsToMMSSMsMsMs( float fSecs );
-CString PrettyPercent( float fNumerator, float fDenominator );
-inline CString PrettyPercent( int fNumerator, int fDenominator ) { return PrettyPercent( float(fNumerator), float(fDenominator) ); }
-CString Commify( int iNum );
+std::string SecondsToHHMMSS( float fSecs );
+std::string SecondsToMMSSMsMs( float fSecs );
+std::string SecondsToMMSSMsMsMs( float fSecs );
+std::string PrettyPercent( float fNumerator, float fDenominator );
+inline std::string PrettyPercent( int fNumerator, int fDenominator ) { return PrettyPercent( float(fNumerator), float(fDenominator) ); }
+std::string Commify( int iNum );
 
 
 struct tm GetLocalTime();
@@ -197,8 +197,8 @@ CString werr_ssprintf( int err, const char *fmt, ...);
  * element will end up in Dir, not FName: "c:\games\stepmania\". */
 void splitpath( const CString &Path, CString &Dir, CString &Filename, CString &Ext );
 
-CString SetExtension( const CString &path, const CString &ext );
-CString GetExtension( const CString &sPath );
+std::string SetExtension( const CString &path, const CString &ext );
+std::string GetExtension( const CString &sPath );
 
 using longchar = int;
 extern const wchar_t INVALID_CHAR;
@@ -210,8 +210,8 @@ void wchar_to_utf8( wchar_t ch, CString &out );
 wchar_t utf8_get_char( const CString &s );
 bool utf8_is_valid( const CString &s );
 
-CString WStringToCString(const wstring &str);
-CString WcharToUTF8( wchar_t c );
+std::string WStringToCString(const wstring &str);
+std::string WcharToUTF8( wchar_t c );
 wstring CStringToWstring(const CString &str);
 
 // Splits a CString into an CStringArray according the Delimitor.
@@ -227,10 +227,10 @@ void split( const CString &Source, const CString &Delimitor, int &begin, int &si
 void split( const wstring &Source, const wstring &Delimitor, int &begin, int &size, int len, const bool bIgnoreEmpty );
 
 // Joins a CStringArray to create a CString according the Deliminator.
-CString join( const CString &Delimitor, const CStringArray& Source );
-CString join( const CString &Delimitor, CStringArray::const_iterator begin, CStringArray::const_iterator end );
+std::string join( const CString &Delimitor, const CStringArray& Source );
+std::string join( const CString &Delimitor, CStringArray::const_iterator begin, CStringArray::const_iterator end );
 
-CString GetCwd();
+std::string GetCwd();
 
 unsigned int GetHashForString( const CString &s );
 unsigned int GetHashForFile( const CString &sPath );
@@ -258,8 +258,8 @@ void TrimLeft(CString &str, const char *s = "\r\n\t ");
 void TrimRight(CString &str, const char *s = "\r\n\t ");
 void StripCrnl(CString &s);
 
-CString DerefRedir(const CString &path);
-CString GetRedirContents(const CString &path);
+std::string DerefRedir(const CString &path);
+std::string GetRedirContents(const CString &path);
 
 class Regex {
 	void *reg;
@@ -281,9 +281,9 @@ public:
 void Replace_Unicode_Markers( CString &Text );
 CString WcharDisplayText(wchar_t c);
 
-CString Basename( const CString &dir );
-CString Dirname( const CString &dir );
-CString Capitalize( const CString &s );
+std::string Basename( const CString &dir );
+std::string Dirname( const CString &dir );
+std::string Capitalize( const CString &s );
 
 #ifndef WIN32
 #include <unistd.h> /* correct place with correct definitions */

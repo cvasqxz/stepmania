@@ -203,7 +203,7 @@ void BGAnimation::LoadFromAniDir( CString sAniDir )
 		for( unsigned i=0; i<asImagePaths.size(); i++ )
 		{
 			const CString sPath = asImagePaths[i];
-			if( Basename(sPath).Left(1) == "_" )
+			if( !Basename(sPath).empty() && Basename(sPath)[0] == '_' )
 				continue;	// don't directly load files starting with an underscore
 			BGAnimationLayer* pLayer = new BGAnimationLayer( m_bGeneric );
 			pLayer->LoadFromAniLayerFile( asImagePaths[i] );

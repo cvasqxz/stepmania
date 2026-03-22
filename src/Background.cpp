@@ -230,7 +230,7 @@ CString Background::CreateRandomBGA()
 
 	// strip out "cvs"
 	for( int j=arrayPaths.size()-1; j>=0; j-- )
-		if( !Basename(arrayPaths[j]).CompareNoCase("cvs") )
+		if( !CompareNoCase(Basename(arrayPaths[j]), "cvs") )
 			arrayPaths.erase( arrayPaths.begin()+j, arrayPaths.begin()+j+1 );
 
 	if( arrayPaths.empty() )
