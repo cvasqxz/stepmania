@@ -1,5 +1,6 @@
 #ifndef RAGE_TEXTURE_ID_H
 #define RAGE_TEXTURE_ID_H
+#include <string>
 
 /* A unique texture is identified by a RageTextureID.  (Loading the
  * same file with two different dither settings is considered two
@@ -59,6 +60,7 @@ struct RageTextureID
 
 	RageTextureID() { Init(); }
 	RageTextureID( const CString &fn ) { Init(); SetFilename(fn); }
+	RageTextureID( const std::string &fn ) { Init(); SetFilename(fn.c_str()); }
 	void SetFilename( const CString &fn );
 };
 

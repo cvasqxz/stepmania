@@ -371,9 +371,9 @@ void ScreenNetSelectMusic::HandleScreenMessage( const ScreenMessage SM )
 			unsigned i;
 
 			for ( i = 0; i < m_vSongs.size(); ++i)
-				if ( ( !m_vSongs[i]->GetTranslitArtist().CompareNoCase( NSMAN->m_sArtist ) ) &&
-					 ( !m_vSongs[i]->GetTranslitMainTitle().CompareNoCase( NSMAN->m_sMainTitle ) ) &&
-					 ( !m_vSongs[i]->GetTranslitSubTitle().CompareNoCase( NSMAN->m_sSubTitle ) ) )
+				if ( !CompareNoCase( m_vSongs[i]->GetTranslitArtist(), NSMAN->m_sArtist.c_str() ) &&
+					 !CompareNoCase( m_vSongs[i]->GetTranslitMainTitle(), NSMAN->m_sMainTitle.c_str() ) &&
+					 !CompareNoCase( m_vSongs[i]->GetTranslitSubTitle(), NSMAN->m_sSubTitle.c_str() ) )
 					 break;
 			
 			bool haveSong = i != m_vSongs.size();
@@ -679,7 +679,7 @@ void ScreenNetSelectMusic::UpdateSongsListPos()
 	Song* pSong = m_vSongs[j];
 	if( pSong  &&  pSong->HasMusic() )
 	{
-		if(SOUND->GetMusicPath().CompareNoCase(pSong->GetMusicPath())) // dont play the same sound over and over
+		if(CompareNoCase(SOUND->GetMusicPath(), pSong->GetMusicPath())) // dont play the same sound over and over
 		{
 			
 			SOUND->StopMusic();

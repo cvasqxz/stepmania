@@ -7,6 +7,7 @@
 #include "GameConstantsAndTypes.h"
 #include "Grade.h"
 #include "TimingData.h"
+#include <string>
 
 class Steps;
 class Style;
@@ -72,7 +73,7 @@ public:
 	void SaveToDWIFile();
 
 	const CString &GetSongFilePath() const;
-	CString GetCacheFilePath() const;
+	std::string GetCacheFilePath() const;
 
 	void AddAutoGenNotes();
 	void AutoGen( StepsType ntTo, StepsType ntFrom );	// create Steps of type ntTo from Steps of type ntFrom
@@ -97,18 +98,18 @@ public:
 
 	/* If PREFSMAN->m_bShowNative is off, these are the same as GetTranslit* below.
 	 * Otherwise, they return the main titles. */
-	CString GetDisplayMainTitle() const;
-	CString GetDisplaySubTitle() const;
-	CString GetDisplayArtist() const;
+	std::string GetDisplayMainTitle() const;
+	std::string GetDisplaySubTitle() const;
+	std::string GetDisplayArtist() const;
 
 	/* Returns the transliterated titles, if any; otherwise returns the main titles. */
-	CString GetTranslitMainTitle() const { return m_sMainTitleTranslit.size()? m_sMainTitleTranslit: m_sMainTitle; }
-	CString GetTranslitSubTitle() const { return m_sSubTitleTranslit.size()? m_sSubTitleTranslit: m_sSubTitle; }
-	CString GetTranslitArtist() const { return m_sArtistTranslit.size()? m_sArtistTranslit:m_sArtist; }
+	std::string GetTranslitMainTitle() const { return m_sMainTitleTranslit.size()? m_sMainTitleTranslit.c_str(): m_sMainTitle.c_str(); }
+	std::string GetTranslitSubTitle() const { return m_sSubTitleTranslit.size()? m_sSubTitleTranslit.c_str(): m_sSubTitle.c_str(); }
+	std::string GetTranslitArtist() const { return m_sArtistTranslit.size()? m_sArtistTranslit.c_str(): m_sArtist.c_str(); }
 
 	/* "title subtitle" */
-	CString GetFullDisplayTitle() const;
-	CString GetFullTranslitTitle() const;
+	std::string GetFullDisplayTitle() const;
+	std::string GetFullTranslitTitle() const;
 
 	/* This is read and saved, but never actually used. */
 	CString	m_sCredit;
@@ -128,11 +129,11 @@ public:
 	CString	m_sBackgroundFile;
 	CString	m_sCDTitleFile;
 
-	CString GetMusicPath() const;
-	CString GetBannerPath() const;
-	CString	GetLyricsPath() const;
-	CString GetBackgroundPath() const;
-	CString GetCDTitlePath() const;
+	std::string GetMusicPath() const;
+	std::string GetBannerPath() const;
+	std::string GetLyricsPath() const;
+	std::string GetBackgroundPath() const;
+	std::string GetCDTitlePath() const;
 
 	/* For loading only: */
 	bool m_bHasMusic, m_bHasBanner;
@@ -159,7 +160,7 @@ public:
 	void AddLyricSegment( LyricSegment seg );
 
 	void GetDisplayBpms( DisplayBpms &AddTo ) const;
-	CString GetBackgroundAtBeat( float fBeat ) const;
+	std::string GetBackgroundAtBeat( float fBeat ) const;
 
 	float GetBPMAtBeat( float fBeat ) const { return m_Timing.GetBPMAtBeat( fBeat ); }
 	void SetBPMAtBeat( float fBeat, float fBPM ) { m_Timing.SetBPMAtBeat( fBeat, fBPM ); }

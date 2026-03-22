@@ -135,7 +135,7 @@ void Song::GetDisplayBpms( DisplayBpms &AddTo ) const
 	}
 }
 
-CString Song::GetBackgroundAtBeat( float fBeat ) const
+std::string Song::GetBackgroundAtBeat( float fBeat ) const
 {
 	unsigned i;
 	for( i=0; i<m_BackgroundChanges.size()-1; i++ )
@@ -145,7 +145,7 @@ CString Song::GetBackgroundAtBeat( float fBeat ) const
 }
 
 
-CString Song::GetCacheFilePath() const
+std::string Song::GetCacheFilePath() const
 {
 	return ssprintf( CACHE_DIR "Songs/%u", GetHashForString(m_sSongDir) );
 }
@@ -1232,63 +1232,63 @@ CString GetSongAssetPath( CString sPath, const CString &sSongPath )
 
 /* Note that supplying a path relative to the top-level directory is only for compatibility
  * with DWI.  We prefer paths relative to the song directory. */
-CString Song::GetMusicPath() const
+std::string Song::GetMusicPath() const
 {
 	return GetSongAssetPath( m_sMusicFile, m_sSongDir );
 }
 
-CString Song::GetBannerPath() const
+std::string Song::GetBannerPath() const
 {
 	return GetSongAssetPath( m_sBannerFile, m_sSongDir );
 }
 
-CString Song::GetLyricsPath() const
+std::string Song::GetLyricsPath() const
 {
 	return GetSongAssetPath( m_sLyricsFile, m_sSongDir );
 }
 
-CString Song::GetCDTitlePath() const
+std::string Song::GetCDTitlePath() const
 {
 	return GetSongAssetPath( m_sCDTitleFile, m_sSongDir );
 }
 
-CString Song::GetBackgroundPath() const
+std::string Song::GetBackgroundPath() const
 {
 	return GetSongAssetPath( m_sBackgroundFile, m_sSongDir );
 }
 
-CString Song::GetDisplayMainTitle() const
+std::string Song::GetDisplayMainTitle() const
 {
 	if(!PREFSMAN->m_bShowNative) return GetTranslitMainTitle();
 	return m_sMainTitle;
 }
 
-CString Song::GetDisplaySubTitle() const
+std::string Song::GetDisplaySubTitle() const
 {
 	if(!PREFSMAN->m_bShowNative) return GetTranslitSubTitle();
 	return m_sSubTitle;
 }
 
-CString Song::GetDisplayArtist() const
+std::string Song::GetDisplayArtist() const
 {
 	if(!PREFSMAN->m_bShowNative) return GetTranslitArtist();
 	return m_sArtist;
 }
 
 
-CString Song::GetFullDisplayTitle() const
+std::string Song::GetFullDisplayTitle() const
 {
-	CString Title = GetDisplayMainTitle();
-	CString SubTitle = GetDisplaySubTitle();
+	std::string Title = GetDisplayMainTitle();
+	std::string SubTitle = GetDisplaySubTitle();
 
 	if(!SubTitle.empty()) Title += " " + SubTitle;
 	return Title;
 }
 
-CString Song::GetFullTranslitTitle() const
+std::string Song::GetFullTranslitTitle() const
 {
-	CString Title = GetTranslitMainTitle();
-	CString SubTitle = GetTranslitSubTitle();
+	std::string Title = GetTranslitMainTitle();
+	std::string SubTitle = GetTranslitSubTitle();
 
 	if(!SubTitle.empty()) Title += " " + SubTitle;
 	return Title;
@@ -1348,7 +1348,7 @@ bool Song::Matches(CString sGroup, CString sSong) const
 	// match on song dir or title (ala DWI)
 	if( !sSong.CompareNoCase(sLastBit) )
 		return true;
-	if( !sSong.CompareNoCase(this->GetFullTranslitTitle()) )
+	if( !CompareNoCase(sSong, this->GetFullTranslitTitle()) )
 		return true;
 
 	return false;

@@ -324,7 +324,7 @@ void MusicBannerWheel::PlayMusicSample()
 	Song* pSong = GetSelectedSong();
 	if( pSong  &&  pSong->HasMusic() )
 	{
-		if(SOUND->GetMusicPath().CompareNoCase(pSong->GetMusicPath())) // dont play the same sound over and over
+		if(CompareNoCase(SOUND->GetMusicPath(), pSong->GetMusicPath())) // dont play the same sound over and over
 		{
 			
 			SOUND->StopMusic();

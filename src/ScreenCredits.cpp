@@ -198,7 +198,7 @@ ScreenCredits::ScreenCredits( CString sName ) : ScreenAttract( sName )
 			}
 
 			Sprite* pBackground = new Sprite;
-			pBackground->LoadBG( pSong->HasBackground() ? pSong->GetBackgroundPath() : THEME->GetPathToG("Common fallback background") );
+			pBackground->LoadBG( pSong->HasBackground() ? pSong->GetBackgroundPath() : std::string(THEME->GetPathToG("Common fallback background")) );
 			pBackground->ScaleToClipped( BACKGROUNDS_WIDTH, BACKGROUNDS_HEIGHT );
 			m_ScrollerBackgrounds.AddChild( pBackground );
 

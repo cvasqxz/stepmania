@@ -1054,7 +1054,7 @@ Course* SongManager::GetCourseFromName( CString sName )
 		return NULL;
 
 	for( unsigned int i=0; i<m_pCourses.size(); i++ )
-		if( sName.CompareNoCase(m_pCourses[i]->GetFullDisplayTitle()) == 0 )
+		if( !CompareNoCase(sName, m_pCourses[i]->GetFullDisplayTitle()) )
 			return m_pCourses[i];
 
 	return NULL;
@@ -1108,7 +1108,7 @@ Course *SongManager::FindCourse( CString sName )
 {
 	for( unsigned i = 0; i < m_pCourses.size(); i++ )
 	{
-		if( !sName.CompareNoCase(m_pCourses[i]->GetFullDisplayTitle()) )
+		if( !CompareNoCase(sName, m_pCourses[i]->GetFullDisplayTitle()) )
 			return m_pCourses[i];
 	}
 

@@ -542,33 +542,33 @@ struct SortTrailEntry
 	bool operator< ( const SortTrailEntry &rhs ) const { return SortMeter < rhs.SortMeter; }
 };
 
-CString Course::GetDisplayMainTitle() const
+std::string Course::GetDisplayMainTitle() const
 {
 	if( !PREFSMAN->m_bShowNative )
 		return GetTranslitMainTitle();
 	return m_sMainTitle;
 }
 
-CString Course::GetDisplaySubTitle() const
+std::string Course::GetDisplaySubTitle() const
 {
 	if( !PREFSMAN->m_bShowNative )
 		return GetTranslitSubTitle();
 	return m_sSubTitle;
 }
 
-CString Course::GetFullDisplayTitle() const
+std::string Course::GetFullDisplayTitle() const
 {
-	CString Title = GetDisplayMainTitle();
-	CString SubTitle = GetDisplaySubTitle();
+	std::string Title = GetDisplayMainTitle();
+	std::string SubTitle = GetDisplaySubTitle();
 
 	if(!SubTitle.empty()) Title += " " + SubTitle;
 	return Title;
 }
 
-CString Course::GetFullTranslitTitle() const
+std::string Course::GetFullTranslitTitle() const
 {
-	CString Title = GetTranslitMainTitle();
-	CString SubTitle = GetTranslitSubTitle();
+	std::string Title = GetTranslitMainTitle();
+	std::string SubTitle = GetTranslitSubTitle();
 
 	if(!SubTitle.empty()) Title += " " + SubTitle;
 	return Title;

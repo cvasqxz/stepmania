@@ -7,6 +7,7 @@
 #include "GameConstantsAndTypes.h"
 #include "Attack.h"
 #include <map>
+#include <string>
 #include "Trail.h"
 
 struct PlayerOptions;
@@ -95,16 +96,16 @@ public:
 
 	/* If PREFSMAN->m_bShowNative is off, these are the same as GetTranslit* below.
 	 * Otherwise, they return the main titles. */
-	CString GetDisplayMainTitle() const;
-	CString GetDisplaySubTitle() const;
+	std::string GetDisplayMainTitle() const;
+	std::string GetDisplaySubTitle() const;
 
 	/* Returns the transliterated titles, if any; otherwise returns the main titles. */
-	CString GetTranslitMainTitle() const { return m_sMainTitleTranslit.size()? m_sMainTitleTranslit: m_sMainTitle; }
-	CString GetTranslitSubTitle() const { return m_sSubTitleTranslit.size()? m_sSubTitleTranslit: m_sSubTitle; }
+	std::string GetTranslitMainTitle() const { return m_sMainTitleTranslit.size()? m_sMainTitleTranslit.c_str(): m_sMainTitle.c_str(); }
+	std::string GetTranslitSubTitle() const { return m_sSubTitleTranslit.size()? m_sSubTitleTranslit.c_str(): m_sSubTitle.c_str(); }
 
 	/* "title subtitle" */
-	CString GetFullDisplayTitle() const;
-	CString GetFullTranslitTitle() const;
+	std::string GetFullDisplayTitle() const;
+	std::string GetFullTranslitTitle() const;
 
 	// Dereferences course_entries and returns only the playable Songs and Steps
 	Trail* GetTrail( StepsType st, CourseDifficulty cd=DIFFICULTY_MEDIUM ) const;
