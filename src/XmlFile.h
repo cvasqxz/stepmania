@@ -20,6 +20,7 @@
 //////////////////////////////////////////////////////////////////////
 
 #include <vector>
+#include <string>
 struct DateTime;
 class RageFile;
 
@@ -173,6 +174,12 @@ struct XNode
 	bool GetChildValue(const char* name,bool &out) const	{ const XNode* pChild=GetChild(name); if(pChild==NULL) return false; pChild->GetValue(out); return true; }
 	bool GetChildValue(const char* name,unsigned &out) const{ const XNode* pChild=GetChild(name); if(pChild==NULL) return false; pChild->GetValue(out); return true; }
 	bool GetChildValue(const char* name,DateTime &out) const{ const XNode* pChild=GetChild(name); if(pChild==NULL) return false; pChild->GetValue(out); return true; }
+	// std::string name overloads
+	bool GetChildValue(const std::string& name,CString &out) const	{ return GetChildValue(name.c_str(),out); }
+	bool GetChildValue(const std::string& name,int &out) const		{ return GetChildValue(name.c_str(),out); }
+	bool GetChildValue(const std::string& name,float &out) const	{ return GetChildValue(name.c_str(),out); }
+	bool GetChildValue(const std::string& name,bool &out) const		{ return GetChildValue(name.c_str(),out); }
+	bool GetChildValue(const std::string& name,unsigned &out) const	{ return GetChildValue(name.c_str(),out); }
 	XNodes	GetChilds( const char* name ); 
 	XNodes	GetChilds(); 
 
@@ -190,6 +197,14 @@ struct XNode
 	XNode	*AppendChild( const char* name, unsigned value );
 	XNode	*AppendChild( const char* name, const DateTime &value );
 	XNode	*AppendChild( XNode *node );
+	// std::string overloads
+	XNode	*AppendChild( const std::string& name ) { return AppendChild( name.c_str() ); }
+	XNode	*AppendChild( const std::string& name, const std::string& value ) { return AppendChild( name.c_str(), value.c_str() ); }
+	XNode	*AppendChild( const std::string& name, const char* value ) { return AppendChild( name.c_str(), value ); }
+	XNode	*AppendChild( const char* name, const std::string& value ) { return AppendChild( name, value.c_str() ); }
+	XNode	*AppendChild( const std::string& name, int value ) { return AppendChild( name.c_str(), value ); }
+	XNode	*AppendChild( const std::string& name, unsigned value ) { return AppendChild( name.c_str(), value ); }
+	XNode	*AppendChild( const std::string& name, float value ) { return AppendChild( name.c_str(), value ); }
 	bool	RemoveChild( XNode *node );
 	XNode *DetachChild( XNode *node );
 
@@ -203,6 +218,13 @@ struct XNode
 	XAttr *AppendAttr( const char* name, unsigned value );
 	XAttr *AppendAttr( const char* name, const DateTime &value );
 	XAttr	*AppendAttr( XAttr *attr );
+	// std::string overloads
+	XAttr	*AppendAttr( const std::string& name ) { return AppendAttr( name.c_str() ); }
+	XAttr	*AppendAttr( const std::string& name, const std::string& value ) { return AppendAttr( name.c_str(), value.c_str() ); }
+	XAttr	*AppendAttr( const std::string& name, const char* value ) { return AppendAttr( name.c_str(), value ); }
+	XAttr	*AppendAttr( const char* name, const std::string& value ) { return AppendAttr( name, value.c_str() ); }
+	XAttr	*AppendAttr( const std::string& name, int value ) { return AppendAttr( name.c_str(), value ); }
+	XAttr	*AppendAttr( const std::string& name, float value ) { return AppendAttr( name.c_str(), value ); }
 	bool	RemoveAttr( XAttr *attr );
 	XAttr *DetachAttr( XAttr *attr );
 
