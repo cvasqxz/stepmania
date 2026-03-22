@@ -817,7 +817,7 @@ XNode* Profile::SaveGeneralDataCreateNode() const
 		{
 			if( !m_iNumStagesPassedByGrade[g] )
 				continue;
-			pNumStagesPassedByGrade->AppendChild( GradeToString(g), m_iNumStagesPassedByGrade[g] );
+			pNumStagesPassedByGrade->AppendChild( GradeToString(g).c_str(), m_iNumStagesPassedByGrade[g] );
 		}
 	}
 
@@ -957,7 +957,7 @@ void Profile::LoadGeneralDataFromNode( const XNode* pNode )
 		const XNode* pNumStagesPassedByGrade = pNode->GetChild("NumStagesPassedByGrade");
 		if( pNumStagesPassedByGrade )
 			FOREACH_Grade( g )
-				pNumStagesPassedByGrade->GetChildValue( GradeToString(g), m_iNumStagesPassedByGrade[g] );
+				pNumStagesPassedByGrade->GetChildValue( GradeToString(g).c_str(), m_iNumStagesPassedByGrade[g] );
 	}
 
 	{

@@ -210,8 +210,8 @@ void SaveCatalogXml()
 		{
 			FOREACH_UsedGrade( g )
 			{
-				XNode* pNode2 = pNode->AppendChild( "Grade", GradeToString(g) );
-				pNode2->AppendAttr( "DisplayAs", GradeToThemedString(g) );
+				XNode* pNode2 = pNode->AppendChild( "Grade", GradeToString(g).c_str() );
+				pNode2->AppendAttr( "DisplayAs", GradeToThemedString(g).c_str() );
 			}
 		}
 

@@ -1,6 +1,6 @@
 # TODO.md - StepMania 3.9 Modernization Roadmap
 
-**Version:** 1.21 (2026-03-18)
+**Version:** 1.23 (2026-03-22)
 
 This document outlines opportunities to modernize the StepMania 3.9 codebase (originally from 2004-2005) to modern C++ standards and practices.
 
@@ -262,9 +262,11 @@ uint16_t value = *reinterpret_cast<uint16_t*>(p);
 - [ ] Replace with `dynamic_cast<>` for polymorphic types
 - [ ] Replace with `const_cast<>` for const removal (review necessity)
 
-### 3.5 Replace typedef with using
+### 3.5 Replace typedef with using ✅ DONE
 
-**Current:** 15+ typedef declarations
+**Status:** ✅ **COMPLETE** — Converted in FontManager.cpp, InputFilter.h, RageFileManager.cpp, XmlFile.h, RageSoundReader_MP3.cpp, RageSurfaceUtils_Palettize.cpp, RageFileDriverZip.cpp, EmergencyShutdown.cpp
+
+**Original:** 15+ typedef declarations
 
 **Before:**
 ```cpp
@@ -278,7 +280,9 @@ using pixval = uint8_t;
 using key = std::map<std::string, std::string>;
 ```
 
-### 3.6 Replace Macros with constexpr
+### 3.6 Replace Macros with constexpr ✅ DONE
+
+**Status:** ✅ **COMPLETE** — Converted 18 numeric macro constants (DRAW_ORDER_*, NUM_GRADE_TIERS, MAX_PLAYERS, MAX_NAME_LENGTH, NETMAXPLAYERS, NETPROTOCOLVERSION, NETMAXBUFFERSIZE, NETNUMTAPSCORES, NOTE_COLOR_IMAGES, RADAR_VAL_UNKNOWN, MAX_CHOICES, MAX_MODE_CHOICES, MAX_CHAR_ICONS_TO_SHOW, MAX_CHOICES_PER_PAGE, MAX_ICON_PARTS, MAX_PREVIEW_PARTS, MAX_CURSOR_PARTS, MAX_ELEMS). Note: NO_DEFAULT_KEY in Game.h kept as #define due to GCC -fpermissive dependency.
 
 **Before:**
 ```cpp
@@ -298,10 +302,17 @@ constexpr unsigned int OPT_SAVE_PREFERENCES = 1u << 0;
 
 ## Priority 4: STL and Standard Library
 
-### 4.1 Replace CString with std::string
+### 4.1 Replace CString with std::string 🔄 IN PROGRESS
 
 **Current:** Custom `CStdStr` class (1,315 lines in `StdString.h`)
-**Occurrences:** 1,163 across 266 files
+**Occurrences:** ~3,115 across 266 files (before migration)
+
+**Progress:**
+- ✅ Added compatibility helper functions to RageUtil.h (CompareNoCase, MakeLower, MakeUpper, Left, Right, Mid, Replace, Find, ReverseFind)
+- ✅ Batch 1: DateTime.h/cpp — GetString/FromString, DayInYearToString, LastDayToString, DayOfWeekToString, HourInDayToString, MonthToString, LastWeekToString, StringToDayInYear (commit e7ddcc0)
+- ✅ Batch 2: Grade.h/cpp — GradeToString, GradeToOldString, GradeToThemedString, StringToGrade; updated callers in HighScore.cpp, CatalogXml.cpp, Profile.cpp with .c_str()
+
+**Migration strategy:** Convert subsystems bottom-up as complete dependency chains. CString inherits from std::string so CString→std::string is safe for by-value params, but CString& cannot be passed to std::string& without explicit cast.
 
 **Phase 1: Add std::string compatibility**
 ```cpp
@@ -321,9 +332,11 @@ CStdStr(const std::string& s) : base_class(s.c_str()) {}
 - [ ] Gradually migrate existing code
 - [ ] Remove StdString.h when complete
 
-### 4.2 Replace FOREACH Macros with Range-Based For
+### 4.2 Replace FOREACH Macros with Range-Based For ✅ DONE
 
-**Current:** 596 uses of FOREACH/FOREACH_CONST macros
+**Status:** ✅ **COMPLETE** — All 37 FOREACH/FOREACH_CONST usages converted across 16 files (Attack, GameConstantsAndTypes, CatalogXml, Model, PrefsManager, Course, StageStats, ScreenSelectMusic, SongManager, ModelTypes, NoteDataUtil, PlayerOptions, ScreenGameplay, Sprite, Trail, Profile). Iterator-style `(*it)->member` converted to element-style `it.member` or `it->member`.
+
+**Original:** 596 uses of FOREACH/FOREACH_CONST macros (596 total in codebase, 37 in main source)
 
 **Before:**
 ```cpp

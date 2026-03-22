@@ -4,15 +4,15 @@
 #include "ThemeManager.h"
 #include "RageLog.h"
 
-CString GradeToThemedString( Grade g )
+std::string GradeToThemedString( Grade g )
 {
-	CString s = GradeToString(g);
+	std::string s = GradeToString(g);
 	if( !THEME->HasMetric("Grade",s) )
 		return "???";
-	return THEME->GetMetric( "Grade",s );
+	return THEME->GetMetric( "Grade", s );
 }
 
-CString GradeToOldString( Grade g )
+std::string GradeToOldString( Grade g )
 {
 	// string is meant to be human readable
 	switch( g )
@@ -30,7 +30,7 @@ CString GradeToOldString( Grade g )
 	}
 };
 
-Grade StringToGrade( const CString &sGrade )
+Grade StringToGrade( const std::string &sGrade )
 {
 	CString s = sGrade;
 	s.MakeUpper();

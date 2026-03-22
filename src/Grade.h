@@ -4,6 +4,7 @@
 #define GRADE_H
 
 #include "RageUtil.h"
+#include <string>
 
 constexpr int NUM_GRADE_TIERS = 20;
 /* C++11: explicit underlying type */
@@ -30,13 +31,13 @@ enum Grade : int
 	GRADE_TIER_19,
 	GRADE_TIER_20,
 	GRADE_FAILED,	// = E
-	NUM_GRADES, 
+	NUM_GRADES,
 	GRADE_NO_DATA,	// ~GRADE_INVALID
 };
 
 /* This is in the header so the test sets don't require Grade.cpp (through PrefsManager),
  * since that pulls in ThemeManager. */
-static inline CString GradeToString( Grade g )
+static inline std::string GradeToString( Grade g )
 {
         // string is meant to be human readable
         switch( g )
@@ -48,9 +49,9 @@ static inline CString GradeToString( Grade g )
         }
 }
 
-CString GradeToOldString( Grade g );	// "AAA", "B", etc for backward compatibility
-CString GradeToThemedString( Grade g );
-Grade StringToGrade( const CString &s );
+std::string GradeToOldString( Grade g );	// "AAA", "B", etc for backward compatibility
+std::string GradeToThemedString( Grade g );
+Grade StringToGrade( const std::string &s );
 #define FOREACH_Grade( g ) FOREACH_ENUM( Grade, NUM_GRADES, g )
 #define FOREACH_UsedGrade( g ) FOREACH_ENUM( Grade, PREFSMAN->m_iNumGradeTiersUsed, g )
 
