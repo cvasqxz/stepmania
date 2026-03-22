@@ -2947,9 +2947,10 @@ int GameManager::StepsTypeToNumTracks( StepsType st )
 	return StepsTypes[st].NumTracks;
 }
 
-StepsType GameManager::StringToStepsType( CString sStepsType )
+StepsType GameManager::StringToStepsType( const std::string& sStepsTypeIn )
 {
-	sStepsType.MakeLower();
+	std::string sStepsType = sStepsTypeIn;
+	MakeLower(sStepsType);
 
 	// HACK!  We elminitated "ez2-single-hard", but we should still handle it.
 	if( sStepsType == "ez2-single-hard" )
@@ -2968,17 +2969,17 @@ StepsType GameManager::StringToStepsType( CString sStepsType )
 	return STEPS_TYPE_DANCE_SINGLE;
 }
 
-CString GameManager::StepsTypeToString( StepsType st )
+std::string GameManager::StepsTypeToString( StepsType st )
 {
 	ASSERT_M( st < NUM_STEPS_TYPES, ssprintf("%i", st) );
 	return StepsTypes[st].name;
 }
 
-CString GameManager::StepsTypeToThemedString( StepsType st )
+std::string GameManager::StepsTypeToThemedString( StepsType st )
 {
-	CString s = StepsTypeToString( st );
-	if( THEME->HasMetric( "StepsType", s ) )
-		return THEME->GetMetric( "StepsType", s );
+	std::string s = StepsTypeToString( st );
+	if( THEME->HasMetric( "StepsType", s.c_str() ) )
+		return THEME->GetMetric( "StepsType", s.c_str() );
 	else
 		return s;
 }

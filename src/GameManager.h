@@ -29,9 +29,9 @@ public:
 	const Game* GetGameFromIndex( int index );
 
 	static int StepsTypeToNumTracks( StepsType st );
-	static StepsType StringToStepsType( CString sStepsType );
-	static CString StepsTypeToString( StepsType st );
-	static CString StepsTypeToThemedString( StepsType st );
+	static StepsType StringToStepsType( const std::string& sStepsType );
+	static std::string StepsTypeToString( StepsType st );
+	static std::string StepsTypeToThemedString( StepsType st );
 	static const Game* StringToGameType( CString sGameType );
 	const Style* GameAndStringToStyle( const Game* pGame, CString sStyle );
 	static CString StyleToThemedString( const Style* s );

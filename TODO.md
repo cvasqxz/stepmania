@@ -1,6 +1,6 @@
 # TODO.md - StepMania 3.9 Modernization Roadmap
 
-**Version:** 1.25 (2026-03-22)
+**Version:** 1.26 (2026-03-22)
 
 This document outlines opportunities to modernize the StepMania 3.9 codebase (originally from 2004-2005) to modern C++ standards and practices.
 
@@ -313,6 +313,8 @@ constexpr unsigned int OPT_SAVE_PREFERENCES = 1u << 0;
 - ✅ Batch 2: Grade.h/cpp — GradeToString, GradeToOldString, GradeToThemedString, StringToGrade; updated callers in HighScore.cpp, CatalogXml.cpp, Profile.cpp with .c_str()
 - ✅ XmlFile.h — Added std::string overloads for AppendChild, AppendAttr, GetChildValue; eliminates need for .c_str() at call sites going forward
 - ✅ Batch 3: EnumHelper.h macros (XToString, XToThemedString, StringToX) migrated to std::string; all 16 static *Names[] arrays in Difficulty.cpp, GameConstantsAndTypes.cpp, LightsManager.cpp, ScreenRanking.cpp, ScreenSetTime.cpp; corresponding header declarations updated
+- ✅ Batch 4: NoteTypeToString (NoteTypes.h/cpp)
+- ✅ Batch 5: GameManager::StepsTypeToString, StepsTypeToThemedString, StringToStepsType (GameManager.h/cpp)
 
 **Migration strategy:** Convert subsystems bottom-up as complete dependency chains. CString inherits from std::string so CString→std::string is safe for by-value params, but CString& cannot be passed to std::string& without explicit cast.
 
