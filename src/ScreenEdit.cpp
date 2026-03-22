@@ -388,7 +388,7 @@ void ScreenEdit::PlayTicks()
 	 * ahead.  This is just to make sure that we request the sound early enough for it to
 	 * come out on time; the actual precise timing is handled by SetStartTime. */
 	float fPositionSeconds = GAMESTATE->m_fMusicSeconds;
-	fPositionSeconds += SOUND->GetPlayLatency() + (float)TICK_EARLY_SECONDS + 0.250f;
+	fPositionSeconds += SOUND->GetPlayLatency() + static_cast<float>(TICK_EARLY_SECONDS) + 0.250f;
 	const float fSongBeat = GAMESTATE->m_pCurSong->GetBeatFromElapsedTime( fPositionSeconds );
 
 	const int iSongRow = max( 0, BeatToNoteRowNotRounded( fSongBeat ) );
@@ -411,7 +411,7 @@ void ScreenEdit::PlayTicks()
 		fSecondsUntil /= m_soundMusic.GetPlaybackRate(); /* 2x music rate means the time until the tick is halved */
 
 		RageSoundParams p;
-		p.StartTime = GAMESTATE->m_LastBeatUpdate + (fSecondsUntil - (float)TICK_EARLY_SECONDS);
+		p.StartTime = GAMESTATE->m_LastBeatUpdate + (fSecondsUntil - static_cast<float>(TICK_EARLY_SECONDS));
 		m_soundAssistTick.Play( &p );
 	}
 }

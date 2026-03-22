@@ -130,7 +130,7 @@ void AppendOctal( int n, int digits, CString &out )
 	{
 		const int shift = p*3;
 		int n2 = (n >> shift) & 0x7;
-		out.insert( out.end(), (char) (n2+'0') );
+		out.insert( out.end(), static_cast<char>(n2+'0') );
 	}
 }
 
@@ -267,7 +267,7 @@ CString SongUtil::GetSectionNameFromSongAndSort( const Song* pSong, SortOrder so
 			const int iBPMGroupSize = 20;
 			DisplayBpms bpms;
 			pSong->GetDisplayBpms( bpms );
-			int iMaxBPM = (int)bpms.GetMax();
+			int iMaxBPM = static_cast<int>(bpms.GetMax());
 			iMaxBPM += iBPMGroupSize - (iMaxBPM%iBPMGroupSize) - 1;
 			return ssprintf("%03d-%03d",iMaxBPM-(iBPMGroupSize-1), iMaxBPM);
 		}

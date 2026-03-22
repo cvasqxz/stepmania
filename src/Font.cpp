@@ -318,7 +318,7 @@ void Font::CapsOnly()
 		if(it == m_iCharToGlyph.end())
 			continue;
 
-		m_iCharToGlyph[(char) tolower(c)] = it->second;
+		m_iCharToGlyph[static_cast<char>(tolower(c))] = it->second;
 	}
 }
 

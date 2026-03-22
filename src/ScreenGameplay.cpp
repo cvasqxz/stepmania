@@ -1972,7 +1972,7 @@ void ScreenGameplay::StageFinished( bool bBackedOut )
 {
 	if( GAMESTATE->IsCourseMode() && GAMESTATE->m_PlayMode != PLAY_MODE_ENDLESS )
 	{
-		LOG->Trace("Stage finished at index %i/%i", GAMESTATE->GetCourseSongIndex(), (int) m_apSongsQueue.size() );
+		LOG->Trace("Stage finished at index %i/%i", GAMESTATE->GetCourseSongIndex(), static_cast<int>(m_apSongsQueue.size()) );
 		/* +1 to skip the current song; that's done already. */
 		for( unsigned iPlaySongIndex = GAMESTATE->GetCourseSongIndex()+1;
 			 iPlaySongIndex < m_apSongsQueue.size(); ++iPlaySongIndex )

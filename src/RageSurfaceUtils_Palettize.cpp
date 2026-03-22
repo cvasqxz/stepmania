@@ -251,7 +251,7 @@ void RageSurfaceUtils::Palettize( RageSurface *&pImg, int iColors, bool bDither 
 				{
 					for( int c = 0; c < 4; ++c )
 					{
-						long err = (sc[c] - (long)acolormap[ind].acolor[c])*FS_SCALE;
+						long err = (sc[c] - static_cast<long>(acolormap[ind].acolor[c]))*FS_SCALE;
 						thiserr[col + 2].c[c] += ( err * 7 ) / 16;
 						nexterr[col    ].c[c] += ( err * 3 ) / 16;
 						nexterr[col + 1].c[c] += ( err * 5 ) / 16;
@@ -260,7 +260,7 @@ void RageSurfaceUtils::Palettize( RageSurface *&pImg, int iColors, bool bDither 
 				} else {
 					for( int c = 0; c < 4; ++c )
 					{
-						long err = (sc[c] - (long)acolormap[ind].acolor[c])*FS_SCALE;
+						long err = (sc[c] - static_cast<long>(acolormap[ind].acolor[c]))*FS_SCALE;
 						thiserr[col    ].c[c] += ( err * 7 ) / 16;
 						nexterr[col + 2].c[c] += ( err * 3 ) / 16;
 						nexterr[col + 1].c[c] += ( err * 5 ) / 16;
@@ -467,13 +467,13 @@ static acolorhist_item *mediancut( acolorhist_item *achv, int colors, int sum, i
 			sum += achv[indx + i].value;
 		}
 		r = r / sum;
-		r = min( r, (long) maxval );
+		r = min( r, static_cast<long>(maxval) );
 		g = g / sum;
-		g = min( g, (long) maxval );
+		g = min( g, static_cast<long>(maxval) );
 		b = b / sum;
-		b = min( b, (long) maxval );
+		b = min( b, static_cast<long>(maxval) );
 		a = a / sum;
-		a = min( a, (long) maxval );
+		a = min( a, static_cast<long>(maxval) );
 		PAM_ASSIGN( acolormap[bi].acolor, static_cast<uint8_t>(r), static_cast<uint8_t>(g), static_cast<uint8_t>(b), static_cast<uint8_t>(a) );
 #endif /*REP_AVERAGE_PIXELS*/
 	}
@@ -502,10 +502,10 @@ static acolorhist_item *mediancut( acolorhist_item *achv, int colors, int sum, i
 
 #define HASH_SIZE 20023
 
-#define pam_hashapixel(p) ( ( ( (long) PAM_GETR(p) * 33023 + \
-                                (long) PAM_GETG(p) * 30013 + \
-                                (long) PAM_GETB(p) * 27011 + \
-                                (long) PAM_GETA(p) * 24007 ) \
+#define pam_hashapixel(p) ( ( ( static_cast<long>(PAM_GETR(p)) * 33023 + \
+                                static_cast<long>(PAM_GETG(p)) * 30013 + \
+                                static_cast<long>(PAM_GETB(p)) * 27011 + \
+                                static_cast<long>(PAM_GETA(p)) * 24007 ) \
                               & 0x7fffffff ) % HASH_SIZE )
 
 static bool pam_computeacolorhash( const RageSurface *src, int maxacolors, int* acolorsP, acolorhash_hash &hash )

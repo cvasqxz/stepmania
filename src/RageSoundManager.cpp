@@ -463,7 +463,7 @@ void SoundMixBuffer::read( float *buf )
 	const int Maximum = 32767 * 256;
 
 	for( unsigned pos = 0; pos < used; ++pos )
-		buf[pos] = SCALE( (float)mixbuf[pos], Minimum, Maximum, -1.0f, 1.0f );
+		buf[pos] = SCALE( static_cast<float>(mixbuf[pos]), Minimum, Maximum, -1.0f, 1.0f );
 
 	used = 0;
 }

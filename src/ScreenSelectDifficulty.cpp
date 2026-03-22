@@ -318,7 +318,7 @@ void ScreenSelectDifficulty::ChangePage( Page newPage )
 	// move frame with choices
 	m_framePages.StopTweening();
 	m_framePages.BeginTweening( 0.2f );
-	m_framePages.SetX( (float)newPage*-SCREEN_WIDTH );
+	m_framePages.SetX( static_cast<float>(newPage)*-SCREEN_WIDTH );
 }
 
 bool ScreenSelectDifficulty::ChangeWithinPage( PlayerNumber pn, int iNewChoice, bool bChangingPages )

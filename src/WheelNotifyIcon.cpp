@@ -70,7 +70,7 @@ void WheelNotifyIcon::Update( float fDeltaTime )
 	if( m_vIconsToShow.size() > 0 )
 	{
 		const float fSecondFraction = fmodf( RageTimer::GetTimeSinceStart(), 1 );
-		const int index = (int)(fSecondFraction*m_vIconsToShow.size());
+		const int index = static_cast<int>(fSecondFraction*m_vIconsToShow.size());
 		Sprite::SetState( m_vIconsToShow[index] );
 	}
 

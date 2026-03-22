@@ -30,7 +30,7 @@ void RageModelGeometry::OptimizeBones()
 		if( !mesh.Vertices.empty() )
 			nBoneIndex = mesh.Vertices[0].bone;
 		else
-			nBoneIndex = (char)-1;
+			nBoneIndex = static_cast<char>(-1);
 
 		if( nBoneIndex != -1 )
 		{

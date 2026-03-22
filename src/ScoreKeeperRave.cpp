@@ -89,13 +89,13 @@ void ScoreKeeperRave::AddSuperMeterDelta( float fUnscaledPercentChange )
 	if( fUnscaledPercentChange < 0 )
 		fUnscaledPercentChange *= SCALE( GAMESTATE->m_fSuperMeter[m_PlayerNumber], 0.f, 1.f, 0.01f, 1.f );
 
-	AttackLevel oldAL = (AttackLevel)(int)GAMESTATE->m_fSuperMeter[m_PlayerNumber];
+	AttackLevel oldAL = static_cast<AttackLevel>(static_cast<int>(GAMESTATE->m_fSuperMeter[m_PlayerNumber]));
 
 	float fPercentToMove = fUnscaledPercentChange;
 	GAMESTATE->m_fSuperMeter[m_PlayerNumber] += fPercentToMove * GAMESTATE->m_fSuperMeterGrowthScale[m_PlayerNumber];
 	CLAMP( GAMESTATE->m_fSuperMeter[m_PlayerNumber], 0.f, NUM_ATTACK_LEVELS );
 
-	AttackLevel newAL = (AttackLevel)(int)GAMESTATE->m_fSuperMeter[m_PlayerNumber];
+	AttackLevel newAL = static_cast<AttackLevel>(static_cast<int>(GAMESTATE->m_fSuperMeter[m_PlayerNumber]));
 
 	if( newAL > oldAL )
 	{

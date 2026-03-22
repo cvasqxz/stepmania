@@ -62,7 +62,7 @@ const char NAME_CHARS[] =
 
 int GetClosestCharIndex( float fFakeBeat )
 {
-	int iCharIndex = (int)roundf(fFakeBeat) % NUM_NAME_CHARS;
+	int iCharIndex = static_cast<int>(roundf(fFakeBeat)) % NUM_NAME_CHARS;
 	ASSERT( iCharIndex >= 0 );
 	return iCharIndex;
 }
@@ -181,7 +181,7 @@ ScreenNameEntry::ScreenNameEntry( CString sClassName ) : Screen( sClassName )
 		GAMESTATE->m_pPosition->Load( (PlayerNumber)p );
 
 		m_ReceptorArrowRow[p].Load( (PlayerNumber)p, GAMESTATE->m_PlayerOptions[p].m_sNoteSkin, 0 );
-		m_ReceptorArrowRow[p].SetX( (float)GAMESTATE->GetCurrentStyle()->m_iCenterX[p] );
+		m_ReceptorArrowRow[p].SetX( static_cast<float>(GAMESTATE->GetCurrentStyle()->m_iCenterX[p]) );
 		m_ReceptorArrowRow[p].SetY( SCREEN_TOP + 100 );
 		this->AddChild( &m_ReceptorArrowRow[p] );
 
@@ -211,7 +211,7 @@ ScreenNameEntry::ScreenNameEntry( CString sClassName ) : Screen( sClassName )
 			m_textSelectedChars[p][t].SetY( GRAY_ARROWS_Y );
 			m_textSelectedChars[p][t].SetDiffuse( g_SelectedCharsColor );
 			m_textSelectedChars[p][t].SetZoom( CHARS_ZOOM_LARGE );
-			if( t < (int)m_sSelectedName[p].length() )
+			if( t < static_cast<int>(m_sSelectedName[p].length()) )
 				m_textSelectedChars[p][t].SetText( m_sSelectedName[p].substr(t,1) );
 			this->AddChild( &m_textSelectedChars[p][t] );		// draw these manually
 			
@@ -223,7 +223,7 @@ ScreenNameEntry::ScreenNameEntry( CString sClassName ) : Screen( sClassName )
 		}
 
 		m_textCategory[p].LoadFromFont( THEME->GetPathToF("ScreenNameEntry category") );
-		m_textCategory[p].SetX( (float)GAMESTATE->GetCurrentStyle()->m_iCenterX[p] );
+		m_textCategory[p].SetX( static_cast<float>(GAMESTATE->GetCurrentStyle()->m_iCenterX[p]) );
 		m_textCategory[p].SetY( CATEGORY_Y );
 		m_textCategory[p].SetZoom( CATEGORY_ZOOM );
 		CString joined;

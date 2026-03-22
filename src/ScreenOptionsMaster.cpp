@@ -308,7 +308,7 @@ ScreenOptionsMaster::~ScreenOptionsMaster()
 
 void SelectExactlyOne( int iSelection, vector<bool> &vbSelectedOut )
 {
-	for( int i=0; i<(int)vbSelectedOut.size(); i++ )
+	for( int i=0; i<static_cast<int>(vbSelectedOut.size()); i++ )
 		vbSelectedOut[i] = i==iSelection;
 }
 

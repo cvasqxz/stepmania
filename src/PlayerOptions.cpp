@@ -389,7 +389,7 @@ void PlayerOptions::NextScroll()
 
 void PlayerOptions::NextPerspective()
 {
-	switch( (int)m_fPerspectiveTilt )
+	switch( static_cast<int>(m_fPerspectiveTilt) )
 	{
 	case -1:			m_fPerspectiveTilt =  0;	break;
 	case  0:			m_fPerspectiveTilt = +1;	break;

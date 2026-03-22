@@ -559,7 +559,7 @@ void GameClient::UpdateStats(PacketFunctions& Packet)
 		Player[pID].maxCombo = Player[pID].combo;
 
 	Player[pID].health = Packet.Read2();
-	Player[pID].offset = ((double)abs(int(Packet.Read2())-32767)/2000);
+	Player[pID].offset = (static_cast<double>(abs(static_cast<int>(Packet.Read2())-32767))/2000);
 	Player[pID].steps[Player[pID].currstep]++;
 }
 

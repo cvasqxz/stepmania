@@ -214,7 +214,7 @@ void NoteDataUtil::GetSMNoteDataString( const NoteData &in_, CString &notes_out,
 					case TapNote::hold_head:	c = '2'; break;
 					case TapNote::hold_tail:	c = '3'; break;
 					case TapNote::mine:			c = 'M'; break;
-					case TapNote::attack:		c = 'a' + (char)tn.attackIndex ; break;
+					case TapNote::attack:		c = 'a' + static_cast<char>(tn.attackIndex) ; break;
 					default: 
 						ASSERT(0);
 						c = '0'; 
@@ -239,7 +239,7 @@ void NoteDataUtil::GetSMNoteDataString( const NoteData &in_, CString &notes_out,
 			iter++ )
 		{
 			int attackIndex = iter->first;
-			char ch = 'a' + (char)attackIndex;
+			char ch = 'a' + static_cast<char>(attackIndex);
 			Attack attack = iter->second;
 			attack.sModifier.Replace( ',', '.' );	// comma is the map item separator
 

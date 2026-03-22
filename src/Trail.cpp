@@ -106,9 +106,9 @@ int Trail::GetMeter() const
 	if( m_vEntries.empty() )
 		return 0;
 
-	float fMeter = GetTotalMeter() / (float)m_vEntries.size();
+	float fMeter = GetTotalMeter() / static_cast<float>(m_vEntries.size());
 
-	return (int)roundf( fMeter );
+	return static_cast<int>(roundf( fMeter ));
 }
 
 int Trail::GetTotalMeter() const

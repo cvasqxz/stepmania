@@ -126,7 +126,7 @@ SoundReader_FileReader::OpenResult RageSoundReader_Vorbisfile::Open(CString file
 	}
 
 	eof = false;
-	read_offset = (int) ov_pcm_tell(vf);
+	read_offset = static_cast<int>(ov_pcm_tell(vf));
 
 	vorbis_info *vi = ov_info( vf, -1 );
 	ASSERT_M( vi->channels == 1 || vi->channels == 2, ssprintf("%i", vi->channels) );
@@ -171,7 +171,7 @@ int RageSoundReader_Vorbisfile::SetPosition(int ms, bool accurate)
 		SetError( ov_ssprintf(ret, "ogg: SetPosition failed") );
 		return -1;
 	}
-	read_offset = (int) ov_pcm_tell(vf);
+	read_offset = static_cast<int>(ov_pcm_tell(vf));
 
 	return ms;
 }
@@ -187,7 +187,7 @@ int RageSoundReader_Vorbisfile::Read(char *buf, unsigned len)
 		int ret = 0;
 
 		{
-			int curofs = (int) ov_pcm_tell(vf);
+			int curofs = static_cast<int>(ov_pcm_tell(vf));
 			if( curofs < read_offset )
 			{
 				/* The timestamps moved backwards.  Ignore it.  This file probably
@@ -205,7 +205,7 @@ int RageSoundReader_Vorbisfile::Read(char *buf, unsigned len)
 				/* In bytes: */
 				int silence = (curofs - read_offset) * bytes_per_frame;
 				CHECKPOINT_M( ssprintf("p %i,%i: %i frames of silence needed", curofs, read_offset, silence) );
-				silence = min( silence, (int) len );
+				silence = min( silence, static_cast<int>(len) );
 
 				memset( buf, 0, silence );
 				ret = silence;

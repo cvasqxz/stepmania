@@ -92,7 +92,7 @@ void AnimatedTexture::Update( float fDelta )
 {
 	if( vFrames.empty() )
 		return;
-	ASSERT( m_iCurState < (int)vFrames.size() );
+	ASSERT( m_iCurState < static_cast<int>(vFrames.size()) );
 	m_fSecsIntoFrame += fDelta;
 	if( m_fSecsIntoFrame > vFrames[m_iCurState].fDelaySecs )
 	{
@@ -105,7 +105,7 @@ RageTexture* AnimatedTexture::GetCurrentTexture()
 {
 	if( vFrames.empty() )
 		return NULL;
-	ASSERT( m_iCurState < (int)vFrames.size() );
+	ASSERT( m_iCurState < static_cast<int>(vFrames.size()) );
 	return vFrames[m_iCurState].pTexture;
 }
 
@@ -304,13 +304,13 @@ bool msAnimation::LoadMilkshapeAsciiBones( CString sAniName, CString sPath )
 
 		// Ignore "Frames:" in file.  Calculate it ourself
 		Animation.nTotalFrames = 0;
-		for( int i = 0; i < (int)Animation.Bones.size(); i++ )
+		for( int i = 0; i < static_cast<int>(Animation.Bones.size()); i++ )
 		{
 			msBone& Bone = Animation.Bones[i];
 			for( unsigned j = 0; j < Bone.PositionKeys.size(); ++j )
-				Animation.nTotalFrames = max( Animation.nTotalFrames, (int)Bone.PositionKeys[j].fTime );
+				Animation.nTotalFrames = max( Animation.nTotalFrames, static_cast<int>(Bone.PositionKeys[j].fTime) );
 			for( unsigned j = 0; j < Bone.RotationKeys.size(); ++j )
-				Animation.nTotalFrames = max( Animation.nTotalFrames, (int)Bone.RotationKeys[j].fTime );
+				Animation.nTotalFrames = max( Animation.nTotalFrames, static_cast<int>(Bone.RotationKeys[j].fTime) );
 		}
 	}
 

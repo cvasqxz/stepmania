@@ -312,7 +312,7 @@ void ScreenNetSelectMusic::Input( const DeviceInput& DeviceI, const InputEventTy
 		if( bHoldingCtrl )
 		{
 			c = static_cast<char>(toupper(c));
-			for (int i=0; i<(int)m_vSongs.size(); ++i)
+			for (int i=0; i<static_cast<int>(m_vSongs.size()); ++i)
 				if ( static_cast<char>(toupper(m_vSongs[i]->GetTranslitMainTitle().c_str()[0])) == static_cast<char>(c) )
 				{
 					m_iSongNum = i;

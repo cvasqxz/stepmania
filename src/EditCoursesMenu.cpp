@@ -178,7 +178,7 @@ bool EditCoursesMenu::CanGoRight()
 		m_pCourses.size(),
 		1,
 		NUM_ACTIONS,
-		(int)GetSelectedCourse()->m_entries.size(),
+		static_cast<int>(GetSelectedCourse()->m_entries.size()),
 		NUM_COURSE_ENTRY_TYPES,
 		1,
 		1,
@@ -433,7 +433,7 @@ void EditCoursesMenu::OnRowValueChanged( Row row )
 		// fall through
 	case ROW_ENTRY:
 		CHECKPOINT;
-		m_textValue[ROW_ENTRY].SetText( ssprintf("%d of %d",m_iSelection[ROW_ENTRY]+1, (int)GetSelectedCourse()->m_entries.size()) );
+		m_textValue[ROW_ENTRY].SetText( ssprintf("%d of %d",m_iSelection[ROW_ENTRY]+1, static_cast<int>(GetSelectedCourse()->m_entries.size())) );
 		m_iSelection[ROW_ENTRY_TYPE] = pEntry->type;
 		// fall through
 	case ROW_ENTRY_TYPE:

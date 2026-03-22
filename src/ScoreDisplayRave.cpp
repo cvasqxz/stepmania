@@ -56,7 +56,7 @@ void ScoreDisplayRave::Update( float fDelta )
 	ScoreDisplay::Update( fDelta );
 
 	float fLevel = GAMESTATE->m_fSuperMeter[m_PlayerNumber];
-	AttackLevel level = (AttackLevel)(int)fLevel;
+	AttackLevel level = static_cast<AttackLevel>(static_cast<int>(fLevel));
 
 	if( level != m_lastLevelSeen )
 	{

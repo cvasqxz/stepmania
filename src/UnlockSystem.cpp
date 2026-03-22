@@ -198,8 +198,8 @@ void UnlockSystem::GetPoints( const Profile *pProfile, float fScores[NUM_UNLOCK_
 {
 	fScores[UNLOCK_ARCADE_POINTS] = GetArcadePoints( pProfile );
 	fScores[UNLOCK_SONG_POINTS] = GetSongPoints( pProfile );
-	fScores[UNLOCK_DANCE_POINTS] = (float) pProfile->m_iTotalDancePoints;
-	fScores[UNLOCK_CLEARED] = (float) pProfile->GetTotalNumSongsPassed();
+	fScores[UNLOCK_DANCE_POINTS] = static_cast<float>(pProfile->m_iTotalDancePoints);
+	fScores[UNLOCK_CLEARED] = static_cast<float>(pProfile->GetTotalNumSongsPassed());
 }
 
 bool UnlockEntry::IsLocked() const

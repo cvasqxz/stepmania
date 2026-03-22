@@ -47,7 +47,7 @@ unsigned int RageFileStore::TransferTo2(BufferedTransformation &target, unsigned
 	{
 		{
 			unsigned int spaceSize = 1024;
-			m_space = HelpCreatePutSpace(target, channel, 1, (unsigned int)STDMIN(size, (unsigned long)UINT_MAX), spaceSize);
+			m_space = HelpCreatePutSpace(target, channel, 1, static_cast<unsigned int>(STDMIN(size, static_cast<unsigned long>(UINT_MAX))), spaceSize);
 			
 			m_len = m_file.Read( (char *)m_space, STDMIN(size, (unsigned long)spaceSize));
 			if( m_len == -1 )

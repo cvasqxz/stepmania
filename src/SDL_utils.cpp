@@ -213,7 +213,7 @@ RageSurface *RageSurfaceFromSDLSurface( SDL_Surface *surf )
 		/* If the surface had a color key set, transfer it. */
 		if( surf->flags & SDL_SRCCOLORKEY )
 		{
-			ASSERT_M( (int)surf->format->colorkey < surf->format->palette->ncolors, ssprintf("%i",surf->format->colorkey) );
+			ASSERT_M( static_cast<int>(surf->format->colorkey) < surf->format->palette->ncolors, ssprintf("%i",surf->format->colorkey) );
 			int ckey = surf->format->colorkey;
 			ret->fmt.palette->colors[ ckey ].a = 0;
 		}

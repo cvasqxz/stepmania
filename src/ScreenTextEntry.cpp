@@ -119,7 +119,7 @@ void ScreenTextEntry::Input( const DeviceInput& DeviceI, const InputEventType ty
 		// using a US layout is a bit gimped.  This is better than nothing though.
 		if( bHoldingShift )
 		{
-			c = (char)toupper(c);
+			c = static_cast<char>(toupper(c));
 
 			switch( c )
 			{

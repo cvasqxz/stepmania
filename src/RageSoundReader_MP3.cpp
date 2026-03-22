@@ -123,7 +123,7 @@ signed long id3_tag_query( const unsigned char *data, id3_length_t length )
 
 	case TAGTYPE_ID3V2_FOOTER:
 		parse_header(&data, &version, &flags, &size);
-		return -(int)size - 10;
+		return -static_cast<int>(size) - 10;
 
 	case TAGTYPE_NONE:
 		break;
@@ -307,7 +307,7 @@ bool RageSoundReader_MP3::handle_first_frame()
 		/* XXX: an id3v2 footer tag would throw this off a little. This also assumes
 		 * the Xing tag is the last header; it always is, I think. */
 		int bytes = mad->filesize - mad->header_bytes;
-		mad->bitrate = (int)(bytes * 8 / (mad->length/1000.f));
+		mad->bitrate = static_cast<int>(bytes * 8 / (mad->length/1000.f));
 
 		if( mad->xingtag.type == xing::XING )
 			ret = 1;
@@ -508,7 +508,7 @@ void RageSoundReader_MP3::synth_output()
 	{
 		for(int chan = 0; chan < this->Channels; ++chan)
 		{
-			short Sample = (short) scale(mad->Synth.pcm.samples[chan][i]);
+			short Sample = static_cast<short>(scale(mad->Synth.pcm.samples[chan][i]));
 			*((short *) (mad->outbuf + mad->outleft)) = Sample;
 			mad->outleft += 2;
 		}
@@ -664,8 +664,8 @@ SoundReader_FileReader::OpenResult RageSoundReader_MP3::Open( CString filename_ 
     {
 		/* If vbr and !xing, this is just an estimate. */
 		int bps = mad->bitrate / 8;
-		float secs = (float)(mad->filesize - mad->header_bytes) / bps;
-		mad->length = (int)(secs * 1000.f);
+		float secs = static_cast<float>(mad->filesize - mad->header_bytes) / bps;
+		mad->length = static_cast<int>(secs * 1000.f);
 	}
 
 	return OPEN_OK;

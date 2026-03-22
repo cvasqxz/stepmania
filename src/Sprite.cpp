@@ -613,7 +613,7 @@ void Sprite::SetState( int iNewState )
 	// This assert will likely trigger if the "missing" theme element graphic 
 	// is loaded in place of a multi-frame sprite.  We want to know about these
 	// problems in debug builds, but they're not fatal.
-	if( iNewState < 0  ||  iNewState >= (int)m_States.size() )
+	if( iNewState < 0  ||  iNewState >= static_cast<int>(m_States.size()) )
 	{
 		CString sError;
 		if( m_pTexture )
@@ -625,7 +625,7 @@ void Sprite::SetState( int iNewState )
 		Dialog::OK( sError );
 	}
 
-	CLAMP(iNewState, 0, (int)m_States.size()-1);
+	CLAMP(iNewState, 0, static_cast<int>(m_States.size())-1);
 	m_iCurState = iNewState;
 	m_fSecsIntoState = 0.0; 
 }
@@ -693,7 +693,7 @@ void Sprite::SetCustomImageCoords( float fImageCoords[8] )	// order: top left, b
 
 const RectF *Sprite::GetCurrentTextureCoordRect() const
 {
-	ASSERT_M( m_iCurState < (int) m_States.size(), ssprintf("%d, %d", int(m_iCurState), int(m_States.size())) );
+	ASSERT_M( m_iCurState < static_cast<int>(m_States.size()), ssprintf("%d, %d", static_cast<int>(m_iCurState), static_cast<int>(m_States.size())) );
 
 	unsigned int uFrameNo = m_States[m_iCurState].iFrameIndex;
 	return m_pTexture->GetTextureCoordRect( uFrameNo );
@@ -782,8 +782,8 @@ void Sprite::ScaleToClipped( float fWidth, float fHeight )
 
 		// first find the correct zoom
 		Sprite::ScaleToCover( RectI(0, 0,
-									(int)fWidth,
-									(int)fHeight )
+									static_cast<int>(fWidth),
+									static_cast<int>(fHeight) )
 							 );
 		// find which dimension is larger
 		bool bXDimNeedsToBeCropped = GetZoomedWidth() > fWidth+0.01;

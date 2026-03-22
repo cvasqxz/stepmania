@@ -129,7 +129,7 @@ void ScreenBookkeeping::ChangeView( View newView )
 			sData += "\n";
 
 			sTitle += "Average\n";
-			float fAverage = iTotalLast/(float)NUM_LAST_DAYS;
+			float fAverage = iTotalLast/static_cast<float>(NUM_LAST_DAYS);
 			sData += ssprintf("%.1f\n",fAverage);
 			
 			m_textCols[0].SetHorizAlign( Actor::align_left );
