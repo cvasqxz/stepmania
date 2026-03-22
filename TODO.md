@@ -1,6 +1,6 @@
 # TODO.md - StepMania 3.9 Modernization Roadmap
 
-**Version:** 1.27 (2026-03-22)
+**Version:** 1.29 (2026-03-22)
 
 This document outlines opportunities to modernize the StepMania 3.9 codebase (originally from 2004-2005) to modern C++ standards and practices.
 
@@ -315,7 +315,9 @@ constexpr unsigned int OPT_SAVE_PREFERENCES = 1u << 0;
 - ✅ Batch 3: EnumHelper.h macros (XToString, XToThemedString, StringToX) migrated to std::string; all 16 static *Names[] arrays in Difficulty.cpp, GameConstantsAndTypes.cpp, LightsManager.cpp, ScreenRanking.cpp, ScreenSetTime.cpp; corresponding header declarations updated
 - ✅ Batch 4: NoteTypeToString (NoteTypes.h/cpp)
 - ✅ Batch 5: GameManager::StepsTypeToString, StepsTypeToThemedString, StringToStepsType (GameManager.h/cpp)
-- ✅ Batch 6: RageUtil string functions — SecondsToHHMMSS/MMSSMsMs/MMSSMsMsMs, PrettyPercent, Commify, join (×2), GetCwd, WStringToCString, WcharToUTF8, Basename, Dirname, Capitalize, GetExtension, SetExtension, DerefRedir, GetRedirContents; fixed callers in BGAnimation, Background, RageFileDriverDirect, ModelTypes, Sprite, SongManager, ThemeManager (commit 8054df0)
+- ✅ Batch 6: RageUtil string functions — SecondsToHHMMSS/MMSSMsMs/MMSSMsMsMs, PrettyPercent, Commify, join (×2), GetCwd, WStringToCString, WcharToUTF8, Basename, Dirname, Capitalize, GetExtension, SetExtension, DerefRedir, GetRedirContents (commit 8054df0)
+- ✅ Batch 7: SongUtil::MakeSortString, GetSectionNameFromSongAndSort, SongID::ToString; CourseID::ToString; StepsID::ToString; GameManager::StyleToThemedString, StringToGameType, GameAndStringToStyle (commit 4fb4062)
+- ✅ Batch 8: Song: 15 accessors (GetDisplay*, GetTranslit*, GetFullDisplay*, GetFullTranslit*, Get*Path, GetCacheFilePath, GetBackgroundAtBeat); Course: 6 accessors; RageTextureID: std::string constructor (commit 37034c1)
 
 **Migration strategy:** Convert subsystems bottom-up as complete dependency chains. CString inherits from std::string so CString→std::string is safe for by-value params, but CString& cannot be passed to std::string& without explicit cast.
 
