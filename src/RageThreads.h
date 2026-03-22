@@ -1,6 +1,8 @@
 #ifndef RAGE_THREADS_H
 #define RAGE_THREADS_H
 
+#include <atomic>
+
 struct ThreadSlot;
 class RageThread
 {
@@ -62,7 +64,7 @@ class RageMutex
 
 	int m_UniqueID;
 	
-	uint64_t m_LockedBy;
+	std::atomic<uint64_t> m_LockedBy;
 	int m_LockCnt;
 
 	void MarkLockedMutex();

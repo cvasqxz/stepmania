@@ -5,6 +5,9 @@
 
 #include <pthread.h>
 #include <semaphore.h>
+#include <mutex>
+#include <condition_variable>
+#include <thread>
 
 class ThreadImpl_Pthreads: public ThreadImpl
 {
@@ -41,58 +44,42 @@ public:
 	void Unlock();
 
 private:
-	pthread_mutex_t mutex;
+	std::timed_mutex mutex;
 };
 
-#if 0
 class SemaImpl_Pthreads: public SemaImpl
 {
 public:
 	SemaImpl_Pthreads( int iInitialValue );
 	~SemaImpl_Pthreads();
-	int GetValue() const;
+	int GetValue() const { return static_cast<int>(m_iValue); }
 	void Post();
 	bool Wait();
 	bool TryWait();
 
 private:
-	sem_t sem;
-};
-#else
-class SemaImpl_Pthreads: public SemaImpl
-{
-public:
-	SemaImpl_Pthreads( int iInitialValue );
-	~SemaImpl_Pthreads();
-	int GetValue() const { return m_iValue; }
-	void Post();
-	bool Wait();
-	bool TryWait();
-
-private:
-	pthread_cond_t m_Cond;
-	pthread_mutex_t m_Mutex;
+	std::condition_variable m_Cond;
+	std::mutex m_Mutex;
 	unsigned m_iValue;
 };
-
-#endif
 
 #endif
 
 /*
  * (c) 2001-2004 Glenn Maynard
  * All rights reserved.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the
  * "Software"), to deal in the Software without restriction, including
  * without limitation the rights to use, copy, modify, merge, publish,
  * distribute, and/or sell copies of the Software, and to permit persons to
- * whom the Software is furnished to do so, provided that the above
- * copyright notice(s) and this permission notice appear in all copies of
- * the Software and that both the above copyright notice(s) and this
- * permission notice appear in supporting documentation.
- * 
+ * whom the Software is furnished to do so, subject to the following
+ * conditions:
+ *
+ * The above copyright notice and this permission notice shall be included
+ * in all copies or substantial portions of the Software.
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
  * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT OF

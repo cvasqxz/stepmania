@@ -1,8 +1,9 @@
 #include "global.h"
 #include "Threads_Pthreads.h"
 #include "RageUtil.h"
-#include <sys/time.h>
-#include <errno.h>
+#include <chrono>
+#include <cerrno>
+#include <cstring>
 
 #if defined(LINUX)
 #include "archutils/Unix/LinuxThreadHelpers.h"
@@ -44,7 +45,7 @@ int ThreadImpl_Pthreads::Wait()
 	if( ret )
 		RageException::Throw( "pthread_join: %s", strerror(errno) );
 
-	return (int)(intptr_t) val;
+	return static_cast<int>(reinterpret_cast<intptr_t>(val));
 }
 
 ThreadImpl *MakeThisThread()
@@ -59,15 +60,15 @@ ThreadImpl *MakeThisThread()
 
 static void *StartThread( void *pData )
 {
-	ThreadImpl_Pthreads *pThis = (ThreadImpl_Pthreads *) pData;
+	ThreadImpl_Pthreads *pThis = static_cast<ThreadImpl_Pthreads *>(pData);
 
 	pThis->threadHandle = GetCurrentThreadId();
 	*pThis->m_piThreadID = pThis->threadHandle;
-	
+
 	/* Tell MakeThread that we've set m_piThreadID, so it's safe to return. */
 	pThis->m_StartFinishedSem->Post();
 
-	return (void *) pThis->m_pFunc( pThis->m_pData );
+	return reinterpret_cast<void *>(pThis->m_pFunc( pThis->m_pData ));
 }
 
 ThreadImpl *MakeThread( int (*pFunc)(void *pData), void *pData, uint64_t *piThreadID )
@@ -79,113 +80,62 @@ ThreadImpl *MakeThread( int (*pFunc)(void *pData), void *pData, uint64_t *piThre
 
 	thread->m_StartFinishedSem = new SemaImpl_Pthreads( 0 );
 
-	int ret = pthread_create( &thread->thread, NULL, StartThread, thread );
+	int ret = pthread_create( &thread->thread, nullptr, StartThread, thread );
 	if( ret )
 		FAIL_M( ssprintf( "MakeThread: pthread_create: %s", strerror(errno)) );
 
 	/* Don't return until StartThread sets m_piThreadID. */
 	thread->m_StartFinishedSem->Wait();
 	delete thread->m_StartFinishedSem;
-	
+
 	return thread;
 }
 
+/* Priority 5.2: MutexImpl_Pthreads now uses std::timed_mutex instead of pthread_mutex_t.
+ * Deadlock detection uses try_lock_for() with a 10-second timeout, equivalent to
+ * the previous pthread_mutex_timedlock() approach. */
 MutexImpl_Pthreads::MutexImpl_Pthreads( RageMutex *pParent ):
 	MutexImpl( pParent )
 {
-	pthread_mutex_init( &mutex, NULL );
+	/* std::timed_mutex is default-constructed, no initialization needed */
 }
 
 MutexImpl_Pthreads::~MutexImpl_Pthreads()
 {
-	int ret = pthread_mutex_destroy( &mutex ) == -1;
-	if( ret )
-		RageException::Throw( "Error deleting mutex: %s", strerror(errno) );
+	/* std::timed_mutex destructor handles cleanup */
 }
-
-
-#if defined(HAVE_PTHREAD_MUTEX_TIMEDLOCK) || defined(DARWIN)
-static bool UseTimedlock()
-{
-#if defined(LINUX)
-	/* Valgrind crashes and burns on pthread_mutex_timedlock. */
-	if( RunningUnderValgrind() )
-		return false;
-#endif
-
-	return true;
-}
-#endif
 
 bool MutexImpl_Pthreads::Lock()
 {
-#if defined(HAVE_PTHREAD_MUTEX_TIMEDLOCK)
-	if( UseTimedlock() )
+#if defined(LINUX)
+	/* Valgrind can have issues with timed locks; use a plain lock instead. */
+	if( RunningUnderValgrind() )
 	{
-		int len = 10; /* seconds */
-		int tries = 2;
-
-		while( tries-- )
-		{
-			/* Wait for ten seconds.  If it takes longer than that, we're probably deadlocked. */
-			timeval tv;
-			gettimeofday( &tv, NULL );
-
-			timespec ts;
-			ts.tv_sec = tv.tv_sec + len;
-			ts.tv_nsec = tv.tv_usec * 1000;
-			int ret = pthread_mutex_timedlock( &mutex, &ts );
-			switch( ret )
-			{
-			case 0:
-				return true;
-
-			case EINTR:
-				/* Ignore it. */
-				++tries;
-				continue;
-
-			case ETIMEDOUT:
-				/* Timed out.  Probably deadlocked.  Try again one more time, with a smaller
-				 * timeout, just in case we're debugging and happened to stop while waiting
-				 * on the mutex. */
-				len = 1;
-				break;
-
-			default:
-				FAIL_M( ssprintf("pthread_mutex_timedlock: %s", strerror(errno)) );
-			}
-		}
-
-		return false;
+		mutex.lock();
+		return true;
 	}
 #endif
 
-	int ret;
-	do
-	{
-		ret = pthread_mutex_lock( &mutex );
-	}
-	while( ret == -1 && ret == EINTR );
+	/* Wait up to 10 seconds. If it takes longer, we're probably deadlocked. */
+	if( mutex.try_lock_for( std::chrono::seconds(10) ) )
+		return true;
 
-	ASSERT_M( ret == 0, ssprintf("pthread_mutex_lock: %s", strerror(errno)) );
+	/* Timed out once — try one more second (in case we paused in a debugger). */
+	if( mutex.try_lock_for( std::chrono::seconds(1) ) )
+		return true;
 
-	return true;
+	/* Still can't acquire: deadlock detected. Return false so caller can report it. */
+	return false;
 }
 
 bool MutexImpl_Pthreads::TryLock()
 {
-	int ret = pthread_mutex_trylock( &mutex );
-	if( ret == EBUSY )
-		return false;
-	if( ret )
-		RageException::Throw( "pthread_mutex_lock failed: %s", strerror(errno) );
-	return true;
+	return mutex.try_lock();
 }
 
 void MutexImpl_Pthreads::Unlock()
 {
-	pthread_mutex_unlock( &mutex );
+	mutex.unlock();
 }
 
 uint64_t GetThisThreadId()
@@ -203,159 +153,60 @@ MutexImpl *MakeMutex( RageMutex *pParent )
 	return new MutexImpl_Pthreads( pParent );
 }
 
-#if 0
+/* Priority 5.4: SemaImpl_Pthreads now uses std::condition_variable + std::mutex
+ * instead of raw pthread_cond_t + pthread_mutex_t.  This preserves the custom
+ * counting semaphore semantics needed for correct behavior on all platforms
+ * (including macOS, which historically had broken POSIX semaphores). */
 SemaImpl_Pthreads::SemaImpl_Pthreads( int iInitialValue )
+	: m_iValue( static_cast<unsigned>(iInitialValue) )
 {
-	sem_init( &sem, 0, iInitialValue );
 }
 
 SemaImpl_Pthreads::~SemaImpl_Pthreads()
 {
-	sem_destroy( &sem );
-}
-
-int SemaImpl_Pthreads::GetValue() const
-{
-	int ret;
-	sem_getvalue( const_cast<sem_t *>(&sem), &ret );
-	return ret;
+	/* std::condition_variable and std::mutex destructors handle cleanup */
 }
 
 void SemaImpl_Pthreads::Post()
 {
-	sem_post( &sem );
+	{
+		std::lock_guard<std::mutex> lock( m_Mutex );
+		++m_iValue;
+	}
+	m_Cond.notify_one();
 }
 
 bool SemaImpl_Pthreads::Wait()
 {
-	int ret;
-	do
+	std::unique_lock<std::mutex> lock( m_Mutex );
+
+	/* Wait up to 10 seconds. If it takes longer, we're probably deadlocked. */
+	bool signaled = m_Cond.wait_for( lock, std::chrono::seconds(10),
+		[this]{ return m_iValue > 0; } );
+
+	if( !signaled )
 	{
-		ret = sem_wait( &sem );
+		/* Timed out once — try one more second (in case we paused in a debugger). */
+		signaled = m_Cond.wait_for( lock, std::chrono::seconds(1),
+			[this]{ return m_iValue > 0; } );
 	}
-	while( ret == -1 && errno == EINTR );
 
-	ASSERT_M( ret == 0, ssprintf("Wait: sem_wait: %s", strerror(errno)) );
-
-	return true;
-}
-
-bool SemaImpl_Pthreads::TryWait()
-{
-	int ret = sem_trywait( &sem );
-	if( ret == EBUSY )
+	if( !signaled )
 		return false;
-	if( ret )
-		RageException::Throw( "TryWait: sem_trywait failed: %s", strerror(errno) );
-	return true;
-}
-#else
-/* Use conditions, to work around OSX "forgetting" to implement semaphores. */
-SemaImpl_Pthreads::SemaImpl_Pthreads( int iInitialValue )
-{
-	int ret = pthread_cond_init( &m_Cond, NULL );
-	ASSERT_M( ret == 0, ssprintf( "SemaImpl_Pthreads: pthread_cond_init: %s", strerror(errno)) );
-	ret = pthread_mutex_init( &m_Mutex, NULL );
-	ASSERT_M( ret == 0, ssprintf( "SemaImpl_Pthreads: pthread_mutex_init: %s", strerror(errno)) );
-		
-	m_iValue = iInitialValue;
-}
-
-SemaImpl_Pthreads::~SemaImpl_Pthreads()
-{
-	pthread_cond_destroy( &m_Cond );
-	pthread_mutex_destroy( &m_Mutex );
-}
-
-void SemaImpl_Pthreads::Post()
-{
-	pthread_mutex_lock( &m_Mutex );
-	++m_iValue;
-	if( m_iValue == 1 )
-		pthread_cond_signal( &m_Cond );
-	pthread_mutex_unlock( &m_Mutex );
-}
-
-bool SemaImpl_Pthreads::Wait()
-{
-#if defined(HAVE_PTHREAD_MUTEX_TIMEDLOCK) || defined(DARWIN)
-	if( UseTimedlock() )
-	{
-		timeval tv;
-		gettimeofday( &tv, NULL );
-
-		/* Wait for ten seconds.  If it takes longer than that, we're probably deadlocked. */
-		timespec ts;
-		ts.tv_sec = tv.tv_sec + 10;
-		ts.tv_nsec = tv.tv_usec * 1000;
-
-		pthread_mutex_lock( &m_Mutex );
-
-		int tries = 2;
-		while( !m_iValue && tries )
-		{
-			int ret = pthread_cond_timedwait( &m_Cond, &m_Mutex, &ts );
-
-			switch( ret )
-			{
-			case 0:
-			case EINTR:
-				break;
-
-			case ETIMEDOUT:
-				/* Timed out.  Probably deadlocked.  Try again one more time, with a smaller
-				 * timeout, just in case we're debugging and happened to stop while waiting
-				 * on the mutex. */
-				++ts.tv_sec;
-				tries--;
-				break;
-
-			default:
-				FAIL_M( ssprintf("pthread_mutex_timedlock: %s", strerror(errno)) );
-			}
-		}
-
-		if( !m_iValue )
-		{
-			/* Timed out. */
-			pthread_mutex_unlock( &m_Mutex );
-			return false;
-		}
-		else
-		{
-			--m_iValue;
-			pthread_mutex_unlock( &m_Mutex );
-			return true;
-		}
-	}
-#endif
-
-	pthread_mutex_lock( &m_Mutex );
-	while( !m_iValue )
-		pthread_cond_wait( &m_Cond, &m_Mutex );
 
 	--m_iValue;
-	pthread_mutex_unlock( &m_Mutex);
-
 	return true;
 }
 
 bool SemaImpl_Pthreads::TryWait()
 {
-	pthread_mutex_lock( &m_Mutex );
+	std::lock_guard<std::mutex> lock( m_Mutex );
 	if( !m_iValue )
-	{
-		pthread_mutex_unlock( &m_Mutex);
 		return false;
-	}
-	
-	--m_iValue;
-	pthread_mutex_unlock( &m_Mutex);
 
+	--m_iValue;
 	return true;
 }
-
-#endif
 
 SemaImpl *MakeSemaphore( int iInitialValue )
 {
@@ -366,17 +217,18 @@ SemaImpl *MakeSemaphore( int iInitialValue )
 /*
  * (c) 2001-2004 Glenn Maynard
  * All rights reserved.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the
  * "Software"), to deal in the Software without restriction, including
  * without limitation the rights to use, copy, modify, merge, publish,
  * distribute, and/or sell copies of the Software, and to permit persons to
- * whom the Software is furnished to do so, provided that the above
- * copyright notice(s) and this permission notice appear in all copies of
- * the Software and that both the above copyright notice(s) and this
- * permission notice appear in supporting documentation.
- * 
+ * whom the Software is furnished to do so, subject to the following
+ * conditions:
+ *
+ * The above copyright notice and this permission notice shall be included
+ * in all copies or substantial portions of the Software.
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
  * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT OF

@@ -16,6 +16,7 @@
 #include "RageLog.h"
 #include "RageUtil.h"
 
+#include <atomic>
 #include <cerrno>
 #include <set>
 
@@ -565,7 +566,7 @@ RageMutex::~RageMutex()
 
 void RageMutex::Lock()
 {
-	if( m_LockedBy == (uint64_t) GetThisThreadId() )
+	if( m_LockedBy.load(std::memory_order_relaxed) == GetThisThreadId() )
 	{
 		++m_LockCnt;
 		return;
@@ -607,7 +608,7 @@ void RageMutex::Lock()
 
 bool RageMutex::TryLock()
 {
-	if( m_LockedBy == (uint64_t) GetThisThreadId() )
+	if( m_LockedBy.load(std::memory_order_relaxed) == GetThisThreadId() )
 	{
 		++m_LockCnt;
 		return true;
@@ -636,7 +637,7 @@ void RageMutex::Unlock()
 
 bool RageMutex::IsLockedByThisThread() const
 {
-	return m_LockedBy == GetThisThreadId();
+	return m_LockedBy.load(std::memory_order_relaxed) == GetThisThreadId();
 }
 
 LockMutex::LockMutex(RageMutex &pMutex, const char *file_, int line_): 
