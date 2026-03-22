@@ -4,6 +4,7 @@
 #define SONG_UTIL_H
 
 #include "GameConstantsAndTypes.h"
+#include <string>
 
 class Song;
 class Profile;
@@ -11,7 +12,7 @@ struct XNode;
 
 namespace SongUtil
 {
-	CString MakeSortString( CString s );
+	std::string MakeSortString( std::string s );
 	void SortSongPointerArrayByDifficulty( vector<Song*> &arraySongPointers );
 	void SortSongPointerArrayByTitle( vector<Song*> &arraySongPointers );
 	void SortSongPointerArrayByBPM( vector<Song*> &arraySongPointers );
@@ -23,7 +24,7 @@ namespace SongUtil
 	void SortSongPointerArrayByNumPlays( vector<Song*> &arraySongPointers, ProfileSlot slot, bool bDescending );
 	void SortSongPointerArrayByNumPlays( vector<Song*> &arraySongPointers, const Profile* pProfile, bool bDescending );
 	void SortSongPointerArrayByMeter( vector<Song*> &arraySongPointers, Difficulty dc );
-	CString GetSectionNameFromSongAndSort( const Song* pSong, SortOrder so );
+	std::string GetSectionNameFromSongAndSort( const Song* pSong, SortOrder so );
 	void SortSongPointerArrayBySectionName( vector<Song*> &arraySongPointers, SortOrder so );
 }
 
@@ -43,7 +44,7 @@ public:
 
 	XNode* CreateNode() const;
 	void LoadFromNode( const XNode* pNode );
-	CString ToString() const;
+	std::string ToString() const;
 	bool IsValid() const;
 };
 

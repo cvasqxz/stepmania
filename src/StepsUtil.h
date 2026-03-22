@@ -2,6 +2,7 @@
 #define STEPSUTIL_H
 
 #include "GameConstantsAndTypes.h"
+#include <string>
 
 class Steps;
 class Song;
@@ -37,7 +38,7 @@ public:
 
 	XNode* CreateNode() const;
 	void LoadFromNode( const XNode* pNode );
-	CString ToString() const;
+	std::string ToString() const;
 	bool IsValid() const;
 	static void Invalidate( Song *pStaleSong );
 };

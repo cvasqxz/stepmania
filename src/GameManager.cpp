@@ -2984,9 +2984,9 @@ std::string GameManager::StepsTypeToThemedString( StepsType st )
 		return s;
 }
 
-CString GameManager::StyleToThemedString( const Style* style )
+std::string GameManager::StyleToThemedString( const Style* style )
 {
-	CString s = style->m_szName;
+	std::string s = style->m_szName;
 	s = Capitalize( s );
 	if( THEME->HasMetric( "Style", s ) )
 		return THEME->GetMetric( "Style", s );
@@ -2994,24 +2994,24 @@ CString GameManager::StyleToThemedString( const Style* style )
 		return s;
 }
 
-const Game* GameManager::StringToGameType( CString sGameType )
+const Game* GameManager::StringToGameType( const std::string& sGameType )
 {
 	for( int i=0; i<NUM_GAMES; i++ )
-		if( !sGameType.CompareNoCase(g_Games[i].m_szName) )
+		if( !CompareNoCase(sGameType, g_Games[i].m_szName) )
 			return &g_Games[i];
 
 	return NULL;
 }
 
 
-const Style* GameManager::GameAndStringToStyle( const Game *game, CString sStyle )
+const Style* GameManager::GameAndStringToStyle( const Game *game, const std::string& sStyle )
 {
-	for( unsigned s=0; s<NUM_STYLES; s++ ) 
+	for( unsigned s=0; s<NUM_STYLES; s++ )
 	{
 		const Style* style = &g_Styles[s];
 		if( style->m_pGame != game )
 			continue;
-		if( sStyle.CompareNoCase(style->m_szName) == 0 )
+		if( !CompareNoCase(sStyle, style->m_szName) )
 			return style;
 	}
 

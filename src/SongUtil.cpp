@@ -30,9 +30,9 @@ bool CompareSongPointersBySortValueDescending(const Song *pSong1, const Song *pS
 }
 
 
-CString SongUtil::MakeSortString( CString s )
+std::string SongUtil::MakeSortString( std::string s )
 {
-	s.MakeUpper();
+	MakeUpper(s);
 
 	// Make sure that non-alphanumeric strings are placed at the very end.
 	if( s.size() > 0 )
@@ -40,7 +40,7 @@ CString SongUtil::MakeSortString( CString s )
 		if( s[0] == '.' )	// ".59"
 			s.erase(s.begin());
 		if( (s[0] < 'A' || s[0] > 'Z') && (s[0] < '0' || s[0] > '9') )
-			s = char(126) + s;
+			s = std::string(1, char(126)) + s;
 	}
 
 	return s;
@@ -230,7 +230,7 @@ void SongUtil::SortSongPointerArrayByNumPlays( vector<Song*> &arraySongPointers,
 	song_sort_val.clear();
 }
 
-CString SongUtil::GetSectionNameFromSongAndSort( const Song* pSong, SortOrder so )
+std::string SongUtil::GetSectionNameFromSongAndSort( const Song* pSong, SortOrder so )
 {
 	if( pSong == nullptr )
 		return "";
@@ -260,7 +260,7 @@ CString SongUtil::GetSectionNameFromSongAndSort( const Song* pSong, SortOrder so
 			else if( s[0] < 'A' || s[0] > 'Z')
 				return "OTHER";
 			else
-				return s.Left(1);
+				return s.substr(0, 1);
 		}
 	case SORT_BPM:
 		{
@@ -389,7 +389,7 @@ void SongID::LoadFromNode( const XNode* pNode )
 	pNode->GetAttrValue("Dir", sDir);
 }
 
-CString SongID::ToString() const
+std::string SongID::ToString() const
 {
 	return sDir;
 }

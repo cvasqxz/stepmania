@@ -4,6 +4,7 @@
 #define COURSEUTIL_H
 
 #include "GameConstantsAndTypes.h"
+#include <string>
 
 class Course;
 class Profile;
@@ -39,7 +40,7 @@ public:
 
 	XNode* CreateNode() const;
 	void LoadFromNode( const XNode* pNode );
-	CString ToString() const;
+	std::string ToString() const;
 	bool IsValid() const;
 };
 

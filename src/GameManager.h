@@ -32,9 +32,9 @@ public:
 	static StepsType StringToStepsType( const std::string& sStepsType );
 	static std::string StepsTypeToString( StepsType st );
 	static std::string StepsTypeToThemedString( StepsType st );
-	static const Game* StringToGameType( CString sGameType );
-	const Style* GameAndStringToStyle( const Game* pGame, CString sStyle );
-	static CString StyleToThemedString( const Style* s );
+	static const Game* StringToGameType( const std::string& sGameType );
+	const Style* GameAndStringToStyle( const Game* pGame, const std::string& sStyle );
+	static std::string StyleToThemedString( const Style* s );
 };
 
 extern GameManager*	GAMEMAN;	// global and accessable from anywhere in our program

@@ -237,7 +237,7 @@ void CourseID::LoadFromNode( const XNode* pNode )
 	pNode->GetAttrValue("FullTitle", sFullTitle);
 }
 
-CString CourseID::ToString() const
+std::string CourseID::ToString() const
 {
 	if( !sPath.empty() )
 		return sPath;

@@ -217,7 +217,7 @@ void StepsID::LoadFromNode( const XNode* pNode )
 	}
 }
 
-CString StepsID::ToString() const
+std::string StepsID::ToString() const
 {
 	CString s = GameManager::StepsTypeToString(st);
 	s += " " + DifficultyToString(dc);
