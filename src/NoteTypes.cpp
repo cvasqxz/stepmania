@@ -46,7 +46,7 @@ NoteType GetNoteType( int iNoteIndex )
 	else												return NOTE_TYPE_INVALID;
 };
 
-CString NoteTypeToString( NoteType nt )
+std::string NoteTypeToString( NoteType nt )
 {
 	switch( nt )
 	{
