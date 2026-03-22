@@ -186,9 +186,9 @@ void ScreenGameplay::Init()
 		m_apSongsQueue.clear();
 		PlayerNumber pnMaster = GAMESTATE->m_MasterPlayerNumber;
 		Trail *pTrail = GAMESTATE->m_pCurTrail[pnMaster];
-		FOREACH_CONST( TrailEntry, pTrail->m_vEntries, e )
+		for( const auto& e : pTrail->m_vEntries )
 		{
-			m_apSongsQueue.push_back( e->pSong );
+			m_apSongsQueue.push_back( e.pSong );
 		}
 
         FOREACH_EnabledPlayer(p)
@@ -198,11 +198,11 @@ void ScreenGameplay::Init()
 
 			m_vpStepsQueue[p].clear();
 			m_asModifiersQueue[p].clear();
-			FOREACH_CONST( TrailEntry, pTrail->m_vEntries, e )
+			for( const auto& e : pTrail->m_vEntries )
 			{
-				m_vpStepsQueue[p].push_back( e->pSteps );
+				m_vpStepsQueue[p].push_back( e.pSteps );
 				AttackArray a;
-				e->GetAttackArray( a );
+				e.GetAttackArray( a );
 				m_asModifiersQueue[p].push_back( a );
 			}
 

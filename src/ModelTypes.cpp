@@ -123,8 +123,8 @@ void AnimatedTexture::SetState( int iState )
 float AnimatedTexture::GetAnimationLengthSeconds() const
 {
 	float fTotalSeconds = 0;
-	FOREACH_CONST( AnimatedTextureState, vFrames, ats )
-		fTotalSeconds += ats->fDelaySecs;
+	for( const auto& ats : vFrames )
+		fTotalSeconds += ats.fDelaySecs;
 	return fTotalSeconds;
 }
 

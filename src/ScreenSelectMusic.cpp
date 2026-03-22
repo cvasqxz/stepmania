@@ -1614,15 +1614,15 @@ void ScreenSelectMusic::AfterMusicChange()
 
 		SwitchToPreferredDifficulty();
 
-		FOREACH_CONST( TrailEntry, pTrail->m_vEntries, e )
+		for( const auto& e : pTrail->m_vEntries )
 		{
-			if( e->bMystery )
+			if( e.bMystery )
 			{
 				m_Artists.push_back( "???" );
 				m_AltArtists.push_back( "???" );
 			} else {
-				m_Artists.push_back( e->pSong->GetDisplayArtist() );
-				m_AltArtists.push_back( e->pSong->GetTranslitArtist() );
+				m_Artists.push_back( e.pSong->GetDisplayArtist() );
+				m_AltArtists.push_back( e.pSong->GetTranslitArtist() );
 			}
 		}
 

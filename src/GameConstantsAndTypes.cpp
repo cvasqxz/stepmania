@@ -182,10 +182,10 @@ void DisplayBpms::Add( float f )
 float DisplayBpms::GetMin()
 {
 	float fMin = 99999;
-	FOREACH_CONST( float, vfBpms, f )
+	for( const auto& f : vfBpms )
 	{
-		if( *f != -1 )
-			fMin = min( fMin, *f );
+		if( f != -1 )
+			fMin = min( fMin, f );
 	}
 	if( fMin == 99999 )
 		return 0;
@@ -196,10 +196,10 @@ float DisplayBpms::GetMin()
 float DisplayBpms::GetMax()
 {
 	float fMax = 0;
-	FOREACH_CONST( float, vfBpms, f )
+	for( const auto& f : vfBpms )
 	{
-		if( *f != -1 )
-			fMax = max( fMax, *f );
+		if( f != -1 )
+			fMax = max( fMax, f );
 	}
 	return fMax;
 }
@@ -211,9 +211,9 @@ bool DisplayBpms::BpmIsConstant()
 
 bool DisplayBpms::IsMystery()
 {
-	FOREACH_CONST( float, vfBpms, f )
+	for( const auto& f : vfBpms )
 	{
-		if( *f == -1 )
+		if( f == -1 )
 			return true;
 	}
 	return false;

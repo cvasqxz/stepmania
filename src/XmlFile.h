@@ -24,9 +24,9 @@ struct DateTime;
 class RageFile;
 
 struct XAttr;
-typedef std::vector<XAttr*> XAttrs;
+using XAttrs = std::vector<XAttr*>;
 struct XNode;
-typedef std::vector<XNode*> XNodes;
+using XNodes = std::vector<XNode*>;
 
 // Entity Encode/Decode Support
 struct XENTITY

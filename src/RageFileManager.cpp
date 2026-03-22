@@ -20,7 +20,7 @@ static RageMutex *g_Mutex;
 CString InitialWorkingDirectory;
 CString DirOfExecutable;
 
-typedef map< const RageFileObj *, RageFileDriver * > FileReferences;
+using FileReferences = map< const RageFileObj *, RageFileDriver * >;
 static FileReferences g_Refs;
 
 struct LoadedDriver

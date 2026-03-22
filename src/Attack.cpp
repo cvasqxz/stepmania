@@ -51,9 +51,9 @@ bool Attack::ContainsTransformOrTurn() const
 
 bool AttackArray::ContainsTransformOrTurn() const
 {
-	FOREACH_CONST( Attack, *this, a )
+	for( const auto& a : *this )
 	{
-		if( a->ContainsTransformOrTurn() )
+		if( a.ContainsTransformOrTurn() )
 			return true;
 	}
 	return false;

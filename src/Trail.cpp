@@ -67,30 +67,30 @@ RadarValues Trail::GetRadarValues() const
 		m_bRadarValuesCached = true;
 		m_CachedRadarValues.Zero();
 
-		FOREACH_CONST( TrailEntry, m_vEntries, e )
+		for( const auto& e : m_vEntries )
 		{
-			const Steps *pSteps = e->pSteps;
+			const Steps *pSteps = e.pSteps;
 			ASSERT( pSteps );
 			/* Hack: don't calculate for autogen entries; it makes writing Catalog.xml
 			 * take way too long.  (Tournamix 4 Sample.crs takes me ~10s.) */
-			if( !pSteps->IsAutogen() && e->ContainsTransformOrTurn() )
+			if( !pSteps->IsAutogen() && e.ContainsTransformOrTurn() )
 			{
 				NoteData nd;
 				pSteps->GetNoteData( &nd );
 				RadarValues rv_orig;
-				NoteDataUtil::GetRadarValues( nd, e->pSong->m_fMusicLengthSeconds, rv_orig );
+				NoteDataUtil::GetRadarValues( nd, e.pSong->m_fMusicLengthSeconds, rv_orig );
 				PlayerOptions po;
-				po.FromString( e->Modifiers );
+				po.FromString( e.Modifiers );
 				if( po.ContainsTransformOrTurn() )
 					NoteDataUtil::TransformNoteData( nd, po, pSteps->m_StepsType );
-				NoteDataUtil::TransformNoteData( nd, e->Attacks, pSteps->m_StepsType, e->pSong );
+				NoteDataUtil::TransformNoteData( nd, e.Attacks, pSteps->m_StepsType, e.pSong );
 				RadarValues rv;
-				NoteDataUtil::GetRadarValues( nd, e->pSong->m_fMusicLengthSeconds, rv );
+				NoteDataUtil::GetRadarValues( nd, e.pSong->m_fMusicLengthSeconds, rv );
 				m_CachedRadarValues += rv;
 			}
 			else
 			{
-				m_CachedRadarValues += pSteps->GetRadarValues();			
+				m_CachedRadarValues += pSteps->GetRadarValues();
 			}
 		}
 
@@ -114,9 +114,9 @@ int Trail::GetMeter() const
 int Trail::GetTotalMeter() const
 {
 	int iTotalMeter = 0;
-	FOREACH_CONST( TrailEntry, m_vEntries, e )
+	for( const auto& e : m_vEntries )
 	{
-		iTotalMeter += e->pSteps->GetMeter();
+		iTotalMeter += e.pSteps->GetMeter();
 	}
 
 	return iTotalMeter;
@@ -125,24 +125,24 @@ int Trail::GetTotalMeter() const
 float Trail::GetLengthSeconds() const
 {
 	float fSecs = 0;
-	FOREACH_CONST( TrailEntry, m_vEntries, e )
+	for( const auto& e : m_vEntries )
 	{
-		fSecs += e->pSong->m_fMusicLengthSeconds;
+		fSecs += e.pSong->m_fMusicLengthSeconds;
 	}
 	return fSecs;
 }
 
 void Trail::GetDisplayBpms( DisplayBpms &AddTo )
 {
-	FOREACH_CONST( TrailEntry, m_vEntries, e )
+	for( const auto& e : m_vEntries )
 	{
-		if( e->bMystery )
+		if( e.bMystery )
 		{
 			AddTo.Add( -1 );
 			continue;
 		}
 
-		Song *pSong = e->pSong;
+		Song *pSong = e.pSong;
 		ASSERT( pSong );
 		switch( pSong->m_DisplayBPMType )
 		{
@@ -163,9 +163,9 @@ void Trail::GetDisplayBpms( DisplayBpms &AddTo )
 
 bool Trail::IsMystery() const
 {
-	FOREACH_CONST( TrailEntry, m_vEntries, e )
+	for( const auto& e : m_vEntries )
 	{
-		if( e->bMystery )
+		if( e.bMystery )
 			return true;
 	}
 	return false;
@@ -173,9 +173,9 @@ bool Trail::IsMystery() const
 
 bool Trail::ContainsSong( Song* pSong ) const
 {
-	FOREACH_CONST( TrailEntry, m_vEntries, e )
+	for( const auto& e : m_vEntries )
 	{
-		if( e->pSong == pSong )
+		if( e.pSong == pSong )
 			return true;
 	}
 	return false;

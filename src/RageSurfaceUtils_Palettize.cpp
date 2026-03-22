@@ -6,8 +6,8 @@
 #include "RageSurfaceUtils.h"
 #include "RageUtil.h"
 
-typedef uint8_t pixval;
-typedef uint8_t apixel[4];
+using pixval = uint8_t;
+using apixel = uint8_t[4];
 
 #define PAM_GETR(p) ((p)[0])
 #define PAM_GETG(p) ((p)[1])

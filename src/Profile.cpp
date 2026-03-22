@@ -1044,27 +1044,27 @@ void Profile::LoadSongScoresFromNode( const XNode* pNode )
 
 	ASSERT( pNode->name == "SongScores" );
 
-	FOREACH_CONST( XNode*, pNode->childs, song )
+	for( XNode* song : pNode->childs )
 	{
-		if( (*song)->name != "Song" )
+		if( song->name != "Song" )
 			continue;
 
 		SongID songID;
-		songID.LoadFromNode( *song );
+		songID.LoadFromNode( song );
 		if( !songID.IsValid() )
 			WARN_AND_CONTINUE;
 
-		FOREACH_CONST( XNode*, (*song)->childs, steps )
+		for( XNode* steps : song->childs )
 		{
-			if( (*steps)->name != "Steps" )
+			if( steps->name != "Steps" )
 				continue;
 
 			StepsID stepsID;
-			stepsID.LoadFromNode( *steps );
+			stepsID.LoadFromNode( steps );
 			if( !stepsID.IsValid() )
 				WARN_AND_CONTINUE;
 
-			XNode *pHighScoreListNode = (*steps)->GetChild("HighScoreList");
+			XNode *pHighScoreListNode = steps->GetChild("HighScoreList");
 			if( pHighScoreListNode == nullptr )
 				WARN_AND_CONTINUE;
 			
@@ -1127,27 +1127,27 @@ void Profile::LoadCourseScoresFromNode( const XNode* pNode )
 
 	ASSERT( pNode->name == "CourseScores" );
 
-	FOREACH_CONST( XNode*, pNode->childs, course )
+	for( XNode* course : pNode->childs )
 	{
-		if( (*course)->name != "Course" )
+		if( course->name != "Course" )
 			continue;
 
 		CourseID courseID;
-		courseID.LoadFromNode( *course );
+		courseID.LoadFromNode( course );
 		if( !courseID.IsValid() )
 			WARN_AND_CONTINUE;
 
-		FOREACH_CONST( XNode*, (*course)->childs, trail )
+		for( XNode* trail : course->childs )
 		{
-			if( (*trail)->name != "Trail" )
+			if( trail->name != "Trail" )
 				continue;
-			
+
 			TrailID trailID;
-			trailID.LoadFromNode( *trail );
+			trailID.LoadFromNode( trail );
 			if( !trailID.IsValid() )
 				WARN_AND_CONTINUE;
 
-			XNode *pHighScoreListNode = (*trail)->GetChild("HighScoreList");
+			XNode *pHighScoreListNode = trail->GetChild("HighScoreList");
 			if( pHighScoreListNode == nullptr )
 				WARN_AND_CONTINUE;
 			
@@ -1263,13 +1263,13 @@ void Profile::LoadScreenshotDataFromNode( const XNode* pNode )
 	CHECKPOINT;
 
 	ASSERT( pNode->name == "ScreenshotData" );
-	FOREACH_CONST( XNode*, pNode->childs, screenshot )
+	for( XNode* screenshot : pNode->childs )
 	{
-		if( (*screenshot)->name != "Screenshot" )
-			WARN_AND_CONTINUE_M( (*screenshot)->name );
+		if( screenshot->name != "Screenshot" )
+			WARN_AND_CONTINUE_M( screenshot->name );
 
 		Screenshot ss;
-		ss.LoadFromNode( *screenshot );
+		ss.LoadFromNode( screenshot );
 
 		m_vScreenshots.push_back( ss );
 	}	
@@ -1285,9 +1285,9 @@ XNode* Profile::SaveScreenshotDataCreateNode() const
 	XNode* pNode = new XNode;
 	pNode->name = "ScreenshotData";
 
-	FOREACH_CONST( Screenshot, m_vScreenshots, ss )
+	for( const auto& ss : m_vScreenshots )
 	{
-		pNode->AppendChild( ss->CreateNode() );
+		pNode->AppendChild( ss.CreateNode() );
 	}
 
 	return pNode;
@@ -1298,13 +1298,13 @@ void Profile::LoadCalorieDataFromNode( const XNode* pNode )
 	CHECKPOINT;
 
 	ASSERT( pNode->name == "CalorieData" );
-	FOREACH_CONST( XNode*, pNode->childs, pCaloriesBurned )
+	for( XNode* pCaloriesBurned : pNode->childs )
 	{
-		if( (*pCaloriesBurned)->name != "CaloriesBurned" )
-			WARN_AND_CONTINUE_M( (*pCaloriesBurned)->name );
+		if( pCaloriesBurned->name != "CaloriesBurned" )
+			WARN_AND_CONTINUE_M( pCaloriesBurned->name );
 
 		CString sDate;
-		if( !(*pCaloriesBurned)->GetAttrValue("Date",sDate) )
+		if( !pCaloriesBurned->GetAttrValue("Date",sDate) )
 			WARN_AND_CONTINUE;
 		DateTime date;
 		if( !date.FromString(sDate) )
@@ -1312,7 +1312,7 @@ void Profile::LoadCalorieDataFromNode( const XNode* pNode )
 
 		float fCaloriesBurned = 0;
 
-		(*pCaloriesBurned)->GetValue(fCaloriesBurned);
+		pCaloriesBurned->GetValue(fCaloriesBurned);
 
 		m_mapDayToCaloriesBurned[date] = fCaloriesBurned;
 	}	

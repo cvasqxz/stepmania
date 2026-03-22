@@ -685,18 +685,18 @@ void SongManager::Invalidate( Song *pStaleSong )
 	map<Course*,CourseID> mapOldCourseToCourseID;
 	typedef pair<TrailID,Course*> TrailIDAndCourse;
 	map<Trail*,TrailIDAndCourse> mapOldTrailToTrailIDAndCourse;
-	FOREACH_CONST( Course*, this->m_pCourses, pCourse )
+	for( Course* pCourse : this->m_pCourses )
 	{
 		CourseID id;
-		id.FromCourse( *pCourse );
-		mapOldCourseToCourseID[*pCourse] = id;
+		id.FromCourse( pCourse );
+		mapOldCourseToCourseID[pCourse] = id;
 		vector<Trail *> Trails;
-		(*pCourse)->GetAllCachedTrails( Trails );
-		FOREACH_CONST( Trail*, Trails, pTrail )
+		pCourse->GetAllCachedTrails( Trails );
+		for( Trail* pTrail : Trails )
 		{
 			TrailID id;
-			id.FromTrail( *pTrail );
-			mapOldTrailToTrailIDAndCourse[*pTrail] = TrailIDAndCourse(id, *pCourse);
+			id.FromTrail( pTrail );
+			mapOldTrailToTrailIDAndCourse[pTrail] = TrailIDAndCourse(id, pCourse);
 		}
 	}
 
@@ -768,11 +768,11 @@ void SongManager::RevertFromDisk( Song *pSong, bool bAllowNotesLoss )
 	// Save list of all old Steps pointers for the song
 	//
 	map<Steps*,StepsID> mapOldStepsToStepsID;
-	FOREACH_CONST( Steps*, pSong->GetAllSteps(), pSteps )
+	for( Steps* pSteps : pSong->GetAllSteps() )
 	{
 		StepsID id;
-		id.FromSteps( *pSteps );
-		mapOldStepsToStepsID[*pSteps] = id;
+		id.FromSteps( pSteps );
+		mapOldStepsToStepsID[pSteps] = id;
 	}
 
 

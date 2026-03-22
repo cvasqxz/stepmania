@@ -316,7 +316,7 @@ void PrefsManager::Init()
 	m_iProductID = 1;
 
 
-	FOREACH_CONST( IPreference*, *g_pvpSubscribers, p ) (*p)->LoadDefault();
+	for( const auto& p : *g_pvpSubscribers ) p->LoadDefault();
 }
 
 PrefsManager::~PrefsManager()
@@ -822,7 +822,7 @@ void PrefsManager::SaveGlobalPrefsToDisk() const
 	ini.SetValue( "Debug", "LogCheckpoints",					m_bLogCheckpoints );
 	ini.SetValue( "Debug", "ShowLoadingWindow",					m_bShowLoadingWindow );
 
-	FOREACH_CONST( IPreference*, *g_pvpSubscribers, p ) (*p)->WriteTo( ini );
+	for( const auto& p : *g_pvpSubscribers ) p->WriteTo( ini );
 
 	ini.WriteFile( STEPMANIA_INI_PATH );
 }

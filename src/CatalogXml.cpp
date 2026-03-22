@@ -166,12 +166,12 @@ void SaveCatalogXml()
 		{
 			vector<StepsType> vStepsTypes;
 			GAMEMAN->GetStepsTypesForGame( GAMESTATE->m_pCurGame, vStepsTypes );
-			FOREACH_CONST( StepsType, vStepsTypes, iter )
+			for( const auto& iter : vStepsTypes )
 			{
-				if( !SHOW_STEPS_TYPE(*iter) )
+				if( !SHOW_STEPS_TYPE(iter) )
 					continue;
-				XNode* pNode2 = pNode->AppendChild( "StepsType", GAMEMAN->StepsTypeToString(*iter) );
-				pNode2->AppendAttr( "DisplayAs", GAMEMAN->StepsTypeToThemedString(*iter) );
+				XNode* pNode2 = pNode->AppendChild( "StepsType", GAMEMAN->StepsTypeToString(iter) );
+				pNode2->AppendAttr( "DisplayAs", GAMEMAN->StepsTypeToThemedString(iter) );
 			}
 		}
 

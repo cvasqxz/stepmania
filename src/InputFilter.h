@@ -35,7 +35,7 @@ struct InputEvent : public DeviceInput
 	InputEventType type;
 };
 
-typedef vector<InputEvent> InputEventArray;
+using InputEventArray = vector<InputEvent>;
 
 class RageMutex;
 class InputFilter

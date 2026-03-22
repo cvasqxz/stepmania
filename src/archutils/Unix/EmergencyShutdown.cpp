@@ -2,7 +2,7 @@
 #include "EmergencyShutdown.h"
 #include "RageUtil.h"
 
-typedef void (*Callback)();
+using Callback = void (*)();
 static Callback g_pEmergencyFunc[5];
 static unsigned g_iNumEmergencyFuncs = 0;
 

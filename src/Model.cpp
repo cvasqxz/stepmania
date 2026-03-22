@@ -694,8 +694,8 @@ void Model::Update( float fDelta )
 int Model::GetNumStates() const
 {
 	int iMaxStates = 0;
-	FOREACH_CONST( msMaterial, m_Materials, m )
-		iMaxStates = max( iMaxStates, m->diffuse.GetNumStates() );
+	for( const auto& m : m_Materials )
+		iMaxStates = max( iMaxStates, m.diffuse.GetNumStates() );
 	return iMaxStates;
 }
 

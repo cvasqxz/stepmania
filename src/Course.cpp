@@ -511,16 +511,16 @@ static vector<Song*> GetFilteredBestSongs( StepsType st )
 		const vector<Steps*>& vpSteps = pSong->GetAllSteps();
 
 		bool FoundMedium = false, FoundHard = false;
-		FOREACH_CONST( Steps*, vpSteps, pSteps )
+		for( Steps* pSteps : vpSteps )
 		{
-			if( (*pSteps)->m_StepsType != st )
+			if( pSteps->m_StepsType != st )
 				continue;
-			if( !PREFSMAN->m_bAutogenSteps && (*pSteps)->IsAutogen() )
+			if( !PREFSMAN->m_bAutogenSteps && pSteps->IsAutogen() )
 				continue;
 
-			if( (*pSteps)->GetDifficulty() == DIFFICULTY_MEDIUM )
+			if( pSteps->GetDifficulty() == DIFFICULTY_MEDIUM )
 				FoundMedium = true;
-			else if( (*pSteps)->GetDifficulty() == DIFFICULTY_HARD )
+			else if( pSteps->GetDifficulty() == DIFFICULTY_HARD )
 				FoundHard = true;
 
 			if( FoundMedium && FoundHard )
@@ -919,9 +919,9 @@ void Course::GetTrails( vector<Trail*> &AddTo, StepsType st ) const
 
 bool Course::HasMods() const
 {
-	FOREACH_CONST( CourseEntry, m_entries, e )
+	for( const auto& e : m_entries )
 	{
-		if( !e->modifiers.empty() || !e->attacks.empty() )
+		if( !e.modifiers.empty() || !e.attacks.empty() )
 			return true;
 	}
 
@@ -930,9 +930,9 @@ bool Course::HasMods() const
 
 bool Course::AllSongsAreFixed() const
 {
-	FOREACH_CONST( CourseEntry, m_entries, e )
+	for( const auto& e : m_entries )
 	{
-		if( e->type != COURSE_ENTRY_FIXED )
+		if( e.type != COURSE_ENTRY_FIXED )
 			return false;
 	}
 	return true;
@@ -940,9 +940,9 @@ bool Course::AllSongsAreFixed() const
 
 void Course::Invalidate( Song *pStaleSong )
 {
-	FOREACH_CONST( CourseEntry, m_entries, e )
+	for( const auto& e : m_entries )
 	{
-		if( e->pSong == pStaleSong )	// a fixed entry that references the stale Song
+		if( e.pSong == pStaleSong )	// a fixed entry that references the stale Song
 		{
 			RevertFromDisk();
 			return;

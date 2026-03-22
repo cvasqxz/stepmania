@@ -10,7 +10,7 @@
 FontManager*	FONT	= nullptr;	// global and accessable from anywhere in our program
 
 // map from file name to a texture holder
-typedef pair<CString,CString> FontName;
+using FontName = pair<CString,CString>;
 static map<FontName, Font*> g_mapPathToFont;
 
 FontManager::FontManager()

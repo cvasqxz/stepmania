@@ -633,8 +633,8 @@ void Sprite::SetState( int iNewState )
 float Sprite::GetAnimationLengthSeconds() const
 {
 	float fTotal = 0;
-	FOREACH_CONST( State, m_States, s )
-		fTotal += s->fDelay;
+	for( const auto& s : m_States )
+		fTotal += s.fDelay;
 	return fTotal;
 }
 

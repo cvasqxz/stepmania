@@ -69,17 +69,17 @@ int StageStats::GetAverageMeter( PlayerNumber pn ) const
 void StageStats::AddStats( const StageStats& other )
 {
 	ASSERT( !other.vpSongs.empty() );
-	FOREACH_CONST( Song*, other.vpSongs, s )
-		vpSongs.push_back( *s );
+	for( Song* s : other.vpSongs )
+		vpSongs.push_back( s );
 	StageType = STAGE_INVALID; // meaningless
 	memset( fAliveSeconds, 0, sizeof(fAliveSeconds) );	// why not accumulate? -Chris
-	
+
 	fGameplaySeconds += other.fGameplaySeconds;
 
 	FOREACH_PlayerNumber( p )
 	{
-		FOREACH_CONST( Steps*, other.vpSteps[p], s )
-			vpSteps[p].push_back( *s );
+		for( Steps* s : other.vpSteps[p] )
+			vpSteps[p].push_back( s );
 		fAliveSeconds[p] += other.fAliveSeconds[p];
 		bFailed[p] |= other.bFailed[p];
 		bFailedEarlier[p] |= other.bFailedEarlier[p];

@@ -1557,14 +1557,14 @@ void NoteDataUtil::ConvertAdditionsToRegular( NoteData &in )
 
 void NoteDataUtil::TransformNoteData( NoteData &nd, const AttackArray &aa, StepsType st, Song* pSong )
 {
-	FOREACH_CONST( Attack, aa, a )
+	for( const auto& a : aa )
 	{
 		PlayerOptions po;
-		po.FromString( a->sModifier );
+		po.FromString( a.sModifier );
 		if( po.ContainsTransformOrTurn() )
 		{
 			float fStartBeat, fEndBeat;
-			a->GetAttackBeats( pSong, PLAYER_INVALID, fStartBeat, fEndBeat );
+			a.GetAttackBeats( pSong, PLAYER_INVALID, fStartBeat, fEndBeat );
 
 			NoteDataUtil::TransformNoteData( nd, po, st, fStartBeat, fEndBeat );
 		}

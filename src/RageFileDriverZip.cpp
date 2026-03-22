@@ -294,7 +294,7 @@ void RageFileDriverZip::ParseZipfile()
 }
 
 #define CREC_SIZE   42
-typedef unsigned char cdir_byte_hdr[ CREC_SIZE ];
+using cdir_byte_hdr = unsigned char[ CREC_SIZE ];
 #define C_VERSION_MADE_BY_0               0
 #define C_VERSION_MADE_BY_1               1
 #define C_VERSION_NEEDED_TO_EXTRACT_0     2
