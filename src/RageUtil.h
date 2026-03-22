@@ -363,6 +363,111 @@ void FileWrite(RageFile& f, float fWrite);
 
 bool FileCopy( CString sSrcFile, CString sDstFile );
 
+/* Priority 4.1: std::string compatibility helpers for MFC-style CString methods.
+ * These free functions provide equivalents to CStdStr methods so code can be
+ * migrated from CString to std::string incrementally without breaking callers. */
+#include <string>
+#include <cctype>
+#include <algorithm>
+
+/* Case-insensitive comparison (CString::CompareNoCase equivalent) */
+inline int CompareNoCase( const std::string &a, const std::string &b )
+{
+	return strcasecmp( a.c_str(), b.c_str() );
+}
+
+/* In-place lowercase (CString::MakeLower equivalent) */
+inline void MakeLower( std::string &s )
+{
+	std::transform( s.begin(), s.end(), s.begin(),
+		[]( unsigned char c ) { return std::tolower(c); } );
+}
+
+/* In-place uppercase (CString::MakeUpper equivalent) */
+inline void MakeUpper( std::string &s )
+{
+	std::transform( s.begin(), s.end(), s.begin(),
+		[]( unsigned char c ) { return std::toupper(c); } );
+}
+
+/* Return lowercase copy */
+inline std::string ToLower( std::string s )
+{
+	MakeLower( s );
+	return s;
+}
+
+/* Return uppercase copy */
+inline std::string ToUpper( std::string s )
+{
+	MakeUpper( s );
+	return s;
+}
+
+/* Substring from left (CString::Left equivalent) */
+inline std::string Left( const std::string &s, size_t n )
+{
+	return s.substr( 0, n );
+}
+
+/* Substring from right (CString::Right equivalent) */
+inline std::string Right( const std::string &s, size_t n )
+{
+	if( n >= s.size() ) return s;
+	return s.substr( s.size() - n );
+}
+
+/* Substring (CString::Mid equivalent) */
+inline std::string Mid( const std::string &s, size_t pos, size_t n = std::string::npos )
+{
+	if( pos >= s.size() ) return "";
+	return s.substr( pos, n );
+}
+
+/* In-place substring replace all occurrences (CString::Replace equivalent) */
+inline int Replace( std::string &s, const std::string &from, const std::string &to )
+{
+	if( from.empty() ) return 0;
+	int count = 0;
+	size_t pos = 0;
+	while( (pos = s.find(from, pos)) != std::string::npos )
+	{
+		s.replace( pos, from.size(), to );
+		pos += to.size();
+		++count;
+	}
+	return count;
+}
+
+/* Single-char replace variant */
+inline int Replace( std::string &s, char from, char to )
+{
+	int count = 0;
+	for( char &c : s )
+		if( c == from ) { c = to; ++count; }
+	return count;
+}
+
+/* Find returning -1 on not-found (CString::Find equivalent) */
+inline int Find( const std::string &s, const std::string &sub, size_t start = 0 )
+{
+	size_t pos = s.find( sub, start );
+	return pos == std::string::npos ? -1 : static_cast<int>(pos);
+}
+
+inline int Find( const std::string &s, char c, size_t start = 0 )
+{
+	size_t pos = s.find( c, start );
+	return pos == std::string::npos ? -1 : static_cast<int>(pos);
+}
+
+/* Reverse find returning -1 on not-found (CString::ReverseFind equivalent) */
+inline int ReverseFind( const std::string &s, char c )
+{
+	size_t pos = s.rfind( c );
+	return pos == std::string::npos ? -1 : static_cast<int>(pos);
+}
+
 #endif
 
 /*
