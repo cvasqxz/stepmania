@@ -2,8 +2,8 @@
 #define NETGAMESTATE_H
 
 
-#define MAX_PLAYERS 8
-#define MAX_NAME_LENGTH 32
+constexpr int MAX_PLAYERS = 8;
+constexpr int MAX_NAME_LENGTH = 32;
 
 
 struct NetPlayerState

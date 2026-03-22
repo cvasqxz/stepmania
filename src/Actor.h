@@ -7,9 +7,9 @@
 #include "ActorCommands.h"	// for ParsedCommand
 #include <deque>
 
-#define DRAW_ORDER_BEFORE_EVERYTHING	-100
-#define DRAW_ORDER_TRANSITIONS			100
-#define DRAW_ORDER_AFTER_EVERYTHING		200
+constexpr int DRAW_ORDER_BEFORE_EVERYTHING = -100;
+constexpr int DRAW_ORDER_TRANSITIONS       = 100;
+constexpr int DRAW_ORDER_AFTER_EVERYTHING  = 200;
 
 class Actor
 {

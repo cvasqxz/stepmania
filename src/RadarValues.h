@@ -6,7 +6,7 @@
 
 #include "GameConstantsAndTypes.h"
 
-#define RADAR_VAL_UNKNOWN -1
+constexpr int RADAR_VAL_UNKNOWN = -1;
 
 struct XNode;
 

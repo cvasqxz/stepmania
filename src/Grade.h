@@ -5,7 +5,7 @@
 
 #include "RageUtil.h"
 
-#define NUM_GRADE_TIERS 20
+constexpr int NUM_GRADE_TIERS = 20;
 /* C++11: explicit underlying type */
 enum Grade : int
 {

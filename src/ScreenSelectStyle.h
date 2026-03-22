@@ -6,7 +6,7 @@
 #include "BitmapText.h"
 #include "RageSound.h"
 
-#define MAX_MODE_CHOICES 30
+// MAX_MODE_CHOICES defined in ScreenSelect.h
 
 class ScreenSelectStyle : public ScreenSelect
 {

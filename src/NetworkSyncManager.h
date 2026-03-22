@@ -8,10 +8,10 @@
 
 class LoadingWindow;
 
-#define NETMAXPLAYERS 32
-const int NETPROTOCOLVERSION=1;
-const int NETMAXBUFFERSIZE=1020; //1024 - 4 bytes for EzSockets
-const int NETNUMTAPSCORES=8;
+constexpr int NETMAXPLAYERS = 32;
+constexpr int NETPROTOCOLVERSION = 1;
+constexpr int NETMAXBUFFERSIZE = 1020; //1024 - 4 bytes for EzSockets
+constexpr int NETNUMTAPSCORES = 8;
 
 enum NSCommand
 {

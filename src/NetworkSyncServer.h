@@ -5,7 +5,7 @@
 
 #if !defined(WITHOUT_NETWORKING)
 #include "ezsockets.h"
-#define NETMAXBUFFERSIZE 1020
+// NETMAXBUFFERSIZE defined in NetworkSyncManager.h
 
 class LanPlayer
 {

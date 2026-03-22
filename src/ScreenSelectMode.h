@@ -18,7 +18,7 @@
 
 /* Class Definition */
 
-#define MAX_ELEMS 30
+constexpr int MAX_ELEMS = 30;
 
 class ScreenSelectMode : public ScreenSelect
 {

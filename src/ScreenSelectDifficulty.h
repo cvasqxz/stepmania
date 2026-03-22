@@ -7,7 +7,7 @@
 #include "RageSound.h"
 #include "RandomSample.h"
 
-#define MAX_CHOICES_PER_PAGE 15
+constexpr int MAX_CHOICES_PER_PAGE = 15;
 
 class ScreenSelectDifficulty : public ScreenSelect
 {

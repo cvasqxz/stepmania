@@ -56,13 +56,13 @@ protected:
 
 	AutoActor	m_sprExplanation[NUM_PAGES];
 	Sprite	m_sprMore[NUM_PAGES];
-#define MAX_ICON_PARTS 3
+	static constexpr int MAX_ICON_PARTS = 3;
 	// icon is the piece shared, per-choice piece
 	AutoActor m_sprIcon[MAX_ICON_PARTS][MAX_CHOICES];
-#define MAX_PREVIEW_PARTS 3
+	static constexpr int MAX_PREVIEW_PARTS = 3;
 	// preview is per-choice, per-player piece
 	AutoActor m_sprPreview[MAX_PREVIEW_PARTS][MAX_CHOICES][NUM_PLAYERS];
-#define MAX_CURSOR_PARTS 3
+	static constexpr int MAX_CURSOR_PARTS = 3;
 	// cursor is the per-player that's shared by all choices
 	Sprite	m_sprCursor[MAX_CURSOR_PARTS][NUM_PLAYERS];
 	// scroll is the per-player, per-choice piece that's scrolled

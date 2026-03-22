@@ -9,7 +9,7 @@
 #include "Banner.h"
 
 
-#define MAX_CHAR_ICONS_TO_SHOW 11
+constexpr int MAX_CHAR_ICONS_TO_SHOW = 11;
 
 class ScreenSelectCharacter : public ScreenWithMenuElements
 {
