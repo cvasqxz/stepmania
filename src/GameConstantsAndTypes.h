@@ -51,8 +51,8 @@ enum RadarCategory : int
 	NUM_RADAR_CATEGORIES	// leave this at the end
 };
 #define FOREACH_RadarCategory( rc ) FOREACH_ENUM( RadarCategory, NUM_RADAR_CATEGORIES, rc )
-const CString& RadarCategoryToString( RadarCategory cat );
-CString RadarCategoryToThemedString( RadarCategory cat );
+const std::string& RadarCategoryToString( RadarCategory cat );
+std::string RadarCategoryToThemedString( RadarCategory cat );
 
 
 
@@ -111,9 +111,9 @@ enum PlayMode : int
 	PLAY_MODE_INVALID
 };
 #define FOREACH_PlayMode( pm ) FOREACH_ENUM( PlayMode, NUM_PLAY_MODES, pm )
-const CString& PlayModeToString( PlayMode pm );
-CString PlayModeToThemedString( PlayMode pm );
-PlayMode StringToPlayMode( const CString& s );
+const std::string& PlayModeToString( PlayMode pm );
+std::string PlayModeToThemedString( PlayMode pm );
+PlayMode StringToPlayMode( const std::string& s );
 
 
 
@@ -142,8 +142,8 @@ enum SortOrder : int {
 };
 const SortOrder MAX_SELECTABLE_SORT = (SortOrder)(SORT_ROULETTE-1);
 #define FOREACH_SortOrder( so ) FOREACH_ENUM( SortOrder, NUM_SORT_ORDERS, so )
-const CString& SortOrderToString( SortOrder so );
-SortOrder StringToSortOrder( const CString& str );
+const std::string& SortOrderToString( SortOrder so );
+SortOrder StringToSortOrder( const std::string& str );
 
 inline bool IsSongSort( SortOrder so ) { return so >= SORT_PREFERRED && so <= SORT_CHALLENGE_METER; }
 
@@ -163,9 +163,9 @@ enum TapNoteScore : int {
 	NUM_TAP_NOTE_SCORES
 };
 #define FOREACH_TapNoteScore( tns ) FOREACH_ENUM( TapNoteScore, NUM_TAP_NOTE_SCORES, tns )
-const CString& TapNoteScoreToString( TapNoteScore tns );
-CString TapNoteScoreToThemedString( TapNoteScore tns );
-TapNoteScore StringToTapNoteScore( const CString& str );
+const std::string& TapNoteScoreToString( TapNoteScore tns );
+std::string TapNoteScoreToThemedString( TapNoteScore tns );
+TapNoteScore StringToTapNoteScore( const std::string& str );
 
 
 enum HoldNoteScore 
@@ -176,9 +176,9 @@ enum HoldNoteScore
 	NUM_HOLD_NOTE_SCORES
 };
 #define FOREACH_HoldNoteScore( hns ) FOREACH_ENUM( HoldNoteScore, NUM_HOLD_NOTE_SCORES, hns )
-const CString& HoldNoteScoreToString( HoldNoteScore hns );
-CString HoldNoteScoreToThemedString( HoldNoteScore hns );
-HoldNoteScore StringToHoldNoteScore( const CString& str );
+const std::string& HoldNoteScoreToString( HoldNoteScore hns );
+std::string HoldNoteScoreToThemedString( HoldNoteScore hns );
+HoldNoteScore StringToHoldNoteScore( const std::string& str );
 
 
 //
@@ -205,7 +205,7 @@ enum MemoryCardState : int
 	MEMORY_CARD_STATE_INVALID,
 };
 
-const CString& MemoryCardStateToString( MemoryCardState mcs );
+const std::string& MemoryCardStateToString( MemoryCardState mcs );
 
 
 //
@@ -221,8 +221,8 @@ enum RankingCategory : int
 	RANKING_INVALID
 };
 #define FOREACH_RankingCategory( rc ) FOREACH_ENUM( RankingCategory, NUM_RANKING_CATEGORIES, rc )
-const CString& RankingCategoryToString( RankingCategory rc );
-RankingCategory StringToRankingCategory( const CString& rc );
+const std::string& RankingCategoryToString( RankingCategory rc );
+RankingCategory StringToRankingCategory( const std::string& rc );
 
 const CString RANKING_TO_FILL_IN_MARKER[NUM_PLAYERS] = {"#P1#","#P2#"};
 inline bool IsRankingToFillIn( const CString& sName ) { return !sName.empty() && sName[0]=='#'; }
@@ -288,7 +288,7 @@ const int ITEM_NONE = -1;
 
 enum CoinMode : int { COIN_HOME, COIN_PAY, COIN_FREE, NUM_COIN_MODES };
 
-const CString& CoinModeToString( CoinMode cm );
+const std::string& CoinModeToString( CoinMode cm );
 
 
 //
@@ -311,9 +311,9 @@ enum PerDifficultyAward : int
 	PER_DIFFICULTY_AWARD_INVALID,
 };
 #define FOREACH_PerDifficultyAward( pma ) FOREACH_ENUM( PerDifficultyAward, NUM_PER_DIFFICULTY_AWARDS, pma )
-const CString& PerDifficultyAwardToString( PerDifficultyAward pma );
-CString PerDifficultyAwardToThemedString( PerDifficultyAward pma );
-PerDifficultyAward StringToPerDifficultyAward( const CString& pma );
+const std::string& PerDifficultyAwardToString( PerDifficultyAward pma );
+std::string PerDifficultyAwardToThemedString( PerDifficultyAward pma );
+PerDifficultyAward StringToPerDifficultyAward( const std::string& pma );
 
 
 enum PeakComboAward 
@@ -332,9 +332,9 @@ enum PeakComboAward
 	PEAK_COMBO_AWARD_INVALID,
 };
 #define FOREACH_PeakComboAward( pca ) FOREACH_ENUM( PeakComboAward, NUM_PEAK_COMBO_AWARDS, pca )
-const CString& PeakComboAwardToString( PeakComboAward pma );
-CString PeakComboAwardToThemedString( PeakComboAward pma );
-PeakComboAward StringToPeakComboAward( const CString& pma );
+const std::string& PeakComboAwardToString( PeakComboAward pma );
+std::string PeakComboAwardToThemedString( PeakComboAward pma );
+PeakComboAward StringToPeakComboAward( const std::string& pma );
 
 
 struct DisplayBpms

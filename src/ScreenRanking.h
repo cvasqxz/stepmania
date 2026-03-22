@@ -22,7 +22,7 @@ enum PageType
 	NUM_PAGE_TYPES
 };
 #define FOREACH_PageType( pt ) FOREACH_ENUM( PageType, NUM_PAGE_TYPES, pt )
-const CString& PageTypeToString( PageType pt );
+const std::string& PageTypeToString( PageType pt );
 
 
 class ScreenRanking : public ScreenAttract

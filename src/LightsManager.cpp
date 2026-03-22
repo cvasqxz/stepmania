@@ -10,7 +10,7 @@
 #include "PrefsManager.h"
 
 
-static const CString CabinetLightNames[NUM_CABINET_LIGHTS] = {
+static const std::string CabinetLightNames[NUM_CABINET_LIGHTS] = {
 	"MarqueeUpLeft",
 	"MarqueeUpRight",
 	"MarqueeLrLeft",
@@ -22,7 +22,7 @@ static const CString CabinetLightNames[NUM_CABINET_LIGHTS] = {
 };
 XToString( CabinetLight );
 
-static const CString LightsModeNames[NUM_LIGHTS_MODES] = {
+static const std::string LightsModeNames[NUM_LIGHTS_MODES] = {
 	"Attract",
 	"Joining",
 	"Menu",

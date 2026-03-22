@@ -13,7 +13,7 @@
 #include "RageLog.h"
 #include "UnlockSystem.h"
 
-static const CString PageTypeNames[NUM_PAGE_TYPES] = {
+static const std::string PageTypeNames[NUM_PAGE_TYPES] = {
 	"Category",
 	"Course",
 	"AllSteps",

@@ -7,7 +7,7 @@
 #include "Foreach.h"
 
 
-static const CString RadarCategoryNames[NUM_RADAR_CATEGORIES] = {
+static const std::string RadarCategoryNames[NUM_RADAR_CATEGORIES] = {
 	"Stream",
 	"Voltage",
 	"Air",
@@ -23,7 +23,7 @@ XToString( RadarCategory );
 XToThemedString( RadarCategory );
 
 
-static const CString PlayModeNames[NUM_PLAY_MODES] = {
+static const std::string PlayModeNames[NUM_PLAY_MODES] = {
 	"Regular",
 	"Nonstop",
 	"Oni",
@@ -45,7 +45,7 @@ RankingCategory AverageMeterToRankingCategory( int iAverageMeter )
 }
 
 
-static const CString RankingCategoryNames[NUM_RANKING_CATEGORIES] = {
+static const std::string RankingCategoryNames[NUM_RANKING_CATEGORIES] = {
 	"a",
 	"b",
 	"c",
@@ -55,7 +55,7 @@ XToString( RankingCategory );
 StringToX( RankingCategory );
 
 
-static const CString CoinModeNames[NUM_COIN_MODES] = {
+static const std::string CoinModeNames[NUM_COIN_MODES] = {
 	"home",
 	"pay",
 	"free",
@@ -63,7 +63,7 @@ static const CString CoinModeNames[NUM_COIN_MODES] = {
 XToString( CoinMode );
 
 
-static const CString SortOrderNames[NUM_SORT_ORDERS] = {
+static const std::string SortOrderNames[NUM_SORT_ORDERS] = {
 	"PREFERRED",
 	"GROUP",
 	"TITLE",
@@ -87,7 +87,7 @@ XToString( SortOrder );
 StringToX( SortOrder );
 
 
-static const CString TapNoteScoreNames[NUM_TAP_NOTE_SCORES] = {
+static const std::string TapNoteScoreNames[NUM_TAP_NOTE_SCORES] = {
 	"None",
 	"HitMine",
 	"Miss",
@@ -102,7 +102,7 @@ StringToX( TapNoteScore );
 XToThemedString( TapNoteScore );
 
 
-static const CString HoldNoteScoreNames[NUM_HOLD_NOTE_SCORES] = {
+static const std::string HoldNoteScoreNames[NUM_HOLD_NOTE_SCORES] = {
 	"None",
 	"NG",
 	"OK",
@@ -112,7 +112,7 @@ StringToX( HoldNoteScore );
 XToThemedString( HoldNoteScore );
 
 
-static const CString MemoryCardStateNames[NUM_MEMORY_CARD_STATES] = {
+static const std::string MemoryCardStateNames[NUM_MEMORY_CARD_STATES] = {
 	"ready",
 	"late",
 	"error",
@@ -121,7 +121,7 @@ static const CString MemoryCardStateNames[NUM_MEMORY_CARD_STATES] = {
 XToString( MemoryCardState );
 
 
-static const CString PerDifficultyAwardNames[NUM_PER_DIFFICULTY_AWARDS] = {
+static const std::string PerDifficultyAwardNames[NUM_PER_DIFFICULTY_AWARDS] = {
 	"FullComboGreats",
 	"SingleDigitGreats",
 	"OneGreat",
@@ -142,7 +142,7 @@ StringToX( PerDifficultyAward );
 // strings can be used as XML entity names.
 // Numbers are intentially not at the back so that "1000" and "10000" don't 
 // conflict when searching for theme elements.
-static const CString PeakComboAwardNames[NUM_PEAK_COMBO_AWARDS] = {
+static const std::string PeakComboAwardNames[NUM_PEAK_COMBO_AWARDS] = {
 	"Peak1000Combo",
 	"Peak2000Combo",
 	"Peak3000Combo",

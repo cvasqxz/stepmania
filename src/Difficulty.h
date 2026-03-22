@@ -19,9 +19,9 @@ enum Difficulty : int
 	DIFFICULTY_INVALID
 };
 #define FOREACH_Difficulty( dc ) FOREACH_ENUM( Difficulty, NUM_DIFFICULTIES, dc )
-const CString& DifficultyToString( Difficulty dc );
-CString DifficultyToThemedString( Difficulty dc );
-Difficulty StringToDifficulty( const CString& sDC );
+const std::string& DifficultyToString( Difficulty dc );
+std::string DifficultyToThemedString( Difficulty dc );
+Difficulty StringToDifficulty( const std::string& sDC );
 
 
 using CourseDifficulty = Difficulty;
@@ -29,9 +29,9 @@ using CourseDifficulty = Difficulty;
 #define FOREACH_CourseDifficulty FOREACH_Difficulty
 #define FOREACH_ShownCourseDifficulty( cd ) for( Difficulty cd=GetNextShownCourseDifficulty((CourseDifficulty)-1); cd!=DIFFICULTY_INVALID; cd=GetNextShownCourseDifficulty(cd) )
 
-const CString& CourseDifficultyToString( Difficulty dc );
-CString CourseDifficultyToThemedString( Difficulty dc );
-Difficulty StringToCourseDifficulty( const CString& sDC );
+const std::string& CourseDifficultyToString( Difficulty dc );
+std::string CourseDifficultyToThemedString( Difficulty dc );
+Difficulty StringToCourseDifficulty( const std::string& sDC );
 
 Difficulty GetNextShownCourseDifficulty( Difficulty pn );
 

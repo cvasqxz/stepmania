@@ -22,7 +22,7 @@ enum CabinetLight
 	NUM_CABINET_LIGHTS
 };
 #define FOREACH_CabinetLight( i ) FOREACH_ENUM( CabinetLight, NUM_CABINET_LIGHTS, i )
-const CString& CabinetLightToString( CabinetLight cl );
+const std::string& CabinetLightToString( CabinetLight cl );
 
 enum LightsMode
 {
@@ -36,7 +36,7 @@ enum LightsMode
 	LIGHTSMODE_TEST,
 	NUM_LIGHTS_MODES
 };
-const CString& LightsModeToString( LightsMode lm );
+const std::string& LightsModeToString( LightsMode lm );
 
 struct LightsState
 {

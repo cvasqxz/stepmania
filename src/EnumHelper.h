@@ -1,5 +1,6 @@
 #ifndef EnumHelper_H
 #define EnumHelper_H
+#include <string>
 
 /*
  * Safely add an integer to an enum.
@@ -35,10 +36,10 @@ static inline void enum_add( T &val, int iAmt )
 #define FOREACH_ENUM( e, max, var )	for( e var=(e)0; var<max; enum_add<e>( var, +1 ) )
 
 
-static const CString EMPTY_STRING;
+static const std::string EMPTY_STRING;
 
 #define XToString(X)	\
-	const CString& X##ToString( X x ) \
+	const std::string& X##ToString( X x ) \
 	{	\
 		if( x == ARRAYSIZE(X##Names)+1 ) 	\
 			return EMPTY_STRING;	\
@@ -47,19 +48,19 @@ static const CString EMPTY_STRING;
 	}
 
 #define XToThemedString(X)	\
-	CString X##ToThemedString( X x ) \
+	std::string X##ToThemedString( X x ) \
 	{	\
 		return THEME->GetMetric( #X, X##ToString(x) );	\
 	}
 
 #define StringToX(X)	\
-	X StringTo##X( const CString& s ) \
+	X StringTo##X( const std::string& s ) \
 	{	\
-		CString s2 = s;	\
-		s2.MakeLower();	\
+		std::string s2 = s;	\
+		MakeLower(s2);	\
         unsigned i; \
 		for( i = 0; i < ARRAYSIZE(X##Names); ++i )	\
-			if( !s2.CompareNoCase(X##Names[i]) )	\
+			if( CompareNoCase(s2, X##Names[i]) == 0 )	\
 				return (X)i;	\
 		return (X)(i+1); /*invalid*/	\
 	}

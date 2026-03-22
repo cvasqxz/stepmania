@@ -2,9 +2,10 @@
 #include "Difficulty.h"
 #include "GameState.h"
 #include "ThemeManager.h"
+#include "RageUtil.h"
 
 
-static const CString DifficultyNames[NUM_DIFFICULTIES] = {
+static const std::string DifficultyNames[NUM_DIFFICULTIES] = {
 	"Beginner",
 	"Easy",
 	"Medium",
@@ -17,10 +18,10 @@ XToThemedString( Difficulty );
 
 /* We prefer the above names; recognize a number of others, too.  (They'l
  * get normalized when written to SMs, etc.) */
-Difficulty StringToDifficulty( const CString& sDC )
+Difficulty StringToDifficulty( const std::string& sDC )
 {
-	CString s2 = sDC;
-	s2.MakeLower();
+	std::string s2 = sDC;
+	MakeLower(s2);
 	if( s2 == "beginner" )		return DIFFICULTY_BEGINNER;
 	else if( s2 == "easy" )		return DIFFICULTY_EASY;
 	else if( s2 == "basic" )	return DIFFICULTY_EASY;
@@ -43,7 +44,7 @@ Difficulty StringToDifficulty( const CString& sDC )
 }
 
 
-static const CString CourseDifficultyNames[NUM_DIFFICULTIES] =
+static const std::string CourseDifficultyNames[NUM_DIFFICULTIES] =
 {
 	"(not used)",
 	"Easy",
