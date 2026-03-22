@@ -2,6 +2,7 @@
 #define DATE_TIME_H
 
 #include <ctime>
+#include <string>
 
 const int NUM_LAST_DAYS = 7;
 const int NUM_LAST_WEEKS = 52;
@@ -10,12 +11,12 @@ const int HOURS_IN_DAY = 24;
 const int DAYS_IN_WEEK = 7;
 const int MONTHS_IN_YEAR = 12;
 
-CString DayInYearToString( int iDayInYearIndex );
-CString LastDayToString( int iLastDayIndex );
-CString DayOfWeekToString( int iDayOfWeekIndex );
-CString HourInDayToString( int iHourIndex );
-CString MonthToString( int iMonthIndex );
-CString LastWeekToString( int iLastWeekIndex );
+std::string DayInYearToString( int iDayInYearIndex );
+std::string LastDayToString( int iLastDayIndex );
+std::string DayOfWeekToString( int iDayOfWeekIndex );
+std::string HourInDayToString( int iHourIndex );
+std::string MonthToString( int iMonthIndex );
+std::string LastWeekToString( int iLastWeekIndex );
 
 tm AddDays( tm start, int iDaysToMove );
 tm GetYesterday( tm start );
@@ -69,8 +70,8 @@ struct DateTime
 	
 	void StripTime();
 
-	CString GetString() const;
-	bool FromString( const CString sDateTime );
+	std::string GetString() const;
+	bool FromString( const std::string& sDateTime );
 };
 
 

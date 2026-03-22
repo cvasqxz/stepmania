@@ -47,9 +47,9 @@ void DateTime::StripTime()
 //
 // Common SQL/XML format: "YYYY-MM-DD HH:MM:SS"
 //
-CString DateTime::GetString() const
+std::string DateTime::GetString() const
 {
-	CString s = ssprintf( "%d-%02d-%02d",
+	std::string s = ssprintf( "%d-%02d-%02d",
 		tm_year+1900,
 		tm_mon+1,
 		tm_mday );
@@ -67,13 +67,13 @@ CString DateTime::GetString() const
 	return s;
 }
 
-bool DateTime::FromString( const CString sDateTime )
+bool DateTime::FromString( const std::string& sDateTime )
 {
 	Init();
 
 	int ret;
 
-	ret = sscanf( sDateTime, "%d-%d-%d %d:%d:%d", 
+	ret = sscanf( sDateTime.c_str(), "%d-%d-%d %d:%d:%d",
 		&tm_year,
 		&tm_mon,
 		&tm_mday,
@@ -83,7 +83,7 @@ bool DateTime::FromString( const CString sDateTime )
 	if( ret == 6 )
 		goto success;
 
-	ret = sscanf( sDateTime, "%d-%d-%d", 
+	ret = sscanf( sDateTime.c_str(), "%d-%d-%d",
 		&tm_year,
 		&tm_mon,
 		&tm_mday );
@@ -100,20 +100,20 @@ success:
 
 
 
-CString DayInYearToString( int iDayInYear )
+std::string DayInYearToString( int iDayInYear )
 {
 	return ssprintf("DayInYear%03d",iDayInYear);
 }
 
-int StringToDayInYear( CString sDayInYear )
+int StringToDayInYear( const std::string& sDayInYear )
 {
 	int iDayInYear;
-	if( sscanf( sDayInYear, "DayInYear%d", &iDayInYear ) != 1 )
+	if( sscanf( sDayInYear.c_str(), "DayInYear%d", &iDayInYear ) != 1 )
 		return -1;
 	return iDayInYear;
 }
 
-static const CString LAST_DAYS_NAME[NUM_LAST_DAYS] =
+static const std::string LAST_DAYS_NAME[NUM_LAST_DAYS] =
 {
 	"Today",
 	"Yesterday",
@@ -124,12 +124,12 @@ static const CString LAST_DAYS_NAME[NUM_LAST_DAYS] =
 	"Day6Ago",
 };
 
-CString LastDayToString( int iLastDayIndex )
+std::string LastDayToString( int iLastDayIndex )
 {
 	return LAST_DAYS_NAME[iLastDayIndex];
 }
 
-static const CString DAY_OF_WEEK_TO_NAME[DAYS_IN_WEEK] =
+static const std::string DAY_OF_WEEK_TO_NAME[DAYS_IN_WEEK] =
 {
 	"Sunday",
 	"Monday",
@@ -140,17 +140,17 @@ static const CString DAY_OF_WEEK_TO_NAME[DAYS_IN_WEEK] =
 	"Saturday",
 };
 
-CString DayOfWeekToString( int iDayOfWeekIndex )
+std::string DayOfWeekToString( int iDayOfWeekIndex )
 {
 	return DAY_OF_WEEK_TO_NAME[iDayOfWeekIndex];
 }
 
-CString HourInDayToString( int iHourInDayIndex )
+std::string HourInDayToString( int iHourInDayIndex )
 {
 	return ssprintf("Hour%02d", iHourInDayIndex);
 }
 
-static const CString MONTH_TO_NAME[MONTHS_IN_YEAR] =
+static const std::string MONTH_TO_NAME[MONTHS_IN_YEAR] =
 {
 	"January",
 	"February",
@@ -166,12 +166,12 @@ static const CString MONTH_TO_NAME[MONTHS_IN_YEAR] =
 	"December",
 };
 
-CString MonthToString( int iMonthIndex )
+std::string MonthToString( int iMonthIndex )
 {
 	return MONTH_TO_NAME[iMonthIndex];
 }
 
-CString LastWeekToString( int iLastWeekIndex )
+std::string LastWeekToString( int iLastWeekIndex )
 {
 	switch( iLastWeekIndex )
 	{
