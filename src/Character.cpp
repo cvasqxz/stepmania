@@ -40,7 +40,7 @@ CString GetRandomFileInDir( CString sDir )
 }
 
 
-CString Character::GetModelPath() const
+std::string Character::GetModelPath() const
 {
 	CString s = m_sCharDir + "model.txt";
 	if( DoesFileExist(s) )
@@ -49,10 +49,10 @@ CString Character::GetModelPath() const
 		return "";
 }
 
-CString Character::GetRestAnimationPath() const	{ return DerefRedir(GetRandomFileInDir(m_sCharDir + "Rest/")); }
-CString Character::GetWarmUpAnimationPath() const { return DerefRedir(GetRandomFileInDir(m_sCharDir + "WarmUp/")); }
-CString Character::GetDanceAnimationPath() const { return DerefRedir(GetRandomFileInDir(m_sCharDir + "Dance/")); }
-CString Character::GetTakingABreakPath() const
+std::string Character::GetRestAnimationPath() const	{ return DerefRedir(GetRandomFileInDir(m_sCharDir + "Rest/")); }
+std::string Character::GetWarmUpAnimationPath() const { return DerefRedir(GetRandomFileInDir(m_sCharDir + "WarmUp/")); }
+std::string Character::GetDanceAnimationPath() const { return DerefRedir(GetRandomFileInDir(m_sCharDir + "Dance/")); }
+std::string Character::GetTakingABreakPath() const
 {
 	CStringArray as;
 	GetDirListing( m_sCharDir+"break.png", as, false, true );
@@ -65,7 +65,7 @@ CString Character::GetTakingABreakPath() const
 		return as[0];
 }
 
-CString Character::GetSongSelectIconPath() const
+std::string Character::GetSongSelectIconPath() const
 {
 	CStringArray as;
 	// first try and find an icon specific to the select music screen
@@ -91,7 +91,7 @@ CString Character::GetSongSelectIconPath() const
 		return as[0];
 }
 
-CString Character::GetStageIconPath() const
+std::string Character::GetStageIconPath() const
 {
 	CStringArray as;
 	// first try and find an icon specific to the select music screen
@@ -117,7 +117,7 @@ CString Character::GetStageIconPath() const
 		return as[0];
 }
 
-CString Character::GetCardPath() const
+std::string Character::GetCardPath() const
 {
 	CStringArray as;
 	GetDirListing( m_sCharDir+"card.png", as, false, true );
@@ -130,7 +130,7 @@ CString Character::GetCardPath() const
 		return as[0];
 }
 
-CString Character::GetIconPath() const
+std::string Character::GetIconPath() const
 {
 	CStringArray as;
 	GetDirListing( m_sCharDir+"icon.png", as, false, true );
@@ -143,7 +143,7 @@ CString Character::GetIconPath() const
 		return as[0];
 }
 
-CString Character::GetHeadPath() const
+std::string Character::GetHeadPath() const
 {
 	CStringArray as;
 	GetDirListing( m_sCharDir+"head*.png", as, false, true );

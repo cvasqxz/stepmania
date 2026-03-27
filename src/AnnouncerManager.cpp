@@ -43,7 +43,7 @@ bool AnnouncerManager::DoesAnnouncerExist( CString sAnnouncerName )
 	return false;
 }
 
-CString AnnouncerManager::GetAnnouncerDirFromName( CString sAnnouncerName )
+std::string AnnouncerManager::GetAnnouncerDirFromName( const std::string& sAnnouncerName )
 {
 	return ANNOUNCERS_DIR + sAnnouncerName + "/";
 }
@@ -84,12 +84,12 @@ static const char *aliases[][2] = {
  * then all aliases above.  Ignore directories that are empty, since we might
  * have "select difficulty intro" with sounds and an empty "ScreenSelectDifficulty
  * intro". */
-CString AnnouncerManager::GetPathTo( CString sAnnouncerName, CString sFolderName )
+std::string AnnouncerManager::GetPathTo( const std::string& sAnnouncerName, const std::string& sFolderName )
 {
 	if(sAnnouncerName == "")
 		return ""; /* announcer disabled */
 
-	const CString AnnouncerPath = GetAnnouncerDirFromName(sAnnouncerName);
+	const std::string AnnouncerPath = GetAnnouncerDirFromName(sAnnouncerName);
 
 	if( !DirectoryIsEmpty(AnnouncerPath+sFolderName+"/") )
 		return AnnouncerPath+sFolderName+"/";
@@ -98,7 +98,7 @@ CString AnnouncerManager::GetPathTo( CString sAnnouncerName, CString sFolderName
 	int i;
 	for(i = 0; aliases[i][0] != nullptr; ++i)
 	{
-		if(sFolderName.CompareNoCase(aliases[i][0]))
+		if(CompareNoCase(sFolderName, aliases[i][0]))
 			continue; /* no match */
 
 		if( !DirectoryIsEmpty(AnnouncerPath+aliases[i][1]+"/") )
@@ -114,16 +114,16 @@ CString AnnouncerManager::GetPathTo( CString sAnnouncerName, CString sFolderName
 	RageFile temp;
 	temp.Open( AnnouncerPath+sFolderName + "/announcer files go here.txt", RageFile::WRITE );
 #endif
-	
+
 	return "";
 }
 
-CString AnnouncerManager::GetPathTo( CString sFolderName )
+std::string AnnouncerManager::GetPathTo( const std::string& sFolderName )
 {
-	return GetPathTo(m_sCurAnnouncerName, sFolderName);
+	return GetPathTo(std::string(m_sCurAnnouncerName.c_str()), sFolderName);
 }
 
-bool AnnouncerManager::HasSoundsFor( CString sFolderName )
+bool AnnouncerManager::HasSoundsFor( const std::string& sFolderName )
 {
 	return !DirectoryIsEmpty( GetPathTo(sFolderName) );
 }

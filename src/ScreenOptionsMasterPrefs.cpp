@@ -164,7 +164,7 @@ static void Announcer( int &sel, bool ToSel, const CStringArray &choices )
 	{
 		sel = 0;
 		for( unsigned i=1; i<choices.size(); i++ )
-			if( !stricmp(choices[i], ANNOUNCER->GetCurAnnouncerName()) )
+			if( !stricmp(choices[i], ANNOUNCER->GetCurAnnouncerName().c_str()) )
 				sel = i;
 	} else {
 		const CString sNewAnnouncer = sel? choices[sel]:CString("");

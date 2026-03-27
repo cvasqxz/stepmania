@@ -1,5 +1,6 @@
 #ifndef ANNOUNCER_MANAGER_H
 #define ANNOUNCER_MANAGER_H
+#include <string>
 
 class AnnouncerManager
 {
@@ -9,15 +10,15 @@ public:
 	void GetAnnouncerNames( CStringArray& AddTo );
 	bool DoesAnnouncerExist( CString sAnnouncerName );
 	void SwitchAnnouncer( CString sNewAnnouncerName );
-	CString GetCurAnnouncerName() { return m_sCurAnnouncerName; };
+	std::string GetCurAnnouncerName() { return m_sCurAnnouncerName.c_str(); };
 	void NextAnnouncer();
 
-	CString GetPathTo( CString sFolderName );
-	bool HasSoundsFor( CString sFolderName );
+	std::string GetPathTo( const std::string& sFolderName );
+	bool HasSoundsFor( const std::string& sFolderName );
 
 protected:
-	static CString GetAnnouncerDirFromName( CString sAnnouncerName );
-	CString GetPathTo( CString AnnouncerPath, CString sFolderName );
+	static std::string GetAnnouncerDirFromName( const std::string& sAnnouncerName );
+	std::string GetPathTo( const std::string& AnnouncerPath, const std::string& sFolderName );
 
 	CString m_sCurAnnouncerName;
 };

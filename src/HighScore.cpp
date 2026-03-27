@@ -98,7 +98,7 @@ void HighScore::LoadFromNode( const XNode* pNode )
 	grade = clamp( grade, GRADE_TIER_1, GRADE_FAILED );
 }
 
-CString HighScore::GetDisplayName() const
+std::string HighScore::GetDisplayName() const
 {
 	if( sName.empty() )
 		return EMPTY_NAME;

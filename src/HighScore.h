@@ -70,7 +70,7 @@ struct HighScore
 	XNode* CreateNode() const;
 	void LoadFromNode( const XNode* pNode );
 
-	CString GetDisplayName() const;
+	std::string GetDisplayName() const;
 };
 
 struct HighScoreList

@@ -150,7 +150,7 @@ bool NoteSkinManager::DoesNoteSkinExist( CString sSkinName )
 	return false;
 }
 
-CString NoteSkinManager::GetNoteSkinDir( const CString &sSkinName )
+std::string NoteSkinManager::GetNoteSkinDir( const CString &sSkinName )
 {
 	CString sGame = m_pCurGame->m_szName;
 
@@ -288,7 +288,7 @@ try_again:
 	return sPath;
 }
 
-CString NoteSkinManager::GetPathToFromDir( const CString &sDir, const CString &sFileName )
+std::string NoteSkinManager::GetPathToFromDir( const CString &sDir, const CString &sFileName )
 {
 	CStringArray matches;		// fill this with the possible files
 

@@ -28,10 +28,10 @@ public:
 	bool		GetMetricB( CString sNoteSkinName, CString sButtonName, CString sValueName );
 	RageColor	GetMetricC( CString sNoteSkinName, CString sButtonName, CString sValueName );
 
-	CString GetNoteSkinDir( const CString &sSkinName );
+	std::string GetNoteSkinDir( const CString &sSkinName );
 
 protected:
-	CString GetPathToFromDir( const CString &sDir, const CString &sFileName );
+	std::string GetPathToFromDir( const CString &sDir, const CString &sFileName );
 
 	struct NoteSkinData
 	{

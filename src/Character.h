@@ -4,6 +4,7 @@
 #define Character_H
 
 #include "GameConstantsAndTypes.h"
+#include <string>
 
 
 class Character
@@ -13,16 +14,16 @@ public:
 
 	bool Load( CString sCharDir );	// return true if success
 
-	CString GetTakingABreakPath() const;
-	CString GetCardPath() const;
-	CString GetIconPath() const;
+	std::string GetTakingABreakPath() const;
+	std::string GetCardPath() const;
+	std::string GetIconPath() const;
 
-	CString GetModelPath() const;
-	CString GetRestAnimationPath() const;
-	CString GetWarmUpAnimationPath() const;
-	CString GetDanceAnimationPath() const;
-	CString GetSongSelectIconPath() const;
-	CString GetStageIconPath() const;
+	std::string GetModelPath() const;
+	std::string GetRestAnimationPath() const;
+	std::string GetWarmUpAnimationPath() const;
+	std::string GetDanceAnimationPath() const;
+	std::string GetSongSelectIconPath() const;
+	std::string GetStageIconPath() const;
 	bool Has2DElems();
 
 
@@ -36,7 +37,7 @@ public:
 
 	CString	m_sAttacks[NUM_ATTACK_LEVELS][NUM_ATTACKS_PER_LEVEL];
 
-	CString GetHeadPath() const;
+	std::string GetHeadPath() const;
 };
 
 #endif
