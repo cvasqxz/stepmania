@@ -27,9 +27,9 @@ private:
 	BitmapText m_Prevmode;
 	Sprite			m_NextIcon;
 	Sprite			m_PrevIcon;
-	CString GetStyleName();
-	CString GetNextStyleName();
-	CString GetPrevStyleName();
+	std::string GetStyleName();
+	std::string GetNextStyleName();
+	std::string GetPrevStyleName();
 };
 
 #endif

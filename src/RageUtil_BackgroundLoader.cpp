@@ -66,7 +66,7 @@ BackgroundLoader::~BackgroundLoader()
 }
 
 /* Pull a request out of m_CacheRequests. */
-CString BackgroundLoader::GetRequest()
+std::string BackgroundLoader::GetRequest()
 {
 	if( !g_bEnableBackgroundLoading )
 		return "";
@@ -81,7 +81,7 @@ CString BackgroundLoader::GetRequest()
 	return ret;
 }
 
-CString BackgroundLoader::GetCachePath( CString sPath ) const
+std::string BackgroundLoader::GetCachePath( CString sPath ) const
 {
 	return m_sCachePathPrefix + "/" + sPath;
 }

@@ -59,7 +59,7 @@ ModeSwitcher::~ModeSwitcher()
 	
 }
 
-CString ModeSwitcher::GetStyleName()
+std::string ModeSwitcher::GetStyleName()
 {
 	CString sStyleName;
 	CString sDiff[NUM_PLAYERS];
@@ -121,7 +121,7 @@ CString ModeSwitcher::GetStyleName()
 	return returnval;
 }
 
-CString ModeSwitcher::GetNextStyleName()
+std::string ModeSwitcher::GetNextStyleName()
 {
 	CString sStyleName[NUM_PLAYERS];
 	CString sDiff[NUM_PLAYERS];
@@ -194,7 +194,7 @@ CString ModeSwitcher::GetNextStyleName()
 	return returnval;
 }
 
-CString ModeSwitcher::GetPrevStyleName()
+std::string ModeSwitcher::GetPrevStyleName()
 {
 	CString sStyleName[NUM_PLAYERS];
 	CString sDiff[NUM_PLAYERS];

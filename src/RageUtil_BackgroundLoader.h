@@ -36,9 +36,9 @@ private:
 	void LoadThread();
 	static int LoadThread_Start( void *p ) { ((BackgroundLoader *) p)->LoadThread(); return 0; }
 
-	CString GetRequest();
+	std::string GetRequest();
 
-	CString GetCachePath( CString sPath ) const;
+	std::string GetCachePath( CString sPath ) const;
 	CString m_sCachePathPrefix;
 
 	RageSemaphore m_StartSem;
