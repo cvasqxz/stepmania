@@ -23,7 +23,7 @@ public:
 	unsigned GetNumValues() const { return values.size(); }
 	unsigned GetNumParams(unsigned val) const { if(val >= GetNumValues()) return 0; return values[val].params.size(); }
 	const value_t &GetValue(unsigned val) const { ASSERT(val < GetNumValues()); return values[val]; }
-	CString GetParam(unsigned val, unsigned par) const;
+	std::string GetParam(unsigned val, unsigned par) const;
 
 
 private:

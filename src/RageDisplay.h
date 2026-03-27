@@ -91,7 +91,7 @@ public:
 		NUM_PIX_FORMATS
 	};
 
-	static CString PixelFormatToString( PixelFormat pixfmt );
+	static std::string PixelFormatToString( PixelFormat pixfmt );
 	virtual const PixelFormatDesc *GetPixelFormatDesc(PixelFormat pf) const = 0;
 
 	struct VideoModeParams

@@ -51,11 +51,11 @@ public:
 	Profile* GetProfile( PlayerNumber pn ) { return (Profile*) ((const ProfileManager *) this)->GetProfile(pn); }
 	const Profile* GetProfile( ProfileSlot slot ) const;
 	Profile* GetProfile( ProfileSlot slot ) { return (Profile*) ((const ProfileManager *) this)->GetProfile(slot); }
-	CString GetProfileDir( ProfileSlot slot ) const;
+	std::string GetProfileDir( ProfileSlot slot ) const;
 
 	Profile* GetMachineProfile() { return &m_MachineProfile; }
 
-	CString GetPlayerName( PlayerNumber pn ) const;
+	std::string GetPlayerName( PlayerNumber pn ) const;
 	bool ProfileWasLoadedFromMemoryCard( PlayerNumber pn ) const;
 
 

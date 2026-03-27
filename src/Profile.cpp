@@ -146,7 +146,7 @@ void Profile::InitRecentCourseScores()
 	m_vRecentCourseScores.clear();
 }
 
-CString Profile::GetDisplayName() const
+std::string Profile::GetDisplayName() const
 {
 	if( !m_sDisplayName.empty() )
 		return m_sDisplayName;
@@ -156,12 +156,12 @@ CString Profile::GetDisplayName() const
 		return "NoName";
 }
 
-static CString FormatCalories( float fCals )
+static std::string FormatCalories( float fCals )
 {
 	return Commify(static_cast<int>(fCals)) + " Cal";
 }
 
-CString Profile::GetDisplayTotalCaloriesBurned() const
+std::string Profile::GetDisplayTotalCaloriesBurned() const
 {
 	if( m_iWeightPounds == 0 )	// weight not entered
 		return "N/A";
@@ -169,7 +169,7 @@ CString Profile::GetDisplayTotalCaloriesBurned() const
 		return FormatCalories( m_fTotalCaloriesBurned );
 }
 
-CString Profile::GetDisplayTotalCaloriesBurnedToday() const
+std::string Profile::GetDisplayTotalCaloriesBurnedToday() const
 {
 	DateTime now = DateTime::GetNowDate();
 	float fCals = GetCaloriesBurnedForDay(now);
@@ -362,7 +362,7 @@ float Profile::GetCoursesPercentComplete( StepsType st, CourseDifficulty cd ) co
 	return GetCoursesActual(st,cd) / GetCoursesPossible(st,cd);
 }
 
-CString Profile::GetProfileDisplayNameFromDir( CString sDir )
+std::string Profile::GetProfileDisplayNameFromDir( const std::string& sDir )
 {
 	Profile profile;
 	profile.LoadEditableDataFromDir( sDir );

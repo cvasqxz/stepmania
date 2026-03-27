@@ -219,10 +219,10 @@ const Profile* ProfileManager::GetProfile( PlayerNumber pn ) const
 		return &m_Profile[pn];
 }
 
-CString ProfileManager::GetPlayerName( PlayerNumber pn ) const
+std::string ProfileManager::GetPlayerName( PlayerNumber pn ) const
 {
 	const Profile *prof = GetProfile( pn );
-	return prof ? prof->GetDisplayName() : CString("");
+	return prof ? prof->GetDisplayName() : std::string("");
 }
 
 
@@ -320,7 +320,7 @@ bool ProfileManager::ProfileWasLoadedFromMemoryCard( PlayerNumber pn ) const
 	return GetProfile(pn) && m_bWasLoadedFromMemoryCard[pn];
 }
 
-CString ProfileManager::GetProfileDir( ProfileSlot slot ) const
+std::string ProfileManager::GetProfileDir( ProfileSlot slot ) const
 {
 	switch( slot )
 	{

@@ -149,7 +149,7 @@ bool MsdFile::ReadFile( CString sNewPath )
 	return true;
 }
 
-CString MsdFile::GetParam(unsigned val, unsigned par) const
+std::string MsdFile::GetParam(unsigned val, unsigned par) const
 {
 	if(val >= GetNumValues()) return "";
 	if(par >= GetNumParams(val)) return "";

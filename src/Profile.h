@@ -58,9 +58,9 @@ public:
 	//
 	// smart accessors
 	//
-	CString GetDisplayName() const;
-	CString GetDisplayTotalCaloriesBurned() const;
-	CString GetDisplayTotalCaloriesBurnedToday() const;
+	std::string GetDisplayName() const;
+	std::string GetDisplayTotalCaloriesBurned() const;
+	std::string GetDisplayTotalCaloriesBurnedToday() const;
 	int GetTotalNumSongsPlayed() const;
 	int GetTotalNumSongsPassed() const;
 	float GetSongsPossible( StepsType st, Difficulty dc ) const;
@@ -69,7 +69,7 @@ public:
 	float GetCoursesActual( StepsType st, CourseDifficulty cd ) const;
 	float GetSongsPercentComplete( StepsType st, Difficulty dc ) const;
 	float GetCoursesPercentComplete( StepsType st, CourseDifficulty cd ) const;
-	static CString GetProfileDisplayNameFromDir( CString sDir );
+	static std::string GetProfileDisplayNameFromDir( const std::string& sDir );
 	int GetSongNumTimesPlayed( const Song* pSong ) const;
 	int GetSongNumTimesPlayed( const SongID& songID ) const;
 	

@@ -34,7 +34,7 @@ int DeviceInput::NumButtons(InputDevice device)
 	return -1; /* quiet compiler */
 }
 
-CString DeviceInput::GetDescription() 
+std::string DeviceInput::GetDescription() 
 {
 	CString sReturn;
 
@@ -233,7 +233,7 @@ CString DeviceInput::GetDescription()
 	return sReturn;
 }
 
-CString DeviceInput::toString() 
+std::string DeviceInput::toString() 
 {
 	if( device == DEVICE_NONE )
 		return "";

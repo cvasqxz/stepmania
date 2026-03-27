@@ -304,9 +304,9 @@ public:
 		return device == other.device  &&  button == other.button;
 	};
 
-	CString GetDescription();
+	std::string GetDescription();
 	
-	CString toString();
+	std::string toString();
 	bool fromString( const CString &s );
 
 	bool IsValid() const { return device != DEVICE_NONE; };

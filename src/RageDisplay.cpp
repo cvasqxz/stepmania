@@ -32,9 +32,9 @@ RageDisplay*		DISPLAY	= nullptr;
 
 Preference<bool>  LOG_FPS( Debug, "LogFPS", true );
 
-CString RageDisplay::PixelFormatToString( PixelFormat pixfmt )
+std::string RageDisplay::PixelFormatToString( PixelFormat pixfmt )
 {
-	const CString s[NUM_PIX_FORMATS] = {
+	const std::string s[NUM_PIX_FORMATS] = {
 		"FMT_RGBA8",
 		"FMT_RGBA4",
 		"FMT_RGB5A1",
