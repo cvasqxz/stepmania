@@ -47,7 +47,7 @@ public:
 	virtual void Rewind();
 	virtual int Seek( int offset );
 	virtual RageFileObj *Copy( RageFile &p ) const;
-	virtual CString GetDisplayPath() const { return path; }
+	virtual std::string GetDisplayPath() const { return path.c_str(); }
 	virtual int GetFileSize();
 };
 

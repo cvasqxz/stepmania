@@ -18,7 +18,7 @@ public:
 
 	// Returns true if successful, false otherwise.
 	bool ReadFile( CString sFilePath );
-	CString GetError() const { return error; }
+	std::string GetError() const { return error.c_str(); }
 
 	unsigned GetNumValues() const { return values.size(); }
 	unsigned GetNumParams(unsigned val) const { if(val >= GetNumValues()) return 0; return values[val].params.size(); }

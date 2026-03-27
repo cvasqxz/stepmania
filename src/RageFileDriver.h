@@ -48,7 +48,7 @@ public:
 	virtual int Seek( int offset );
 	virtual int SeekCur( int offset );
 	virtual int GetFileSize();
-	virtual CString GetDisplayPath() const { return parent.GetRealPath(); }
+	virtual std::string GetDisplayPath() const { return parent.GetRealPath().c_str(); }
 
 	/* Raw I/O: */
 	virtual int Read(void *buffer, size_t bytes) = 0;

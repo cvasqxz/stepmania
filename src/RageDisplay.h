@@ -244,7 +244,7 @@ public:
 	};
 	bool SaveScreenshot( CString sPath, GraphicsFileFormat format );
 
-	virtual CString GetTextureDiagnostics( unsigned id ) const { return ""; }
+	virtual std::string GetTextureDiagnostics( unsigned id ) const { return ""; }
 
 protected:
 	virtual void DrawQuadsInternal( const RageSpriteVertex v[], int iNumVerts ) = 0;

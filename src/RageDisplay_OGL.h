@@ -69,7 +69,7 @@ public:
 	virtual void SetPolygonMode( PolygonMode pm );
 	virtual void SetLineWidth( float fWidth );
 
-	CString GetTextureDiagnostics( unsigned id ) const;
+	std::string GetTextureDiagnostics( unsigned id ) const;
 
 protected:
 	void DrawQuadsInternal( const RageSpriteVertex v[], int iNumVerts );

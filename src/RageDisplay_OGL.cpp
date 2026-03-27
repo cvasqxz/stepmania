@@ -1923,7 +1923,7 @@ void RageDisplay_OGL::SetLineWidth( float fWidth )
 	glLineWidth( fWidth );
 }
 
-CString RageDisplay_OGL::GetTextureDiagnostics( unsigned id ) const
+std::string RageDisplay_OGL::GetTextureDiagnostics( unsigned id ) const
 {
 	return "";
 }
