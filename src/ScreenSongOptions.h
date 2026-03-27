@@ -7,7 +7,7 @@ class ScreenSongOptions : public ScreenOptionsMaster
 {
 public:
 	ScreenSongOptions( CString sName );
-	static CString GetNextScreen();
+	static std::string GetNextScreen();
 
 private:
 	void GoToNextState();

@@ -98,9 +98,9 @@ uint8_t mySDL_EventState( uint8_t type, int state )
 /* SDL sometimes fails to set an error, in which case we get the null string.  We
  * sometimes use that as a sentinel return value.  This function returns "(none)"
  * if no error is set. */
-CString mySDL_GetError()
+std::string mySDL_GetError()
 {
-	CString error = SDL_GetError();
+	std::string error = SDL_GetError();
 	if( error == "" )
 		return "(none)"; /* SDL sometimes fails to set an error */
 	return error;

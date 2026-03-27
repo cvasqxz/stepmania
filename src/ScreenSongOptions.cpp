@@ -10,7 +10,7 @@
 #define NEXT_SCREEN		THEME->GetMetric ("ScreenSongOptions","NextScreen")
 
 /* Get the next screen we'll go to when finished. */
-CString ScreenSongOptions::GetNextScreen()
+std::string ScreenSongOptions::GetNextScreen()
 {
 	return NEXT_SCREEN;
 }

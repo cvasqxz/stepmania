@@ -498,7 +498,7 @@ ScreenOptions::~ScreenOptions()
 		delete m_Rows[i];
 }
 
-CString ScreenOptions::GetExplanationText( int iRow ) const
+std::string ScreenOptions::GetExplanationText( int iRow ) const
 {
 	if( m_Rows[iRow]->Type == Row::ROW_EXIT )
 		return "";
@@ -510,11 +510,11 @@ CString ScreenOptions::GetExplanationText( int iRow ) const
 	return THEME->GetMetric( "OptionExplanations", sLineName+"Help" );
 }
 
-CString ScreenOptions::GetExplanationTitle( int iRow ) const
+std::string ScreenOptions::GetExplanationTitle( int iRow ) const
 {
 	if( m_Rows[iRow]->Type == Row::ROW_EXIT )
 		return "";
-	
+
 	CString sLineName = m_Rows[iRow]->m_RowDef.name;
 	sLineName.Replace("\n-","");
 	sLineName.Replace("\n","");

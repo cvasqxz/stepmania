@@ -56,8 +56,8 @@ protected:
 	virtual void ExportOptions() = 0;
 	void InitOptionsText();
 	void GetWidthXY( PlayerNumber pn, int iRow, int iChoiceOnRow, int &iWidthOut, int &iXOut, int &iYOut );
-	CString GetExplanationText( int row ) const;
-	CString GetExplanationTitle( int row ) const;
+	std::string GetExplanationText( int row ) const;
+	std::string GetExplanationTitle( int row ) const;
 	BitmapText &GetTextItemForRow( PlayerNumber pn, int iRow, int iChoiceOnRow );
 	void PositionUnderlines();
 	void PositionIcons();

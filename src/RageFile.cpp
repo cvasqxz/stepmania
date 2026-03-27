@@ -37,7 +37,7 @@ RageFile::RageFile( const RageFile &cpy )
 	m_BufAvail = cpy.m_BufAvail;
 }
 
-CString RageFile::GetPath() const
+std::string RageFile::GetPath() const
 {
     if ( !IsOpen() )
 		return "";

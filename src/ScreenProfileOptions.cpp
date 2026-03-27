@@ -202,7 +202,7 @@ void ScreenProfileOptions::MenuStart( PlayerNumber pn, const InputEventType type
 	}
 }
 
-CString ScreenProfileOptions::GetSelectedProfileID()
+std::string ScreenProfileOptions::GetSelectedProfileID()
 {
 	vector<CString> vsProfiles;
 	PROFILEMAN->GetLocalProfileIDs( vsProfiles );
@@ -214,7 +214,7 @@ CString ScreenProfileOptions::GetSelectedProfileID()
 	return vsProfiles[ Selection-1 ];
 }
 
-CString ScreenProfileOptions::GetSelectedProfileName()
+std::string ScreenProfileOptions::GetSelectedProfileName()
 {
 	const Row &row = *m_Rows[GetCurrentRow()];
 	const int Selection = row.GetOneSharedSelection();

@@ -19,8 +19,8 @@ private:
 	void GoToNextState();
 	void GoToPrevState();
 
-	CString GetSelectedProfileID();
-	CString GetSelectedProfileName();
+	std::string GetSelectedProfileID();
+	std::string GetSelectedProfileName();
 };
 
 #endif

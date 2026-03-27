@@ -37,7 +37,7 @@ public:
 	 * it may give more information, such as the name of the archive the file
 	 * is in.  It has no parsable meaning. */
 	const CString &GetRealPath() const { return m_Path; }
-	CString GetPath() const;
+	std::string GetPath() const;
     
     bool Open( const CString& path, int mode = READ );
     void Close();

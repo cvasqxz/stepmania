@@ -88,11 +88,11 @@ unsigned SongCacheIndex::GetCacheHash( const CString &path ) const
 	return iDirHash;
 }
 
-CString SongCacheIndex::MangleName( const CString &Name )
+std::string SongCacheIndex::MangleName( const CString &Name )
 {
 	/* We store paths in an INI.  We can't store '='. */
-	CString ret = Name;
-	ret.Replace( "=", "");
+	std::string ret = Name.c_str();
+	Replace(ret, "=", "");
 	return ret;
 }
 

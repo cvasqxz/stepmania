@@ -58,9 +58,9 @@ void TrailID::LoadFromNode( const XNode* pNode )
 	cd = StringToCourseDifficulty( sTemp );
 }
 
-CString TrailID::ToString() const
+std::string TrailID::ToString() const
 {
-	CString s = GameManager::StepsTypeToString(st);
+	std::string s = GameManager::StepsTypeToString(st);
 	s += " " + CourseDifficultyToString(cd);
 	return s;
 }
