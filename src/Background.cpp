@@ -188,7 +188,7 @@ BGAnimation *Background::CreateSongBGA( CString sBGName ) const
 	return NULL;
 }
 
-CString Background::CreateRandomBGA()
+std::string Background::CreateRandomBGA()
 {
 	if( PREFSMAN->m_BackgroundMode == PrefsManager::BGMODE_OFF )
 		return "";

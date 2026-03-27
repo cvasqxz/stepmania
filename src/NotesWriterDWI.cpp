@@ -9,7 +9,7 @@
 #include "RageFile.h"
 
 /* Output is an angle bracket expression without angle brackets, eg. "468". */
-CString NotesWriterDWI::NotesToDWIString( const TapNote cNoteCols[6] )
+std::string NotesWriterDWI::NotesToDWIString( const TapNote cNoteCols[6] )
 {
 	const char dirs[] = { '4', 'C', '2', '8', 'D', '6' };
 	CString taps, holds, ret;
@@ -81,7 +81,7 @@ CString NotesWriterDWI::NotesToDWIString( const TapNote cNoteCols[6] )
 	return '0';*/
 }
 
-CString NotesWriterDWI::NotesToDWIString( TapNote cNoteCol1, TapNote cNoteCol2, TapNote cNoteCol3, TapNote cNoteCol4, TapNote cNoteCol5, TapNote cNoteCol6 )
+std::string NotesWriterDWI::NotesToDWIString( TapNote cNoteCol1, TapNote cNoteCol2, TapNote cNoteCol3, TapNote cNoteCol4, TapNote cNoteCol5, TapNote cNoteCol6 )
 {
 	TapNote cNoteCols[6];
 	cNoteCols[0] = cNoteCol1;
@@ -93,7 +93,7 @@ CString NotesWriterDWI::NotesToDWIString( TapNote cNoteCol1, TapNote cNoteCol2, 
 	return NotesToDWIString( cNoteCols );
 }
 
-CString NotesWriterDWI::NotesToDWIString( TapNote cNoteCol1, TapNote cNoteCol2, TapNote cNoteCol3, TapNote cNoteCol4 )
+std::string NotesWriterDWI::NotesToDWIString( TapNote cNoteCol1, TapNote cNoteCol2, TapNote cNoteCol3, TapNote cNoteCol4 )
 {
 	return NotesToDWIString( cNoteCol1, TAP_EMPTY, cNoteCol2, cNoteCol3, TAP_EMPTY, cNoteCol4 );
 }
@@ -133,7 +133,7 @@ char NotesWriterDWI::OptimizeDWIPair( char c1, char c2 )
 	return it->second;
 }
 
-CString NotesWriterDWI::OptimizeDWIString( CString holds, CString taps )
+std::string NotesWriterDWI::OptimizeDWIString( CString holds, CString taps )
 {
 	/* First, sort the holds and taps in ASCII order.  This puts 2468 first.
 	 * This way 1379 combinations will always be found first, so we'll always

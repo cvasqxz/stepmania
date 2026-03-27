@@ -62,7 +62,7 @@ struct FontPageSettings
 
 	/* Map a range from a character map to glyphs.  If cnt is -1, map the
 	 * whole map. Returns "" or an error message. */
-	CString MapRange(CString Mapping, int map_offset, int glyph_offset, int cnt);
+	std::string MapRange(CString Mapping, int map_offset, int glyph_offset, int cnt);
 };
 
 class FontPage

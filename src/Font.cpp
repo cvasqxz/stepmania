@@ -659,7 +659,7 @@ void Font::LoadFontPageSettings(FontPageSettings &cfg, IniFile &ini, const CStri
 		cfg.CharToGlyphNo[0x00A0] = cfg.CharToGlyphNo[' '];
 }
 
-CString FontPageSettings::MapRange(CString Mapping, int map_offset, int glyphno, int cnt)
+std::string FontPageSettings::MapRange(CString Mapping, int map_offset, int glyphno, int cnt)
 {
 	if(!Mapping.CompareNoCase("Unicode"))
 	{

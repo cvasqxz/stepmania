@@ -62,7 +62,7 @@ protected:
 	BGAnimation		m_DeadPlayer[NUM_PLAYERS];
 
 	BGAnimation* CreateSongBGA( CString sBGName ) const;
-	CString CreateRandomBGA();
+	std::string CreateRandomBGA();
 
 	map<CString,BGAnimation*> m_BGAnimations;
 	deque<CString> m_RandomBGAnimations;
