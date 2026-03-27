@@ -13,7 +13,7 @@ class BannerCache
 {
 	IniFile BannerData;
 
-	static CString GetBannerCachePath( CString BannerPath );
+	static std::string GetBannerCachePath( const std::string& BannerPath );
 	void UnloadAllBanners();
 	void CacheBannerInternal( CString BannerPath );
 

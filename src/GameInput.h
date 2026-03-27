@@ -258,7 +258,7 @@ struct GameInput
 	inline bool IsValid() const { return controller != GAME_CONTROLLER_INVALID; };
 	inline void MakeInvalid() { controller = GAME_CONTROLLER_INVALID; button = GAME_BUTTON_INVALID; };
 
-	CString toString();
+	std::string toString();
 	bool fromString( CString s );
 };
 

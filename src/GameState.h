@@ -120,10 +120,10 @@ public:
 	bool			IsFinalStage() const;
 	bool			IsExtraStage() const;
 	bool			IsExtraStage2() const;
-	CString			GetStageText() const;
+	std::string		GetStageText() const;
 	void			GetAllStageTexts( CStringArray &out ) const;
 	int				GetCourseSongIndex() const;
-	CString			GetPlayerDisplayName( PlayerNumber pn ) const;
+	std::string		GetPlayerDisplayName( PlayerNumber pn ) const;
 
 
 	//

@@ -47,7 +47,7 @@ BannerCache *BANNERCACHE;
 
 static map<CString,RageSurface *> g_BannerPathToImage;
 
-CString BannerCache::GetBannerCachePath( CString BannerPath )
+std::string BannerCache::GetBannerCachePath( const std::string& BannerPath )
 {
 	/* Use GetHashForString, not ForFile, since we don't want to spend time
 	 * checking the file size and date. */

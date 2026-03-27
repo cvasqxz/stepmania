@@ -733,7 +733,7 @@ bool GameState::IsExtraStage2() const
 	return m_iCurrentStageIndex == PREFSMAN->m_iNumArcadeStages+1;
 }
 
-CString GameState::GetStageText() const
+std::string GameState::GetStageText() const
 {
 	if( m_bDemonstrationOrJukebox )				return "demo";
 	else if( m_PlayMode == PLAY_MODE_ONI )		return "oni";
@@ -771,10 +771,10 @@ int GameState::GetCourseSongIndex() const
 	return iSongIndex;
 }
 
-CString GameState::GetPlayerDisplayName( PlayerNumber pn ) const
+std::string GameState::GetPlayerDisplayName( PlayerNumber pn ) const
 {
 	ASSERT( IsPlayerEnabled(pn) );
-	const CString defaultnames[NUM_PLAYERS] = { "Player 1", "Player 2" };
+	const std::string defaultnames[NUM_PLAYERS] = { "Player 1", "Player 2" };
 	if( IsHumanPlayer(pn) )
 	{
 		if( !PROFILEMAN->GetPlayerName(pn).empty() )

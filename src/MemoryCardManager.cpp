@@ -250,7 +250,7 @@ bool MemoryCardManager::PathIsMemCard( CString sDir ) const
 		return false;
 }
 
-CString MemoryCardManager::GetName( PlayerNumber pn ) const
+std::string MemoryCardManager::GetName( PlayerNumber pn ) const
 {
 	return m_Device[pn].sName;
 }

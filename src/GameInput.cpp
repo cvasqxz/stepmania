@@ -4,7 +4,7 @@
 #include "RageUtil.h"
 
 
-CString GameInput::toString() 
+std::string GameInput::toString() 
 {
 	return ssprintf("%d-%d", controller, button );
 }

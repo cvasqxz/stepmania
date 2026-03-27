@@ -104,7 +104,7 @@ void Game::MenuInputToGameInput( MenuInput MenuI, GameInput GameIout[4] ) const
 	}
 }
 
-CString Game::ColToButtonName( int col ) const
+std::string Game::ColToButtonName( int col ) const
 {
 	const Style* pStyle = GAMESTATE->GetCurrentStyle();
 
