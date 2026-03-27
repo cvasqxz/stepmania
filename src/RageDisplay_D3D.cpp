@@ -440,7 +440,7 @@ HWND GetHwnd()
 
 
 /* Set the video mode. */
-CString RageDisplay_D3D::TryVideoMode( VideoModeParams p, bool &bNewDeviceOut )
+std::string RageDisplay_D3D::TryVideoMode( VideoModeParams p, bool &bNewDeviceOut )
 {
 	g_CurrentParams = p;
 

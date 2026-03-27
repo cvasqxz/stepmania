@@ -805,7 +805,7 @@ void RageDisplay_OGL::ResolutionChanged()
 // Return true if mode change was successful.
 // bNewDeviceOut is set true if a new device was created and textures
 // need to be reloaded.
-CString RageDisplay_OGL::TryVideoMode( VideoModeParams p, bool &bNewDeviceOut )
+std::string RageDisplay_OGL::TryVideoMode( VideoModeParams p, bool &bNewDeviceOut )
 {
 //	LOG->Trace( "RageDisplay_OGL::SetVideoMode( %d, %d, %d, %d, %d, %d )", windowed, width, height, bpp, rate, vsync );
 	CString err;

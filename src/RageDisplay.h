@@ -259,7 +259,7 @@ protected:
 	// Return "" if mode change was successful, an error message otherwise.
 	// bNewDeviceOut is set true if a new device was created and textures
 	// need to be reloaded.
-	virtual CString TryVideoMode( VideoModeParams params, bool &bNewDeviceOut ) = 0;
+	virtual std::string TryVideoMode( VideoModeParams params, bool &bNewDeviceOut ) = 0;
 	virtual RageSurface* CreateScreenshot() = 0;	// allocates a surface.  Caller must delete it.
 
 	virtual void SetViewport(int shift_left, int shift_down) = 0;

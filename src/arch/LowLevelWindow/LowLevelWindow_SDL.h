@@ -11,7 +11,7 @@ public:
 	LowLevelWindow_SDL();
 	~LowLevelWindow_SDL();
 	void *GetProcAddress(CString s);
-	CString TryVideoMode( RageDisplay::VideoModeParams p, bool &bNewDeviceOut );
+	std::string TryVideoMode( RageDisplay::VideoModeParams p, bool &bNewDeviceOut );
 	void SwapBuffers();
 	void Update(float fDeltaTime);
 
