@@ -728,12 +728,12 @@ uint32_t PacketFunctions::Read4()
 	return ntohl(Temp);
 }
 
-CString PacketFunctions::ReadNT()
+std::string PacketFunctions::ReadNT()
 {
 	//int Orig=Packet.Position;
-	CString TempStr;
+	std::string TempStr;
 	while ((Position<NETMAXBUFFERSIZE)&& (reinterpret_cast<char*>(Data)[Position]!=0))
-		TempStr= TempStr + static_cast<char>(Data[Position++]);
+		TempStr.push_back(static_cast<char>(Data[Position++]));
 
 	++Position;
 	return TempStr;

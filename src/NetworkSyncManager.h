@@ -64,7 +64,7 @@ public:
 	uint8_t Read1();
 	uint16_t Read2();
 	uint32_t Read4();
-	CString ReadNT();
+	std::string ReadNT();
 
 	void Write1(uint8_t Data);
 	void Write2(uint16_t Data);
