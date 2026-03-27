@@ -1,6 +1,6 @@
 # TODO.md - StepMania 3.9 Modernization Roadmap
 
-**Version:** 1.29 (2026-03-22)
+**Version:** 1.35 (2026-03-27)
 
 This document outlines opportunities to modernize the StepMania 3.9 codebase (originally from 2004-2005) to modern C++ standards and practices.
 
@@ -318,6 +318,13 @@ constexpr unsigned int OPT_SAVE_PREFERENCES = 1u << 0;
 - ✅ Batch 6: RageUtil string functions — SecondsToHHMMSS/MMSSMsMs/MMSSMsMsMs, PrettyPercent, Commify, join (×2), GetCwd, WStringToCString, WcharToUTF8, Basename, Dirname, Capitalize, GetExtension, SetExtension, DerefRedir, GetRedirContents (commit 8054df0)
 - ✅ Batch 7: SongUtil::MakeSortString, GetSectionNameFromSongAndSort, SongID::ToString; CourseID::ToString; StepsID::ToString; GameManager::StyleToThemedString, StringToGameType, GameAndStringToStyle (commit 4fb4062)
 - ✅ Batch 8: Song: 15 accessors (GetDisplay*, GetTranslit*, GetFullDisplay*, GetFullTranslit*, Get*Path, GetCacheFilePath, GetBackgroundAtBeat); Course: 6 accessors; RageTextureID: std::string constructor (commit 37034c1)
+- ✅ Batch 9: Character: 10 path accessors; HighScore::GetDisplayName; GameSoundManager::GetMusicPath; NoteSkinManager: GetNoteSkinDir, GetPathToFromDir; AnnouncerManager: GetAnnouncerDirFromName, GetPathTo (×2), GetCurAnnouncerName, HasSoundsFor (commit ecbd8ac)
+- ✅ Batch 10: GameState: GetStageText, GetPlayerDisplayName; MemoryCardManager::GetName; Game::ColToButtonName; GameInput::toString; BannerCache::GetBannerCachePath (commit 2b11999)
+- ✅ Batch 11: PacketFunctions::ReadNT (commit 1130d89)
+- ✅ Batch 12: Profile: GetDisplayName, GetDisplayTotalCaloriesBurned, GetDisplayTotalCaloriesBurnedToday, GetProfileDisplayNameFromDir; ProfileManager: GetPlayerName, GetProfileDir; RageDisplay::PixelFormatToString; DeviceInput: GetDescription, toString; MsdFile::GetParam (commit 5f2cc90)
+- ✅ Batch 13: TrailID::ToString; RageFile::GetPath; SongCacheIndex::MangleName; ScreenSongOptions::GetNextScreen; ScreenProfileOptions: GetSelectedProfileID, GetSelectedProfileName; ScreenOptions: GetExplanationText, GetExplanationTitle; mySDL_GetError (commit 8c17cf0)
+
+**Migration status (2026-03-27):** ~79 CString-returning functions remain in src/*.cpp (down from ~122 at session start, ~3115 total occurrences before migration began).
 
 **Migration strategy:** Convert subsystems bottom-up as complete dependency chains. CString inherits from std::string so CString→std::string is safe for by-value params, but CString& cannot be passed to std::string& without explicit cast.
 
