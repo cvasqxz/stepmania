@@ -19,7 +19,7 @@ public:
 
 	static CString GetMD5( CString fn );	// in Hex
 
-	static CString GetPublicKeyFileName();
+	static std::string GetPublicKeyFileName();
 };
 
 extern CryptManager*	CRYPTMAN;	// global and accessable from anywhere in our program

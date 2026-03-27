@@ -330,7 +330,7 @@ void Font::SetDefaultGlyph(FontPage *fp)
 }
 
 
-CString Font::GetFontName(CString FileName)
+std::string Font::GetFontName(CString FileName)
 {
 	CString orig = FileName;
 
@@ -380,7 +380,7 @@ void Font::WeedFontNames(vector<CString> &v, const CString &FileName)
 	/* Weed out false matches.  (For example, this gets rid of "normal2" when
 	 * we're really looking for "normal".) */
 	for(unsigned i = 0; i < v.size(); ) {
-		if(FontName.CompareNoCase(Font::GetFontName(v[i])))
+		if(CompareNoCase(FontName, Font::GetFontName(v[i])))
 			v.erase(v.begin()+i);
 		else i++;
 	}
@@ -419,7 +419,7 @@ void Font::GetFontPaths(const CString &sFontOrTextureFilePath,
 	{
 		/* We now have a list of possibilities, but it may include false positives,
 		 * such as "Normal2" when the font name is "Normal".  Weed them. */
-		if(GetFontName(Files[i]).CompareNoCase(FontName))
+		if(CompareNoCase(GetFontName(Files[i]), FontName))
 			continue;
 
 		/* If it's an INI, and we don't already have an INI, use it. */
@@ -436,7 +436,7 @@ void Font::GetFontPaths(const CString &sFontOrTextureFilePath,
 	}
 }
 
-CString Font::GetPageNameFromFileName(const CString &fn)
+std::string Font::GetPageNameFromFileName(const CString &fn)
 {
 	size_t begin = fn.find_first_of('[');
 	if(begin == fn.npos) return "main";

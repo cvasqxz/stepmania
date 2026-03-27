@@ -130,7 +130,7 @@ public:
 
 	static const wchar_t DEFAULT_GLYPH;
 
-	static CString GetFontName(CString FileName);
+	static std::string GetFontName(CString FileName);
 	/* Remove filenames in 'v' that aren't in the same font as "FileName". */
 	static void WeedFontNames(vector<CString> &v, const CString &FileName);
 
@@ -151,7 +151,7 @@ private:
 	void LoadFontPageSettings(FontPageSettings &cfg, IniFile &ini, const CString &TexturePath, const CString &PageName, CString sChars);
 	static void GetFontPaths(const CString &sFontOrTextureFilePath, 
 							   CStringArray &TexturePaths, CString &IniPath);
-	CString GetPageNameFromFileName(const CString &fn);
+	std::string GetPageNameFromFileName(const CString &fn);
 };
 
 #endif

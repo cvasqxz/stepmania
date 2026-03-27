@@ -205,7 +205,7 @@ CString CryptManager::GetMD5( CString fn )
        return BinaryToHex( digest, sizeof(digest) );
 }
 
-CString CryptManager::GetPublicKeyFileName()
+std::string CryptManager::GetPublicKeyFileName()
 {
 	ASSERT( PREFSMAN->m_bSignProfileData );
 
