@@ -21,7 +21,7 @@ struct SongOptions
 
 	SongOptions() { Init(); };
 	void Init();
-	CString GetString() const;
+	std::string GetString() const;
 	void FromString( CString sOptions );
 
 	bool operator==( const SongOptions &other ) const;

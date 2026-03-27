@@ -15,10 +15,10 @@ struct PlayerOptions
 	PlayerOptions() { Init(); };
 	void Init();
 	void Approach( const PlayerOptions& other, float fDeltaSeconds );
-	CString GetString() const;
-	CString GetSavedPrefsString() const;	// only the basic options that players would want for every song
+	std::string GetString() const;
+	std::string GetSavedPrefsString() const;	// only the basic options that players would want for every song
 	static CString ThemeMod( CString sOneMod );
-	CString GetThemedString() const;
+	std::string GetThemedString() const;
 	void FromString( CString sOptions );
 	void ChooseRandomMofifiers();
 	bool ContainsTransformOrTurn() const;

@@ -157,7 +157,7 @@ std::string NoteSkinManager::GetNoteSkinDir( const CString &sSkinName )
 	return NOTESKINS_DIR + sGame + "/" + sSkinName + "/";
 }
 
-CString NoteSkinManager::GetMetric( CString sNoteSkinName, CString sButtonName, CString sValue )
+std::string NoteSkinManager::GetMetric( CString sNoteSkinName, CString sButtonName, CString sValue )
 {
 	sNoteSkinName.MakeLower();
 	map<CString,NoteSkinData>::const_iterator it = m_mapNameToData.find(sNoteSkinName);
@@ -166,34 +166,34 @@ CString NoteSkinManager::GetMetric( CString sNoteSkinName, CString sButtonName, 
 
 	CString sReturn;
 	if( data.metrics.GetValue( sButtonName, sValue, sReturn ) )
-		return sReturn;
+		return sReturn.c_str();
 	if( !data.metrics.GetValue( "NoteDisplay", sValue, sReturn ) )
 		RageException::Throw( "Could not read metric '[%s] %s' or '[NoteDisplay] %s' in '%s'",
 			sButtonName.c_str(), sValue.c_str(), sValue.c_str(), sNoteSkinName.c_str() );
-	return sReturn;
+	return sReturn.c_str();
 }
 
 int NoteSkinManager::GetMetricI( CString sNoteSkinName, CString sButtonName, CString sValueName )
 {
-	return atoi( GetMetric(sNoteSkinName,sButtonName,sValueName) );
+	return atoi( GetMetric(sNoteSkinName,sButtonName,sValueName).c_str() );
 }
 
 float NoteSkinManager::GetMetricF( CString sNoteSkinName, CString sButtonName, CString sValueName )
 {
-	return strtof( GetMetric(sNoteSkinName,sButtonName,sValueName), NULL );
+	return strtof( GetMetric(sNoteSkinName,sButtonName,sValueName).c_str(), NULL );
 }
 
 bool NoteSkinManager::GetMetricB( CString sNoteSkinName, CString sButtonName, CString sValueName )
 {
-	return atoi( GetMetric(sNoteSkinName,sButtonName,sValueName) ) != 0;
+	return atoi( GetMetric(sNoteSkinName,sButtonName,sValueName).c_str() ) != 0;
 }
 
 RageColor NoteSkinManager::GetMetricC( CString sNoteSkinName, CString sButtonName, CString sValueName )
 {
 	float r=1,b=1,g=1,a=1;	// initialize in case sscanf fails
-	CString sValue = GetMetric(sNoteSkinName,sButtonName,sValueName);
+	std::string sValue = GetMetric(sNoteSkinName,sButtonName,sValueName);
 	char szValue[40];
-	strncpy( szValue, sValue, 39 );
+	strncpy( szValue, sValue.c_str(), 39 );
 	int result = sscanf( szValue, "%f,%f,%f,%f", &r, &g, &b, &a );
 	if( result != 4 )
 	{
@@ -205,7 +205,7 @@ RageColor NoteSkinManager::GetMetricC( CString sNoteSkinName, CString sButtonNam
 }
 
 
-CString NoteSkinManager::GetPathToFromNoteSkinAndButton( CString NoteSkin, CString sButtonName, CString sElement, bool bOptional )
+std::string NoteSkinManager::GetPathToFromNoteSkinAndButton( CString NoteSkin, CString sButtonName, CString sElement, bool bOptional )
 {
 try_again:
 

@@ -20,9 +20,9 @@ public:
 	void GetNoteSkinNames( CStringArray &AddTo );	// looks up current const Game* in GAMESTATE
 	bool DoesNoteSkinExist( CString sSkinName );	// looks up current const Game* in GAMESTATE
 
-	CString GetPathToFromNoteSkinAndButton( CString NoteSkin, CString sButtonName, CString sElement, bool bOptional=false );
+	std::string GetPathToFromNoteSkinAndButton( CString NoteSkin, CString sButtonName, CString sElement, bool bOptional=false );
 
-	CString		GetMetric( CString sNoteSkinName, CString sButtonName, CString sValue );
+	std::string	GetMetric( CString sNoteSkinName, CString sButtonName, CString sValue );
 	int			GetMetricI( CString sNoteSkinName, CString sButtonName, CString sValueName );
 	float		GetMetricF( CString sNoteSkinName, CString sButtonName, CString sValueName );
 	bool		GetMetricB( CString sNoteSkinName, CString sButtonName, CString sValueName );

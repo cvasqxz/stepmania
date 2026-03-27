@@ -30,7 +30,7 @@ public:
 	bool WasLoadedFromProfile() const { return m_LoadedFromProfile != PROFILE_SLOT_INVALID; }
 	ProfileSlot GetLoadedFromProfileSlot() const { return m_LoadedFromProfile; }
 	unsigned GetHash() const { return Real()->m_uHash; }
-	CString GetDescription() const { return Real()->m_sDescription; }
+	std::string GetDescription() const { return Real()->m_sDescription.c_str(); }
 	Difficulty GetDifficulty() const { return Real()->m_Difficulty; }
 	ProfileSlot GetLoadedFromProfile() const { return m_LoadedFromProfile; }
 	int GetMeter() const { return Real()->m_iMeter; }

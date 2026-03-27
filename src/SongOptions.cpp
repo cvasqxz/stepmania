@@ -15,7 +15,7 @@ void SongOptions::Init()
 	m_bSaveScore = true;
 }
 
-CString SongOptions::GetString() const
+std::string SongOptions::GetString() const
 {
 	CString sReturn;
 

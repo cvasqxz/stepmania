@@ -70,7 +70,7 @@ static CString AddPart( float level, CString name )
 	return LevelStr + name + ", ";
 }
 
-CString PlayerOptions::GetString() const
+std::string PlayerOptions::GetString() const
 {
 	CString sReturn;
 
@@ -606,12 +606,12 @@ CString PlayerOptions::ThemeMod( CString sOneMod )
 	if( THEME->HasMetric( "OptionNames", asTokens.back() ) )
 		asTokens.back() = THEME->GetMetric( "OptionNames", asTokens.back() );
 
-	return join( " ", asTokens );
+	return join( " ", asTokens ).c_str();
 }
 
-CString PlayerOptions::GetThemedString() const
+std::string PlayerOptions::GetThemedString() const
 {
-	CString sMods = GetString();
+	CString sMods = GetString().c_str();
 
 	CStringArray asMods;
 	split( sMods, ", ", asMods );
@@ -621,7 +621,7 @@ CString PlayerOptions::GetThemedString() const
 		CString& sMod = asMods[j];
 		asThemedMods.emplace_back(sMod);
 	}
-	return join( ", ", asThemedMods );
+	return join( ", ", asThemedMods ).c_str();
 }
 
 bool PlayerOptions::ContainsTransformOrTurn() const
@@ -639,7 +639,7 @@ bool PlayerOptions::ContainsTransformOrTurn() const
 	return false;
 }
 
-CString PlayerOptions::GetSavedPrefsString() const
+std::string PlayerOptions::GetSavedPrefsString() const
 {
 	PlayerOptions po_prefs;
 #define SAVE(x) po_prefs.x = this->x;
