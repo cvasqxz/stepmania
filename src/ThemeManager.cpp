@@ -397,7 +397,7 @@ try_element_again:
 	}
 }
 
-CString ThemeManager::GetPath( ElementCategory category, CString sClassName, CString sElement, bool bOptional ) 
+std::string ThemeManager::GetPath( ElementCategory category, CString sClassName, CString sElement, bool bOptional )
 {
 	CString sFileName = ClassAndElementToFileName( sClassName, sElement );
 
@@ -480,6 +480,7 @@ CString ThemeManager::GetMetricsIniPath( CString sThemeName )
 	return GetThemeDirFromName( sThemeName ) + METRICS_FILE;
 }
 
+
 bool ThemeManager::HasMetric( CString sClassName, CString sValueName )
 {
 	CString sThrowAway;
@@ -528,13 +529,13 @@ bool ThemeManager::GetMetricRaw( CString sClassName, CString sValueName, CString
 	return false;
 }
 
-CString ThemeManager::GetMetricRaw( CString sClassName, CString sValueName )
+std::string ThemeManager::GetMetricRaw( CString sClassName, CString sValueName )
 {
 try_metric_again:
 
 	CString ret;
 	if( ThemeManager::GetMetricRaw( sClassName, sValueName, ret ) )
-		return ret;
+		return ret.c_str();
 
 
 	CString sMessage = ssprintf( "The theme metric '%s-%s' is missing.  Correct this and click Retry, or Cancel to break.",sClassName.c_str(),sValueName.c_str() );
@@ -555,18 +556,18 @@ try_metric_again:
 	CString sCurMetricPath = GetMetricsIniPath(m_sCurThemeName);
 	CString sDefaultMetricPath = GetMetricsIniPath(BASE_THEME_NAME);
 
-	RageException::Throw( "Theme metric '%s : %s' could not be found in '%s' or '%s'.", 
+	RageException::Throw( "Theme metric '%s : %s' could not be found in '%s' or '%s'.",
 		sClassName.c_str(),
 		sValueName.c_str(),
-		sCurMetricPath.c_str(), 
+		sCurMetricPath.c_str(),
 		sDefaultMetricPath.c_str()
 		);
 }
 
 /* Get a string metric. */
-CString ThemeManager::GetMetric( CString sClassName, CString sValueName )
+std::string ThemeManager::GetMetric( CString sClassName, CString sValueName )
 {
-	CString sValue = GetMetricRaw(sClassName,sValueName);
+	CString sValue = GetMetricRaw(sClassName,sValueName).c_str();
 
 	// "::" means newline since you can't use line breaks in an ini file.
 	sValue.Replace("::","\n");
@@ -575,17 +576,17 @@ CString ThemeManager::GetMetric( CString sClassName, CString sValueName )
 	 * we don't want markers */
 	FontCharAliases::ReplaceMarkers(sValue);
 
-	return sValue;
+	return sValue.c_str();
 }
 
 int ThemeManager::GetMetricI( CString sClassName, CString sValueName )
 {
-	return atoi( GetMetricRaw(sClassName,sValueName) );
+	return atoi( GetMetricRaw(sClassName,sValueName).c_str() );
 }
 
 float ThemeManager::GetMetricF( CString sClassName, CString sValueName )
 {
-	return strtof( GetMetricRaw(sClassName,sValueName), NULL );
+	return strtof( GetMetricRaw(sClassName,sValueName).c_str(), NULL );
 }
 
 // #include "LuaHelpers.h"
@@ -597,7 +598,7 @@ bool ThemeManager::GetMetricB( CString sClassName, CString sValueName )
 //	if( str == "1" )
 //		return true; /* optimization */
 //	return Lua::RunExpression( str );
-	return atoi( GetMetricRaw(sClassName,sValueName) ) != 0;
+	return atoi( GetMetricRaw(sClassName,sValueName).c_str() ) != 0;
 }
 
 RageColor ThemeManager::GetMetricC( CString sClassName, CString sValueName )
@@ -644,11 +645,11 @@ CString ThemeManager::GetLanguageIniPath( CString sThemeName, CString sLanguage 
 }
 
 // TODO: remove these and update the places that use them
-CString ThemeManager::GetPathToB( CString sFileName, bool bOptional ) { CString sClassName, sElement; FileNameToClassAndElement(sFileName,sClassName,sElement); return GetPathB(sClassName,sElement,bOptional); }
-CString ThemeManager::GetPathToF( CString sFileName, bool bOptional ) { CString sClassName, sElement; FileNameToClassAndElement(sFileName,sClassName,sElement); return GetPathF(sClassName,sElement,bOptional); }
-CString ThemeManager::GetPathToG( CString sFileName, bool bOptional ) { CString sClassName, sElement; FileNameToClassAndElement(sFileName,sClassName,sElement); return GetPathG(sClassName,sElement,bOptional); }
-CString ThemeManager::GetPathToS( CString sFileName, bool bOptional ) { CString sClassName, sElement; FileNameToClassAndElement(sFileName,sClassName,sElement); return GetPathS(sClassName,sElement,bOptional); }
-CString ThemeManager::GetPathToO( CString sFileName, bool bOptional ) { CString sClassName, sElement; FileNameToClassAndElement(sFileName,sClassName,sElement); return GetPathO(sClassName,sElement,bOptional); }
+std::string ThemeManager::GetPathToB( CString sFileName, bool bOptional ) { CString sClassName, sElement; FileNameToClassAndElement(sFileName,sClassName,sElement); return GetPathB(sClassName,sElement,bOptional); }
+std::string ThemeManager::GetPathToF( CString sFileName, bool bOptional ) { CString sClassName, sElement; FileNameToClassAndElement(sFileName,sClassName,sElement); return GetPathF(sClassName,sElement,bOptional); }
+std::string ThemeManager::GetPathToG( CString sFileName, bool bOptional ) { CString sClassName, sElement; FileNameToClassAndElement(sFileName,sClassName,sElement); return GetPathG(sClassName,sElement,bOptional); }
+std::string ThemeManager::GetPathToS( CString sFileName, bool bOptional ) { CString sClassName, sElement; FileNameToClassAndElement(sFileName,sClassName,sElement); return GetPathS(sClassName,sElement,bOptional); }
+std::string ThemeManager::GetPathToO( CString sFileName, bool bOptional ) { CString sClassName, sElement; FileNameToClassAndElement(sFileName,sClassName,sElement); return GetPathO(sClassName,sElement,bOptional); }
 
 void ThemeManager::GetModifierNames( set<CString>& AddTo )
 {

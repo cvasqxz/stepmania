@@ -122,7 +122,7 @@ static void Language( int &sel, bool ToSel, const CStringArray &choices )
 	{
 		sel = 0;
 		for( unsigned i=1; i<choices.size(); i++ )
-			if( !stricmp(choices[i], THEME->GetCurLanguage()) )
+			if( !stricmp(choices[i], THEME->GetCurLanguage().c_str()) )
 				sel = i;
 	} else {
 		const CString sNewLanguage = choices[sel];
@@ -143,7 +143,7 @@ static void Theme( int &sel, bool ToSel, const CStringArray &choices )
 	{
 		sel = 0;
 		for( unsigned i=1; i<choices.size(); i++ )
-			if( !stricmp(choices[i], THEME->GetCurThemeName()) )
+			if( !stricmp(choices[i], THEME->GetCurThemeName().c_str()) )
 				sel = i;
 	} else {
 		const CString sNewTheme = choices[sel];

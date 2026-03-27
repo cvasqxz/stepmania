@@ -409,7 +409,7 @@ void ScreenEvaluation::Init()
 					
 					m_textPlayerOptions[p].LoadFromFont( THEME->GetPathToF("Common normal") );
 					CString sPO = GAMESTATE->m_PlayerOptions[p].GetThemedString();
-					sPO.Replace( ", ", PLAYER_OPTIONS_SEPARATOR );
+					Replace( sPO, ", ", PLAYER_OPTIONS_SEPARATOR );
 					m_textPlayerOptions[p].SetName( ssprintf("PlayerOptionsP%d",p+1) );
 					SET_XY_AND_ON_COMMAND( m_textPlayerOptions[p] );
 					m_textPlayerOptions[p].SetText( sPO );

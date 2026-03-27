@@ -25,9 +25,9 @@ public:
 	void GetLanguages( CStringArray& AddTo );
 	bool DoesLanguageExist( CString sLanguage );
 	void SwitchThemeAndLanguage( CString sThemeName, CString sLanguage );
-	CString GetCurThemeName() { return m_sCurThemeName; };
-	CString GetCurLanguage() { return m_sCurLanguage; };
-	CString GetCurThemeDir() { return GetThemeDirFromName(m_sCurThemeName); };
+	std::string GetCurThemeName() { return m_sCurThemeName.c_str(); };
+	std::string GetCurLanguage() { return m_sCurLanguage.c_str(); };
+	std::string GetCurThemeDir() { return GetThemeDirFromName(m_sCurThemeName).c_str(); };
 	void NextTheme();
 	void ReloadMetrics();
 	void GetModifierNames( set<CString>& AddTo );
@@ -35,24 +35,24 @@ public:
 	/* I renamed these for two reasons.  The overload conflicts with the ones below:
 	 * GetPathToB( str, str ) was matching the ones below instead of these.  It's also
 	 * easier to search for uses of obsolete functions if they have a different name. */
-	CString GetPath( ElementCategory category, CString sClassName, CString sElement, bool bOptional=false );
-	CString GetPathB( CString sClassName, CString sElement, bool bOptional=false ) { return GetPath(BGAnimations,sClassName,sElement,bOptional); };
-	CString GetPathF( CString sClassName, CString sElement, bool bOptional=false ) { return GetPath(Fonts,sClassName,sElement,bOptional); };
-	CString GetPathG( CString sClassName, CString sElement, bool bOptional=false ) { return GetPath(Graphics,sClassName,sElement,bOptional); };
-	CString GetPathS( CString sClassName, CString sElement, bool bOptional=false ) { return GetPath(Sounds,sClassName,sElement,bOptional); };
-	CString GetPathO( CString sClassName, CString sElement, bool bOptional=false ) { return GetPath(Other,sClassName,sElement,bOptional); };
+	std::string GetPath( ElementCategory category, CString sClassName, CString sElement, bool bOptional=false );
+	std::string GetPathB( CString sClassName, CString sElement, bool bOptional=false ) { return GetPath(BGAnimations,sClassName,sElement,bOptional); };
+	std::string GetPathF( CString sClassName, CString sElement, bool bOptional=false ) { return GetPath(Fonts,sClassName,sElement,bOptional); };
+	std::string GetPathG( CString sClassName, CString sElement, bool bOptional=false ) { return GetPath(Graphics,sClassName,sElement,bOptional); };
+	std::string GetPathS( CString sClassName, CString sElement, bool bOptional=false ) { return GetPath(Sounds,sClassName,sElement,bOptional); };
+	std::string GetPathO( CString sClassName, CString sElement, bool bOptional=false ) { return GetPath(Other,sClassName,sElement,bOptional); };
 
 	// TODO: remove these and update the places that use them
-	CString GetPathToB( CString sFileName, bool bOptional=false );
-	CString GetPathToF( CString sFileName, bool bOptional=false );
-	CString GetPathToG( CString sFileName, bool bOptional=false );
-	CString GetPathToS( CString sFileName, bool bOptional=false );
-	CString GetPathToO( CString sFileName, bool bOptional=false );
+	std::string GetPathToB( CString sFileName, bool bOptional=false );
+	std::string GetPathToF( CString sFileName, bool bOptional=false );
+	std::string GetPathToG( CString sFileName, bool bOptional=false );
+	std::string GetPathToS( CString sFileName, bool bOptional=false );
+	std::string GetPathToO( CString sFileName, bool bOptional=false );
 
 
 	bool		HasMetric( CString sClassName, CString sValueName );
-	CString		GetMetricRaw( CString sClassName, CString sValueName );
-	CString		GetMetric( CString sClassName, CString sValueName );
+	std::string	GetMetricRaw( CString sClassName, CString sValueName );
+	std::string	GetMetric( CString sClassName, CString sValueName );
 	int			GetMetricI( CString sClassName, CString sValueName );
 	float		GetMetricF( CString sClassName, CString sValueName );
 	bool		GetMetricB( CString sClassName, CString sValueName );
@@ -64,7 +64,6 @@ protected:
 	CString GetPathToAndFallback( CString sThemeName, ElementCategory category, CString sClassName, CString sFile );
 	CString GetPathToRaw( CString sThemeName, ElementCategory category, CString sClassName, CString sFile );
 	static CString GetThemeDirFromName( const CString &sThemeName );
-	CString GetElementDir( CString sThemeName );
 	static CString GetMetricsIniPath( CString sThemeName );
 	static void GetLanguagesForTheme( CString sThemeName, CStringArray& asLanguagesOut );
 	static CString GetLanguageIniPath( CString sThemeName, CString sLanguage );

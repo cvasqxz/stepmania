@@ -16,7 +16,7 @@
 #define DESCRIPTION_MAX_WIDTH		THEME->GetMetricF(m_sName,"DescriptionMaxWidth")
 #define NUM_SHOWN_ITEMS				THEME->GetMetricI(m_sName,"NumShownItems")
 #define MOVE_COMMAND				THEME->GetMetric (m_sName,"MoveCommand")
-#define CAPITALIZE_DIFFICULTY_NAMES	THEME->GetMetric( m_sName,"CapitalizeDifficultyNames" )
+#define CAPITALIZE_DIFFICULTY_NAMES	THEME->GetMetricB( m_sName,"CapitalizeDifficultyNames" )
 
 #define MAX_METERS NUM_DIFFICULTIES + MAX_EDITS_PER_SONG
 
