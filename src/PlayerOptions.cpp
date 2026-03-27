@@ -578,7 +578,7 @@ bool PlayerOptions::IsEasierForCourseAndTrail( Course* pCourse, Trail* pTrail )
 	return false;
 }
 
-CString PlayerOptions::ThemeMod( CString sOneMod )
+std::string PlayerOptions::ThemeMod( CString sOneMod )
 {
 	// Strip out the approach speed token
 	if( !sOneMod.empty() && sOneMod[0]=='*' )

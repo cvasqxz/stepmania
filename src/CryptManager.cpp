@@ -180,7 +180,7 @@ static CString BinaryToHex( const unsigned char *string, int iNumBytes )
 	return s;
 }
 
-CString CryptManager::GetMD5( CString fn )
+std::string CryptManager::GetMD5( CString fn )
 {
        struct MD5Context md5c;
        unsigned char digest[16];

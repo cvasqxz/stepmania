@@ -17,7 +17,7 @@ struct PlayerOptions
 	void Approach( const PlayerOptions& other, float fDeltaSeconds );
 	std::string GetString() const;
 	std::string GetSavedPrefsString() const;	// only the basic options that players would want for every song
-	static CString ThemeMod( CString sOneMod );
+	static std::string ThemeMod( CString sOneMod );
 	std::string GetThemedString() const;
 	void FromString( CString sOptions );
 	void ChooseRandomMofifiers();

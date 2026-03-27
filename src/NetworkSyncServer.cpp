@@ -874,7 +874,7 @@ void StepManiaLanServer::ScreenNetMusicSelectStatus(PacketFunctions& Packet, uns
 	ServerChat(message);
 }
 
-CString StepManiaLanServer::ListPlayers()
+std::string StepManiaLanServer::ListPlayers()
 {
 	CString list= "Player List:\n";
 	for (unsigned int x = 0; x < Client.size(); ++x)

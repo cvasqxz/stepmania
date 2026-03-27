@@ -17,7 +17,7 @@ public:
 	static CString Sign( CString sPath );
 	static bool Verify( CString sPath, CString sSignature );
 
-	static CString GetMD5( CString fn );	// in Hex
+	static std::string GetMD5( CString fn );	// in Hex
 
 	static std::string GetPublicKeyFileName();
 };
