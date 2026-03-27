@@ -45,7 +45,7 @@ public:
 	bool IsOpen() const { return m_File != nullptr; }
 	int GetOpenMode() const { return m_Mode; }
 	bool AtEOF() const { return m_EOF; }
-	CString GetError() const { return m_Error; }
+	std::string GetError() const { return m_Error.c_str(); }
 	void ClearError() { m_Error = ""; }
 	bool IsGood() const { return IsOpen() && !AtEOF() && m_Error.empty(); }
 

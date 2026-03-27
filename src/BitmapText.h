@@ -33,7 +33,7 @@ public:
 
 	void GetLines( vector<wstring> &wTextLines ) { wTextLines = m_wTextLines; }
 
-	CString GetText() const { return m_sText; }
+	std::string GetText() const { return m_sText.c_str(); }
 	/* Return true if the string 's' will use an alternate string, if available. */
 	bool StringWillUseAlternate(CString sText, CString sAlternateText) const;
 

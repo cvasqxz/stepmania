@@ -72,8 +72,8 @@ public:
 
 	CString m_sName, m_sID;
 
-	CString GetName() const		{ return m_sName; };
-	CString GetID() const		{ return m_sID; };
+	std::string GetName() const		{ return m_sName.c_str(); };
+	std::string GetID() const		{ return m_sID.c_str(); };
 	/* m_sName is the name actors use to look up internal metrics for themselves, and for
 	 * filenames.  m_sID is the name parents use to look up their own metrics for an actor
 	 * (usually via ActorUtil).  (This is experimental; see DifficultyMeter.cpp for more

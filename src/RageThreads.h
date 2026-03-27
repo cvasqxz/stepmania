@@ -70,7 +70,7 @@ class RageMutex
 	void MarkLockedMutex();
 
 public:
-	CString GetName() const { return m_sName; }
+	std::string GetName() const { return m_sName.c_str(); }
 	void SetName( const CString &s ) { m_sName = s; }
 	void Lock();
 	bool TryLock();
@@ -138,7 +138,7 @@ public:
 	RageSemaphore( CString sName, int iInitialValue = 0 );
 	~RageSemaphore();
 
-	CString GetName() const { return m_sName; }
+	std::string GetName() const { return m_sName.c_str(); }
 	int GetValue() const;
 	void Post();
 	void Wait( bool bFailOnTimeout=true );

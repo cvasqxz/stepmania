@@ -21,7 +21,7 @@ public:
 	virtual RageTimer GetStartTime() const { return RageZeroTimer; }
 	virtual float GetVolume() const = 0;
 	virtual int GetID() const = 0;
-	virtual CString GetLoadedFilePath() const = 0;
+	virtual std::string GetLoadedFilePath() const = 0;
 	virtual bool IsStreamingFromDisk() const = 0;
 };
 
@@ -96,7 +96,7 @@ public:
 	void StartPlaying();
 	void StopPlaying();
 
-	CString GetError() const { return error; }
+	std::string GetError() const { return error.c_str(); }
 	bool Error() const { return !error.empty(); }
 
 	RageSound *Play( const RageSoundParams *params=NULL );
@@ -107,7 +107,7 @@ public:
 	int GetSampleRate() const;
 	bool IsStreamingFromDisk() const;
 	bool SetPositionSeconds( float fSeconds );
-	CString GetLoadedFilePath() const { return m_sFilePath; }
+	std::string GetLoadedFilePath() const { return m_sFilePath.c_str(); }
 	bool IsPlaying() const { return playing; }
 	uint64_t GetPlayingThread() const { return playing_thread; }
 

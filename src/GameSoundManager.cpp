@@ -87,7 +87,7 @@ static void StartMusic( MusicToPlay &ToPlay )
 CHECKPOINT;
 	LockMutex L( *g_Mutex );
 CHECKPOINT;
-	if( g_Playing->m_Music->IsPlaying() && !g_Playing->m_Music->GetLoadedFilePath().CompareNoCase(ToPlay.file) )
+	if( g_Playing->m_Music->IsPlaying() && !CompareNoCase(g_Playing->m_Music->GetLoadedFilePath(), ToPlay.file) )
 		return;
 
 CHECKPOINT;
