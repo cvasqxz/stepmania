@@ -31,7 +31,7 @@ public:
 
 	void SetSelection(unsigned sel);
 	int GetSelection() const { return m_iSelection; }
-	CString GetSelectionName() const { return m_asLabels[m_iSelection]; }
+	std::string GetSelectionName() const { return m_asLabels[m_iSelection].c_str(); }
 	void Up();
 	void Down();
 	void Load( const CStringArray& asGroupNames );

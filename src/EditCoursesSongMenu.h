@@ -41,9 +41,9 @@ public:
 		ROW_BEST_WORST_VALUE, 
 		NUM_ROWS 
 	} m_SelectedRow;
-	CString RowToString( Row r )
+	std::string RowToString( Row r )
 	{
-		const CString s[NUM_ROWS] = 
+		const CString s[NUM_ROWS] =
 		{
 			"Group",
 			"Song",
@@ -53,10 +53,10 @@ public:
 			"High Meter",
 			"Best/Worst Value",
 		};
-		return s[r];
+		return s[r].c_str();
 	}
 
-	CString GetSelectedGroup() const		{ return m_aGroups[ m_iSelection[ROW_GROUP] ]; }
+	std::string GetSelectedGroup() const		{ return m_aGroups[ m_iSelection[ROW_GROUP] ].c_str(); }
 	Song *GetSelectedSong() const;
 	Difficulty GetSelectedDifficulty() const { if( m_iSelection[ROW_DIFFICULTY] == 0 ) return DIFFICULTY_INVALID; else return (Difficulty) (m_iSelection[ROW_DIFFICULTY]-1); }
 	CourseEntryType GetSelectedType() const { return (CourseEntryType) m_iSelection[ROW_TYPE]; }

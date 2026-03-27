@@ -29,7 +29,7 @@ private:
 public:
 	static void InitializeErrorHandler();
 	static void GetSoundCardDebugInfo();
-	static CString GetHardwareID( CString name="" );
+	static std::string GetHardwareID( CString name="" );
 		
 	enum hw { HW_HARDWARE, HW_SOFTWARE, HW_DONT_CARE };
 

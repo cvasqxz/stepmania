@@ -436,13 +436,13 @@ void Alsa9Buf::SetSampleRate(int hz)
 	SetSWParams();
 }
 
-CString Alsa9Buf::GetHardwareID( CString name )
+std::string Alsa9Buf::GetHardwareID( CString name )
 {
 	InitializeErrorHandler();
 
 	if( name.empty() )
 		name = DeviceName();
-	
+
 	snd_ctl_t *handle;
 	int err;
 	err = dsnd_ctl_open( &handle, name, 0 );
@@ -458,7 +458,7 @@ CString Alsa9Buf::GetHardwareID( CString name )
 	CString ret = dsnd_ctl_card_info_get_id( info );
 	dsnd_ctl_close(handle);
 
-	return ret;
+	return ret.c_str();
 }
 
 void Alsa9Buf::SetWriteahead( snd_pcm_sframes_t frames )

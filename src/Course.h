@@ -26,7 +26,7 @@ enum CourseEntryType : int
 	NUM_COURSE_ENTRY_TYPES	// leave this at the end
 };
 
-inline CString CourseEntryTypeToString( CourseEntryType cet )
+inline std::string CourseEntryTypeToString( CourseEntryType cet )
 {
 	switch( cet )
 	{

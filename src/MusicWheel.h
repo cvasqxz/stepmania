@@ -64,7 +64,7 @@ public:
 	WheelItemType	GetSelectedType()	{ return m_CurWheelItemData[m_iSelection]->m_Type; }
 	Song*			GetSelectedSong();
 	Course*			GetSelectedCourse()	{ return m_CurWheelItemData[m_iSelection]->m_pCourse; }
-	CString			GetSelectedSection(){ return m_CurWheelItemData[m_iSelection]->m_sSectionName; }
+	std::string		GetSelectedSection(){ return m_CurWheelItemData[m_iSelection]->m_sSectionName.c_str(); }
 
 	bool WheelIsLocked() { return (m_WheelState == STATE_LOCKED ? true : false); }
 	void RebuildMusicWheelItems();

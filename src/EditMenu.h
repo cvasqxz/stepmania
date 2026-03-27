@@ -39,9 +39,9 @@ public:
 		ROW_ACTION, 
 		NUM_ROWS 
 	} m_SelectedRow;
-	CString RowToString( Row r )
+	std::string RowToString( Row r )
 	{
-		const CString s[NUM_ROWS] = 
+		const CString s[NUM_ROWS] =
 		{
 			"Group",
 			"Song",
@@ -51,7 +51,7 @@ public:
 			"Source Difficulty",
 			"Action"
 		};
-		return s[r];
+		return s[r].c_str();
 	}
 
 	enum Action
@@ -63,9 +63,9 @@ public:
 		ACTION_BLANK,
 		NUM_ACTIONS
 	};
-	CString ActionToString( Action a )
+	std::string ActionToString( Action a )
 	{
-		const CString s[NUM_ACTIONS] = 
+		const CString s[NUM_ACTIONS] =
 		{
 			"Edit Existing",
 			"Delete Existing",
@@ -73,13 +73,13 @@ public:
 			"Create from Souce by AutoGen",
 			"Create with Blank"
 		};
-		return s[a];
+		return s[a].c_str();
 	}
 
 	void RefreshNotes();
 
 
-	CString		GetSelectedGroup() const			{ ASSERT(m_iSelection[ROW_GROUP] < (int)m_sGroups.size()); return m_sGroups[m_iSelection[ROW_GROUP]]; }
+	std::string	GetSelectedGroup() const			{ ASSERT(m_iSelection[ROW_GROUP] < (int)m_sGroups.size()); return m_sGroups[m_iSelection[ROW_GROUP]].c_str(); }
 	Song*		GetSelectedSong() const				{ ASSERT(m_iSelection[ROW_SONG] < (int)m_pSongs.size()); return m_pSongs[m_iSelection[ROW_SONG]]; }
 	StepsType	GetSelectedStepsType() const		{ ASSERT(m_iSelection[ROW_STEPS_TYPE] < (int)m_StepsTypes.size()); return m_StepsTypes[m_iSelection[ROW_STEPS_TYPE]]; }
 	Difficulty	GetSelectedDifficulty() const		{ return (Difficulty)m_iSelection[ROW_DIFFICULTY]; }

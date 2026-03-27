@@ -17,7 +17,7 @@ static void *Handle = NULL;
 #undef FUNC
 
 static const CString lib = "libasound.so.2";
-CString LoadALSA()
+std::string LoadALSA()
 {
 	/* If /proc/asound/ doesn't exist, chances are we're on an OSS system.  We shouldn't
 	 * touch ALSA at all, since many OSS systems have old, broken versions of ALSA lying
@@ -55,7 +55,7 @@ CString LoadALSA()
 	return "";
 error:
 	UnloadALSA();
-	return error;
+	return error.c_str();
 }
 
 void UnloadALSA()

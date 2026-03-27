@@ -9,7 +9,7 @@ struct BacktraceNames
 	void FromAddr( const void *p );
 	void FromString( CString str );
 	void Demangle();
-	CString Format() const;
+	std::string Format() const;
 	BacktraceNames(): Address(0), Offset(0) { }
 };
 

@@ -1193,7 +1193,7 @@ int main(int argc, char* argv[])
 #endif
 }
 
-CString SaveScreenshot( CString sDir, bool bSaveCompressed, bool bMakeSignature, int iIndex )
+std::string SaveScreenshot( CString sDir, bool bSaveCompressed, bool bMakeSignature, int iIndex )
 {
 	//
 	// Find a file name for the screenshot
@@ -1258,7 +1258,7 @@ CString SaveScreenshot( CString sDir, bool bSaveCompressed, bool bMakeSignature,
 	if( PREFSMAN->m_bSignProfileData && bMakeSignature )
 		CryptManager::SignFileToFile( sPath );
 
-	return sFileName;
+	return sFileName.c_str();
 }
 
 void InsertCoin( int iNum )

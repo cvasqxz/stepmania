@@ -40,7 +40,7 @@ public:
 	virtual float GetAnimationLengthSeconds() const;
 	virtual void SetSecondsIntoAnimation( float fSeconds );
 	
-	CString	GetTexturePath() const;
+	std::string GetTexturePath() const;
 
 	void SetCustomTextureRect( const RectF &new_texcoord_frect );
 	void SetCustomTextureCoords( float fTexCoords[8] );

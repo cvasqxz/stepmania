@@ -36,22 +36,22 @@ public:
 		ROW_MODIFIERS,
 		NUM_ROWS
 	} m_SelectedRow;
-	CString RowToString( Row r )
+	std::string RowToString( Row r )
 	{
-		const CString s[NUM_ROWS] = 
+		const CString s[NUM_ROWS] =
 		{
 			"Style",
 			"Group",
 			"Difficulty",
 			"Modifiers",
 		};
-		return s[r];
+		return s[r].c_str();
 	}
 
 
 	const Style*	GetSelectedStyle()				{ return m_Styles[m_iSelection[ROW_STYLE]]; }
-	CString			GetSelectedGroup()				{ return m_sGroups[m_iSelection[ROW_GROUP]]; }
-	CString			GetSelectedDifficultyString()	{ return m_sDifficulties[m_iSelection[ROW_DIFFICULTY]]; }
+	std::string		GetSelectedGroup()				{ return m_sGroups[m_iSelection[ROW_GROUP]].c_str(); }
+	std::string		GetSelectedDifficultyString()	{ return m_sDifficulties[m_iSelection[ROW_DIFFICULTY]]; }
 	Difficulty		GetSelectedDifficulty()			{ return StringToDifficulty( GetSelectedDifficultyString() ); }
 	bool			GetSelectedModifiers()			{ return m_iSelection[ROW_MODIFIERS] != 0; }
 

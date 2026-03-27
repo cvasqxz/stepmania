@@ -18,7 +18,7 @@ void ChangeCurrentGame( const Game* g );
 void FocusChanged( bool bHasFocus );
 
 // If successful, return filename of screenshot in sDir, else return ""
-CString SaveScreenshot( CString sDir, bool bSaveCompressed, bool bMakeSignature, int iIndex = -1 );
+std::string SaveScreenshot( CString sDir, bool bSaveCompressed, bool bMakeSignature, int iIndex = -1 );
 
 void InsertCoin( int iNum = 1 );
 void InsertCredit();

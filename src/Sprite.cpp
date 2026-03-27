@@ -646,12 +646,12 @@ void Sprite::SetSecondsIntoAnimation( float fSeconds )
 	UpdateAnimationState();
 }
 
-CString	Sprite::GetTexturePath() const
+std::string Sprite::GetTexturePath() const
 {
 	if( m_pTexture==NULL )
 		return "";
 
-	return m_pTexture->GetID().filename;
+	return m_pTexture->GetID().filename.c_str();
 }
 
 void Sprite::SetCustomTextureRect( const RectF &new_texcoord_frect ) 

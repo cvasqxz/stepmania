@@ -44,9 +44,9 @@ public:
 		ROW_ENTRY_SONG_OPTIONS, 
 		NUM_ROWS 
 	} m_SelectedRow;
-	CString RowToString( Row r )
+	std::string RowToString( Row r )
 	{
-		const CString s[NUM_ROWS] = 
+		const CString s[NUM_ROWS] =
 		{
 			"Course",
 			"Course Options",
@@ -57,7 +57,7 @@ public:
 			"Entry Player Options",
 			"Entry Song Options"
 		};
-		return s[r];
+		return s[r].c_str();
 	}
 
 	enum Action
@@ -67,7 +67,7 @@ public:
 		delete_selected_entry, 
 		NUM_ACTIONS
 	};
-	CString ActionToString( Action a )
+	std::string ActionToString( Action a )
 	{
 		switch( a )
 		{

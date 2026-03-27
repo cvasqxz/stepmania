@@ -27,7 +27,7 @@ private:
 
 public:
 	/* Retrieve the filename of the last file loaded. */
-	CString GetPath() const { return m_sPath; }
+	std::string GetPath() const { return m_sPath.c_str(); }
 	const CString &GetError() const { return m_sError; }
 
 	bool ReadFile( const CString &sPath );

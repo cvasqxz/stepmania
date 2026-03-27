@@ -71,7 +71,7 @@ void BacktraceNames::Demangle() { }
 #endif
 
 
-CString BacktraceNames::Format() const
+std::string BacktraceNames::Format() const
 {
 	CString ShortenedPath = File;
 	if( ShortenedPath != "" )
@@ -88,7 +88,7 @@ CString BacktraceNames::Format() const
 		ret += Symbol + " ";
 	ret += ShortenedPath;
 
-	return ret;
+	return ret.c_str();
 }
 
 

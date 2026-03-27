@@ -39,7 +39,7 @@ public:
 	virtual float GetAnimationLengthSeconds() const;
 	virtual void SetSecondsIntoAnimation( float fSeconds );
 
-	CString		GetDefaultAnimation() { return m_sDefaultAnimation; };
+	std::string	GetDefaultAnimation() { return m_sDefaultAnimation.c_str(); };
 	void		SetDefaultAnimation( CString sAnimation, float fPlayRate = 1 );
 	bool		m_bRevertToDefaultAnimation;
 
