@@ -413,12 +413,12 @@ void DifficultyList::Hide()
 	}
 }
 
-CString DifficultyList::GetDifficultyString( Difficulty d ) const
+std::string DifficultyList::GetDifficultyString( Difficulty d ) const
 {
 	CString s = DifficultyToThemedString( d );
 	if( CAPITALIZE_DIFFICULTY_NAMES )
 		s.MakeUpper();
-	return s;
+	return s.c_str();
 }
 
 /*

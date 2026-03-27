@@ -29,7 +29,7 @@ struct ParsedCommand
 
 	vector<ParsedCommandToken> vTokens;
 
-	CString GetOriginalCommandString() const;	// for when reporting an error in number of params
+	std::string GetOriginalCommandString() const;	// for when reporting an error in number of params
 };
 
 // Take a command list string and return pointers to each of the tokens in the 

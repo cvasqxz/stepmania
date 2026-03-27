@@ -280,7 +280,7 @@ public:
 
 
 	// wrappers
-	CString GetSoundDrivers();
+	std::string GetSoundDrivers();
 
 
 	void ReadGlobalPrefsFromDisk();

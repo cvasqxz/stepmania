@@ -28,7 +28,7 @@ private:
 	void PositionItems();
 	int GetCurrentRowIndex( PlayerNumber pn ) const;
 	void HideRows();
-	CString GetDifficultyString( Difficulty d ) const;
+	std::string GetDifficultyString( Difficulty d ) const;
 
 	AutoActor		m_Cursors[NUM_PLAYERS];
 	ActorFrame		m_CursorFrames[NUM_PLAYERS];

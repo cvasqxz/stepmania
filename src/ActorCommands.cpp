@@ -35,12 +35,12 @@ void ParsedCommand::Set( const CString &sCommand )
 	}
 }
 
-CString ParsedCommand::GetOriginalCommandString() const
+std::string ParsedCommand::GetOriginalCommandString() const
 {
 	CStringArray asTokens;
 	for( unsigned i=0; i<vTokens.size(); i++ )
 		asTokens.push_back( vTokens[i].s );
-	return join( ",", asTokens );
+	return join( ",", asTokens ).c_str();
 }
 
 void ParseCommands( const CString &sCommands, vector<ParsedCommand> &vCommandsOut )

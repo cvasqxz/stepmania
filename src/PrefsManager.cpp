@@ -827,12 +827,12 @@ void PrefsManager::SaveGlobalPrefsToDisk() const
 	ini.WriteFile( STEPMANIA_INI_PATH );
 }
 
-CString PrefsManager::GetSoundDrivers()
+std::string PrefsManager::GetSoundDrivers()
 {
 	if( m_sSoundDrivers.empty() )
-		return (CString)DEFAULT_SOUND_DRIVER_LIST;
+		return DEFAULT_SOUND_DRIVER_LIST;
 	else
-		return m_sSoundDrivers;
+		return m_sSoundDrivers.c_str();
 }
 
 int PrefsManager::GetCoinMode()
