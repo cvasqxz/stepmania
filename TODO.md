@@ -1,6 +1,6 @@
 # TODO.md - StepMania 3.9 Modernization Roadmap
 
-**Version:** 1.35 (2026-03-27)
+**Version:** 1.36 (2026-03-27)
 
 This document outlines opportunities to modernize the StepMania 3.9 codebase (originally from 2004-2005) to modern C++ standards and practices.
 
@@ -323,8 +323,18 @@ constexpr unsigned int OPT_SAVE_PREFERENCES = 1u << 0;
 - ✅ Batch 11: PacketFunctions::ReadNT (commit 1130d89)
 - ✅ Batch 12: Profile: GetDisplayName, GetDisplayTotalCaloriesBurned, GetDisplayTotalCaloriesBurnedToday, GetProfileDisplayNameFromDir; ProfileManager: GetPlayerName, GetProfileDir; RageDisplay::PixelFormatToString; DeviceInput: GetDescription, toString; MsdFile::GetParam (commit 5f2cc90)
 - ✅ Batch 13: TrailID::ToString; RageFile::GetPath; SongCacheIndex::MangleName; ScreenSongOptions::GetNextScreen; ScreenProfileOptions: GetSelectedProfileID, GetSelectedProfileName; ScreenOptions: GetExplanationText, GetExplanationTitle; mySDL_GetError (commit 8c17cf0)
+- ✅ Batch 14: ThemeManager: GetPath/GetPathB/F/G/S/O/ToB/F/G/S/O, GetMetricRaw/GetMetric, GetCurThemeName/Language/Dir (commit 3044475)
+- ✅ Batch 15: PlayerOptions: GetString/GetThemedString/GetSavedPrefsString; SongOptions::GetString; Steps::GetDescription; NoteSkinManager: GetMetric, GetPathToFromNoteSkinAndButton (commit 32df364)
+- ✅ Batch 16: Actor::GetName/GetID; BitmapText::GetText; RageSoundReader/RageSound: GetLoadedFilePath; RageSound::GetError; RageFile::GetError; RageMutex/RageSemaphore::GetName (commit e2783e1)
+- ✅ Batch 17: ParsedCommand::GetOriginalCommandString; DifficultyList::GetDifficultyString; PrefsManager::GetSoundDrivers (commit ea7696d)
+- ✅ Batch 18: ModeSwitcher::GetStyleName/GetNextStyleName/GetPrevStyleName; BackgroundLoader::GetRequest/GetCachePath (commit 273508b)
+- ✅ Batch 19: MsdFile::GetError; RageDisplay::GetTextureDiagnostics (virtual+OGL override); RageFileDriverObj::GetDisplayPath (virtual+Direct override) (commit 4e057a8)
+- ✅ Batch 20: CryptManager::GetPublicKeyFileName; Font::GetFontName, GetPageNameFromFileName (commit 26722da)
+- ✅ Batch 21: CryptManager::GetMD5; PlayerOptions::ThemeMod; NetworkSyncServer::ListPlayers (commit 39d3900)
+- ✅ Batch 22: Background::CreateRandomBGA; FontPageSettings::MapRange; NotesWriterDWI::NotesToDWIString (×3), OptimizeDWIString (commit 3c88197)
+- ✅ Batch 23: RageDisplay/OGL/D3D/Null::TryVideoMode; LowLevelWindow/SDL::TryVideoMode (commit f25427f)
 
-**Migration status (2026-03-27):** ~79 CString-returning functions remain in src/*.cpp (down from ~122 at session start, ~3115 total occurrences before migration began).
+**Migration status (2026-03-27):** ~8 CString-returning function definitions remain in src/*.cpp (down from ~122 at session start). Remaining are: ThemeManager protected internals (GetPathToAndFallback, GetPathToRaw, GetThemeDirFromName, GetMetricsIniPath, GetLanguageIniPath), XmlFile entity helpers (XENTITYS::Ref2Entity/Entity2Ref), and free functions in AttackDisplay/EnumHelper (file-local/unused). ssprintf/vssprintf/hr_ssprintf/werr_ssprintf intentionally kept as CString until sm_crash overload is added.
 
 **Migration strategy:** Convert subsystems bottom-up as complete dependency chains. CString inherits from std::string so CString→std::string is safe for by-value params, but CString& cannot be passed to std::string& without explicit cast.
 
