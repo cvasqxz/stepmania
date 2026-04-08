@@ -44,15 +44,15 @@ struct XENTITYS : public std::vector<XENTITY>
 	int GetEntityCount( const char* str );
 	int Ref2Entity( const char* estr, char* str, int strlen );
 	int Entity2Ref( const char* str, char* estr, int estrlen );
-	CString Ref2Entity( const char* estr );
-	CString Entity2Ref( const char* str );	
+	std::string Ref2Entity( const char* estr );
+	std::string Entity2Ref( const char* str );
 
 	XENTITYS(){};
 	XENTITYS( XENTITY *entities, int count );
 };
 extern XENTITYS entityDefault;
-CString XRef2Entity( const char* estr );
-CString XEntity2Ref( const char* str );	
+std::string XRef2Entity( const char* estr );
+std::string XEntity2Ref( const char* str );	
 
 enum PCODE
 {

@@ -287,14 +287,14 @@ void PrintCodecError(HRESULT hr, CString s)
 		);
 }
 
-CString MovieTexture_DShow::GetActiveFilterList()
+std::string MovieTexture_DShow::GetActiveFilterList()
 {
-	CString ret;
-	
+	std::string ret;
+
 	IEnumFilters *pEnum = NULL;
 	HRESULT hr = m_pGB->EnumFilters(&pEnum);
 	if (FAILED(hr))
-		return hr_ssprintf(hr, "EnumFilters");
+		return hr_ssprintf(hr, "EnumFilters").c_str();
 
 	IBaseFilter *pF = NULL;
 	while (S_OK == pEnum->Next(1, &pF, 0))
@@ -304,7 +304,7 @@ CString MovieTexture_DShow::GetActiveFilterList()
 
 		if(ret != "")
 			ret += ", ";
-		ret += WStringToCString(FilterInfo.achName);
+		ret += WStringToCString(FilterInfo.achName).c_str();
 
 		if( FilterInfo.pGraph )
 			FilterInfo.pGraph->Release();

@@ -1151,13 +1151,12 @@ int XENTITYS::Entity2Ref( const char* str, char* estr, int estrlen )
 	return pes-estr;
 }
 
-CString XENTITYS::Ref2Entity( const char* estr )
+std::string XENTITYS::Ref2Entity( const char* estr )
 {
-	CString es;
+	std::string es;
 	if( estr )
 	{
 		int len = strlen(estr);
-//		char* esbuf = es.GetBufferSetLength( len+1 );
 		char* szTemp = new char[len+1];
 		if( szTemp )
 			Ref2Entity( estr, szTemp, len );
@@ -1167,16 +1166,15 @@ CString XENTITYS::Ref2Entity( const char* estr )
 	return es;
 }
 
-CString XENTITYS::Entity2Ref( const char* str )
+std::string XENTITYS::Entity2Ref( const char* str )
 {
-	CString s;
+	std::string s;
 	if( str )
 	{
 		int nEntityCount = GetEntityCount(str);
 		if( nEntityCount == 0 )
-			return CString(str);
+			return std::string(str);
 		int len = strlen(str) + nEntityCount*10 ;
-		//char* sbuf = s.GetBufferSetLength( len+1 );
 		char* szTemp = new char[len+1];
 		if( szTemp )
 			Entity2Ref( str, szTemp, len );
@@ -1186,12 +1184,12 @@ CString XENTITYS::Entity2Ref( const char* str )
 	return s;
 }
 
-CString XRef2Entity( const char* estr )
+std::string XRef2Entity( const char* estr )
 {
 	return entityDefault.Ref2Entity( estr );
 }
 
-CString XEntity2Ref( const char* str )
+std::string XEntity2Ref( const char* str )
 {
 	return entityDefault.Entity2Ref( str );
 }
