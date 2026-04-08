@@ -279,7 +279,7 @@ public:
 
 
 void Replace_Unicode_Markers( CString &Text );
-CString WcharDisplayText(wchar_t c);
+std::string WcharDisplayText(wchar_t c);
 
 std::string Basename( const CString &dir );
 std::string Dirname( const CString &dir );
@@ -344,7 +344,7 @@ void FlushDirCache();
 
 // call FixSlashes on any path that came from the user
 void FixSlashesInPlace( CString &sPath );
-CString FixSlashes( CString sPath );
+std::string FixSlashes( const std::string &sPath );
 void CollapsePath( CString &sPath, bool bRemoveLeadingDot=false );
 
 // helper file functions used by Bookkeeper and ProfileManager

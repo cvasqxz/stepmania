@@ -55,24 +55,24 @@ bool GetFileVersion( CString fn, CString &out )
 	return true;
 }
 
-CString FindSystemFile( CString fn )
+std::string FindSystemFile( const std::string &fn )
 {
 	char path[MAX_PATH];
 	GetSystemDirectory( path, MAX_PATH );
 
-	CString sPath = ssprintf( "%s\\%s", path, fn.c_str() );
+	std::string sPath = ssprintf( "%s\\%s", path, fn.c_str() ).c_str();
 	struct stat buf;
-	if( !stat( sPath, &buf ) )
+	if( !stat( sPath.c_str(), &buf ) )
 		return sPath;
 
-	sPath = ssprintf( "%s\\drivers\\%s", path, fn.c_str() );
-	if( !stat( sPath, &buf ) )
+	sPath = ssprintf( "%s\\drivers\\%s", path, fn.c_str() ).c_str();
+	if( !stat( sPath.c_str(), &buf ) )
 		return sPath;
 
 	GetWindowsDirectory( path, MAX_PATH );
 
-	sPath = ssprintf( "%s\\%s", path, fn.c_str() );
-	if( !stat( sPath, &buf ) )
+	sPath = ssprintf( "%s\\%s", path, fn.c_str() ).c_str();
+	if( !stat( sPath.c_str(), &buf ) )
 		return sPath;
 
 	return "";

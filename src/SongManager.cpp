@@ -334,7 +334,7 @@ void SongManager::FreeSongs()
 	m_pShuffledSongs.clear();
 }
 
-CString SongManager::GetGroupBannerPath( CString sGroupName )
+std::string SongManager::GetGroupBannerPath( CString sGroupName )
 {
 	unsigned i;
 	for(i = 0; i < m_sGroupNames.size(); ++i)
@@ -463,7 +463,7 @@ int SongManager::GetNumCourses() const
 	return m_pCourses.size();
 }
 
-CString SongManager::ShortenGroupName( CString sLongGroupName )
+std::string SongManager::ShortenGroupName( CString sLongGroupName )
 {
 	sLongGroupName.Replace( "Dance Dance Revolution", "DDR" );
 	sLongGroupName.Replace( "dance dance revolution", "DDR" );

@@ -1073,11 +1073,10 @@ void Replace_Unicode_Markers( CString &Text )
 }
 
 /* Form a string to identify a wchar_t with ASCII. */
-CString WcharDisplayText(wchar_t c)
+std::string WcharDisplayText(wchar_t c)
 {
-	CString chr;
-	chr = ssprintf("U+%4.4x", c);
-	if(c < 128) chr += ssprintf(" ('%c')", char(c));
+	std::string chr = ssprintf("U+%4.4x", c).c_str();
+	if(c < 128) chr += ssprintf(" ('%c')", char(c)).c_str();
 	return chr;
 }
 
@@ -1166,10 +1165,13 @@ void FixSlashesInPlace( CString &sPath )
 			sPath[i] = '/';
 }
 
-CString FixSlashes( CString sPath )
+std::string FixSlashes( const std::string &sPath )
 {
-	FixSlashesInPlace( sPath );
-    return sPath;
+	std::string result = sPath;
+	for( unsigned i = 0; i < result.size(); ++i )
+		if( result[i] == '\\' )
+			result[i] = '/';
+	return result;
 }
 
 /*

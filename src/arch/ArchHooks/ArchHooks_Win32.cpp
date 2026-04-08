@@ -116,7 +116,7 @@ void ArchHooks_Win32::CheckVideoDriver()
 	if( MessageIsIgnored( "OLD_DRIVER_WARNING" ) )
 		return;
 
-	CString sPrimaryDeviceName = GetPrimaryVideoName();
+	std::string sPrimaryDeviceName = GetPrimaryVideoName();
 	if( sPrimaryDeviceName == "" )
 		return;
 

@@ -1,0 +1,112 @@
+
+
+Fri Mar  6 12:58:00 2026
+Command line: TestDisk
+
+TestDisk 7.2, Data Recovery Utility, February 2024
+Christophe GRENIER <grenier@cgsecurity.org>
+https://www.cgsecurity.org
+OS: Linux, kernel 6.18.13-arch1-1 (#1 SMP PREEMPT_DYNAMIC Wed, 25 Feb 2026 23:12:35 +0000) x86_64
+Compiler: GCC 14.2
+ext2fs lib: 1.47.3, ntfs lib: libntfs-3g, reiserfs lib: none, ewf lib: none, curses lib: ncurses 6.5
+/dev/sda: LBA, HPA, LBA48 support
+/dev/sda: size       1875385008 sectors
+/dev/sda: user_max   1875385008 sectors
+/dev/sda: native_max 1875385008 sectors
+/dev/sdb: LBA, HPA, LBA48, DCO support
+/dev/sdb: size       1953525168 sectors
+/dev/sdb: user_max   1953525168 sectors
+/dev/sdb: native_max 1953525168 sectors
+Hard disk list
+Disk /dev/sda - 960 GB / 894 GiB - CHS 116737 255 63, sector size=512 - KINGSTON SA400S3, FW:Z1.3
+Disk /dev/sdb - 1000 GB / 931 GiB - CHS 121601 255 63, sector size=512 - Samsung SSD 870, FW:2B6Q
+Disk /dev/sdc - 275 GB / 256 GiB - CHS 33441 255 63, sector size=512 - CT275MX300SSD1, FW:1.02
+Disk /dev/sdd - 500 GB / 465 GiB - CHS 60801 255 63, sector size=512 - RTL9210B-CG, FW:1.00
+Disk /dev/nvme0n1 - 500 GB / 465 GiB - CHS 476940 64 32, sector size=512 - WDS500G3X0C-00SJG0, S/N:21284U801793
+
+Partition table type (auto): Intel
+Disk /dev/sdd - 500 GB / 465 GiB - RTL9210B-CG
+Partition table type: Intel
+
+Analyse Disk /dev/sdd - 500 GB / 465 GiB - CHS 60801 255 63
+Geometry from i386 MBR: head=255 sector=63
+check_part_i386 failed for partition type 07
+Current partition structure:
+Invalid NTFS or exFAT boot
+ 1 P HPFS - NTFS              0  32 33 60800 237 45  976764928
+ 1 P HPFS - NTFS              0  32 33 60800 237 45  976764928
+No partition is bootable
+
+search_part()
+Disk /dev/sdd - 500 GB / 465 GiB - CHS 60801 255 63
+Search for partition aborted
+
+Results
+
+interface_write()
+ 
+No partition found or selected for recovery
+
+interface_write()
+ 
+No partition found or selected for recovery
+simulate write!
+
+write_mbr_i386: starting...
+write_all_log_i386: starting...
+No extended partition
+
+Interface Advanced
+Geometry from i386 MBR: head=255 sector=63
+check_part_i386 failed for partition type 07
+ 1 P HPFS - NTFS              0  32 33 60800 237 45  976764928
+
+ntfs_boot_sector
+ 1 P HPFS - NTFS              0  32 33 60800 237 45  976764928
+filesystem size           3399704436437297449 1
+sectors_per_cluster       13 0
+mft_lcn                   3978425819141910832 0
+mftmirr_lcn               4557147201846524216 0
+clusters_per_mft_record   64 0
+clusters_per_index_record 68 0
+Boot sector
+Status: Bad
+
+Backup boot sector
+Status: Bad
+
+Sectors are not identical.
+
+A valid NTFS Boot sector must be present in order to access
+any data; even if the partition is not bootable.
+rebuild_NTFS_BS
+Search mft stopped:   94371840/976764928
+Failed to rebuild NTFS boot sector.
+
+ntfs_boot_sector
+ 1 P HPFS - NTFS              0  32 33 60800 237 45  976764928
+filesystem size           3399704436437297449 1
+sectors_per_cluster       13 0
+mft_lcn                   3978425819141910832 0
+mftmirr_lcn               4557147201846524216 0
+clusters_per_mft_record   64 0
+clusters_per_index_record 68 0
+Boot sector
+Status: Bad
+
+Backup boot sector
+Status: Bad
+
+Sectors are not identical.
+
+A valid NTFS Boot sector must be present in order to access
+any data; even if the partition is not bootable.
+SIGINT detected! PhotoRec has been killed.
+SIGINT detected! PhotoRec has been killed.
+Partition table type (auto): Intel
+
+Analyse Disk /dev/sdd - 500 GB / 465 GiB - CHS 60801 255 63
+Geometry from i386 MBR: head=255 sector=63
+check_part_i386 failed for partition type 07
+Using locale 'LC_CTYPE=en_US.UTF-8;LC_NUMERIC=es_CL.UTF-8;LC_TIME=es_CL.UTF-8;LC_COLLATE=en_US.UTF-8;LC_MONETARY=es_CL.UTF-8;LC_MESSAGES=en_US.UTF-8;LC_PAPER=es_CL.UTF-8;LC_NAME=es_CL.UTF-8;LC_ADDRESS=es_CL.UTF-8;LC_TELEPHONE=es_CL.UTF-8;LC_MEASUREMENT=es_CL.UTF-8;LC_IDENTIFICATION=en_US.UTF-8'.
+Terminal has only 23 lines

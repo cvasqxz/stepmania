@@ -24,7 +24,7 @@
 
 
 
-CString GetStatsLineTitle( PlayerNumber pn, EndingStatsLine line )
+std::string GetStatsLineTitle( PlayerNumber pn, EndingStatsLine line )
 {
 	switch( line )
 	{
@@ -61,7 +61,7 @@ CString GetStatsLineTitle( PlayerNumber pn, EndingStatsLine line )
 	}
 }
 
-CString GetStatsLineValue( PlayerNumber pn, EndingStatsLine line )
+std::string GetStatsLineValue( PlayerNumber pn, EndingStatsLine line )
 {
 	Profile* pProfile = PROFILEMAN->GetProfile( pn );
 	ASSERT( pProfile );

@@ -6,15 +6,15 @@
 #include "RegistryAccess.h"
 
 // this will not work on 95 and NT b/c of EnumDisplayDevices
-CString GetPrimaryVideoName()
+std::string GetPrimaryVideoName()
 {
     typedef BOOL (WINAPI* pfnEnumDisplayDevices)(PVOID,DWORD,PDISPLAY_DEVICE,DWORD);
 	pfnEnumDisplayDevices EnumDisplayDevices;
     HINSTANCE  hInstUser32;
-    
+
     hInstUser32 = LoadLibrary("User32.DLL");
-    if( !hInstUser32 ) 
-		return "";  
+    if( !hInstUser32 )
+		return "";
 
 	// VC6 don't have a stub to static link with, so link dynamically.
 	EnumDisplayDevices = (pfnEnumDisplayDevices)GetProcAddress(hInstUser32,"EnumDisplayDevicesA");
@@ -23,8 +23,8 @@ CString GetPrimaryVideoName()
         FreeLibrary(hInstUser32);
         return "";
     }
-	
-	CString sPrimaryDeviceName;
+
+	std::string sPrimaryDeviceName;
 	for( DWORD i=0; true; i++ )
 	{
 		DISPLAY_DEVICE dd;
@@ -43,12 +43,12 @@ CString GetPrimaryVideoName()
 	return sPrimaryDeviceName;
 }
 
-CString GetPrimaryVideoDriverName()
+std::string GetPrimaryVideoDriverName()
 {
-	const CString sPrimaryDeviceName = GetPrimaryVideoName();
+	const std::string sPrimaryDeviceName = GetPrimaryVideoName();
 	if( sPrimaryDeviceName != "" )
 		return sPrimaryDeviceName;
-	
+
 	LOG->Warn("GetPrimaryVideoName failed; renderer selection may be wrong");
 
 	VideoDriverInfo info;

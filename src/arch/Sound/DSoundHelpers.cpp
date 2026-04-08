@@ -20,7 +20,7 @@ BOOL CALLBACK DSound::EnumCallback( LPGUID lpGuid, LPCSTR lpcstrDescription, LPC
 		sLine += ssprintf( " %s", lpcstrModule );
 
 #ifndef _XBOX
-		CString sPath = FindSystemFile( lpcstrModule );
+		std::string sPath = FindSystemFile( lpcstrModule );
 		if( sPath != "" )
 		{
 			CString ver;

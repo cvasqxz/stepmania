@@ -27,7 +27,7 @@ static void GetMemoryDebugInfo()
 
 static void GetDisplayDriverDebugInfo()
 {
-	CString sPrimaryDeviceName = GetPrimaryVideoName();
+	std::string sPrimaryDeviceName = GetPrimaryVideoName();
 	
 	if( sPrimaryDeviceName == "" )
 		LOG->Info( "Primary display driver could not be determined." );

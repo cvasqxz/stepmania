@@ -4,7 +4,7 @@
 #define GET_FILE_INFORMATION_H
 
 bool GetFileVersion( CString fn, CString &out );
-CString FindSystemFile( CString fn );
+std::string FindSystemFile( const std::string &fn );
 
 #endif
 

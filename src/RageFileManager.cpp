@@ -34,7 +34,7 @@ struct LoadedDriver
 	CString Type, Root, MountPoint;
 
 	LoadedDriver() { driver = nullptr; }
-	CString GetPath( const CString &path );
+	std::string GetPath( const CString &path );
 };
 
 static vector<LoadedDriver> g_Drivers;
@@ -214,7 +214,7 @@ RageFileManager::~RageFileManager()
 }
 
 /* path must be normalized (FixSlashesInPlace, CollapsePath). */
-CString LoadedDriver::GetPath( const CString &path )
+std::string LoadedDriver::GetPath( const CString &path )
 {
 	/* Default mountpoints: */
 	if( MountPoint.size() == 0 )

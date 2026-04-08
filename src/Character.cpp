@@ -29,7 +29,7 @@ bool Character::Load( CString sCharDir )
 }
 
 
-CString GetRandomFileInDir( CString sDir )
+std::string GetRandomFileInDir( CString sDir )
 {
 	CStringArray asFiles;
 	GetDirListing( sDir, asFiles, false, true );

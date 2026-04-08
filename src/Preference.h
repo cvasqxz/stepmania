@@ -13,7 +13,7 @@ enum PrefsGroup
 	Options,
 };
 
-inline CString PrefsGroupToString( PrefsGroup pg )
+inline std::string PrefsGroupToString( PrefsGroup pg )
 {
 	switch( pg )
 	{
