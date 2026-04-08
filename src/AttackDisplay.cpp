@@ -10,7 +10,7 @@
 
 std::string GetAttackPath( const std::string &sAttack )
 {
-	std::string ret = ssprintf( "AttackDisplay attack %s", sAttack.c_str() ).c_str();
+	std::string ret = std_ssprintf( "AttackDisplay attack %s", sAttack.c_str() );
 
 	/* 1.5x -> 1_5x.  If we pass a period to THEME->GetPathTo, it'll think
 	 * we're looking for a specific file and not search. */

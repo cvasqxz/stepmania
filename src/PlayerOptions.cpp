@@ -65,7 +65,7 @@ static std::string AddPart( float level, const std::string &name )
 	if( level == 0 )
 		return "";
 
-	const std::string LevelStr = (level == 1)? std::string(""): ssprintf( "%i%% ", static_cast<int>(roundf(level*100)) ).c_str();
+	const std::string LevelStr = (level == 1)? std::string(""): std_ssprintf( "%i%% ", static_cast<int>(roundf(level*100)) );
 
 	return LevelStr + name + ", ";
 }
@@ -79,7 +79,7 @@ std::string PlayerOptions::GetString() const
 		if( m_fScrollSpeed != 1 )
 		{
 			/* -> 1.00 */
-			std::string s = ssprintf( "%2.2f", m_fScrollSpeed ).c_str();
+			std::string s = std_ssprintf( "%2.2f", m_fScrollSpeed );
 			if( s[s.size()-1] == '0' ) {
 				/* -> 1.0 */
 				s.erase(s.size()-1);	// delete last char
@@ -93,7 +93,7 @@ std::string PlayerOptions::GetString() const
 	}
 	else
 	{
-		std::string s = ssprintf( "C%.0f", m_fScrollBPM ).c_str();
+		std::string s = std_ssprintf( "C%.0f", m_fScrollBPM );
 		sReturn += s + ", ";
 	}
 

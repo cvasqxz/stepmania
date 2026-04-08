@@ -61,7 +61,7 @@ static std::string ov_ssprintf( int err, const char *fmt, ...)
 {
     va_list	va;
     va_start(va, fmt);
-    std::string s = vssprintf( fmt, va ).c_str();
+    std::string s = std_vssprintf( fmt, va );
     va_end(va);
 
 	std::string errstr;

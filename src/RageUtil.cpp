@@ -161,7 +161,7 @@ std::string PrettyPercent( float fNumerator, float fDenominator)
 
 std::string Commify( int iNum )
 {
-	std::string sNum = ssprintf("%d",iNum);
+	std::string sNum = std_ssprintf("%d",iNum);
 	std::string sReturn;
 	for( unsigned i=0; i<sNum.length(); i++ )
 	{
