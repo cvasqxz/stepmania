@@ -60,32 +60,32 @@ void PlayerOptions::Approach( const PlayerOptions& other, float fDeltaSeconds )
 	APP( fPassmark );
 }
 
-static CString AddPart( float level, CString name )
+static std::string AddPart( float level, const std::string &name )
 {
 	if( level == 0 )
 		return "";
 
-	const CString LevelStr = (level == 1)? CString(""): ssprintf( "%i%% ", static_cast<int>(roundf(level*100)) );
+	const std::string LevelStr = (level == 1)? std::string(""): ssprintf( "%i%% ", static_cast<int>(roundf(level*100)) ).c_str();
 
 	return LevelStr + name + ", ";
 }
 
 std::string PlayerOptions::GetString() const
 {
-	CString sReturn;
+	std::string sReturn;
 
 	if( !m_fTimeSpacing )
 	{
 		if( m_fScrollSpeed != 1 )
 		{
 			/* -> 1.00 */
-			CString s = ssprintf( "%2.2f", m_fScrollSpeed );
-			if( s[s.GetLength()-1] == '0' ) {
+			std::string s = ssprintf( "%2.2f", m_fScrollSpeed ).c_str();
+			if( s[s.size()-1] == '0' ) {
 				/* -> 1.0 */
-				s.erase(s.GetLength()-1);	// delete last char
-				if( s[s.GetLength()-1] == '0' ) {
+				s.erase(s.size()-1);	// delete last char
+				if( s[s.size()-1] == '0' ) {
 					/* -> 1 */
-					s.erase(s.GetLength()-2);	// delete last 2 chars
+					s.erase(s.size()-2);	// delete last 2 chars
 				}
 			}
 			sReturn += s + "x, ";
@@ -93,7 +93,7 @@ std::string PlayerOptions::GetString() const
 	}
 	else
 	{
-		CString s = ssprintf( "C%.0f", m_fScrollBPM );
+		std::string s = ssprintf( "C%.0f", m_fScrollBPM ).c_str();
 		sReturn += s + ", ";
 	}
 
@@ -171,8 +171,8 @@ std::string PlayerOptions::GetString() const
 	if( !m_sNoteSkin.empty()  &&  m_sNoteSkin.CompareNoCase("default")!=0 )
 		sReturn += m_sNoteSkin + ", ";
 
-	if( sReturn.GetLength() > 2 )
-		sReturn.erase( sReturn.GetLength()-2 );	// delete the trailing ", "
+	if( sReturn.size() > 2 )
+		sReturn.erase( sReturn.size()-2 );	// delete the trailing ", "
 	return sReturn;
 }
 
