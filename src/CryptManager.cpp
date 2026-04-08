@@ -169,13 +169,13 @@ bool CryptManager::Verify( CString sPath, CString sSignature )
 	}
 }
 
-static CString BinaryToHex( const unsigned char *string, int iNumBytes )
+static std::string BinaryToHex( const unsigned char *string, int iNumBytes )
 {
-	CString s;
+	std::string s;
 	for( int i=0; i<iNumBytes; i++ )
 	{
 		unsigned val = string[i];
-		s += ssprintf( "%x", val );
+		s += ssprintf( "%x", val ).c_str();
 	}
 	return s;
 }

@@ -24,7 +24,7 @@
 #include <vfw.h> /* for GetVideoCodecDebugInfo */
 #pragma comment(lib, "vfw32.lib")
 
-static CString FourCCToString(int fcc)
+static std::string FourCCToString(int fcc)
 {
 	char c[4];
 	c[0] = char((fcc >> 0) & 0xFF);
@@ -32,7 +32,7 @@ static CString FourCCToString(int fcc)
 	c[2] = char((fcc >> 16) & 0xFF);
 	c[3] = char((fcc >> 24) & 0xFF);
 
-	CString s;
+	std::string s;
 	for( int i = 0; i < 4; ++i )
 		s += clamp( c[i], '\x20', '\x7e' );
 

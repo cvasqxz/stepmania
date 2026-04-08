@@ -64,7 +64,7 @@ RageFileDriverDirect::RageFileDriverDirect( CString root_ ):
 }
 
 
-static CString MakeTempFilename( const CString &sPath )
+static std::string MakeTempFilename( const std::string &sPath )
 {
 	/* "Foo/bar/baz" -> "Foo/bar/new.baz.new".  Both prepend and append: we don't
 	 * want a wildcard search for the filename to match (foo.txt.new matches foo.txt*),

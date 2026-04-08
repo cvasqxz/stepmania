@@ -33,20 +33,20 @@ static float g_fLastMixTimes[NUM_MIX_TIMES];
 static int g_fLastMixTimePos = 0;
 static int g_iNumIOProcCalls = 0;
 
-static CString FormatToString( int fmt )
+static std::string FormatToString( int fmt )
 {
 	char c[4];
 	c[0] = (fmt >> 24) & 0xFF;
 	c[1] = (fmt >> 16) & 0xFF;
 	c[2] = (fmt >>  8) & 0xFF;
 	c[3] = (fmt)       & 0xFF;
-    
+
 	/* Sanitize: */
 	for( int i = 0; i < 4; ++i )
 		if( c[i] < 32 || c[i] >= 127 )
-			return ssprintf( "0x%X", fmt );
-    
-	return ssprintf( "%c%c%c%c", c[0], c[1], c[2], c[3] );
+			return ssprintf( "0x%X", fmt ).c_str();
+
+	return ssprintf( "%c%c%c%c", c[0], c[1], c[2], c[3] ).c_str();
 }
 
 RageSound_CA::RageSound_CA()
