@@ -57,14 +57,14 @@ static long OggRageFile_tell_func( void *datasource )
 const int read_block_size = 1024;
 
 
-static CString ov_ssprintf( int err, const char *fmt, ...)
+static std::string ov_ssprintf( int err, const char *fmt, ...)
 {
     va_list	va;
     va_start(va, fmt);
-    CString s = vssprintf( fmt, va );
+    std::string s = vssprintf( fmt, va ).c_str();
     va_end(va);
 
-	CString errstr;
+	std::string errstr;
 	switch( err )
 	{
 	/* XXX: In the case of OV_EREAD, can we snoop at errno? */
@@ -79,10 +79,10 @@ static CString ov_ssprintf( int err, const char *fmt, ...)
 	case OV_EBADPACKET:	errstr = "OV_EBADPACKET"; break;
 	case OV_EBADLINK:	errstr = "Link corrupted"; break;
 	case OV_ENOSEEK:	errstr = "Stream is not seekable"; break;
-	default:			errstr = ssprintf( "unknown error %i", err ); break;
+	default:			errstr = ssprintf( "unknown error %i", err ).c_str(); break;
 	}
 
-	return s + ssprintf( " (%s)", errstr.c_str() );
+	return s + ssprintf( " (%s)", errstr.c_str() ).c_str();
 }
 
 SoundReader_FileReader::OpenResult RageSoundReader_Vorbisfile::Open(CString filename_)
