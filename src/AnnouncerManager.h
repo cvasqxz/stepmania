@@ -8,8 +8,8 @@ public:
 	AnnouncerManager();
 
 	void GetAnnouncerNames( CStringArray& AddTo );
-	bool DoesAnnouncerExist( CString sAnnouncerName );
-	void SwitchAnnouncer( CString sNewAnnouncerName );
+	bool DoesAnnouncerExist( const std::string& sAnnouncerName );
+	void SwitchAnnouncer( const std::string& sNewAnnouncerName );
 	std::string GetCurAnnouncerName() { return m_sCurAnnouncerName.c_str(); };
 	void NextAnnouncer();
 

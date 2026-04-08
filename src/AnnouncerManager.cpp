@@ -30,7 +30,7 @@ void AnnouncerManager::GetAnnouncerNames( CStringArray& AddTo )
 			AddTo.erase(AddTo.begin()+i, AddTo.begin()+i+1 );
 }
 
-bool AnnouncerManager::DoesAnnouncerExist( CString sAnnouncerName )
+bool AnnouncerManager::DoesAnnouncerExist( const std::string& sAnnouncerName )
 {
 	if( sAnnouncerName == "" )
 		return true;
@@ -38,7 +38,7 @@ bool AnnouncerManager::DoesAnnouncerExist( CString sAnnouncerName )
 	CStringArray asAnnouncerNames;
 	GetAnnouncerNames( asAnnouncerNames );
 	for( unsigned i=0; i<asAnnouncerNames.size(); i++ )
-		if( 0==stricmp(sAnnouncerName, asAnnouncerNames[i]) )
+		if( 0==stricmp(sAnnouncerName.c_str(), asAnnouncerNames[i]) )
 			return true;
 	return false;
 }
@@ -48,7 +48,7 @@ std::string AnnouncerManager::GetAnnouncerDirFromName( const std::string& sAnnou
 	return ANNOUNCERS_DIR + sAnnouncerName + "/";
 }
 
-void AnnouncerManager::SwitchAnnouncer( CString sNewAnnouncerName )
+void AnnouncerManager::SwitchAnnouncer( const std::string& sNewAnnouncerName )
 {
 	if( !DoesAnnouncerExist(sNewAnnouncerName) )
 		m_sCurAnnouncerName = "";
