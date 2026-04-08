@@ -65,7 +65,7 @@ void FileNameToClassAndElement( const CString &sFileName, CString &sClassNameOut
 }
 
 
-CString ClassAndElementToFileName( const CString &sClassName, const CString &sElement )
+std::string ClassAndElementToFileName( const std::string &sClassName, const std::string &sElement )
 {
 	if( sClassName.empty() )
 		return sElement;

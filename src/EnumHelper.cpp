@@ -3,7 +3,7 @@
 #include "EnumHelper.h"
 #include "ThemeManager.h"
 
-CString GetThemedString( CCStringRef sClass, CCStringRef sValue )
+std::string GetThemedString( CCStringRef sClass, CCStringRef sValue )
 {
 	return THEME->GetMetric( sClass, sValue );
 }

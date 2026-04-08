@@ -54,9 +54,9 @@ static const char *anims[NUM_ANIMATIONS] =
 };
 
 
-static CString GetAnimPath( Animation a )
+static std::string GetAnimPath( Animation a )
 {
-	return CString("Characters/") + anims[a];
+	return std::string("Characters/") + anims[a];
 }
 
 static bool HaveAllCharAnimations()

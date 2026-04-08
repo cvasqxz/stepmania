@@ -77,10 +77,10 @@ int TestBinaryRead( RageFile &test, int size, bool AllowEOF, int ExpectedFilePos
 	return 1;
 }
 
-CString MakeTextTestLine( int line, int size )
+std::string MakeTextTestLine( int line, int size )
 {
-	CString ret = ssprintf( "%02i", line );
-	ret.append( CString( size-ret.size(), 'x' ) );
+	std::string ret = ssprintf( "%02i", line ).c_str();
+	ret.append( size - ret.size(), 'x' );
 	return ret;
 }
 

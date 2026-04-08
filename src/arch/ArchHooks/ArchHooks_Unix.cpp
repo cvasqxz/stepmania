@@ -119,8 +119,8 @@ ArchHooks_Unix::ArchHooks_Unix()
 #define _CS_GNU_LIBC_VERSION 2
 #endif
 
-static CString LibcVersion()
-{	
+static std::string LibcVersion()
+{
 	char buf[1024] = "(error)";
 	int ret = confstr( _CS_GNU_LIBC_VERSION, buf, sizeof(buf) );
 	if( ret == -1 )

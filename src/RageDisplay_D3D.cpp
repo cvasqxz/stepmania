@@ -35,7 +35,7 @@
 #include <list>
 
 
-CString GetErrorString( HRESULT hr )
+std::string GetErrorString( HRESULT hr )
 {
 	char szError[1024] = "";
 	D3DXGetErrorString( hr, szError, sizeof(szError) );

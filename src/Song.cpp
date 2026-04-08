@@ -295,12 +295,13 @@ static void GetImageDirListing( CString sPath, CStringArray &AddTo, bool bReturn
 	GetDirListing( sPath + ".gif", AddTo, false, bReturnPathToo ); 
 }
 
-static CString RemoveInitialWhitespace( CString s )
+static std::string RemoveInitialWhitespace( const std::string &s )
 {
-	size_t i = s.find_first_not_of(" \t\r\n");
-	if( i != s.npos )
-		s.erase( 0, i );
-	return s;
+	std::string result = s;
+	size_t i = result.find_first_not_of(" \t\r\n");
+	if( i != std::string::npos )
+		result.erase( 0, i );
+	return result;
 }
 
 /* This is called within TidyUpData, before autogen notes are added. */

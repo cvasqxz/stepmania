@@ -539,7 +539,7 @@ struct VideoCardDefaults
 };
 
 
-static CString GetVideoDriverName()
+static std::string GetVideoDriverName()
 {
 #if defined(_WINDOWS)
 	return GetPrimaryVideoDriverName();

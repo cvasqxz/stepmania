@@ -8,13 +8,15 @@
 #include "RageTextureManager.h"
 #include <set>
 
-CString GetAttackPath( const CString &sAttack )
+std::string GetAttackPath( const std::string &sAttack )
 {
-	CString ret = ssprintf( "AttackDisplay attack %s", sAttack.c_str() );
+	std::string ret = ssprintf( "AttackDisplay attack %s", sAttack.c_str() ).c_str();
 
 	/* 1.5x -> 1_5x.  If we pass a period to THEME->GetPathTo, it'll think
 	 * we're looking for a specific file and not search. */
-	ret.Replace( ".", "_" );
+	size_t pos = 0;
+	while( (pos = ret.find( ".", pos )) != std::string::npos )
+		ret.replace( pos, 1, "_" );
 
 	return ret;
 }
