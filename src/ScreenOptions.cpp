@@ -1081,7 +1081,7 @@ void ScreenOptions::OnChange( PlayerNumber pn )
 			if( m_bWasOnExit[p] != ExitSelected )
 			{
 				m_bWasOnExit[p] = ExitSelected;
-				UtilCommand( m_sprMore, "ScreenOptions", ssprintf("Exit%sP%i", ExitSelected? "Selected":"Unselected", p+1) );
+				UtilCommand( m_sprMore, "ScreenOptions", std_ssprintf("Exit%sP%i", ExitSelected? "Selected":"Unselected", p+1) );
 			}
 		}
 	}

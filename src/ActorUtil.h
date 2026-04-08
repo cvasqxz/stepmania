@@ -12,25 +12,25 @@
 #define COMMAND( actor, command_name )		UtilCommand( actor, m_sName, command_name )
 
 
-void UtilSetXY( Actor& actor, CString sClassName );
-inline void UtilSetXY( Actor* pActor, CString sClassName ) { UtilSetXY( *pActor, sClassName ); }
+void UtilSetXY( Actor& actor, const std::string& sClassName );
+inline void UtilSetXY( Actor* pActor, const std::string& sClassName ) { UtilSetXY( *pActor, sClassName ); }
 
 
-void UtilCommand( Actor& actor, CString sClassName, CString sCommandName );
+void UtilCommand( Actor& actor, const std::string& sClassName, const std::string& sCommandName );
 
-inline void UtilOnCommand( Actor& actor, CString sClassName ) { UtilCommand( actor, sClassName, "On" ); }
-inline void UtilOffCommand( Actor& actor, CString sClassName ) { UtilCommand( actor, sClassName, "Off" ); }
-inline void UtilSetXYAndOnCommand( Actor& actor, CString sClassName )
+inline void UtilOnCommand( Actor& actor, const std::string& sClassName ) { UtilCommand( actor, sClassName, "On" ); }
+inline void UtilOffCommand( Actor& actor, const std::string& sClassName ) { UtilCommand( actor, sClassName, "Off" ); }
+inline void UtilSetXYAndOnCommand( Actor& actor, const std::string& sClassName )
 {
 	UtilSetXY( actor, sClassName );
 	UtilOnCommand( actor, sClassName );
 }
 
 /* convenience */
-inline void UtilCommand( Actor* pActor, CString sClassName, CString sCommandName ) { if(pActor) UtilCommand( *pActor, sClassName, sCommandName ); }
-inline void UtilOnCommand( Actor* pActor, CString sClassName ) { if(pActor) UtilOnCommand( *pActor, sClassName ); }
-inline void UtilOffCommand( Actor* pActor, CString sClassName ) { if(pActor) UtilOffCommand( *pActor, sClassName ); }
-inline void UtilSetXYAndOnCommand( Actor* pActor, CString sClassName ) { if(pActor) UtilSetXYAndOnCommand( *pActor, sClassName ); }
+inline void UtilCommand( Actor* pActor, const std::string& sClassName, const std::string& sCommandName ) { if(pActor) UtilCommand( *pActor, sClassName, sCommandName ); }
+inline void UtilOnCommand( Actor* pActor, const std::string& sClassName ) { if(pActor) UtilOnCommand( *pActor, sClassName ); }
+inline void UtilOffCommand( Actor* pActor, const std::string& sClassName ) { if(pActor) UtilOffCommand( *pActor, sClassName ); }
+inline void UtilSetXYAndOnCommand( Actor* pActor, const std::string& sClassName ) { if(pActor) UtilSetXYAndOnCommand( *pActor, sClassName ); }
 
 // Return a Sprite, BitmapText, or Model depending on the file type
 Actor* LoadFromActorFile( CString sIniPath, CString sLayer = "Actor" );

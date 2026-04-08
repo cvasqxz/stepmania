@@ -275,13 +275,13 @@ Actor* MakeActor( RageTextureID ID )
 		ID.filename.c_str(), sExt.c_str() );
 }
 
-void UtilSetXY( Actor& actor, CString sClassName )
+void UtilSetXY( Actor& actor, const std::string& sClassName )
 {
 	ASSERT( !actor.GetID().empty() );
 	actor.SetXY( THEME->GetMetricF(sClassName,actor.GetID()+"X"), THEME->GetMetricF(sClassName,actor.GetID()+"Y") );
 }
 
-void UtilCommand( Actor& actor, CString sClassName, CString sCommandName )
+void UtilCommand( Actor& actor, const std::string& sClassName, const std::string& sCommandName )
 {
 	// If Actor is hidden, it won't get updated or drawn, so don't bother tweening.
 	/* ... but we might be unhiding it, or setting state for when we unhide it later */
