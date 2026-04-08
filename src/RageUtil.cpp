@@ -247,6 +247,62 @@ CString werr_ssprintf( int err, const char *fmt, ...)
 
 #endif
 
+std::string std_ssprintf( const char *fmt, ...)
+{
+    va_list	va;
+    va_start(va, fmt);
+	return std_vssprintf(fmt, va);
+}
+
+std::string std_vssprintf( const char *fmt, va_list argList)
+{
+	CString str;
+	str.FormatV(fmt, argList);
+	return std::string(str.c_str());
+}
+
+#ifdef WIN32
+std::string std_hr_ssprintf( int hr, const char *fmt, ...)
+{
+    va_list	va;
+    va_start(va, fmt);
+    CString s = vssprintf( fmt, va );
+    va_end(va);
+
+#ifdef _XBOX
+	char szError[1024] = "";
+	D3DXGetErrorString( hr, szError, sizeof(szError) );
+#else
+	const char *szError = DXGetErrorString8( hr );
+#endif
+
+	return std::string(s.c_str()) + std_ssprintf( " (%s)", szError );
+}
+
+std::string std_werr_ssprintf( int err, const char *fmt, ...)
+{
+	char buf[1024] = "";
+#ifndef _XBOX
+	FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM,
+		0, err, 0, buf, sizeof(buf), NULL);
+#endif
+
+	/* Why is FormatMessage returning text ending with \r\n? */
+	CString text = buf;
+	text.Replace( "\n", "" );
+	text.Replace( "\r", " " ); /* foo\r\nbar -> foo bar */
+	TrimRight( text ); /* "foo\r\n" -> "foo" */
+
+	va_list	va;
+    va_start(va, fmt);
+    CString s = vssprintf( fmt, va );
+    va_end(va);
+
+	return std::string(s.c_str()) + std_ssprintf( " (%s)", text.c_str() );
+}
+
+#endif
+
 std::string join( const CString &Deliminator, const CStringArray& Source)
 {
 	if( Source.empty() )

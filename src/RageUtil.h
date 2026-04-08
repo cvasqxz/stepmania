@@ -186,10 +186,14 @@ struct tm GetLocalTime();
 
 CString ssprintf( const char *fmt, ...) PRINTF(1,2);
 CString vssprintf( const char *fmt, va_list argList );
+std::string std_ssprintf( const char *fmt, ...) PRINTF(1,2);
+std::string std_vssprintf( const char *fmt, va_list argList );
 
 #ifdef WIN32
 CString hr_ssprintf( int hr, const char *fmt, ...);
 CString werr_ssprintf( int err, const char *fmt, ...);
+std::string std_hr_ssprintf( int hr, const char *fmt, ...);
+std::string std_werr_ssprintf( int err, const char *fmt, ...);
 #endif
 
 // Splits a Path into 4 parts (Directory, Drive, Filename, Extention).  Supports UNC path names.
