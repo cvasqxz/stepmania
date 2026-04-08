@@ -1184,16 +1184,18 @@ bool Song::HasBackground() const 	{return m_sBackgroundFile != ""		&&  IsAFile(G
 bool Song::HasCDTitle() const 		{return m_sCDTitleFile != ""		&&  IsAFile(GetCDTitlePath()); }
 bool Song::HasBGChanges() const 	{return !m_BackgroundChanges.empty(); }
 
-CString GetSongAssetPath( CString sPath, const CString &sSongPath )
+std::string GetSongAssetPath( const std::string &sPath_, const std::string &sSongPath )
 {
-	if( sPath == "" )
+	if( sPath_ == "" )
 		return "";
 
+	std::string sPath = sPath_;
+
 	/* Security fix: normalize path separators first */
-	sPath.Replace( "\\", "/" );
+	for( auto &c : sPath ) if( c == '\\' ) c = '/';
 
 	/* Security fix: reject absolute paths */
-	if( sPath.Left(1) == "/" )
+	if( sPath.substr(0, 1) == "/" )
 		return "";
 #if defined(_WINDOWS)
 	/* Reject Windows absolute paths (C:\ etc) */
@@ -1203,28 +1205,36 @@ CString GetSongAssetPath( CString sPath, const CString &sSongPath )
 
 	/* If there's no path in the file, the file is in the same directory
 	 * as the song.  (This is the preferred configuration.) */
-	if( sPath.Find('/') == -1 )
+	if( sPath.find('/') == std::string::npos )
 		return sSongPath+sPath;
 
 	/* The song contains a path; treat it as relative to the top SM directory. */
-	if( sPath.Left(3) == "../" )
+	if( sPath.substr(0, 3) == "../" )
 	{
 		/* The path begins with "../".  Resolve it wrt. the song directory. */
 		sPath = sSongPath + sPath;
 	}
 
-	CollapsePath( sPath );
+	{
+		CString sCStr = sPath;
+		CollapsePath( sCStr );
+		sPath = sCStr;
+	}
 
 	/* Security fix: after collapsing, verify the path stays within bounds */
 	/* If the path still begins with "../", then there were an unreasonable number
 	 * of them at the beginning of the path.  Ignore the path entirely. */
-	if( sPath.Left(3) == "../" || sPath.Left(1) == "/" )
+	if( sPath.substr(0, 3) == "../" || sPath.substr(0, 1) == "/" )
 		return "";
 
 	/* Security fix: verify the resolved path starts with the song directory */
-	CString sNormalizedSongPath = sSongPath;
-	CollapsePath( sNormalizedSongPath );
-	if( sPath.Left(sNormalizedSongPath.size()) != sNormalizedSongPath )
+	std::string sNormalizedSongPath = sSongPath;
+	{
+		CString sCStr = sNormalizedSongPath;
+		CollapsePath( sCStr );
+		sNormalizedSongPath = sCStr;
+	}
+	if( sPath.substr(0, sNormalizedSongPath.size()) != sNormalizedSongPath )
 		return "";  /* Path escaped song directory */
 
 	return sPath;

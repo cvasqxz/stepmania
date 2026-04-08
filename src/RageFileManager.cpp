@@ -64,14 +64,14 @@ public:
 };
 static RageFileDriverMountpoints *g_Mountpoints = nullptr;
 
-static CString GetDirOfExecutable( CString argv0 )
+static std::string GetDirOfExecutable( const std::string &argv0 )
 {
 #ifdef _XBOX
 	return "D:\\";
 #else
 	/* argv[0] can be wrong in most OS's; try to avoid using it. */
 
-	CString sPath;
+	std::string sPath;
 #if defined(_WIN32)
 	char buf[MAX_PATH];
 	GetModuleFileName( NULL, buf, sizeof(buf) );
@@ -80,7 +80,7 @@ static CString GetDirOfExecutable( CString argv0 )
 	sPath = argv0;
 #endif
 
-	sPath.Replace( "\\", "/" );
+	for( auto &c : sPath ) if( c == '\\' ) c = '/';
 
 	bool IsAbsolutePath = false;
 	if( sPath.size() == 0 || sPath[0] == '/' )
@@ -100,7 +100,7 @@ static CString GetDirOfExecutable( CString argv0 )
 	if( !IsAbsolutePath )
 	{
 		sPath = GetCwd() + "/" + sPath;
-		sPath.Replace( "\\", "/" );
+		for( auto &c : sPath ) if( c == '\\' ) c = '/';
 	}
 
 	return sPath;
