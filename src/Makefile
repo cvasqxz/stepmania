@@ -1456,14 +1456,14 @@ AUTOMAKE = ${SHELL} '/home/cvasqxz/stepmania/autoconf/missing' automake-1.18
 AWK = gawk
 CC = gcc
 CCDEPMODE = depmode=gcc3
-CFLAGS = -Wall -W -Wno-unused -Wno-switch -O3
+CFLAGS = -Wall -W -Wno-unused -Wno-switch -g
 CPP = gcc -E
 CPPFLAGS = 
 CSCOPE = cscope
 CTAGS = ctags
 CXX = g++
 CXXDEPMODE = depmode=gcc3
-CXXFLAGS = -Wall -W -Wno-unused -Wno-switch -O3
+CXXFLAGS = -Wall -W -Wno-unused -Wno-switch -g
 CYGPATH_W = echo
 DEFS = -DHAVE_CONFIG_H
 DEPDIR = .deps
