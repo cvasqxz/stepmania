@@ -1,0 +1,61 @@
+# Build artifacts
+*.o
+*.a
+*.so
+*.so.*
+*.la
+*.lo
+*.deps
+
+# Compiled binary
+src/stepmania
+stepmania
+
+# Build system generated files
+Makefile
+src/Makefile
+config.log
+config.status
+config.h
+src/config.h
+autom4te.cache/
+.deps/
+src/.deps/
+*.Po
+*.Tpo
+
+# autoconf/automake generated
+aclocal.m4
+configure
+install-sh
+missing
+depcomp
+compile
+ltmain.sh
+libtool
+stamp-h1
+
+# libresample build artifacts
+src/libresample/*.o
+src/libresample/*.a
+
+# Editor/IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+\#*\#
+.\#*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+stepmania.log
+*.log
+
+# Profile/save data (runtime generated)
+Save/
+Cache/
