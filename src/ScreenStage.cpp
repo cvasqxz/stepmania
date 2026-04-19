@@ -12,7 +12,6 @@
 #include "GameState.h"
 #include "GameSoundManager.h"
 #include "ThemeManager.h"
-#include "LightsManager.h"
 #include "song.h"
 
 #define NEXT_SCREEN				THEME->GetMetric (m_sName,"NextScreen")
@@ -27,7 +26,6 @@ ScreenStage::ScreenStage( CString sClassName ) : Screen( sClassName )
 
 	SOUND->StopMusic();
 
-	LIGHTSMAN->SetLightsMode( LIGHTSMODE_STAGE );
 
 
 	m_Background.LoadFromAniDir( THEME->GetPathToB(m_sName + " "+GAMESTATE->GetStageText()) );

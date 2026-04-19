@@ -18,7 +18,6 @@
 #include "RageTextureManager.h"
 #include "UnlockSystem.h"
 #include "ProductInfo.h"
-#include "LightsManager.h"
 #include "CodeDetector.h"
 #include "CommonMetrics.h"
 #include "Game.h"
@@ -73,7 +72,6 @@ ScreenTitleMenu::ScreenTitleMenu( CString sClassName ) : ScreenSelect( sClassNam
 	 * things stinks ... */
 	GAMESTATE->Reset();
 
-	LIGHTSMAN->SetLightsMode( LIGHTSMODE_JOINING );	// do this after Reset!
 
 
 	m_sprLogo.Load( THEME->GetPathG("ScreenLogo",GAMESTATE->GetCurrentGame()->m_szName) );

@@ -7,7 +7,6 @@ class RageSoundDriver;
 class ArchHooks;
 class InputHandler;
 class LowLevelWindow;
-class LightsDriver;
 class MemoryCardDriver;
 
 LoadingWindow *MakeLoadingWindow();

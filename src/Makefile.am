@@ -51,7 +51,7 @@ ScreenSelectMaster.cpp ScreenSelectMaster.h ScreenSelectMode.cpp ScreenSelectMod
 ScreenSelectMusic.cpp ScreenSelectMusic.h ScreenSelectStyle.cpp ScreenSelectStyle.h ScreenSetTime.cpp ScreenSetTime.h \
 ScreenSongOptions.cpp ScreenSongOptions.h ScreenStage.cpp ScreenStage.h ScreenStyleSplash.cpp ScreenStyleSplash.h \
 ScreenTest.cpp ScreenTest.h ScreenTestFonts.cpp ScreenTestFonts.h ScreenTestInput.cpp ScreenTestInput.h \
-ScreenTestLights.cpp ScreenTestLights.h ScreenTestSound.cpp ScreenTestSound.h ScreenTextEntry.cpp ScreenTextEntry.h \
+ScreenTestSound.cpp ScreenTestSound.h ScreenTextEntry.cpp ScreenTextEntry.h \
 ScreenTitleMenu.cpp ScreenTitleMenu.h ScreenUnlock.cpp ScreenUnlock.h ScreenWithMenuElements.cpp ScreenWithMenuElements.h
 
 DataStructures = \
@@ -124,9 +124,6 @@ if HAVE_FFMPEG
 MovieTexture += arch/MovieTexture/MovieTexture_FFMpeg.cpp arch/MovieTexture/MovieTexture_FFMpeg.h
 endif
 
-Lights = arch/Lights/LightsDriver.cpp arch/Lights/LightsDriver.h \
-		arch/Lights/LightsDriver_SystemMessage.cpp arch/Lights/LightsDriver_SystemMessage.h
-
 MemoryCard = arch/MemoryCard/MemoryCardDriver.cpp arch/MemoryCard/MemoryCardDriver.h \
 	     arch/MemoryCard/MemoryCardDriverThreaded.cpp arch/MemoryCard/MemoryCardDriverThreaded.h
 LowLevelWindow = arch/LowLevelWindow/LowLevelWindow.h
@@ -149,9 +146,6 @@ endif
 if UNIX
 ArchHooks += arch/ArchHooks/ArchHooks_Unix.cpp arch/ArchHooks/ArchHooks_Unix.h
 Threads += arch/Threads/Threads_Pthreads.cpp arch/Threads/Threads_Pthreads.h
-Lights += arch/Lights/LightsDriver_LinuxWeedTech.cpp arch/Lights/LightsDriver_LinuxWeedTech.h
-Lights += arch/Lights/LightsDriver_LinuxParallel.cpp arch/Lights/LightsDriver_LinuxParallel.h
-
 ArchUtils +=    archutils/Unix/AssertionHandler.cpp \
 		archutils/Unix/GetSysInfo.cpp archutils/Unix/GetSysInfo.h \
 		archutils/Unix/SignalHandler.cpp archutils/Unix/SignalHandler.h \
@@ -173,7 +167,7 @@ MemoryCard += arch/MemoryCard/MemoryCardDriverThreaded_Linux.cpp arch/MemoryCard
 endif
 
 Arch = $(LoadingWindow) $(Sound) $(ArchHooks) $(InputHandler) $(MovieTexture) \
-	   $(Lights) $(MemoryCard) $(LowLevelWindow) $(ArchUtils) $(Dialog) $(Threads) \
+	   $(MemoryCard) $(LowLevelWindow) $(ArchUtils) $(Dialog) $(Threads) \
 	   arch/arch.cpp arch/arch.h arch/arch_default.h arch/arch_linux.h arch/arch_platform.h
 
 RageSoundFileReaders = RageSoundReader_WAV.cpp RageSoundReader_WAV.h 
@@ -261,7 +255,7 @@ GlobalSingletons = \
 AnnouncerManager.cpp AnnouncerManager.h Bookkeeper.cpp Bookkeeper.h CryptManager.cpp CryptManager.h \
 FontManager.cpp FontManager.h GameSoundManager.cpp GameSoundManager.h GameManager.cpp GameManager.h \
 GameState.cpp GameState.h InputFilter.cpp InputFilter.h \
-InputMapper.cpp InputMapper.h InputQueue.cpp InputQueue.h LightsManager.cpp LightsManager.h \
+InputMapper.cpp InputMapper.h InputQueue.cpp InputQueue.h \
 MemoryCardManager.cpp MemoryCardManager.h NetworkSyncManager.cpp NetworkSyncManager.h \
 NetworkSyncServer.cpp NetworkSyncServer.h NoteSkinManager.cpp NoteSkinManager.h \
 PrefsManager.cpp PrefsManager.h ProfileManager.cpp ProfileManager.h ScreenManager.cpp \

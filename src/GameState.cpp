@@ -19,7 +19,6 @@
 #include "ProfileManager.h"
 #include "arch/arch.h"
 #include "ThemeManager.h"
-#include "LightsManager.h"
 #include "RageFile.h"
 #include "Bookkeeper.h"
 #include "MemoryCardManager.h"
@@ -198,7 +197,6 @@ void GameState::Reset()
 	}
 
 
-	LIGHTSMAN->SetLightsMode( LIGHTSMODE_ATTRACT );
 
 	ApplyCmdline();
 }

@@ -19,7 +19,6 @@
 #include "Course.h"
 #include "ProfileManager.h"
 #include "MenuTimer.h"
-#include "LightsManager.h"
 #include "StageStats.h"
 #include "StepsUtil.h"
 #include "Foreach.h"
@@ -63,7 +62,6 @@ ScreenSelectMusic::ScreenSelectMusic( CString sClassName ) : ScreenWithMenuEleme
 {
 	LOG->Trace( "ScreenSelectMusic::ScreenSelectMusic()" );
 
-	LIGHTSMAN->SetLightsMode( LIGHTSMODE_MENU );
 
 	m_DisplayMode = GAMESTATE->IsCourseMode() ? DISPLAY_COURSES : DISPLAY_SONGS;
 

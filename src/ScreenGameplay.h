@@ -178,7 +178,6 @@ protected:
 
 	BeginnerHelper	m_BeginnerHelper;
 
-	NoteData		m_CabinetLightsNoteData;
 };
 
 

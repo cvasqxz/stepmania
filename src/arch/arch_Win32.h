@@ -13,8 +13,6 @@
 #include "Sound/RageSoundDriver_DSound_Software.h"
 #include "Sound/RageSoundDriver_WaveOut.h"
 
-#include "Lights/LightsDriver_Win32Parallel.h"
-
 #include "MemoryCard/MemoryCardDriverThreaded_Windows.h"
 
 #define HAVE_FFMPEG

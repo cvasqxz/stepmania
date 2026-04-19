@@ -253,9 +253,6 @@ public:
 	float			m_fSoundVolume;
 	int				m_iSoundResampleQuality;
 	CString			m_sMovieDrivers;
-	CString			m_sLightsDriver;
-	CString			m_sLightsStepsDifficulty;
-	bool			m_bBlinkGameplayButtonLightsOnNote;
 	bool			m_bAllowUnacceleratedRenderer;
 	bool			m_bThreadedInput;
 	bool			m_bThreadedMovieDecode;

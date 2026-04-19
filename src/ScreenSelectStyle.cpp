@@ -9,7 +9,6 @@
 #include "GameState.h"
 #include "AnnouncerManager.h"
 #include "ActorUtil.h"
-#include "LightsManager.h"
 #include "CommonMetrics.h"
 
 
@@ -22,7 +21,6 @@ ScreenSelectStyle::ScreenSelectStyle( CString sClassName ) : ScreenSelect( sClas
 {
 	m_iSelection = 0;
 
-	LIGHTSMAN->SetLightsMode( LIGHTSMODE_MENU );
 
 	unsigned i;
 	for( i=0; i<m_aModeChoices.size(); i++ )

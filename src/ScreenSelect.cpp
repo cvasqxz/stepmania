@@ -16,7 +16,6 @@
 #include "RageDisplay.h"
 #include "UnlockSystem.h"
 #include "arch/ArchHooks/ArchHooks.h"
-#include "LightsManager.h"
 
 
 #define CHOICE_NAMES			THEME->GetMetric (m_sName,"ChoiceNames")
@@ -82,7 +81,6 @@ ScreenSelect::ScreenSelect( CString sClassName ) : ScreenWithMenuElements(sClass
 		RageException::Throw( "Screen \"%s\" does not set any choices", m_sName.c_str() );
 
 	// derived classes can override if they want
-	LIGHTSMAN->SetLightsMode( LIGHTSMODE_MENU );
 }
 
 

@@ -55,7 +55,6 @@
 #include "arch/ArchHooks/ArchHooks.h"
 #include "RageFileManager.h"
 #include "Bookkeeper.h"
-#include "LightsManager.h"
 #include "ModelManager.h"
 #include "CryptManager.h"
 #include "NetworkSyncManager.h"
@@ -1049,7 +1048,6 @@ int main(int argc, char* argv[])
 	SOUNDMAN->SetPrefs( PREFSMAN->m_fSoundVolume );
 	SOUND		= new GameSoundManager;
 	BOOKKEEPER	= new Bookkeeper;
-	LIGHTSMAN	= new LightsManager(PREFSMAN->m_sLightsDriver);
 	INPUTFILTER	= new InputFilter;
 	INPUTMAPPER	= new InputMapper;
 	INPUTQUEUE	= new InputQueue;
@@ -1163,7 +1161,6 @@ int main(int argc, char* argv[])
 	SAFE_DELETE( THEME );
 	SAFE_DELETE( ANNOUNCER );
 	SAFE_DELETE( BOOKKEEPER );
-	SAFE_DELETE( LIGHTSMAN );
 	SAFE_DELETE( SOUNDMAN );
 	SAFE_DELETE( FONT );
 	SAFE_DELETE( TEXTUREMAN );
@@ -1551,7 +1548,6 @@ static void GameLoop()
 		/* Important:  Process input AFTER updating game logic, or input will be acting on song beat from last frame */
 		HandleInputEvents( fDeltaTime );
 
-		LIGHTSMAN->Update( fDeltaTime );
 
 		HOOKS->Update( fDeltaTime );
 

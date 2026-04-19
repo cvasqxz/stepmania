@@ -17,7 +17,6 @@
 #include "RageTimer.h"
 #include "UnlockSystem.h"
 #include "Course.h"
-#include "LightsManager.h"
 #include "ProfileManager.h"
 #include "song.h"
 #include "StageStats.h"
@@ -167,7 +166,6 @@ void ScreenEvaluation::Init()
 
 	LOG->Trace( "ScreenEvaluation::ScreenEvaluation()" );
 
-	LIGHTSMAN->SetLightsMode( LIGHTSMODE_MENU );
 
 	m_bFailed = g_CurStageStats.AllFailed();
 

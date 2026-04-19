@@ -23,9 +23,6 @@
 
 #include "ArchHooks/ArchHooks_Unix.h"
 
-#include "Lights/LightsDriver_LinuxWeedTech.h"
-#include "Lights/LightsDriver_LinuxParallel.h"
-
 #include "MemoryCard/MemoryCardDriverThreaded_Linux.h"
 
 #endif

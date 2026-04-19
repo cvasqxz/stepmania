@@ -33,7 +33,6 @@
 #include "Course.h"
 #include "NoteDataUtil.h"
 #include "UnlockSystem.h"
-#include "LightsManager.h"
 #include "ProfileManager.h"
 #include "StageStats.h"
 #include "PlayerAI.h"	// for NUM_SKILL_LEVELS
@@ -89,11 +88,6 @@ ScreenGameplay::ScreenGameplay( CString sName, bool bDemonstration ) : Screen(sN
 
 void ScreenGameplay::Init()
 {
-	if( m_bDemonstration )
-		LIGHTSMAN->SetLightsMode( LIGHTSMODE_DEMONSTRATION );
-	else
-		LIGHTSMAN->SetLightsMode( LIGHTSMODE_GAMEPLAY );
-
 	/* We do this ourself. */
 	SOUND->HandleSongTimer( false );
 
@@ -1072,33 +1066,6 @@ void ScreenGameplay::LoadNextSong()
 	m_bZeroDeltaOnNextUpdate = true;
 
 
-	//
-	// Load cabinet lights data
-	//
-	{
-		m_CabinetLightsNoteData.Init();
-		ASSERT( GAMESTATE->m_pCurSong );
-
-		Steps *pSteps = GAMESTATE->m_pCurSong->GetClosestNotes( STEPS_TYPE_LIGHTS_CABINET, StringToDifficulty(PREFSMAN->m_sLightsStepsDifficulty) );
-		if( pSteps != nullptr )
-		{
-			pSteps->GetNoteData( &m_CabinetLightsNoteData );
-		}
-		else
-		{
-			pSteps = GAMESTATE->m_pCurSong->GetClosestNotes( GAMESTATE->GetCurrentStyle()->m_StepsType, StringToDifficulty(PREFSMAN->m_sLightsStepsDifficulty) );
-			if( pSteps )
-			{
-				NoteData TapNoteData;
-				pSteps->GetNoteData( &TapNoteData );
-				NoteDataUtil::LoadTransformedLights( TapNoteData, m_CabinetLightsNoteData, GameManager::StepsTypeToNumTracks(STEPS_TYPE_LIGHTS_CABINET) );
-			}
-		}
-
-		// Convert to 4s so that we can check if we're inside a hold with just 
-		// GetTapNote().
-		m_CabinetLightsNoteData.ConvertHoldNotesTo4s();
-	}
 }
 
 float ScreenGameplay::StartPlayingSong(float MinTimeToNotes, float MinTimeToMusic)
@@ -1490,96 +1457,6 @@ void ScreenGameplay::Update( float fDeltaTime )
 	//
 	PlayTicks();
 
-	//
-	// update lights
-	//
-	const Style* pStyle = GAMESTATE->GetCurrentStyle();
-	bool bBlinkCabinetLight[NUM_CABINET_LIGHTS];
-	bool bBlinkGameButton[MAX_GAME_CONTROLLERS][MAX_GAME_BUTTONS];
-	ZERO( bBlinkCabinetLight );
-	ZERO( bBlinkGameButton );
-	bool bCrossedABeat = false;
-	{
-		float fPositionSeconds = GAMESTATE->m_fMusicSeconds + LIGHTS_FALLOFF_SECONDS/2;	// trigger the light a tiny bit early
-		float fSongBeat = GAMESTATE->m_pCurSong->GetBeatFromElapsedTime( fPositionSeconds );
-
-		int iRowNow = BeatToNoteRowNotRounded( fSongBeat );
-		iRowNow = max( 0, iRowNow );
-		static int iRowLastCrossed = 0;
-
-		float fBeatLast = roundf(NoteRowToBeat(iRowLastCrossed));
-		float fBeatNow = roundf(NoteRowToBeat(iRowNow));
-
-		bCrossedABeat = fBeatLast != fBeatNow;
-
-		for( int r=iRowLastCrossed+1; r<=iRowNow; r++ )  // for each index we crossed since the last update
-		{
-			FOREACH_CabinetLight( cl )
-			{	
-				// Somehow, step data was getting majorly corrupted, therefor causing light
-				// signals to be sent at incorrect times where notes were not even present.
-				bool bBlink = (m_CabinetLightsNoteData.GetTapNote( cl, r ).type != TapNote::empty );
-				bBlinkCabinetLight[cl] |= bBlink;
-			}
-			FOREACH_EnabledPlayer( pn )
-			{
-				for( int t=0; t<m_Player[pn].GetNumTracks(); t++ )
-				{
-					TapNote tn = m_Player[pn].GetTapNote(t,r);
-					bool bBlink = (tn.type != TapNote::empty && tn.type != TapNote::mine);
-					if( bBlink )
-					{
-						StyleInput si( pn, t );
-						GameInput gi = pStyle->StyleInputToGameInput( si );
-						bBlinkGameButton[gi.controller][gi.button] |= bBlink;
-					}
-				}
-			}
-		}
-
-		iRowLastCrossed = iRowNow;
-	}
-
-	{
-		// check for active HoldNotes
-		float fPositionSeconds = GAMESTATE->m_fMusicSeconds + LIGHTS_FALLOFF_SECONDS/2;	// trigger the light a tiny bit early
-		float fSongBeat = GAMESTATE->m_pCurSong->GetBeatFromElapsedTime( fPositionSeconds );
-		const int iSongRow = BeatToNoteRow( fSongBeat );
-
-		FOREACH_EnabledPlayer( pn )
-		{
-			// check if a hold should be active
-			for( int i=0; i < m_Player[pn].GetNumHoldNotes(); i++ )		// for each HoldNote
-			{
-				const HoldNote &hn = m_Player[pn].GetHoldNote(i);
-				if( hn.iStartRow <= iSongRow && iSongRow <= hn.iEndRow )
-				{
-					StyleInput si( pn, hn.iTrack );
-					GameInput gi = pStyle->StyleInputToGameInput( si );
-					bBlinkGameButton[gi.controller][gi.button] |= true;
-				}
-			}
-		}
-	}
-
-
-	// send blink data
-	bool bOverrideCabinetBlink = (GAMESTATE->m_fSongBeat < GAMESTATE->m_pCurSong->m_fFirstBeat) && bCrossedABeat;
-
-	FOREACH_CabinetLight( cl )
-	{
-		if( bOverrideCabinetBlink || bBlinkCabinetLight[cl] )
-			LIGHTSMAN->BlinkCabinetLight( cl );
-	}
-
-	FOREACH_GameController( gc )
-	{
-		FOREACH_GameButton( gb )
-		{
-			if( bBlinkGameButton[gc][gb] )
-				LIGHTSMAN->BlinkGameButton( GameInput(gc,gb) );
-		}
-	}
 
 	//
 	// update song position meter
@@ -2105,8 +1982,6 @@ void ScreenGameplay::HandleScreenMessage( const ScreenMessage SM )
 			GAMESTATE->RemoveAllActiveAttacks();
 			FOREACH_EnabledPlayer( p )
 				m_ActiveAttackList[p].Refresh();
-
-			LIGHTSMAN->SetLightsMode( LIGHTSMODE_ALL_CLEARED );
 
 
 			if( bAllReallyFailed )

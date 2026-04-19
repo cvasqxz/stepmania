@@ -10,7 +10,6 @@
 #include "NoteSkinManager.h"
 #include "RageInputDevice.h"
 #include "ThemeManager.h"
-#include "LightsManager.h"	// for NUM_CABINET_LIGHTS
 #include "Game.h"
 #include "Style.h"
 
@@ -81,7 +80,7 @@ struct {
 	{ "techno-double5", 10 },
 	{ "pnm-five",		5 },
 	{ "pnm-nine",		9 },
-	{ "lights-cabinet",	NUM_CABINET_LIGHTS },
+	{ "lights-cabinet",	8 },
 };
 
 //
@@ -2781,7 +2780,7 @@ Style g_Styles[] =
 		STEPS_TYPE_LIGHTS_CABINET,				// m_StepsType
 		Style::ONE_PLAYER_ONE_CREDIT,		// m_StyleType
 		{ 320, 320 },							// m_iCenterX
-		NUM_CABINET_LIGHTS,						// m_iColsPerPlayer
+		8,						// m_iColsPerPlayer
 		{	// m_ColumnInfo[NUM_PLAYERS][MAX_COLS_PER_PLAYER];
 			{	// PLAYER_1
 				{ TRACK_1,	GAME_CONTROLLER_1,	LIGHTS_BUTTON_MARQUEE_UP_LEFT,	-DANCE_COL_SPACING*3.5f },

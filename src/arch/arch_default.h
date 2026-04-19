@@ -31,8 +31,6 @@
  * drivers.  These are all singleton drivers--we never use more than one. */
 #include "LoadingWindow/LoadingWindow_Null.h"
 #include "Sound/RageSoundDriver_Null.h"
-#include "Lights/LightsDriver_Null.h"
-#include "Lights/LightsDriver_SystemMessage.h"
 #include "MemoryCard/MemoryCardDriver_Null.h"
 
 #if defined(SUPPORT_OPENGL)
