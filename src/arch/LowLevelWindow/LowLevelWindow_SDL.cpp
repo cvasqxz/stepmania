@@ -11,7 +11,7 @@
 extern Display *g_X11Display;
 #endif
 
-LowLevelWindow_SDL::LowLevelWindow_SDL()
+LowLevelWindow_SDL::LowLevelWindow_SDL(): m_bVideoModeSet(false)
 {
 	/* By default, ignore all SDL events.  We'll enable them as we need them.
 	 * We must not enable any events we don't actually want, since we won't
@@ -41,6 +41,23 @@ void *LowLevelWindow_SDL::GetProcAddress(CString s)
 
 std::string LowLevelWindow_SDL::TryVideoMode( RageDisplay::VideoModeParams p, bool &bNewDeviceOut )
 {
+	/* Fast path: if the parameters that require a new GL context haven't
+	 * changed, skip SDL_QuitSubSystem/SDL_SetVideoMode entirely. On VC4
+	 * (Raspberry Pi), tearing down and recreating the GL context causes a
+	 * ~1s stall and forces every texture to be re-uploaded. */
+	if( m_bVideoModeSet &&
+	    CurrentParams.windowed == p.windowed &&
+	    CurrentParams.width    == p.width    &&
+	    CurrentParams.height   == p.height   &&
+	    CurrentParams.bpp      == p.bpp      &&
+	    CurrentParams.rate     == p.rate )
+	{
+		CurrentParams = p;
+		SDL_WM_SetCaption( p.sWindowTitle, "" );
+		bNewDeviceOut = false;
+		return "";
+	}
+
 	CurrentParams = p;
 
 	/* We need to preserve the event mask and all events, since they're lost by
@@ -139,6 +156,7 @@ std::string LowLevelWindow_SDL::TryVideoMode( RageDisplay::VideoModeParams p, bo
 	SDL_ShowCursor( p.windowed );
 
 	bNewDeviceOut = true;	// always a new context because we're resetting SDL_Video
+	m_bVideoModeSet = true;
 
 	static bool bLogged = false;
 	if( !bLogged )

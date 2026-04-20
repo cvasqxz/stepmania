@@ -8,6 +8,7 @@
 #include "RageTypes.h"
 #include "arch/Dialog/Dialog.h"
 #include "RageSurface.h"
+#include "PrefsManager.h"
 #include "RageSurfaceUtils.h"
 
 #include "SDL_rotozoom.h"
@@ -96,6 +97,12 @@ void RageBitmapTexture::Create()
 
 	if( HintString.Find("32bpp") != -1 )			actualID.iColorDepth = 32;
 	else if( HintString.Find("16bpp") != -1 )		actualID.iColorDepth = 16;
+
+	/* VC4 / Raspberry Pi: halve texture memory bandwidth by clamping all
+	 * textures to 16bpp, overriding per-file "32bpp" hints and caller forces. */
+	if( PREFSMAN && PREFSMAN->m_bForceLowColorTextures )
+		actualID.iColorDepth = 16;
+
 	if( HintString.Find("dither") != -1 )			actualID.bDither = true;
 	if( HintString.Find("stretch") != -1 )			actualID.bStretch = true;
 	if( HintString.Find("nomipmaps") != -1 )		actualID.bMipMaps = false;

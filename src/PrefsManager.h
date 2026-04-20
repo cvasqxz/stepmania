@@ -24,6 +24,7 @@ public:
 	int				m_iDisplayColorDepth;
 	int				m_iTextureColorDepth;
 	int				m_iMovieColorDepth;
+	bool			m_bForceLowColorTextures;	// Raspberry Pi / VC4: ignore 32bpp hints, force 16bpp textures
 	int				m_iMaxTextureResolution;
 	int				m_iRefreshRate;
 	bool			m_bShowStats;

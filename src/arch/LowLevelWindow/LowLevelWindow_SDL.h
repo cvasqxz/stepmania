@@ -6,6 +6,7 @@
 class LowLevelWindow_SDL: public LowLevelWindow
 {
 	RageDisplay::VideoModeParams CurrentParams;
+	bool m_bVideoModeSet;
 
 public:
 	LowLevelWindow_SDL();

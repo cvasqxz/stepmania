@@ -60,6 +60,7 @@ void PrefsManager::Init()
 	m_iDisplayColorDepth = 16;
 	m_iTextureColorDepth = 16;		// default to 16 for better preformance on slower cards
 	m_iMovieColorDepth = 16;
+	m_bForceLowColorTextures = false;
 	m_iMaxTextureResolution = 2048;
 	m_iRefreshRate = REFRESH_DEFAULT;
 	m_bOnlyDedicatedMenuButtons = false;
@@ -352,6 +353,7 @@ void PrefsManager::ReadPrefsFromFile( CString sIni )
 	ini.GetValue( "Options", "DisplayColorDepth",				m_iDisplayColorDepth );
 	ini.GetValue( "Options", "TextureColorDepth",				m_iTextureColorDepth );
 	ini.GetValue( "Options", "MovieColorDepth",					m_iMovieColorDepth );
+	ini.GetValue( "Options", "ForceLowColorTextures",			m_bForceLowColorTextures );
 	ini.GetValue( "Options", "MaxTextureResolution",			m_iMaxTextureResolution );
 	ini.GetValue( "Options", "RefreshRate",						m_iRefreshRate );
 	ini.GetValue( "Options", "UseDedicatedMenuButtons",			m_bOnlyDedicatedMenuButtons );
@@ -587,6 +589,7 @@ void PrefsManager::SaveGlobalPrefsToDisk() const
 	ini.SetValue( "Options", "DisplayColorDepth",				m_iDisplayColorDepth );
 	ini.SetValue( "Options", "TextureColorDepth",				m_iTextureColorDepth );
 	ini.SetValue( "Options", "MovieColorDepth",					m_iMovieColorDepth );
+	ini.SetValue( "Options", "ForceLowColorTextures",			m_bForceLowColorTextures );
 	ini.SetValue( "Options", "MaxTextureResolution",			m_iMaxTextureResolution );
 	ini.SetValue( "Options", "RefreshRate",						m_iRefreshRate );
 	ini.SetValue( "Options", "UseDedicatedMenuButtons",			m_bOnlyDedicatedMenuButtons );
