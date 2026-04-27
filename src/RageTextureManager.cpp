@@ -220,10 +220,63 @@ void RageTextureManager::DeleteTexture( RageTexture *t )
 	ASSERT(0);	// we tried to delete a texture that wasn't loaded.
 }
 
+#ifdef PLATFORM_RPI
+// 48MB budget for texture VRAM on RPi Zero 2 W (512MB total, shared with GPU).
+static const int VRAM_BUDGET_BYTES = 48 * 1024 * 1024;
+
+static int GetTextureBytes( const RageTexture *t )
+{
+	int bpp = (t->GetID().iColorDepth > 0) ? (t->GetID().iColorDepth / 8) : 2;
+	return t->GetTextureWidth() * t->GetTextureHeight() * bpp;
+}
+
+static int GetTotalVRAMUsed( const std::map<RageTextureID, RageTexture*> &m )
+{
+	int total = 0;
+	for( std::map<RageTextureID, RageTexture*>::const_iterator i = m.begin(); i != m.end(); ++i )
+		total += GetTextureBytes( i->second );
+	return total;
+}
+
+void RageTextureManager::EvictVolatileTexturesOverBudget()
+{
+	int iUsed = GetTotalVRAMUsed( m_mapPathToTexture );
+	if( iUsed <= VRAM_BUDGET_BYTES )
+		return;
+
+	LOG->Trace( "RageTextureManager: VRAM budget exceeded (%d MB used, limit %d MB). Evicting unreferenced textures.",
+		iUsed / (1024*1024), VRAM_BUDGET_BYTES / (1024*1024) );
+
+	// First pass: evict unreferenced VOLATILE textures (banners, etc.).
+	for( std::map<RageTextureID, RageTexture*>::iterator i = m_mapPathToTexture.begin();
+		i != m_mapPathToTexture.end() && GetTotalVRAMUsed(m_mapPathToTexture) > VRAM_BUDGET_BYTES; )
+	{
+		std::map<RageTextureID, RageTexture*>::iterator cur = i++;
+		RageTexture *t = cur->second;
+		if( t->m_iRefCount == 0 && t->GetPolicy() == RageTextureID::TEX_VOLATILE )
+			DeleteTexture( t );
+	}
+
+	// Second pass: evict unreferenced DEFAULT/CACHED textures if still over budget.
+	for( std::map<RageTextureID, RageTexture*>::iterator i = m_mapPathToTexture.begin();
+		i != m_mapPathToTexture.end() && GetTotalVRAMUsed(m_mapPathToTexture) > VRAM_BUDGET_BYTES; )
+	{
+		std::map<RageTextureID, RageTexture*>::iterator cur = i++;
+		RageTexture *t = cur->second;
+		if( t->m_iRefCount == 0 && t->GetPolicy() != RageTextureID::TEX_PERMANENT )
+			DeleteTexture( t );
+	}
+}
+#endif
+
 void RageTextureManager::GarbageCollect( GCType type )
 {
 	// Search for old textures with refcount==0 to unload
 	LOG->Trace("Performing texture garbage collection.");
+
+#ifdef PLATFORM_RPI
+	EvictVolatileTexturesOverBudget();
+#endif
 
 	for( std::map<RageTextureID, RageTexture*>::iterator i = m_mapPathToTexture.begin();
 		i != m_mapPathToTexture.end(); )

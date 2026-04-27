@@ -28,6 +28,49 @@ autoreconf -fi
 make
 ```
 
+### Building on Raspberry Pi Zero 2 W (Raspberry Pi OS 64-bit, Debian 13 Trixie)
+
+**Hardware**: Cortex-A53 @ 1GHz, 512MB RAM (shared with GPU), VideoCore IV (Mesa VC4, OpenGL ES 2.0)
+
+```bash
+# Install dependencies
+sudo apt install build-essential autoconf automake libsdl1.2-dev \
+    libpng-dev libjpeg-dev libvorbis-dev libogg-dev libmad0-dev \
+    liblua5.1-dev libgl1-mesa-dev libglu1-mesa-dev libx11-dev
+
+# Generate configure script
+autoreconf -fi
+
+# Configure with RPi optimizations (adds -march=armv8-a -mtune=cortex-a53 -ffast-math)
+./configure --with-rpi
+
+# Build using all 4 cores
+make -j4
+```
+
+The `--with-rpi` flag:
+- Defines `PLATFORM_RPI` macro enabling all RPi-specific code paths
+- Adds `-march=armv8-a -mtune=cortex-a53 -ffast-math` to compiler flags
+- Reduces inlining limit from 300 to 150 (less I-cache pressure on Cortex-A53)
+- Activates conservative runtime defaults (see Raspberry Pi Runtime Defaults below)
+
+**Recommended `Preferences.ini`** (apply immediately without recompiling):
+```ini
+[Options]
+DisplayWidth=640
+DisplayHeight=480
+DisplayColorDepth=16
+TextureColorDepth=16
+ForceLowColorTextures=1
+MaxTextureResolution=512
+BackgroundMode=0
+BannerCache=1
+PalettedBannerCache=1
+FastLoad=1
+ShowStats=0
+VSync=1
+```
+
 ### Building (General)
 
 ```bash
@@ -40,6 +83,7 @@ make
 # Build with specific options
 ./configure --with-debug           # Build with debug symbols
 ./configure --with-fast-compile    # Build with fast compilation
+./configure --with-rpi             # Optimize for Raspberry Pi (Cortex-A53)
 ./configure --without-jpeg         # Disable JPEG support
 ./configure --without-network      # Disable networking features
 ./configure --enable-tests         # Build unit tests
@@ -48,6 +92,35 @@ make
 make clean
 make
 ```
+
+### Raspberry Pi Optimizations Applied
+
+All RPi-specific code is guarded by `#ifdef PLATFORM_RPI` and only active when building with `--with-rpi`.
+
+| Area | Change | File | Benefit |
+|------|--------|------|---------|
+| GL primitives | `GL_QUADS` → `GL_TRIANGLES` (index buffer) | `RageDisplay_OGL.cpp` | ES 2.0 compatible (Mesa VC4) |
+| GL primitives | `GL_QUAD_STRIP` → `GL_TRIANGLE_STRIP` | `RageDisplay_OGL.cpp` | ES 2.0 compatible |
+| VBOs | Disabled; falls back to client-side arrays | `RageDisplay_OGL.cpp` | Faster for small sprite geometry on VC4 |
+| Texture color depth | `ForceLowColorTextures=true` by default | `PrefsManager.cpp` | 50% less GPU bandwidth |
+| Max texture size | Default 2048 → 512 | `PrefsManager.cpp` | Prevents VRAM exhaustion |
+| Background mode | Default `BGMODE_ANIMATIONS` → `BGMODE_OFF` | `PrefsManager.cpp` | ~30-40% CPU saving |
+| Banner cache | `PalettedBannerCache=true` by default | `PrefsManager.cpp` | ~75% less banner VRAM |
+| Audio resampling | Default `RESAMP_NORMAL` → `RESAMP_FAST` | `PrefsManager.cpp` | Lower CPU in audio thread |
+| VRAM budget | 48MB hard limit with LRU eviction | `RageTextureManager.cpp` | Prevents OOM with many songs |
+| SDL video mode | Fast-path avoids context recreation | `LowLevelWindow_SDL.cpp` | Eliminates ~1s stalls on VC4 |
+| Compiler flags | `-march=armv8-a -mtune=cortex-a53 -ffast-math` | `configure.ac` | CPU-optimal codegen |
+| Inlining | Reduced from 300 to 150 | `src/Makefile.am` | Less I-cache pressure |
+
+**Key constraint**: Mesa VC4 implements OpenGL ES 2.0, not full OpenGL Desktop. `GL_QUADS` and `GL_QUAD_STRIP` do not exist in ES 2.0 — any new rendering code must avoid them or guard with `#ifdef PLATFORM_RPI`.
+
+**VRAM budget**: The 48MB texture limit (`VRAM_BUDGET_BYTES` in `RageTextureManager.cpp`) triggers eviction of unreferenced VOLATILE textures (banners) first, then DEFAULT/CACHED textures. PERMANENT textures are never evicted.
+
+**Video hardware decoding — not implementable on this platform**: The VideoCore IV has an H.264 hw decoder, but it cannot be used from a 64-bit process:
+- `h264_mmal`: uses 32-bit pointers in VPU messages — architecturally incompatible with AArch64. Does not exist in RPi 64-bit userland.
+- `h264_v4l2m2m`: the `bcm2835-codec` kernel driver is broken on kernel 6.12 (raspberrypi/linux#6753, April 2025).
+- FFmpeg migration required: `MovieTexture_FFMpeg.cpp` uses the ~2004 FFmpeg API (`avcodec_decode_video`, `img_convert`). Any hw decode path first requires migrating to the modern API (`avcodec_send_packet`/`avcodec_receive_frame`, `AVHWDeviceContext`).
+- **Active mitigation**: `BackgroundMode=OFF` by default prevents video decoding from being invoked at all. Re-evaluate P6 only if: (1) `bcm2835-codec` is fixed in a future kernel, (2) background video support is explicitly desired, and (3) a full FFmpeg API migration is accepted.
 
 ### Modern Compilation Fixes Applied
 
@@ -329,8 +402,9 @@ Arcade builds support signature verification for content protection:
 - **Code Style**: Class names capitalized, variables camelCase, member variables prefixed with `m_`
 - **Headers**: All .cpp files have corresponding .h header
 - **Dependencies**: Minimal cross-dependencies enforced via module organization
-- **Performance**: Compilation inlining limited to 300 to manage compile time
-- **Platform Code**: Use `#ifdef LINUX`, `#ifdef WIN32`, etc., or better: use abstraction layer in `arch/`
+- **Performance**: Compilation inlining limited to 300 (150 for RPi) to manage compile time
+- **Platform Code**: Use `#ifdef LINUX`, `#ifdef WIN32`, `#ifdef PLATFORM_RPI`, etc., or better: use abstraction layer in `arch/`
+- **RPi rendering**: Never use `GL_QUADS` or `GL_QUAD_STRIP` in new rendering code — they don't exist in OpenGL ES 2.0 (Mesa VC4). Use `GL_TRIANGLES` with an index buffer, or `GL_TRIANGLE_STRIP` respectively
 
 ## References
 

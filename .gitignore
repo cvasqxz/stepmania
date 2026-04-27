@@ -27,6 +27,9 @@ src/.deps/
 # autoconf/automake generated
 aclocal.m4
 configure
+Makefile.in
+src/Makefile.in
+src/config.h.in
 install-sh
 missing
 depcomp
@@ -34,6 +37,17 @@ compile
 ltmain.sh
 libtool
 stamp-h1
+autoconf/config.guess
+autoconf/config.sub
+autoconf/mkinstalldirs
+autoconf/test-driver
+autoconf/compile
+autoconf/depcomp
+autoconf/install-sh
+autoconf/missing
+
+# Propuesta de optimización (documento de diseño, no parte del código)
+PROPUESTA_OPTIMIZACION_RPI.md
 
 # libresample build artifacts
 src/libresample/*.o

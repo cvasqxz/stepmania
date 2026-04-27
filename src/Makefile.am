@@ -14,8 +14,12 @@ AM_CFLAGS =
 AM_CXXFLAGS += -std=c++14 -fpermissive
 
 # Relax inlining; the default of 600 takes way too long to compile and
-# generates enormous output.
+# generates enormous output. Use a smaller limit on RPi to reduce I-cache pressure.
+if PLATFORM_RPI
+AM_CXXFLAGS += -finline-limit=150
+else
 AM_CXXFLAGS += -finline-limit=300
+endif
 
 AM_CXXFLAGS += $(XCFLAGS)
 

@@ -91,6 +91,9 @@ protected:
 	void DeleteTexture( RageTexture *t );
 	enum GCType { screen_changed, delayed_delete };
 	void GarbageCollect( GCType type );
+#ifdef PLATFORM_RPI
+	void EvictVolatileTexturesOverBudget();
+#endif
 
 	RageTextureManagerPrefs m_Prefs;
 

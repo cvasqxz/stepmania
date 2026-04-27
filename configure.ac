@@ -80,6 +80,12 @@ x86_64-*)
 powerpc-*)
 	AC_DEFINE(CPU_PPC, 1, [PPC])
 	;;
+aarch64-*)
+	AC_DEFINE(CPU_AARCH64, 1, [ARM 64-bit AArch64])
+	;;
+arm*)
+	AC_DEFINE(CPU_ARM, 1, [ARM 32-bit])
+	;;
 esac
 
 
@@ -87,6 +93,14 @@ AC_C_BIGENDIAN(
 	AC_DEFINE(ENDIAN_BIG, 1, [Big endian]),
 	AC_DEFINE(ENDIAN_LITTLE, 1, [Little endian]),
 	AC_MSG_ERROR([Can't determine endianness]) )
+
+AC_ARG_WITH(rpi, AC_HELP_STRING([--with-rpi], [Optimize for Raspberry Pi (Cortex-A53)]), with_rpi=$withval, with_rpi=no)
+if test "$with_rpi" = "yes"; then
+	AC_DEFINE(PLATFORM_RPI, 1, [Raspberry Pi platform])
+	test "$DEFAULT_CFLAGS" = "yes"   && CFLAGS="$CFLAGS -march=armv8-a -mtune=cortex-a53 -ffast-math"
+	test "$DEFAULT_CXXFLAGS" = "yes" && CXXFLAGS="$CXXFLAGS -march=armv8-a -mtune=cortex-a53 -ffast-math"
+fi
+AM_CONDITIONAL(PLATFORM_RPI, test "$with_rpi" = "yes")
 
 AC_ARG_WITH(prof, AC_HELP_STRING([--with-prof], [Enable profiling]), with_prof=$withval, with_prof=no)
 if test "$with_prof" = "yes"; then

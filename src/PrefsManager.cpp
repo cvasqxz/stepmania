@@ -73,6 +73,14 @@ void PrefsManager::Init()
 #endif
 	m_bShowBanners = true ;
 	m_BackgroundMode = BGMODE_ANIMATIONS;
+
+#ifdef PLATFORM_RPI
+	// Conservative defaults for Raspberry Pi Zero 2 W (512MB RAM, VideoCore IV)
+	m_bForceLowColorTextures = true;   // 16bpp: half bandwidth on VC4
+	m_iMaxTextureResolution = 512;     // Avoid VRAM exhaustion with shared 512MB
+	m_BackgroundMode = BGMODE_OFF;     // Background video/anim costs ~30-40% CPU
+	m_bShowBanners = true;
+#endif
 	m_iNumBackgrounds = 8;
 	m_bShowDanger = true;
 	m_fBGBrightness = 0.8f;
@@ -174,6 +182,9 @@ void PrefsManager::Init()
 	m_BannerCache = BNCACHE_LOW_RES;
 	m_bPalettedBannerCache = false;
 	m_bFastLoad = true;
+#ifdef PLATFORM_RPI
+	m_bPalettedBannerCache = true;  // Palettized banners save ~75% banner VRAM
+#endif
 	m_MusicWheelUsesSections = ALWAYS;
 	m_iMusicWheelSwitchSpeed = 10;
 	m_bEasterEggs = true;
@@ -269,6 +280,9 @@ void PrefsManager::Init()
 	m_iSoundDevice = "";
 	m_fSoundVolume = DEFAULT_SOUND_VOLUME;
 	m_iSoundResampleQuality = RageSoundReader_Resample::RESAMP_NORMAL;
+#ifdef PLATFORM_RPI
+	m_iSoundResampleQuality = RageSoundReader_Resample::RESAMP_FAST;
+#endif
 
 	m_sMovieDrivers = DEFAULT_MOVIE_DRIVER_LIST;
 

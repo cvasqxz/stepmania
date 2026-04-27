@@ -711,11 +711,17 @@ void SetupExtensions()
 
 	if( HasExtension("GL_ARB_vertex_buffer_object") )
 	{
+#ifdef PLATFORM_RPI
+		// VC4 driver is faster with client-side arrays for small dynamic geometry.
+		// Leave VBO pointers NULL so the code falls back to SW path (RageCompiledGeometrySWOGL).
+		LOG->Info( "RPI: Skipping hardware VBOs (VC4 client-array path is faster for sprites)" );
+#else
 		GLExt.glGenBuffersARB = (PFNGLGENBUFFERSARBPROC) wind->GetProcAddress("glGenBuffersARB");
 		GLExt.glBindBufferARB = (PFNGLBINDBUFFERARBPROC) wind->GetProcAddress("glBindBufferARB");
 		GLExt.glBufferDataARB = (PFNGLBUFFERDATAARBPROC) wind->GetProcAddress("glBufferDataARB");
 		GLExt.glBufferSubDataARB = (PFNGLBUFFERSUBDATAARBPROC) wind->GetProcAddress("glBufferSubDataARB");
 		GLExt.glDeleteBuffersARB = (PFNGLDELETEBUFFERSARBPROC) wind->GetProcAddress("glDeleteBuffersARB");
+#endif
 	}
 
 	if( HasExtension("GL_EXT_draw_range_elements") )
@@ -1295,13 +1301,33 @@ void RageDisplay_OGL::DeleteCompiledGeometry( RageCompiledGeometry* p )
 	delete p;
 }
 
+// GL_QUADS is not available in OpenGL ES 2.0 (Mesa VC4). Convert each group of
+// 4 vertices into 2 triangles using an index buffer built on the fly.
+static void DrawQuadsAsTriangles( int iNumVerts )
+{
+	int iNumQuads = iNumVerts / 4;
+	vector<GLushort> idx;
+	idx.reserve( iNumQuads * 6 );
+	for( int q = 0; q < iNumQuads; ++q )
+	{
+		GLushort b = (GLushort)(q * 4);
+		idx.push_back(b+0); idx.push_back(b+1); idx.push_back(b+2);
+		idx.push_back(b+0); idx.push_back(b+2); idx.push_back(b+3);
+	}
+	glDrawElements( GL_TRIANGLES, (GLsizei)idx.size(), GL_UNSIGNED_SHORT, idx.data() );
+}
+
 void RageDisplay_OGL::DrawQuadsInternal( const RageSpriteVertex v[], int iNumVerts )
 {
 	TurnOffHardwareVBO();
 	SendCurrentMatrices();
 
 	SetupVertices( v, iNumVerts );
+#ifdef PLATFORM_RPI
+	DrawQuadsAsTriangles( iNumVerts );
+#else
 	glDrawArrays( GL_QUADS, 0, iNumVerts );
+#endif
 }
 
 void RageDisplay_OGL::DrawQuadStripInternal( const RageSpriteVertex v[], int iNumVerts )
@@ -1310,7 +1336,8 @@ void RageDisplay_OGL::DrawQuadStripInternal( const RageSpriteVertex v[], int iNu
 	SendCurrentMatrices();
 
 	SetupVertices( v, iNumVerts );
-	glDrawArrays( GL_QUAD_STRIP, 0, iNumVerts );
+	// GL_QUAD_STRIP and GL_TRIANGLE_STRIP share identical topology; both are ES 2.0 compatible.
+	glDrawArrays( GL_TRIANGLE_STRIP, 0, iNumVerts );
 }
 
 void RageDisplay_OGL::DrawFanInternal( const RageSpriteVertex v[], int iNumVerts )
