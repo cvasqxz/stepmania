@@ -247,24 +247,31 @@ void RageTextureManager::EvictVolatileTexturesOverBudget()
 	LOG->Trace( "RageTextureManager: VRAM budget exceeded (%d MB used, limit %d MB). Evicting unreferenced textures.",
 		iUsed / (1024*1024), VRAM_BUDGET_BYTES / (1024*1024) );
 
+	// Track running total instead of recomputing O(N) every iteration.
 	// First pass: evict unreferenced VOLATILE textures (banners, etc.).
 	for( std::map<RageTextureID, RageTexture*>::iterator i = m_mapPathToTexture.begin();
-		i != m_mapPathToTexture.end() && GetTotalVRAMUsed(m_mapPathToTexture) > VRAM_BUDGET_BYTES; )
+		i != m_mapPathToTexture.end() && iUsed > VRAM_BUDGET_BYTES; )
 	{
 		std::map<RageTextureID, RageTexture*>::iterator cur = i++;
 		RageTexture *t = cur->second;
 		if( t->m_iRefCount == 0 && t->GetPolicy() == RageTextureID::TEX_VOLATILE )
+		{
+			iUsed -= GetTextureBytes( t );
 			DeleteTexture( t );
+		}
 	}
 
 	// Second pass: evict unreferenced DEFAULT/CACHED textures if still over budget.
 	for( std::map<RageTextureID, RageTexture*>::iterator i = m_mapPathToTexture.begin();
-		i != m_mapPathToTexture.end() && GetTotalVRAMUsed(m_mapPathToTexture) > VRAM_BUDGET_BYTES; )
+		i != m_mapPathToTexture.end() && iUsed > VRAM_BUDGET_BYTES; )
 	{
 		std::map<RageTextureID, RageTexture*>::iterator cur = i++;
 		RageTexture *t = cur->second;
 		if( t->m_iRefCount == 0 && t->GetPolicy() != RageTextureID::TEX_PERMANENT )
+		{
+			iUsed -= GetTextureBytes( t );
 			DeleteTexture( t );
+		}
 	}
 }
 #endif

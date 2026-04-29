@@ -1301,21 +1301,28 @@ void RageDisplay_OGL::DeleteCompiledGeometry( RageCompiledGeometry* p )
 	delete p;
 }
 
+#ifdef PLATFORM_RPI
 // GL_QUADS is not available in OpenGL ES 2.0 (Mesa VC4). Convert each group of
-// 4 vertices into 2 triangles using an index buffer built on the fly.
+// 4 vertices into 2 triangles. Uses a persistent buffer to avoid per-frame
+// heap allocation (this is called many times per frame).
 static void DrawQuadsAsTriangles( int iNumVerts )
 {
+	if( iNumVerts < 4 )
+		return;
+
 	int iNumQuads = iNumVerts / 4;
-	vector<GLushort> idx;
+	static vector<GLushort> idx;
+	idx.clear();
 	idx.reserve( iNumQuads * 6 );
 	for( int q = 0; q < iNumQuads; ++q )
 	{
 		GLushort b = (GLushort)(q * 4);
-		idx.push_back(b+0); idx.push_back(b+1); idx.push_back(b+2);
-		idx.push_back(b+0); idx.push_back(b+2); idx.push_back(b+3);
+		idx.push_back(b);     idx.push_back(b+1); idx.push_back(b+2);
+		idx.push_back(b);     idx.push_back(b+2); idx.push_back(b+3);
 	}
-	glDrawElements( GL_TRIANGLES, (GLsizei)idx.size(), GL_UNSIGNED_SHORT, idx.data() );
+	glDrawElements( GL_TRIANGLES, (GLsizei)idx.size(), GL_UNSIGNED_SHORT, &idx[0] );
 }
+#endif
 
 void RageDisplay_OGL::DrawQuadsInternal( const RageSpriteVertex v[], int iNumVerts )
 {
@@ -1336,8 +1343,12 @@ void RageDisplay_OGL::DrawQuadStripInternal( const RageSpriteVertex v[], int iNu
 	SendCurrentMatrices();
 
 	SetupVertices( v, iNumVerts );
-	// GL_QUAD_STRIP and GL_TRIANGLE_STRIP share identical topology; both are ES 2.0 compatible.
+#ifdef PLATFORM_RPI
+	// GL_QUAD_STRIP does not exist in OpenGL ES 2.0; topologically equivalent to GL_TRIANGLE_STRIP.
 	glDrawArrays( GL_TRIANGLE_STRIP, 0, iNumVerts );
+#else
+	glDrawArrays( GL_QUAD_STRIP, 0, iNumVerts );
+#endif
 }
 
 void RageDisplay_OGL::DrawFanInternal( const RageSpriteVertex v[], int iNumVerts )
